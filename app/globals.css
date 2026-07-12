@@ -3,7 +3,7 @@
 @import 'shadcn/tailwind.css';
 
 @theme inline {
-  --font-sans: var(--font-kanit), 'Kanit', sans-serif;
+  --font-sans: var(--font-dm-sans), 'DM Sans', sans-serif;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -164,13 +164,13 @@
     padding: 0;
   }
   html, body {
-    background: #0C0C0C;
+    background: #050A14;
     font-family: var(--font-sans);
   }
 }
 
 .hero-heading {
-  background: linear-gradient(180deg, #646973 0%, #BBCCD7 100%);
+  background: linear-gradient(180deg, #6E6146 0%, #E8D9A6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

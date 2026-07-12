@@ -1,20 +1,20 @@
 import type { Metadata, Viewport } from 'next'
-import { Kanit } from 'next/font/google'
+import { DM_Sans } from 'next/font/google'
 import './globals.css'
 
-const kanit = Kanit({
-  subsets: ['latin'],
+const dmSans = DM_Sans({
+  subsets: ['latin', 'latin-ext'],
   weight: ['300', '400', '500', '600', '700', '800', '900'],
-  variable: '--font-kanit',
+  variable: '--font-dm-sans',
 })
 
 export const metadata: Metadata = {
-  title: 'Jack -- 3D Creator',
-  description: 'Jack is a 3D creator driven by crafting striking and unforgettable projects.',
+  title: 'MAST Studio | Web design Timisoara',
+  description: 'Studio de web design din Timișoara pentru site-uri memorabile, rapide și orientate spre rezultate.',
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0C0C0C',
+  themeColor: '#050A14',
 }
 
 export default function RootLayout({
@@ -23,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${kanit.variable} bg-[#0C0C0C]`}>
-      <body className="antialiased font-sans" style={{ margin: 0, padding: 0, boxSizing: 'border-box', background: '#0C0C0C' }}>
+    <html lang="ro" className={`${dmSans.variable} bg-[#050A14]`}>
+      <body className="antialiased font-sans" style={{ margin: 0, padding: 0, boxSizing: 'border-box', background: '#050A14' }}>
         {children}
       </body>
     </html>

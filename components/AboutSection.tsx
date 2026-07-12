@@ -9,7 +9,7 @@ export default function AboutSection() {
     <section
       id="about"
       className="relative min-h-screen flex items-center justify-center px-5 sm:px-8 md:px-10 py-20"
-      style={{ background: '#0C0C0C' }}
+      style={{ background: '#050A14' }}
     >
       {/* Decorative 3D images */}
       {/* Top-left: Moon */}
@@ -22,7 +22,7 @@ export default function AboutSection() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png"
+          src="/images/mast-compass.png"
           alt=""
           className="w-[120px] sm:w-[160px] md:w-[210px]"
         />
@@ -38,7 +38,7 @@ export default function AboutSection() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png"
+          src="/images/mast-cursor.png"
           alt=""
           className="w-[100px] sm:w-[140px] md:w-[180px]"
         />
@@ -54,7 +54,7 @@ export default function AboutSection() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png"
+          src="/images/mast-rocket.png"
           alt=""
           className="w-[120px] sm:w-[160px] md:w-[210px]"
         />
@@ -70,7 +70,7 @@ export default function AboutSection() {
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png"
+          src="/images/mast-browser.png"
           alt=""
           className="w-[130px] sm:w-[170px] md:w-[220px]"
         />
@@ -83,14 +83,14 @@ export default function AboutSection() {
             className="hero-heading font-black uppercase leading-none tracking-tight text-center"
             style={{ fontSize: 'clamp(3rem, 12vw, 160px)' }}
           >
-            About me
+            Despre noi
           </h2>
         </FadeIn>
 
         <div className="flex flex-col items-center gap-16 sm:gap-20 md:gap-24">
           <AnimatedText
-            text="With more than five years of experience in design, i focus on branding, web design, and user experience, i truly enjoy working with businesses that aim to stand out and present their best image. Let's build something incredible together!"
-            className="text-[#D7E2EA] font-medium text-center leading-relaxed max-w-[560px]"
+            text="Suntem un studio din Timișoara care crede că un site bun nu se vede: se simte. Combinăm strategie, design și cod propriu ca să construim prezențe digitale care aduc încredere și clienți, nu doar vizite. Hai să construim ceva memorabil împreună!"
+            className="text-[#F5F1E8] font-medium text-center leading-relaxed max-w-[560px]"
             style={{ fontSize: 'clamp(1rem, 2vw, 1.35rem)' }}
           />
           <ContactButton />

@@ -6,7 +6,7 @@ import ProjectsSection from '@/components/ProjectsSection'
 
 export default function Page() {
   return (
-    <main style={{ background: '#0C0C0C', overflowX: 'clip' }}>
+    <main style={{ background: '#050A14', overflowX: 'clip' }}>
       <HeroSection />
       <MarqueeSection />
       <AboutSection />
