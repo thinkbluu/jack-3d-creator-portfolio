@@ -33,15 +33,12 @@ export default function HeroSection() {
       </FadeIn>
 
       {/* Hero Heading */}
-      <FadeIn delay={0.15} y={40}>
-        <div className="overflow-hidden">
-          <h1
-            className="hero-heading font-black uppercase tracking-tight leading-none whitespace-nowrap w-full text-[13vw] sm:text-[14vw] md:text-[15vw] lg:text-[16vw] mt-6 sm:mt-4 md:-mt-5"
-          >
-            MAST STUDIO
-          </h1>
-        </div>
-      </FadeIn>
+      <div className="mt-6 w-full max-w-[100vw] overflow-hidden px-2 sm:mt-4">
+        <h1 className="hero-heading text-center font-black uppercase leading-[0.9] tracking-[-0.03em]" style={{ fontSize: 'clamp(4rem, 17vw, 15rem)' }}>
+          <span className="block overflow-hidden"><FadeIn delay={0.15} y={40}>MAST</FadeIn></span>
+          <span className="block overflow-hidden"><FadeIn delay={0.25} y={40}>STUDIO</FadeIn></span>
+        </h1>
+      </div>
 
       {/* Portrait - absolutely centered */}
       <FadeIn delay={0.6} y={30} className="absolute left-1/2 -translate-x-1/2 z-10 top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0">
@@ -55,7 +52,12 @@ export default function HeroSection() {
           <img
             src="/images/mast-hero.png"
             alt="Busolă aurie MAST Studio"
-            className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]"
+            width={3000}
+            height={3000}
+            loading="eager"
+            decoding="async"
+            fetchPriority="high"
+            className="h-auto w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]"
             style={{ display: 'block' }}
           />
         </Magnet>

@@ -98,6 +98,10 @@ function ProjectCard({ project, index, totalCards }: ProjectCardProps) {
             <img
               src={project.col1[0]}
               alt={`${project.name} preview 1`}
+              width={1280}
+              height={720}
+              loading="lazy"
+              decoding="async"
               className="w-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
               style={{ height: 'clamp(130px, 16vw, 230px)' }}
             />
@@ -105,6 +109,10 @@ function ProjectCard({ project, index, totalCards }: ProjectCardProps) {
             <img
               src={project.col1[1]}
               alt={`${project.name} preview 2`}
+              width={1280}
+              height={960}
+              loading="lazy"
+              decoding="async"
               className="w-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
               style={{ height: 'clamp(160px, 22vw, 340px)' }}
             />
@@ -116,6 +124,10 @@ function ProjectCard({ project, index, totalCards }: ProjectCardProps) {
             <img
               src={project.col2}
               alt={`${project.name} preview 3`}
+              width={1280}
+              height={1280}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover rounded-[40px] sm:rounded-[50px] md:rounded-[60px]"
             />
           </div>

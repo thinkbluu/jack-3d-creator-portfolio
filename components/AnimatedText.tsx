@@ -35,12 +35,15 @@ export default function AnimatedText({ text, className, style }: AnimatedTextPro
     offset: ['start 0.8', 'end 0.2'],
   })
 
-  const chars = text.split('')
+  const chars = text.split('').map((char, index) => ({
+    char,
+    id: `${char}-${text.slice(0, index).split(char).length}`,
+  }))
 
   return (
     <p ref={ref} className={className} style={style}>
-      {chars.map((char, i) => (
-        <AnimatedChar key={i} char={char} progress={scrollYProgress} index={i} total={chars.length} />
+      {chars.map(({ char, id }, index) => (
+        <AnimatedChar key={id} char={char} progress={scrollYProgress} index={index} total={chars.length} />
       ))}
     </p>
   )

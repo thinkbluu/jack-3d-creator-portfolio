@@ -24,7 +24,11 @@ export default function AboutSection() {
         <img
           src="/images/mast-compass.png"
           alt=""
-          className="w-[120px] sm:w-[160px] md:w-[210px]"
+          width={2000}
+          height={2000}
+          loading="lazy"
+          decoding="async"
+          className="h-auto w-[120px] sm:w-[160px] md:w-[210px]"
         />
       </FadeIn>
 
@@ -40,7 +44,11 @@ export default function AboutSection() {
         <img
           src="/images/mast-cursor.png"
           alt=""
-          className="w-[100px] sm:w-[140px] md:w-[180px]"
+          width={2000}
+          height={2000}
+          loading="lazy"
+          decoding="async"
+          className="h-auto w-[100px] sm:w-[140px] md:w-[180px]"
         />
       </FadeIn>
 
@@ -56,7 +64,11 @@ export default function AboutSection() {
         <img
           src="/images/mast-rocket.png"
           alt=""
-          className="w-[120px] sm:w-[160px] md:w-[210px]"
+          width={2000}
+          height={2000}
+          loading="lazy"
+          decoding="async"
+          className="h-auto w-[120px] sm:w-[160px] md:w-[210px]"
         />
       </FadeIn>
 
@@ -72,7 +84,11 @@ export default function AboutSection() {
         <img
           src="/images/mast-browser.png"
           alt=""
-          className="w-[130px] sm:w-[170px] md:w-[220px]"
+          width={2000}
+          height={2000}
+          loading="lazy"
+          decoding="async"
+          className="h-auto w-[130px] sm:w-[170px] md:w-[220px]"
         />
       </FadeIn>
 
