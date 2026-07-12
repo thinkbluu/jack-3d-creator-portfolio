@@ -8,10 +8,11 @@ import ProcessSection from '@/components/ProcessSection'
 import FAQSection from '@/components/FAQSection'
 import FinalCTA from '@/components/FinalCTA'
 import MobileWhatsAppBar from '@/components/MobileWhatsAppBar'
+import CompassHUD from '@/components/CompassHUD'
 
 export default function Page() {
   return (
-    <main style={{ background: '#0C0C0C', overflowX: 'clip' }}>
+    <main className="bg-[var(--bg)]" style={{ overflowX: 'clip' }}>
       <HeroSection />
       <MarqueeSection />
       <ComparisonSection />
@@ -22,6 +23,7 @@ export default function Page() {
       <FAQSection />
       <FinalCTA />
       <MobileWhatsAppBar />
+      <CompassHUD />
     </main>
   )
 }

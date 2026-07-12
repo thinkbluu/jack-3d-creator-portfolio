@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import type { ReactNode, ElementType } from 'react'
+import type { ReactNode } from 'react'
 
 interface FadeInProps {
   children: ReactNode
@@ -10,7 +10,6 @@ interface FadeInProps {
   x?: number
   y?: number
   className?: string
-  as?: ElementType
 }
 
 export default function FadeIn({
@@ -18,21 +17,18 @@ export default function FadeIn({
   delay = 0,
   duration = 0.7,
   x = 0,
-  y = 30,
+  y = 24,
   className,
-  as: Tag = 'div',
 }: FadeInProps) {
-  const MotionTag = motion.create(Tag as ElementType)
-
   return (
-    <MotionTag
+    <motion.div
       className={className}
       initial={{ opacity: 0, x, y }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once: true, margin: '50px', amount: 0 }}
-      transition={{ duration, delay, ease: [0.25, 0.1, 0.25, 1] }}
+      transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
     >
       {children}
-    </MotionTag>
+    </motion.div>
   )
 }

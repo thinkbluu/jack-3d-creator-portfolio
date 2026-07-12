@@ -26,8 +26,8 @@ const allImages = [
   'https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif',
 ]
 
-const row1Images = [...allImages.slice(0, 11), ...allImages.slice(0, 11), ...allImages.slice(0, 11)]
-const row2Images = [...allImages.slice(11), ...allImages.slice(11), ...allImages.slice(11)]
+const row1Images = Array.from({ length: 3 }, (_, copy) => allImages.slice(0, 11).map((src) => ({ src, id: `row-1-${copy}-${src}` }))).flat()
+const row2Images = Array.from({ length: 3 }, (_, copy) => allImages.slice(11).map((src) => ({ src, id: `row-2-${copy}-${src}` }))).flat()
 
 export default function MarqueeSection() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -37,7 +37,7 @@ export default function MarqueeSection() {
     const handleScroll = () => {
       if (!sectionRef.current) return
       const sectionTop = sectionRef.current.getBoundingClientRect().top + window.scrollY
-      const newOffset = (window.scrollY - sectionTop + window.innerHeight) * 0.3
+      const newOffset = (window.scrollY - sectionTop + window.innerHeight) * 0.15
       setOffset(newOffset)
     }
 
@@ -49,9 +49,16 @@ export default function MarqueeSection() {
   return (
     <section
       ref={sectionRef}
-      className="pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden"
-      style={{ background: '#0C0C0C' }}
+      className="section-shell overflow-hidden bg-[var(--bg)]"
     >
+      <div className="site-container">
+        <header className="section-header">
+          <p className="type-kicker mb-4">Selecție vizuală</p>
+          <h2 className="type-h2">Direcții care mișcă</h2>
+          <p className="type-body mt-5">O privire rapidă asupra lumilor digitale care ne inspiră munca.</p>
+        </header>
+      </div>
+
       {/* Row 1 - moves right */}
       <div
         className="flex gap-3 mb-3"
@@ -60,15 +67,17 @@ export default function MarqueeSection() {
           willChange: 'transform',
         }}
       >
-        {row1Images.map((src, i) => (
+        {row1Images.map(({ src, id }, index) => (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            key={i}
+            key={id}
             src={src}
-            alt={`Project preview ${i + 1}`}
+            alt={`Project preview ${index + 1}`}
+            width={420}
+            height={270}
             loading="lazy"
-            className="rounded-2xl object-cover flex-shrink-0"
-            style={{ width: '420px', height: '270px' }}
+            decoding="async"
+            className="h-[270px] w-[420px] flex-shrink-0 rounded-[12px] object-cover"
           />
         ))}
       </div>
@@ -81,15 +90,17 @@ export default function MarqueeSection() {
           willChange: 'transform',
         }}
       >
-        {row2Images.map((src, i) => (
+        {row2Images.map(({ src, id }, index) => (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            key={i}
+            key={id}
             src={src}
-            alt={`Project preview ${i + 12}`}
+            alt={`Project preview ${index + 12}`}
+            width={420}
+            height={270}
             loading="lazy"
-            className="rounded-2xl object-cover flex-shrink-0"
-            style={{ width: '420px', height: '270px' }}
+            decoding="async"
+            className="h-[270px] w-[420px] flex-shrink-0 rounded-[12px] object-cover"
           />
         ))}
       </div>
