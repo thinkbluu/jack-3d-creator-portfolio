@@ -89,7 +89,7 @@ export default function AboutSection() {
 
         <div className="flex flex-col items-center gap-16 sm:gap-20 md:gap-24">
           <AnimatedText
-            text="Suntem un studio din Timișoara care crede că un site bun nu se vede: se simte. Combinăm strategie, design și cod propriu ca să construim prezențe digitale care aduc încredere și clienți, nu doar vizite. Hai să construim ceva memorabil împreună!"
+            text="Suntem un studio care crede că un site bun nu se vede: se simte. Combinăm strategie, design și cod propriu ca să construim prezențe digitale care aduc încredere și clienți, nu doar vizite, pentru afaceri din toată România și nu numai."
             className="text-[#D7E2EA] font-medium text-center leading-relaxed max-w-[560px]"
             style={{ fontSize: 'clamp(1rem, 2vw, 1.35rem)' }}
           />

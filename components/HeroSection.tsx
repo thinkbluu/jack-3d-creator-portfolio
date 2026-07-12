@@ -68,11 +68,11 @@ export default function HeroSection() {
             className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug max-w-[160px] sm:max-w-[220px] md:max-w-[260px]"
             style={{ fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)' }}
           >
-            studio de web design care construiește site-uri memorabile pentru afaceri românești
+            site-uri livrate în 48 de ore și platforme digitale premium pentru afaceri care vor mai mult
           </p>
         </FadeIn>
         <FadeIn delay={0.5} y={20}>
-          <ContactButton />
+          <ContactButton hero />
         </FadeIn>
       </div>
     </section>
