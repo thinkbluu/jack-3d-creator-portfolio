@@ -3,8 +3,6 @@
 import { useRef } from 'react'
 import { useScroll, useTransform, motion } from 'framer-motion'
 import LiveProjectButton from './LiveProjectButton'
-import ContactButton from './ContactButton'
-import FadeIn from './FadeIn'
 
 const projects = [
   {
@@ -147,17 +145,6 @@ export default function ProjectsSection() {
         ))}
       </div>
 
-      <FadeIn delay={0.1} y={20}>
-        <div id="contact" className="flex flex-col items-center py-20 text-center sm:py-24 md:py-32">
-          <ContactButton />
-          <p className="mt-6 text-sm font-light text-[#C9A227] opacity-90">
-            Lucrăm cu maximum 4 proiecte noi pe lună. Rezervă-ți locul.
-          </p>
-          <p className="mt-4 text-xs text-[#F5F1E8] opacity-35">
-            Working with international clients? Everything here, delivered in English too.
-          </p>
-        </div>
-      </FadeIn>
     </section>
   )
 }
