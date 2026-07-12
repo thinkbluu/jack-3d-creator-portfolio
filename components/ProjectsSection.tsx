@@ -62,26 +62,26 @@ function ProjectCard({ project, index, totalCards }: ProjectCardProps) {
       style={{ paddingTop: `${index * 28}px` }}
     >
       <motion.div
-        className="sticky top-24 md:top-32 w-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[rgba(201,162,39,0.4)] p-4 sm:p-6 md:p-8"
-        style={{ background: '#050A14', scale, transformOrigin: 'top center' }}
+        className="sticky top-24 md:top-32 w-full rounded-[40px] sm:rounded-[50px] md:rounded-[60px] border-2 border-[#D7E2EA] p-4 sm:p-6 md:p-8"
+        style={{ background: '#0C0C0C', scale, transformOrigin: 'top center' }}
       >
         {/* Top row */}
         <div className="flex flex-wrap items-center gap-4 mb-4 md:mb-6">
           <span
             className="font-black leading-none"
-            style={{ color: '#F5F1E8', fontSize: 'clamp(3rem, 10vw, 140px)' }}
+            style={{ color: '#D7E2EA', fontSize: 'clamp(3rem, 10vw, 140px)' }}
           >
             {project.number}
           </span>
           <div className="flex flex-col gap-1 flex-1">
             <span
-              className="text-[#F5F1E8] uppercase tracking-widest font-medium"
+              className="text-[#D7E2EA] uppercase tracking-widest font-medium"
               style={{ fontSize: 'clamp(0.7rem, 1.2vw, 1rem)', opacity: 0.6 }}
             >
               {project.category}
             </span>
             <span
-              className="text-[#F5F1E8] font-black uppercase tracking-tight leading-none"
+              className="text-[#D7E2EA] font-black uppercase tracking-tight leading-none"
               style={{ fontSize: 'clamp(1.2rem, 3vw, 2.8rem)' }}
             >
               {project.name}
@@ -130,7 +130,7 @@ export default function ProjectsSection() {
     <section
       id="projects"
       className="rounded-t-[40px] sm:rounded-t-[50px] md:rounded-t-[60px] -mt-10 sm:-mt-12 md:-mt-14 relative z-10 px-5 sm:px-8 md:px-10 pt-20 sm:pt-24 md:pt-32 pb-10"
-      style={{ background: '#050A14' }}
+      style={{ background: '#0C0C0C' }}
     >
       <h2
         className="hero-heading font-black uppercase leading-none tracking-tight text-center mb-16 sm:mb-20 md:mb-28"

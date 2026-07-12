@@ -9,7 +9,7 @@ export default function AboutSection() {
     <section
       id="about"
       className="relative min-h-screen flex items-center justify-center px-5 sm:px-8 md:px-10 py-20"
-      style={{ background: '#050A14' }}
+      style={{ background: '#0C0C0C' }}
     >
       {/* Decorative 3D images */}
       {/* Top-left: Moon */}
@@ -90,7 +90,7 @@ export default function AboutSection() {
         <div className="flex flex-col items-center gap-16 sm:gap-20 md:gap-24">
           <AnimatedText
             text="Suntem un studio din Timișoara care crede că un site bun nu se vede: se simte. Combinăm strategie, design și cod propriu ca să construim prezențe digitale care aduc încredere și clienți, nu doar vizite. Hai să construim ceva memorabil împreună!"
-            className="text-[#F5F1E8] font-medium text-center leading-relaxed max-w-[560px]"
+            className="text-[#D7E2EA] font-medium text-center leading-relaxed max-w-[560px]"
             style={{ fontSize: 'clamp(1rem, 2vw, 1.35rem)' }}
           />
           <ContactButton />

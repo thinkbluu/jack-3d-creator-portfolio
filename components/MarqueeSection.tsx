@@ -50,7 +50,7 @@ export default function MarqueeSection() {
     <section
       ref={sectionRef}
       className="pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden"
-      style={{ background: '#050A14' }}
+      style={{ background: '#0C0C0C' }}
     >
       {/* Row 1 - moves right */}
       <div
