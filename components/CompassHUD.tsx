@@ -1,7 +1,6 @@
 'use client'
 
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
-import { Compass } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 const sections = [
@@ -60,13 +59,15 @@ export default function CompassHUD() {
       onClick={() => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })}
       className="fixed bottom-8 right-8 z-40 flex w-24 flex-col items-center gap-2 opacity-70 transition-opacity duration-200 hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--gold)]"
     >
-      <motion.span
+      <motion.img
+        src="/images/mast-rose.png"
+        alt=""
         aria-hidden="true"
-        className="flex h-16 w-16 items-center justify-center text-[var(--gold)] opacity-60 drop-shadow-[0_8px_14px_rgba(0,0,0,0.3)]"
+        width={56}
+        height={56}
+        className="h-14 w-14 opacity-60 drop-shadow-[0_8px_14px_rgba(0,0,0,0.3)]"
         style={reduceMotion ? undefined : { rotate: rotation }}
-      >
-        <Compass className="h-14 w-14" strokeWidth={1.25} />
-      </motion.span>
+      />
       <span className="relative h-4 w-full overflow-hidden text-center text-[0.65rem] font-medium uppercase tracking-[0.2em] text-[var(--text-3)]">
         <AnimatePresence mode="wait" initial={false}>
           <motion.span
