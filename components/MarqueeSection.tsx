@@ -37,7 +37,7 @@ export default function MarqueeSection() {
     const handleScroll = () => {
       if (!sectionRef.current) return
       const sectionTop = sectionRef.current.getBoundingClientRect().top + window.scrollY
-      const newOffset = (window.scrollY - sectionTop + window.innerHeight) * 0.3
+      const newOffset = (window.scrollY - sectionTop + window.innerHeight) * 0.15
       setOffset(newOffset)
     }
 
@@ -49,9 +49,16 @@ export default function MarqueeSection() {
   return (
     <section
       ref={sectionRef}
-      className="pt-24 sm:pt-32 md:pt-40 pb-10 overflow-hidden"
-      style={{ background: '#0C0C0C' }}
+      className="section-shell overflow-hidden bg-[var(--bg)]"
     >
+      <div className="site-container">
+        <header className="section-header">
+          <p className="type-kicker mb-4">Selecție vizuală</p>
+          <h2 className="type-h2">Direcții care mișcă</h2>
+          <p className="type-body mt-5">O privire rapidă asupra lumilor digitale care ne inspiră munca.</p>
+        </header>
+      </div>
+
       {/* Row 1 - moves right */}
       <div
         className="flex gap-3 mb-3"
@@ -70,7 +77,7 @@ export default function MarqueeSection() {
             height={270}
             loading="lazy"
             decoding="async"
-            className="h-[270px] w-[420px] flex-shrink-0 rounded-2xl object-cover"
+            className="h-[270px] w-[420px] flex-shrink-0 rounded-[12px] object-cover"
           />
         ))}
       </div>
@@ -93,7 +100,7 @@ export default function MarqueeSection() {
             height={270}
             loading="lazy"
             decoding="async"
-            className="h-[270px] w-[420px] flex-shrink-0 rounded-2xl object-cover"
+            className="h-[270px] w-[420px] flex-shrink-0 rounded-[12px] object-cover"
           />
         ))}
       </div>

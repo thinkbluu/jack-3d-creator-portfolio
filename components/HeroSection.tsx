@@ -13,67 +13,43 @@ const navLinks = [
 
 export default function HeroSection() {
   return (
-    <section
-      className="h-screen flex flex-col"
-      style={{ background: '#0C0C0C', overflowX: 'clip', position: 'relative' }}
-    >
-      {/* Navbar */}
-      <FadeIn delay={0} y={-20}>
-        <nav className="flex justify-between items-center px-6 md:px-10 pt-6 md:pt-8">
+    <section className="relative flex min-h-screen flex-col overflow-x-clip bg-[var(--bg)]">
+      <FadeIn delay={0}>
+        <nav className="site-container flex items-center justify-between pt-6 md:pt-8" aria-label="Navigație principală">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-[#D7E2EA] font-medium uppercase tracking-wider text-sm md:text-lg lg:text-[1.4rem] hover:opacity-70 transition-opacity duration-200"
+              className="group relative text-sm font-medium text-[var(--text)] md:text-base"
             >
               {link.label}
+              <span className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-[var(--gold)] transition-transform group-hover:scale-x-100" />
             </a>
           ))}
         </nav>
       </FadeIn>
 
-      {/* Hero Heading */}
-      <div className="mt-6 w-full max-w-[100vw] overflow-hidden px-2 sm:mt-4">
+      <div className="mt-8 w-full max-w-[100vw] overflow-hidden px-2">
         <h1 className="hero-heading text-center font-black uppercase leading-[0.9] tracking-[-0.03em]" style={{ fontSize: 'clamp(4rem, 17vw, 15rem)' }}>
-          <span className="block overflow-hidden"><FadeIn delay={0.15} y={40}>MAST</FadeIn></span>
-          <span className="block overflow-hidden"><FadeIn delay={0.25} y={40}>STUDIO</FadeIn></span>
+          <span className="block overflow-hidden"><FadeIn delay={0.08}>MAST</FadeIn></span>
+          <span className="block overflow-hidden"><FadeIn delay={0.16}>STUDIO</FadeIn></span>
         </h1>
       </div>
 
-      {/* Portrait - absolutely centered */}
-      <FadeIn delay={0.6} y={30} className="absolute left-1/2 -translate-x-1/2 z-10 top-1/2 -translate-y-1/2 sm:top-auto sm:translate-y-0 sm:bottom-0">
-        <Magnet
-          padding={150}
-          strength={3}
-          activeTransition="transform 0.3s ease-out"
-          inactiveTransition="transform 0.6s ease-in-out"
-        >
+      <FadeIn delay={0.24} className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 sm:top-auto sm:bottom-0 sm:translate-y-0">
+        <Magnet padding={150} strength={3} activeTransition="transform 0.25s ease-out" inactiveTransition="transform 0.25s ease-out">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/mast-hero.png"
-            alt="Busolă aurie MAST Studio"
-            width={3000}
-            height={3000}
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            className="h-auto w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]"
-            style={{ display: 'block' }}
-          />
+          <img src="/images/mast-hero.png" alt="Busolă aurie MAST Studio" width={3000} height={3000} loading="eager" decoding="async" fetchPriority="high" className="h-auto w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]" />
         </Magnet>
       </FadeIn>
 
-      {/* Bottom Bar */}
-      <div className="mt-auto flex justify-between items-end pb-7 sm:pb-8 md:pb-10 px-6 md:px-10">
-        <FadeIn delay={0.35} y={20}>
-          <p
-            className="text-[#D7E2EA] font-light uppercase tracking-wide leading-snug max-w-[160px] sm:max-w-[220px] md:max-w-[260px]"
-            style={{ fontSize: 'clamp(0.75rem, 1.4vw, 1.5rem)' }}
-          >
-            site-uri livrate în 48 de ore și platforme digitale premium pentru afaceri care vor mai mult
+      <div className="site-container mt-auto flex flex-col items-start gap-5 pb-8 sm:flex-row sm:items-end sm:justify-between md:pb-10">
+        <FadeIn delay={0.24}>
+          <p className="type-body max-w-[15rem] text-sm">
+            Site-uri livrate în 48 de ore și platforme digitale premium pentru afaceri care vor mai mult.
           </p>
         </FadeIn>
-        <FadeIn delay={0.5} y={20}>
+        <FadeIn delay={0.32}>
           <ContactButton hero />
         </FadeIn>
       </div>

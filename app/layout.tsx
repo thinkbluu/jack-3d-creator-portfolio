@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0C0C0C',
+  themeColor: '#050A14',
 }
 
 export default function RootLayout({
@@ -23,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ro" className={`${dmSans.variable} bg-[#0C0C0C]`}>
-      <body className="antialiased font-sans" style={{ margin: 0, padding: 0, boxSizing: 'border-box', background: '#0C0C0C' }}>
+    <html lang="ro" className={`${dmSans.variable} bg-[var(--bg)]`}>
+      <body className="bg-[var(--bg)] font-sans antialiased">
         {children}
       </body>
     </html>

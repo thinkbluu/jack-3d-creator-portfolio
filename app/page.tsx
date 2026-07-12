@@ -11,7 +11,7 @@ import MobileWhatsAppBar from '@/components/MobileWhatsAppBar'
 
 export default function Page() {
   return (
-    <main style={{ background: '#0C0C0C', overflowX: 'clip' }}>
+    <main className="bg-[var(--bg)]" style={{ overflowX: 'clip' }}>
       <HeroSection />
       <MarqueeSection />
       <ComparisonSection />
