@@ -1,6 +1,7 @@
 'use client'
 
 import FadeIn from './FadeIn'
+import ChartKicker from './ChartKicker'
 
 const services = [
   { number: '01', name: 'Site de prezentare', description: 'Vitrina digitală a afacerii tale: design unic, copy care convinge și PageSpeed 90+ la predare.', price: 'de la 300 EUR · live în 48h de la primirea conținutului' },
@@ -21,11 +22,12 @@ function PriceLine({ children }: { children: string }) {
 
 export default function ServicesSection() {
   return (
-    <section id="price" className="section-shell rounded-t-[28px] bg-[var(--paper)] text-[var(--paper-text)]">
+    <section id="services" className="section-shell rounded-t-[28px] bg-[var(--paper)] text-[var(--paper-text)]">
+      <span id="price" className="sr-only" aria-hidden="true" />
       <div className="site-container">
         <FadeIn>
           <header className="section-header">
-            <p className="type-kicker mb-4 !text-[rgba(10,18,32,0.38)]">Ce construim</p>
+            <ChartKicker bearing="04" label="Servicii" paper />
             <h2 className="type-h2 !text-[var(--paper-text)]">Servicii</h2>
             <p className="type-body mt-5 !text-[var(--paper-text-2)]">Soluții clare, construite în jurul obiectivelor tale de business.</p>
           </header>

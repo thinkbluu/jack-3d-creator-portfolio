@@ -1,4 +1,4 @@
-/* MAST editorial design system */
+/* MAST editorial navigational chart design system */
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
@@ -196,6 +196,15 @@
     transition-duration: 250ms;
     transition-timing-function: ease-out;
   }
+}
+
+.hero-chart-grid {
+  background-image:
+    linear-gradient(rgba(245, 241, 232, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 241, 232, 0.035) 1px, transparent 1px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='384' height='384' viewBox='0 0 384 384'%3E%3Cpath d='M189 192h6M192 189v6' stroke='%23c9a227' stroke-opacity='.06' stroke-width='1'/%3E%3C/svg%3E");
+  background-position: center;
+  background-size: 96px 96px, 96px 96px, 384px 384px;
 }
 
 .hero-heading {

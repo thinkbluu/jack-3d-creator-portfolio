@@ -40,8 +40,10 @@ export default function Magnet({
         e.clientY < rect.bottom + padding
 
       if (inBounds) {
+        const rotateX = Math.max(-6, Math.min(6, (-distY / Math.max(rect.height, 1)) * 12))
+        const rotateY = Math.max(-6, Math.min(6, (distX / Math.max(rect.width, 1)) * 12))
         setActive(true)
-        setTransform(`translate3d(${distX / strength}px, ${distY / strength}px, 0)`)
+        setTransform(`perspective(900px) translate3d(${distX / strength}px, ${distY / strength}px, 0) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`)
       } else {
         setActive(false)
         setTransform('translate3d(0,0,0)')
@@ -78,6 +80,7 @@ export default function Magnet({
       style={{
         transform,
         transition: active ? activeTransition : inactiveTransition,
+        transformStyle: 'preserve-3d',
         willChange: 'transform',
       }}
     >

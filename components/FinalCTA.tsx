@@ -1,5 +1,6 @@
 import ContactButton from './ContactButton'
 import FadeIn from './FadeIn'
+import ChartKicker from './ChartKicker'
 
 export default function FinalCTA() {
   return (
@@ -7,8 +8,8 @@ export default function FinalCTA() {
       <div className="site-container">
         <FadeIn>
           <header className="section-header">
-            <p className="type-kicker mb-4">Următorul pas</p>
-            <h2 className="type-h2">Construim ceva care contează?</h2>
+            <ChartKicker bearing="06" label="Contact" />
+            <h2 className="type-h2">Seteaza <span className="text-[var(--gold)]">directia.</span></h2>
             <p className="type-body mt-5">Lucrăm cu maximum 4 proiecte noi pe lună. Rezervă-ți locul.</p>
           </header>
           <div className="flex justify-start"><ContactButton /></div>

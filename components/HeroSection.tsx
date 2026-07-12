@@ -3,17 +3,18 @@
 import FadeIn from './FadeIn'
 import Magnet from './Magnet'
 import ContactButton from './ContactButton'
+import ChartKicker from './ChartKicker'
 
 const navLinks = [
   { label: 'Despre', href: '#about' },
-  { label: 'Servicii', href: '#price' },
+  { label: 'Servicii', href: '#services' },
   { label: 'Proiecte', href: '#projects' },
   { label: 'Contact', href: '#contact' },
 ]
 
 export default function HeroSection() {
   return (
-    <section className="relative flex min-h-screen flex-col overflow-x-clip bg-[var(--bg)]">
+    <section id="home" className="hero-chart-grid relative flex min-h-screen flex-col overflow-x-clip bg-[var(--bg)]">
       <FadeIn delay={0}>
         <nav className="site-container flex items-center justify-between pt-6 md:pt-8" aria-label="Navigație principală">
           {navLinks.map((link) => (
@@ -29,7 +30,11 @@ export default function HeroSection() {
         </nav>
       </FadeIn>
 
-      <div className="mt-8 w-full max-w-[100vw] overflow-hidden px-2">
+      <FadeIn delay={0.04} className="site-container mt-8">
+        <ChartKicker bearing="01" label="Acasă" />
+      </FadeIn>
+
+      <div className="mt-2 w-full max-w-[100vw] overflow-hidden px-2">
         <h1 className="hero-heading text-center font-black uppercase leading-[0.9] tracking-[-0.03em]" style={{ fontSize: 'clamp(4rem, 17vw, 15rem)' }}>
           <span className="block overflow-hidden"><FadeIn delay={0.08}>MAST</FadeIn></span>
           <span className="block overflow-hidden"><FadeIn delay={0.16}>STUDIO</FadeIn></span>
@@ -45,8 +50,8 @@ export default function HeroSection() {
 
       <div className="site-container mt-auto flex flex-col items-start gap-5 pb-8 sm:flex-row sm:items-end sm:justify-between md:pb-10">
         <FadeIn delay={0.24}>
-          <p className="type-body max-w-[15rem] text-sm">
-            Site-uri livrate în 48 de ore și platforme digitale premium pentru afaceri care vor mai mult.
+          <p className="type-body max-w-sm text-sm">
+            Studio de web design. Site-uri livrate in 48 de ore si platforme premium pentru afaceri care stiu incotro merg.
           </p>
         </FadeIn>
         <FadeIn delay={0.32}>

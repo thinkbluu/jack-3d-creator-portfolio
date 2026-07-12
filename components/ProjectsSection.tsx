@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import FadeIn from './FadeIn'
 import LiveProjectButton from './LiveProjectButton'
+import ChartKicker from './ChartKicker'
 
 const projects = [
   { number: '01', category: 'Client', name: 'Nextlevel Studio', col1: ['https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&w=1280&q=85', 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&w=1280&q=85'], col2: 'https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&w=1280&q=85' },
@@ -39,7 +40,7 @@ export default function ProjectsSection() {
   return (
     <section id="projects" className="section-shell bg-[var(--bg)]">
       <div className="site-container">
-        <FadeIn><header className="section-header"><p className="type-kicker mb-4">Lucrări selectate</p><h2 className="type-h2">Proiecte</h2><p className="type-body mt-5">Identități și produse digitale construite pentru claritate, încredere și creștere.</p></header></FadeIn>
+        <FadeIn><header className="section-header"><ChartKicker bearing="02" label="Proiecte" /><h2 className="type-h2">Proiecte</h2><p className="type-body mt-5">Identități și produse digitale construite pentru claritate, încredere și creștere.</p></header></FadeIn>
         {projects.map((project, index) => <ProjectCard key={project.number} project={project} index={index} />)}
       </div>
     </section>

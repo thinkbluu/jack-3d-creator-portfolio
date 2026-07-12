@@ -1,4 +1,5 @@
 import FadeIn from './FadeIn'
+import ChartKicker from './ChartKicker'
 
 const steps = [
   { number: '01', title: 'Ne scrii pe WhatsApp', description: 'Ne spui în două fraze ce faci și ce îți trebuie. În aceeași zi primești întrebările noastre și oferta.' },
@@ -8,11 +9,11 @@ const steps = [
 
 export default function ProcessSection() {
   return (
-    <section className="section-shell bg-[var(--bg)]">
+    <section id="process" className="section-shell bg-[var(--bg)]">
       <div className="site-container">
         <FadeIn>
           <header className="section-header">
-            <p className="type-kicker mb-4">Proces</p>
+            <ChartKicker bearing="05" label="Proces" />
             <h2 className="type-h2">Cum lucrăm</h2>
             <p className="type-body mt-5">Trei pași transparenți, de la primul mesaj până la lansare.</p>
           </header>
