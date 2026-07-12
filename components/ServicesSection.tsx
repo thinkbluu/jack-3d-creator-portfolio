@@ -23,7 +23,6 @@ function PriceLine({ children }: { children: string }) {
 export default function ServicesSection() {
   return (
     <section id="services" className="section-shell rounded-t-[28px] bg-[var(--paper)] text-[var(--paper-text)]">
-      <span id="price" className="sr-only" aria-hidden="true" />
       <div className="site-container">
         <FadeIn>
           <header className="section-header">

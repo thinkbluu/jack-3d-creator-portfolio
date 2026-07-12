@@ -4,7 +4,7 @@ import ChartKicker from './ChartKicker'
 
 export default function FinalCTA() {
   return (
-    <section id="contact" className="section-shell border-t border-[var(--line)] bg-[var(--bg)]">
+    <section id="contact" className="hero-chart-grid section-shell border-t border-[var(--line)] bg-[var(--bg)]">
       <div className="site-container">
         <FadeIn>
           <header className="section-header">
