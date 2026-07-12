@@ -15,7 +15,7 @@ export default function HeroSection() {
   return (
     <section
       className="h-screen flex flex-col"
-      style={{ background: '#050A14', overflowX: 'clip', position: 'relative' }}
+      style={{ background: '#000000', overflowX: 'clip', position: 'relative' }}
     >
       {/* Navbar */}
       <FadeIn delay={0} y={-20}>
@@ -56,7 +56,7 @@ export default function HeroSection() {
             src="/images/mast-hero.png"
             alt="Busolă aurie MAST Studio"
             className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]"
-            style={{ display: 'block', mixBlendMode: 'screen' }}
+            style={{ display: 'block' }}
           />
         </Magnet>
       </FadeIn>
