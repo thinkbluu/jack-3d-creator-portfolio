@@ -56,7 +56,7 @@ export default function HeroSection() {
             src="/images/mast-hero.png"
             alt="Busolă aurie MAST Studio"
             className="w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]"
-            style={{ display: 'block' }}
+            style={{ display: 'block', mixBlendMode: 'screen' }}
           />
         </Magnet>
       </FadeIn>
