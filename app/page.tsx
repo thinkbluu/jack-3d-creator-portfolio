@@ -9,6 +9,7 @@ import FinalCTA from '@/components/FinalCTA'
 import Footer from '@/components/Footer'
 import MobileWhatsAppBar from '@/components/MobileWhatsAppBar'
 import CompassHUD from '@/components/CompassHUD'
+import PlottedRoute from '@/components/PlottedRoute'
 
 export default function Page() {
   return (
@@ -24,6 +25,7 @@ export default function Page() {
       <Footer />
       <MobileWhatsAppBar />
       <CompassHUD />
+      <PlottedRoute />
     </main>
   )
 }

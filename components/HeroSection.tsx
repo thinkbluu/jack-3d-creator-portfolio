@@ -4,6 +4,7 @@ import FadeIn from './FadeIn'
 import Magnet from './Magnet'
 import ContactButton from './ContactButton'
 import ChartKicker from './ChartKicker'
+import { motion, useReducedMotion } from 'framer-motion'
 
 const navLinks = [
   { label: 'Despre', href: '#about' },
@@ -13,6 +14,8 @@ const navLinks = [
 ]
 
 export default function HeroSection() {
+  const reduceMotion = useReducedMotion()
+
   return (
     <section id="home" className="hero-chart-grid relative flex min-h-screen flex-col overflow-x-clip bg-[var(--bg)]">
       <FadeIn delay={0}>
@@ -31,7 +34,7 @@ export default function HeroSection() {
       </FadeIn>
 
       <FadeIn delay={0.04} className="site-container mt-8">
-        <ChartKicker bearing="01" label="Acasă" />
+        <ChartKicker bearing="01" label="Acasă" coords />
       </FadeIn>
 
       <div className="mt-2 w-full max-w-[100vw] overflow-hidden px-2">
@@ -41,12 +44,26 @@ export default function HeroSection() {
         </h1>
       </div>
 
-      <FadeIn delay={0.24} className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 sm:top-auto sm:bottom-0 sm:translate-y-0">
+      <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 sm:top-auto sm:bottom-0 sm:translate-y-0">
         <Magnet padding={150} strength={3} activeTransition="transform 0.25s ease-out" inactiveTransition="transform 0.25s ease-out">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/mast-hero.png" alt="Busolă aurie MAST Studio" width={3000} height={3000} loading="eager" decoding="async" fetchPriority="high" className="h-auto w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]" />
+          <motion.div
+            initial={reduceMotion ? { opacity: 0 } : { opacity: 0, rotate: -25, scale: 0.96 }}
+            animate={reduceMotion ? { opacity: 1 } : { opacity: 1, rotate: 0, scale: 1 }}
+            transition={
+              reduceMotion
+                ? { duration: 0.5 }
+                : {
+                    opacity: { duration: 0.5, delay: 0.24 },
+                    rotate: { type: 'spring', stiffness: 60, damping: 9, mass: 1.1, delay: 0.24 },
+                    scale: { type: 'spring', stiffness: 60, damping: 9, mass: 1.1, delay: 0.24 },
+                  }
+            }
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/mast-hero.png" alt="Busolă aurie MAST Studio" width={3000} height={3000} loading="eager" decoding="async" fetchPriority="high" className="h-auto w-[280px] sm:w-[360px] md:w-[440px] lg:w-[520px]" />
+          </motion.div>
         </Magnet>
-      </FadeIn>
+      </div>
 
       <div className="site-container mt-auto flex flex-col items-start gap-5 pb-8 sm:flex-row sm:items-end sm:justify-between md:pb-10">
         <FadeIn delay={0.24}>
