@@ -5,6 +5,7 @@ import { ArrowUpRight } from 'lucide-react'
 import type { CSSProperties } from 'react'
 import FadeIn from './FadeIn'
 import ChartKicker from './ChartKicker'
+import TrackedLink from './TrackedLink'
 
 const services = [
   { cardinal: 'N', direction: 0, name: 'Site de prezentare', description: 'Vitrina digitală a afacerii tale: design unic, copy care convinge și PageSpeed 90+ la predare.', price: 'de la 300 EUR · live în 48h de la primirea conținutului', message: 'Salut! Vreau un site de prezentare, livrat în 48 de ore. Îmi poți face o ofertă?' },
@@ -61,6 +62,7 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
   return (
     <motion.a
       href={whatsappUrl(service.message)}
+      onClick={() => import('@vercel/analytics').then(({ track }) => track('service_whatsapp_click', { service: service.name })).catch(() => undefined)}
       target="_blank"
       rel="noopener"
       aria-label={`Cere ofertă pe WhatsApp pentru ${service.name}`}
@@ -114,8 +116,10 @@ export default function ServicesSection() {
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {continuingServices.map((service, index) => (
             <FadeIn key={service.name} delay={index * 0.08}>
-              <a
+              <TrackedLink
                 href={whatsappUrl(service.message)}
+                eventName="service_whatsapp_click"
+                eventProperties={{ service: service.name }}
                 target="_blank"
                 rel="noopener"
                 aria-label={`Cere ofertă pe WhatsApp pentru ${service.name}`}
@@ -125,7 +129,7 @@ export default function ServicesSection() {
                 <p className="type-body mt-2 !text-[var(--paper-text-2)]">{service.description}</p>
                 <PriceLine>{service.price}</PriceLine>
                 <div className="mt-auto pt-4"><OfferAffordance /></div>
-              </a>
+              </TrackedLink>
             </FadeIn>
           ))}
         </div>

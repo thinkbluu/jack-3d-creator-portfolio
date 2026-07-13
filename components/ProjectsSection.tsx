@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import FadeIn from './FadeIn'
@@ -55,10 +56,10 @@ function ProjectCard({ project, index }: { project: (typeof projects)[0]; index:
         </div>
         <div className="flex gap-3">
           <div className="flex w-2/5 flex-col gap-3">
-            <img src={project.col1[0]} alt={`${project.name} preview 1`} width={1280} height={720} loading="lazy" decoding="async" className="h-[clamp(130px,16vw,230px)] w-full rounded-[20px] object-cover" />
-            <img src={project.col1[1]} alt={`${project.name} preview 2`} width={1280} height={960} loading="lazy" decoding="async" className="h-[clamp(160px,22vw,340px)] w-full rounded-[20px] object-cover" />
+            <Image src={project.col1[0]} alt={`${project.name} preview 1`} width={1280} height={720} sizes="(max-width: 768px) 40vw, 34vw" className="h-[clamp(130px,16vw,230px)] w-full rounded-[20px] object-cover" />
+            <Image src={project.col1[1]} alt={`${project.name} preview 2`} width={1280} height={960} sizes="(max-width: 768px) 40vw, 34vw" className="h-[clamp(160px,22vw,340px)] w-full rounded-[20px] object-cover" />
           </div>
-          <div className="w-3/5"><img src={project.col2} alt={`${project.name} preview 3`} width={1280} height={1280} loading="lazy" decoding="async" className="h-full w-full rounded-[20px] object-cover" /></div>
+          <div className="w-3/5"><Image src={project.col2} alt={`${project.name} preview 3`} width={1280} height={1280} sizes="(max-width: 768px) 60vw, 51vw" className="h-full w-full rounded-[20px] object-cover" /></div>
         </div>
       </motion.article>
     </div>

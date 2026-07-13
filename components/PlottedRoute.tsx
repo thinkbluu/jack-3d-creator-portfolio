@@ -124,7 +124,7 @@ export default function PlottedRoute() {
       window.clearTimeout(timeout)
       timeout = window.setTimeout(measure, 120)
     }
-    measure()
+    const initialMeasure = window.requestAnimationFrame(measure)
     window.addEventListener('load', scheduleMeasure)
     window.addEventListener('resize', scheduleMeasure)
     document.fonts.ready.then(scheduleMeasure)
@@ -137,6 +137,7 @@ export default function PlottedRoute() {
     if (routeOrigin) observer.observe(routeOrigin)
     document.querySelectorAll('img').forEach((image) => image.addEventListener('load', scheduleMeasure))
     return () => {
+      window.cancelAnimationFrame(initialMeasure)
       window.clearTimeout(timeout)
       window.removeEventListener('load', scheduleMeasure)
       window.removeEventListener('resize', scheduleMeasure)

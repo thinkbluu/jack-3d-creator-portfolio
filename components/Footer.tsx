@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 const bucharestClock = new Intl.DateTimeFormat('ro-RO', {
@@ -40,9 +41,9 @@ export default function Footer() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p>MAST Studio</p>
           <nav aria-label="Linkuri juridice" className="flex flex-wrap gap-x-5 gap-y-2">
-            <a href="#" className={linkClass}>Confidențialitate</a>
-            <a href="#" className={linkClass}>Cookies</a>
-            <a href="#" className={linkClass}>Termeni</a>
+            <Link href="/confidentialitate" className={linkClass}>Confidențialitate</Link>
+            <Link href="/cookies" className={linkClass}>Cookies</Link>
+            <Link href="/termeni" className={linkClass}>Termeni</Link>
           </nav>
         </div>
 
