@@ -1,4 +1,5 @@
 import HeroSection from '@/components/HeroSection'
+import RouteTransition from '@/components/RouteTransition'
 import ManifestSection from '@/components/ManifestSection'
 import AboutSection from '@/components/AboutSection'
 import ServicesSection from '@/components/ServicesSection'
@@ -15,6 +16,7 @@ export default function Page() {
   return (
     <main className="relative bg-[var(--bg)]" style={{ overflowX: 'clip' }}>
       <HeroSection />
+      <RouteTransition />
       <ManifestSection />
       <AboutSection />
       <ServicesSection />

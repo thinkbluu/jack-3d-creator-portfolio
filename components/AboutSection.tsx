@@ -8,7 +8,7 @@ export default function AboutSection() {
       <div className="site-container relative z-10">
         <FadeIn>
           <header className="section-header">
-            <ChartKicker bearing="03" label="Despre" />
+            <ChartKicker bearing="04" label="Despre" />
             <h2 className="type-h2">Digital, dar profund uman</h2>
           </header>
         </FadeIn>
