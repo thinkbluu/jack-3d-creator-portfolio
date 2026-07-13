@@ -46,7 +46,10 @@ export default function FinalCTA() {
           </header>
           <div className="relative z-0 inline-flex justify-start">
             <SonarPing />
-            <div className="relative z-10"><ContactButton /></div>
+            <div className="relative z-10">
+              <ContactButton />
+              <p className="type-body mt-4 text-center !text-[var(--text-3)]">Ai ajuns unde trebuia.</p>
+            </div>
           </div>
         </FadeIn>
       </div>

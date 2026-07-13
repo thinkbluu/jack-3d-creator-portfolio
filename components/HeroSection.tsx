@@ -16,7 +16,7 @@ import ChartKicker from './ChartKicker'
 const navLinks = [
   { label: 'Despre', href: '#about' },
   { label: 'Servicii', href: '#services' },
-  { label: 'Proiecte', href: '#projects' },
+  { label: 'Escale', href: '#projects' },
   { label: 'Contact', href: '#contact' },
 ]
 
