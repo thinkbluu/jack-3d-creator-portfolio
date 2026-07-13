@@ -92,7 +92,7 @@ export default function HeroSection() {
           <FadeIn delay={0.08} className="flex w-full justify-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/mast-studio-title.jpg"
+              src="/images/mast-studio-title.png"
               alt="MAST Studio"
               width={5120}
               height={5120}
