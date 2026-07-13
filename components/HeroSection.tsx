@@ -2,13 +2,14 @@
 
 import {
   motion,
-  useMotionValue,
+  useMotionTemplate,
   useReducedMotion,
   useScroll,
   useSpring,
   useTransform,
+  type MotionStyle,
 } from 'framer-motion'
-import { useEffect, useRef, type CSSProperties } from 'react'
+import { useRef } from 'react'
 import ContactButton from './ContactButton'
 import ChartKicker from './ChartKicker'
 
@@ -22,49 +23,40 @@ const navLinks = [
 export default function HeroSection() {
   const heroRef = useRef<HTMLElement>(null)
   const reduceMotion = useReducedMotion()
-  const sceneX = useMotionValue(0)
-  const sceneY = useMotionValue(0)
-  const pointerX = useSpring(sceneX, { stiffness: 50, damping: 20 })
-  const pointerY = useSpring(sceneY, { stiffness: 50, damping: 20 })
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end end'] })
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 30 })
 
-  const seaScale = useTransform(progress, [0, 0.72, 1], [1.08, 1.02, 1])
-  const seaY = useTransform(progress, [0, 1], ['0%', '-2%'])
-  const mistOneX = useTransform(progress, [0, 0.68, 1], ['-18%', '3%', '8%'])
-  const mistTwoX = useTransform(progress, [0, 0.68, 1], ['18%', '-3%', '-8%'])
-  const mistOpacity = useTransform(progress, [0, 0.12, 0.58, 0.82], [0, 0.82, 0.48, 0])
-  const beamX = useTransform(progress, [0.05, 0.58], ['-125%', '130%'])
-  const beamOpacity = useTransform(progress, [0, 0.08, 0.5, 0.65], [0, 0.42, 0.32, 0])
-  const sceneOpacity = useTransform(progress, [0.55, 0.78, 1], [0, 0.94, 1])
-  const titleOpacity = useTransform(progress, [0.66, 0.86], [0, 1])
-  const kickerOpacity = useTransform(progress, [0.62, 0.78], [0, 1])
-  const bodyOpacity = useTransform(progress, [0.76, 0.92], [0, 1])
-  const cueOpacity = useTransform(progress, [0, 0.16, 0.48], [0.75, 0.75, 0])
-  const glintX = useTransform(progress, [0.42, 0.7], ['-80%', '145%'])
-  const glintOpacity = useTransform(progress, [0.38, 0.48, 0.65, 0.74], [0, 0.9, 0.65, 0])
+  const seaX = useTransform(progress, [0, 1], ['0%', '-2%'])
+  const portalRadius = useTransform(progress, [0, 0.12, 0.55, 1], [0, 0, 90, 90])
+  const portalMask = useMotionTemplate`radial-gradient(circle at 50% 44%, transparent ${portalRadius}vw, black calc(${portalRadius}vw + 28vw))`
 
-  useEffect(() => {
-    if (reduceMotion) return
-    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1024px)')
-    if (!finePointer.matches) return
+  const veilAScale = useTransform(progress, [0, 0.06, 0.12, 0.55], [1.15, 1.18, 1.15, 1.15])
+  const veilAX = useTransform(progress, [0.12, 0.55], ['0%', '-4%'])
+  const veilAY = useTransform(progress, [0.12, 0.55], ['0%', '-2%'])
+  const veilBX = useTransform(progress, [0.12, 0.55], ['0%', '5%'])
+  const veilBY = useTransform(progress, [0.12, 0.55], ['0%', '2%'])
+  const fogOpacity = useTransform(progress, [0.55, 0.75], [1, 0])
+  const veilBOpacity = useTransform(fogOpacity, (value) => value * 0.8)
 
-    const handlePointerMove = (event: PointerEvent) => {
-      sceneX.set(((window.innerWidth / 2 - event.clientX) / (window.innerWidth / 2)) * 8)
-      sceneY.set(((window.innerHeight / 2 - event.clientY) / (window.innerHeight / 2)) * 8)
-    }
-    const resetScene = () => {
-      sceneX.set(0)
-      sceneY.set(0)
-    }
+  const lockupScale = useTransform(progress, [0, 0.12, 0.55], [0.92, 0.92, 1])
+  const lockupOpacity = useTransform(progress, [0, 0.12, 0.55], [0.9, 0.9, 1])
+  const lockupBlur = useTransform(progress, [0.12, 0.55], [8, 0])
+  const lockupFilter = useMotionTemplate`blur(${lockupBlur}px)`
+  const glowOpacity = useTransform(progress, (value) => {
+    if (value <= 0.12) return 0.7 + Math.sin((value / 0.12) * Math.PI * 2) * 0.2
+    if (value <= 0.42) return 0.9 + ((value - 0.12) / 0.3) * 0.1
+    if (value <= 0.55) return 1 - ((value - 0.42) / 0.13) * 0.72
+    return 0.28
+  })
+  const glowScale = useTransform(progress, [0.12, 0.42, 0.55], [1, 1.16, 1.06])
 
-    window.addEventListener('pointermove', handlePointerMove, { passive: true })
-    window.addEventListener('pointerleave', resetScene)
-    return () => {
-      window.removeEventListener('pointermove', handlePointerMove)
-      window.removeEventListener('pointerleave', resetScene)
-    }
-  }, [reduceMotion, sceneX, sceneY])
+  const kickerOpacity = useTransform(progress, [0.75, 0.82], [0, 1])
+  const kickerY = useTransform(progress, [0.75, 0.82], [24, 0])
+  const paragraphOpacity = useTransform(progress, [0.82, 0.9], [0, 1])
+  const paragraphY = useTransform(progress, [0.82, 0.9], [24, 0])
+  const ctaOpacity = useTransform(progress, [0.9, 0.98], [0, 1])
+  const ctaY = useTransform(progress, [0.9, 0.98], [24, 0])
+  const cueOpacity = useTransform(progress, [0, 0.1], [1, 0])
 
   return (
     <section ref={heroRef} id="home" className="relative h-screen bg-[var(--bg)] lg:h-[300vh] [@media(pointer:coarse)]:h-screen">
@@ -73,73 +65,92 @@ export default function HeroSection() {
 
         <motion.div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-[-10px] z-[1] will-change-transform lg:block [@media(pointer:coarse)]:hidden"
-          style={reduceMotion ? undefined : { scale: seaScale, y: seaY }}
+          className="pointer-events-none absolute inset-y-0 left-0 z-[1] w-[102%] will-change-transform"
+          style={reduceMotion ? undefined : { x: seaX }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/sea-backdrop.jpg" alt="" aria-hidden="true" width={1360} height={768} loading="eager" decoding="async" fetchPriority="high" className="h-full w-full object-cover" />
+          <img src="/images/sea-backdrop.jpg" alt="" width={1360} height={768} loading="eager" decoding="async" fetchPriority="high" className="h-full w-full object-cover" />
         </motion.div>
-
-        <motion.div aria-hidden="true" className="pointer-events-none absolute inset-[-10px] z-[2] will-change-transform lg:block [@media(pointer:coarse)]:hidden" style={{ x: mistOneX, opacity: mistOpacity }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/mist-1.png" alt="" aria-hidden="true" width={1360} height={768} loading="eager" decoding="async" className="h-full w-full object-cover opacity-70 mix-blend-screen" />
-        </motion.div>
-        <motion.div aria-hidden="true" className="pointer-events-none absolute inset-[-10px] z-[3] will-change-transform lg:block [@media(pointer:coarse)]:hidden" style={{ x: mistTwoX, opacity: mistOpacity }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/mist-2.png" alt="" aria-hidden="true" width={1360} height={768} loading="eager" decoding="async" className="h-full w-full object-cover opacity-55 mix-blend-screen" />
-        </motion.div>
-        <motion.div aria-hidden="true" className="pointer-events-none absolute inset-y-[-20%] z-[4] hidden w-[32%] -skew-x-12 bg-[linear-gradient(90deg,transparent,rgba(232,217,166,0.22),transparent)] blur-2xl will-change-transform lg:block [@media(pointer:coarse)]:hidden" style={{ x: beamX, opacity: beamOpacity }} />
 
         <motion.div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-[-10px] z-[5] opacity-100 will-change-transform lg:opacity-[var(--scene-opacity)] [@media(pointer:coarse)]:opacity-100"
-          style={{ '--scene-opacity': sceneOpacity } as CSSProperties}
+          className="pointer-events-none absolute left-1/2 top-[44%] z-[2] h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(232,217,166,0.10)_0%,transparent_60%)] blur-[40px] mix-blend-screen"
+          style={reduceMotion ? undefined : { opacity: glowOpacity, scale: glowScale }}
+        />
+
+        <nav className="site-container absolute inset-x-0 top-0 z-20 flex items-center justify-between pt-6 md:pt-8" aria-label="Navigație principală">
+          {navLinks.map((link) => (
+            <a key={link.label} href={link.href} className="group relative text-sm font-medium text-[var(--text)] md:text-base">
+              {link.label}
+              <span className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-[var(--gold)] transition-transform group-hover:scale-x-100" />
+            </a>
+          ))}
+        </nav>
+
+        <motion.div
+          className="relative z-[3] flex min-h-screen flex-col pt-16 opacity-100 lg:opacity-[var(--lockup-opacity)] lg:[filter:var(--lockup-filter)] [@media(pointer:coarse)]:opacity-100 [@media(pointer:coarse)]:[filter:none] md:pt-20"
+          style={
+            reduceMotion
+              ? undefined
+              : ({ '--lockup-opacity': lockupOpacity, '--lockup-filter': lockupFilter, scale: lockupScale } as MotionStyle)
+          }
         >
           <motion.div
-            className="h-full w-full"
-            initial={reduceMotion ? false : { scale: 1.06 }}
-            animate={{ scale: 1 }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-            style={reduceMotion ? undefined : { x: pointerX, y: pointerY }}
+            className="site-container mt-8 opacity-100 lg:opacity-[var(--kicker-opacity)] [@media(pointer:coarse)]:opacity-100"
+            style={reduceMotion ? undefined : ({ '--kicker-opacity': kickerOpacity, y: kickerY } as MotionStyle)}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/hero-scene.png" alt="" aria-hidden="true" width={4096} height={4096} loading="eager" decoding="async" fetchPriority="high" className="h-full w-full object-cover object-[center_60%]" />
-          </motion.div>
-        </motion.div>
-        <motion.div aria-hidden="true" className="pointer-events-none absolute inset-y-0 z-[7] hidden w-[24%] bg-[linear-gradient(90deg,transparent,rgba(255,238,181,0.52),transparent)] blur-xl will-change-transform lg:block [@media(pointer:coarse)]:hidden" style={{ x: glintX, opacity: glintOpacity }} />
-
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 z-[8] h-[30%] bg-[linear-gradient(transparent,var(--bg))]" />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[9] bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(2,5,10,0.55)_100%)]" />
-        <div aria-hidden="true" className="hero-chart-grid pointer-events-none absolute inset-0 z-10 opacity-40" />
-
-        <div className="relative z-20 flex min-h-screen flex-col">
-          <nav className="site-container flex items-center justify-between pt-6 md:pt-8" aria-label="Navigație principală">
-            {navLinks.map((link) => (
-              <a key={link.label} href={link.href} className="group relative text-sm font-medium text-[var(--text)] md:text-base">
-                {link.label}
-                <span className="absolute inset-x-0 -bottom-1 h-px origin-left scale-x-0 bg-[var(--gold)] transition-transform group-hover:scale-x-100" />
-              </a>
-            ))}
-          </nav>
-
-          <motion.div className="site-container mt-8 opacity-100 lg:opacity-[var(--kicker-opacity)] [@media(pointer:coarse)]:opacity-100" style={{ '--kicker-opacity': kickerOpacity } as CSSProperties}>
             <ChartKicker bearing="01" label="Acasă" coords />
           </motion.div>
 
-          <motion.div className="mt-2 flex w-full max-w-[100vw] justify-center overflow-hidden px-4 opacity-100 lg:opacity-[var(--title-opacity)] [@media(pointer:coarse)]:opacity-100" style={{ '--title-opacity': titleOpacity } as CSSProperties}>
+          <div className="mt-2 flex w-full max-w-[100vw] justify-center overflow-hidden px-4">
             <h1 className="sr-only">MAST Studio</h1>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/mast-studio-title.png" alt="MAST Studio" width={5120} height={5120} loading="eager" decoding="async" fetchPriority="high" className="h-auto max-h-[52vh] w-auto max-w-full object-contain mix-blend-screen" />
-          </motion.div>
+          </div>
 
-          <motion.div className="site-container mt-auto flex flex-col items-start gap-5 pb-8 opacity-100 sm:flex-row sm:items-end sm:justify-between md:pb-10 lg:opacity-[var(--body-opacity)] [@media(pointer:coarse)]:opacity-100" style={{ '--body-opacity': bodyOpacity } as CSSProperties}>
-            <p className="type-body max-w-sm text-sm">Studio de web design. Site-uri livrate în 48 de ore și platforme premium pentru afaceri care știu încotro merg.</p>
-            <ContactButton hero />
-          </motion.div>
-        </div>
+          <div className="site-container mt-auto flex flex-col items-start gap-5 pb-8 sm:flex-row sm:items-end sm:justify-between md:pb-10">
+            <motion.p
+              className="type-body max-w-sm text-sm opacity-100 lg:opacity-[var(--paragraph-opacity)] [@media(pointer:coarse)]:opacity-100"
+              style={reduceMotion ? undefined : ({ '--paragraph-opacity': paragraphOpacity, y: paragraphY } as MotionStyle)}
+            >
+              Studio de web design. Site-uri livrate în 48 de ore și platforme premium pentru afaceri care știu încotro merg.
+            </motion.p>
+            <motion.div
+              className="opacity-100 lg:opacity-[var(--cta-opacity)] [@media(pointer:coarse)]:opacity-100"
+              style={reduceMotion ? undefined : ({ '--cta-opacity': ctaOpacity, y: ctaY } as MotionStyle)}
+            >
+              <ContactButton hero />
+            </motion.div>
+          </div>
+        </motion.div>
 
-        <motion.div aria-hidden="true" className="pointer-events-none absolute bottom-8 left-1/2 z-30 hidden -translate-x-1/2 flex-col items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-[var(--text-3)] lg:flex [@media(pointer:coarse)]:hidden" style={{ opacity: cueOpacity }}>
-          <span>Derulează</span>
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-[4] hidden origin-center will-change-transform lg:block [@media(pointer:coarse)]:hidden"
+          style={{ x: veilAX, y: veilAY, scale: veilAScale, opacity: fogOpacity, maskImage: portalMask, WebkitMaskImage: portalMask }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/mist-veil-1.png" alt="" width={1360} height={768} loading="eager" decoding="async" className="h-full w-full object-cover mix-blend-screen" />
+        </motion.div>
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-[5] hidden scale-[1.3] will-change-transform lg:block [@media(pointer:coarse)]:hidden"
+          style={{ x: veilBX, y: veilBY, opacity: veilBOpacity, maskImage: portalMask, WebkitMaskImage: portalMask }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/images/mist-veil-2.png" alt="" width={1360} height={768} loading="eager" decoding="async" className="h-full w-full object-cover mix-blend-screen" />
+        </motion.div>
+
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 z-[6] h-[30%] bg-[linear-gradient(transparent,var(--bg))]" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[7] bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(2,5,10,0.55)_100%)]" />
+        <div aria-hidden="true" className="hero-chart-grid pointer-events-none absolute inset-0 z-[8] opacity-40" />
+
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-8 left-1/2 z-20 hidden -translate-x-1/2 flex-col items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-[var(--text)] lg:flex [@media(pointer:coarse)]:hidden"
+          style={{ opacity: cueOpacity }}
+        >
+          <span>urmează lumina</span>
           <span className="h-8 w-px bg-[var(--gold)]" />
         </motion.div>
       </div>
