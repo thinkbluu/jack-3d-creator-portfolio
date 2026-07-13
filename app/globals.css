@@ -1,4 +1,4 @@
-/* MAST editorial navigational chart design system */
+/* MAST editorial navigational chart system */
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
@@ -207,8 +207,8 @@
   background-size: 96px 96px, 96px 96px, 384px 384px;
 }
 
-.hero-heading {
-  background: linear-gradient(180deg, #8d97a5 0%, var(--gold) 100%);
+.hero-heading-line {
+  background: linear-gradient(180deg, #8a6d1f 0%, #e8d9a6 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
