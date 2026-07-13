@@ -76,7 +76,7 @@ export default function ServicesSection() {
       <div className="site-container">
         <FadeIn>
           <header className="section-header">
-            <ChartKicker bearing="04" label="Servicii" paper />
+            <ChartKicker bearing="05" label="Servicii" paper />
             <h2 className="type-h2 !text-[var(--paper-text)]">Patru direcții. Una e a ta.</h2>
             <p className="type-body mt-5 !text-[var(--paper-text-2)]">Soluții clare, construite în jurul obiectivelor tale de business.</p>
           </header>

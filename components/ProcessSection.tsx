@@ -13,7 +13,7 @@ export default function ProcessSection() {
       <div className="site-container">
         <FadeIn>
           <header className="section-header">
-            <ChartKicker bearing="05" label="Proces" />
+            <ChartKicker bearing="06" label="Proces" />
             <h2 className="type-h2">Cum lucrăm</h2>
             <p className="type-body mt-5">Trei pași transparenți, de la primul mesaj până la lansare.</p>
           </header>

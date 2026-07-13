@@ -26,6 +26,7 @@ type RouteLayout = {
   path: string
   servicesTop: number
   servicesBottom: number
+  startProgress: number
   waypoints: RouteWaypoint[]
   endpoint: Point
 }
@@ -52,13 +53,16 @@ export default function PlottedRoute() {
   const reduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll()
   const routeProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 25 })
-  const pathLength = useTransform(routeProgress, [0, 1], [0, 1])
+  const pathLength = useTransform(routeProgress, (progress) => {
+    if (!layout) return 0
+    return Math.min(1, Math.max(0, (progress - layout.startProgress) / (1 - layout.startProgress)))
+  })
 
   const measure = useCallback(() => {
     const main = document.querySelector('main')
-    const hero = document.getElementById('home')
+    const routeOrigin = document.querySelector<HTMLElement>('#ruta [data-route-origin="true"]')
     const contact = document.querySelector<HTMLElement>('#contact [data-route-contact="true"]')
-    if (!(main instanceof HTMLElement) || !hero || !contact) return
+    if (!(main instanceof HTMLElement) || !routeOrigin || !contact) return
 
     const mainRect = main.getBoundingClientRect()
     const width = main.clientWidth
@@ -68,11 +72,13 @@ export default function PlottedRoute() {
       return rect.top + window.scrollY - mainPageTop + rect.height / 2
     }
 
-    const heroRect = hero.getBoundingClientRect()
+    const originRect = routeOrigin.getBoundingClientRect()
     const start: Point = {
-      x: width * 0.06,
-      y: heroRect.bottom + window.scrollY - mainPageTop + 48,
+      x: originRect.left + originRect.width / 2 - mainRect.left,
+      y: originRect.top + window.scrollY - mainPageTop + originRect.height / 2,
     }
+    const maxScroll = Math.max(1, main.scrollHeight - window.innerHeight)
+    const startProgress = Math.min(0.98, Math.max(0, (start.y - window.innerHeight * 0.6) / maxScroll))
 
     const measuredWaypoints = waypointConfig.flatMap((waypoint) => {
       const element = document.getElementById(waypoint.id)
@@ -97,6 +103,7 @@ export default function PlottedRoute() {
       path: createPath(points),
       servicesTop: servicesRect ? servicesRect.top + window.scrollY - mainPageTop : 0,
       servicesBottom: servicesRect ? servicesRect.bottom + window.scrollY - mainPageTop : 0,
+      startProgress,
       waypoints: [...measuredWaypoints, contactWaypoint],
       endpoint,
     })
@@ -124,8 +131,10 @@ export default function PlottedRoute() {
     const observer = new ResizeObserver(scheduleMeasure)
     const main = document.querySelector('main')
     const contact = document.querySelector('#contact [data-route-contact="true"]')
+    const routeOrigin = document.querySelector('#ruta [data-route-origin="true"]')
     if (main) observer.observe(main)
     if (contact) observer.observe(contact)
+    if (routeOrigin) observer.observe(routeOrigin)
     document.querySelectorAll('img').forEach((image) => image.addEventListener('load', scheduleMeasure))
     return () => {
       window.clearTimeout(timeout)
