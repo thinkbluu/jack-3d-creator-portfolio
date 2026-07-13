@@ -87,11 +87,21 @@ export default function HeroSection() {
           <ChartKicker bearing="01" label="Acasă" coords />
         </FadeIn>
 
-        <div className="mt-2 w-full max-w-[100vw] overflow-hidden px-2">
-          <h1 className="text-center font-black uppercase leading-[0.9] tracking-[-0.03em]" style={{ fontSize: 'clamp(4rem, 17vw, 15rem)' }}>
-            <span className="block overflow-hidden"><FadeIn delay={0.08}><span className="hero-heading-line block">MAST</span></FadeIn></span>
-            <span className="block overflow-hidden"><FadeIn delay={0.16}><span className="hero-heading-line block">STUDIO</span></FadeIn></span>
-          </h1>
+        <div className="mt-2 flex w-full max-w-[100vw] justify-center overflow-hidden px-4">
+          <h1 className="sr-only">MAST Studio</h1>
+          <FadeIn delay={0.08} className="flex w-full justify-center">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/mast-studio-title.jpg"
+              alt="MAST Studio"
+              width={5120}
+              height={5120}
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              className="h-auto max-h-[52vh] w-auto max-w-full object-contain mix-blend-screen"
+            />
+          </FadeIn>
         </div>
 
         <div className="site-container mt-auto flex flex-col items-start gap-5 pb-8 sm:flex-row sm:items-end sm:justify-between md:pb-10">
