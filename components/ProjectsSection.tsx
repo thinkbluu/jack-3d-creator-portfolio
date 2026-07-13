@@ -40,7 +40,7 @@ export default function ProjectsSection() {
   return (
     <section id="projects" className="section-shell bg-[var(--bg)]">
       <div className="site-container">
-        <FadeIn><header className="section-header"><ChartKicker bearing="02" label="Proiecte" /><h2 className="type-h2">Proiecte</h2><p className="type-body mt-5">Identități și produse digitale construite pentru claritate, încredere și creștere.</p></header></FadeIn>
+        <FadeIn><header className="section-header"><ChartKicker bearing="06" label="Proiecte" /><h2 className="type-h2">Proiecte</h2><p className="type-body mt-5">Identități și produse digitale construite pentru claritate, încredere și creștere.</p></header></FadeIn>
         {projects.map((project, index) => <ProjectCard key={project.number} project={project} index={index} />)}
       </div>
     </section>
