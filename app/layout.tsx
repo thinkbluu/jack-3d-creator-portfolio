@@ -9,7 +9,7 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
-  title: 'MAST Studio | Web design Timisoara',
+  title: 'MAST Studio | Web design Timișoara',
   description: 'Studio de web design. Site-uri de prezentare de la 300 EUR livrate în 48 de ore și magazine online de la 900 EUR. Platforme și aplicații premium pentru afaceri în creștere.',
 }
 

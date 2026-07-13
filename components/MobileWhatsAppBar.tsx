@@ -3,7 +3,7 @@
 import { MessageCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-const WHATSAPP_URL = 'https://wa.me/40755928029?text=Salut!%20Vreau%20o%20oferta%20pentru%20un%20site.'
+const WHATSAPP_URL = 'https://wa.me/40755928029?text=Salut!%20Vreau%20o%20ofert%C4%83%20pentru%20un%20site.'
 
 export default function MobileWhatsAppBar() {
   const [visible, setVisible] = useState(false)
