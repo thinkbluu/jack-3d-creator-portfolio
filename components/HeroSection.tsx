@@ -37,7 +37,6 @@ export default function HeroSection() {
   const beamX = useTransform(progress, [0.05, 0.58], ['-125%', '130%'])
   const beamOpacity = useTransform(progress, [0, 0.08, 0.5, 0.65], [0, 0.42, 0.32, 0])
   const sceneOpacity = useTransform(progress, [0.55, 0.78, 1], [0, 0.94, 1])
-  const sceneCoverOpacity = useTransform(sceneOpacity, (value) => 1 - value)
   const titleOpacity = useTransform(progress, [0.66, 0.86], [0, 1])
   const kickerOpacity = useTransform(progress, [0.62, 0.78], [0, 1])
   const bodyOpacity = useTransform(progress, [0.76, 0.92], [0, 1])
@@ -93,16 +92,20 @@ export default function HeroSection() {
 
         <motion.div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-[-10px] z-[5] will-change-transform"
-          initial={reduceMotion ? false : { scale: 1.06, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={reduceMotion ? { duration: 0 } : { duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-          style={reduceMotion ? undefined : { x: pointerX, y: pointerY }}
+          className="pointer-events-none absolute inset-[-10px] z-[5] opacity-100 will-change-transform lg:opacity-[var(--scene-opacity)] [@media(pointer:coarse)]:opacity-100"
+          style={{ '--scene-opacity': sceneOpacity } as CSSProperties}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/hero-scene.png" alt="" aria-hidden="true" width={4096} height={4096} loading="eager" decoding="async" fetchPriority="high" className="h-full w-full object-cover object-[center_60%]" />
+          <motion.div
+            className="h-full w-full"
+            initial={reduceMotion ? false : { scale: 1.06 }}
+            animate={{ scale: 1 }}
+            transition={reduceMotion ? { duration: 0 } : { duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+            style={reduceMotion ? undefined : { x: pointerX, y: pointerY }}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/hero-scene.png" alt="" aria-hidden="true" width={4096} height={4096} loading="eager" decoding="async" fetchPriority="high" className="h-full w-full object-cover object-[center_60%]" />
+          </motion.div>
         </motion.div>
-        <motion.div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[6] hidden bg-[var(--bg)] lg:block [@media(pointer:coarse)]:hidden" style={{ opacity: sceneCoverOpacity }} />
         <motion.div aria-hidden="true" className="pointer-events-none absolute inset-y-0 z-[7] hidden w-[24%] bg-[linear-gradient(90deg,transparent,rgba(255,238,181,0.52),transparent)] blur-xl will-change-transform lg:block [@media(pointer:coarse)]:hidden" style={{ x: glintX, opacity: glintOpacity }} />
 
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 z-[8] h-[30%] bg-[linear-gradient(transparent,var(--bg))]" />
