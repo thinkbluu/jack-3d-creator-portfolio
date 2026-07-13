@@ -13,7 +13,7 @@ import PlottedRoute from '@/components/PlottedRoute'
 
 export default function Page() {
   return (
-    <main className="bg-[var(--bg)]" style={{ overflowX: 'clip' }}>
+    <main className="relative bg-[var(--bg)]" style={{ overflowX: 'clip' }}>
       <HeroSection />
       <MarqueeSection />
       <AboutSection />
