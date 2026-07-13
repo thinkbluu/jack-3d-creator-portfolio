@@ -40,13 +40,16 @@ export default function FinalCTA() {
       <div className="site-container relative z-10">
         <FadeIn>
           <header className="section-header">
-            <ChartKicker bearing="06" label="Contact" />
+            <ChartKicker bearing="07" label="Contact" />
             <h2 className="type-h2 text-shadow-sm">Setează <span className="text-[var(--gold)]">direcția.</span></h2>
             <p className="type-body mt-5 text-[var(--text)] [text-shadow:0_1px_12px_rgba(0,0,0,0.8)]">Lucrăm cu maximum 4 proiecte noi pe lună. Rezervă-ți locul.</p>
           </header>
           <div className="relative z-0 inline-flex justify-start">
             <SonarPing />
-            <div className="relative z-10"><ContactButton /></div>
+            <div className="relative z-10">
+              <ContactButton />
+              <p className="type-body mt-4 text-center !text-[var(--text-3)]">Ai ajuns unde trebuia.</p>
+            </div>
           </div>
         </FadeIn>
       </div>

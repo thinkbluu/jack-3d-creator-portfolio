@@ -1,5 +1,5 @@
 import HeroSection from '@/components/HeroSection'
-import MarqueeSection from '@/components/MarqueeSection'
+import ManifestSection from '@/components/ManifestSection'
 import AboutSection from '@/components/AboutSection'
 import ServicesSection from '@/components/ServicesSection'
 import ProjectsSection from '@/components/ProjectsSection'
@@ -13,9 +13,9 @@ import PlottedRoute from '@/components/PlottedRoute'
 
 export default function Page() {
   return (
-    <main className="bg-[var(--bg)]" style={{ overflowX: 'clip' }}>
+    <main className="relative bg-[var(--bg)]" style={{ overflowX: 'clip' }}>
       <HeroSection />
-      <MarqueeSection />
+      <ManifestSection />
       <AboutSection />
       <ServicesSection />
       <ProcessSection />

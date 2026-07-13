@@ -32,9 +32,9 @@ const FAQItem = memo(function FAQItem({ question, answer, delay }: { question: s
 
 export default function FAQSection() {
   return (
-    <section className="section-shell bg-[var(--bg)]">
+    <section id="faq" className="section-shell bg-[var(--bg)]">
       <div className="site-container">
-        <FadeIn><header className="section-header"><p className="type-kicker mb-4">Clarificări</p><h2 className="type-h2">Întrebări frecvente</h2></header></FadeIn>
+        <FadeIn><header className="section-header"><p className="type-kicker mb-4">Clarificări</p><h2 className="type-h2">Înainte de îmbarcare</h2></header></FadeIn>
         <div className="overflow-hidden rounded-[20px] border border-[var(--line)]">
           {faqs.map(([question, answer], index) => <FAQItem key={question} question={question} answer={answer} delay={index * 0.08} />)}
         </div>
