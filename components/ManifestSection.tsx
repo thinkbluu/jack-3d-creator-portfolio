@@ -29,12 +29,12 @@ export default function ManifestSection() {
               viewport={{ once: true, amount: 0.6 }}
             >
               <div className="relative mb-5 w-fit max-w-full">
-                <p className="type-body !text-[var(--text-3)]">{pair.other}</p>
+                <p className="text-[clamp(1.05rem,1.9vw,1.5rem)] font-medium leading-relaxed text-[var(--text-2)]">{pair.other}</p>
                 <motion.span
                   aria-hidden="true"
-                  className="pointer-events-none absolute left-0 top-1/2 h-[1.5px] w-full origin-left bg-[rgba(245,241,232,0.5)]"
+                  className="pointer-events-none absolute left-0 top-1/2 h-0.5 w-full origin-left bg-[rgba(245,241,232,0.5)]"
                   variants={{ hidden: { scaleX: reduceMotion ? 1 : 0 }, visible: { scaleX: 1 } }}
-                  transition={{ duration: reduceMotion ? 0 : 0.5, ease: 'easeOut' }}
+                  transition={{ duration: reduceMotion ? 0 : 0.9, ease: 'easeOut' }}
                 />
               </div>
               <div className="overflow-visible px-1 py-2 md:px-2">
@@ -44,7 +44,7 @@ export default function ManifestSection() {
                     hidden: reduceMotion ? { opacity: 1 } : { opacity: 0, filter: 'blur(6px)', y: 20 },
                     visible: { opacity: 1, filter: 'blur(0px)', y: 0 },
                   }}
-                  transition={{ duration: reduceMotion ? 0 : 0.9, delay: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: reduceMotion ? 0 : 0.9, delay: reduceMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }}
                 >
                   {pair.statement}
                 </motion.p>
