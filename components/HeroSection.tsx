@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useInView, useMotionTemplate, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
-import { useRef, useState, type CSSProperties, type PointerEvent } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
 import AmbientVideo from './AmbientVideo'
 import ChartKicker from './ChartKicker'
 import ContactButton from './ContactButton'
@@ -28,7 +28,19 @@ export default function HeroSection() {
   const heroRef = useRef<HTMLElement>(null)
   const reduceMotion = useReducedMotion()
   const heroInView = useInView(heroRef, { amount: 0.05 })
+  const [underDesktop, setUnderDesktop] = useState(false)
   const [arrivalComplete, setArrivalComplete] = useState(false)
+  const isReduced = Boolean(reduceMotion)
+  const isTimedFallback = underDesktop && !isReduced
+  const isFallback = underDesktop || isReduced
+
+  useEffect(() => {
+    const viewport = window.matchMedia('(max-width: 1023px)')
+    const updateViewport = () => setUnderDesktop(viewport.matches)
+    updateViewport()
+    viewport.addEventListener('change', updateViewport)
+    return () => viewport.removeEventListener('change', updateViewport)
+  }, [])
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end end'] })
 
   useMotionValueEvent(scrollYProgress, 'change', (progress) => {
@@ -76,8 +88,8 @@ export default function HeroSection() {
   const bowY = useTransform(scrollYProgress, [0.4, 0.62], [0, -8])
   const bowRollTarget = useMotionValue(0)
   const bowRoll = useSpring(bowRollTarget, { stiffness: 40, damping: 14 })
-  const idleLife = !reduceMotion && heroInView && arrivalComplete
-  const bowIdleLife = !reduceMotion && heroInView
+  const idleLife = !isFallback && heroInView && arrivalComplete
+  const bowIdleLife = !isFallback && heroInView
 
   function handleStagePointerMove(event: PointerEvent<HTMLDivElement>) {
     if (!window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)').matches) return
@@ -93,24 +105,27 @@ export default function HeroSection() {
   const panelMaskRight = 'linear-gradient(to left, black 0%, black 92%, transparent 100%)'
 
   return (
-    <section ref={heroRef} id="home" className="relative h-[320vh] bg-[var(--bg)]">
+    <section ref={heroRef} id="home" className={`relative bg-[var(--bg)] motion-reduce:h-[100dvh] ${isReduced ? 'h-[100dvh]' : 'h-[100dvh] lg:h-[320vh]'}`}>
       <div
-        className="sticky top-0 h-screen min-h-[100dvh] overflow-hidden bg-[var(--bg)]"
+        className={`${isReduced ? 'relative' : 'relative lg:sticky lg:top-0'} h-screen min-h-[100dvh] overflow-hidden bg-[var(--bg)] motion-reduce:relative motion-reduce:top-auto`}
         onPointerMove={handleStagePointerMove}
         onPointerLeave={handleStagePointerLeave}
       >
         <motion.div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-0 will-change-transform"
-          style={reduceMotion ? { scale: 1.08 } : { scale: seaScale, y: seaY }}
+          style={isFallback ? { scale: 1.08, y: 0 } : { scale: seaScale, y: seaY }}
         >
-          <AmbientVideo src="/images/sea-loop.mp4" poster="/images/sea-backdrop.jpg" />
+          <AmbientVideo src="/images/sea-loop.mp4" poster="/images/sea-backdrop.jpg" forcePoster={isReduced} />
         </motion.div>
 
         <motion.div
           aria-hidden="true"
           className="pointer-events-none absolute left-1/2 top-[56%] z-[2] h-[90vmin] w-[90vmin] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[30px] mix-blend-screen"
-          style={{ opacity: reduceMotion ? 0.3 : bloomOpacity }}
+          initial={isTimedFallback ? { opacity: 0 } : false}
+          animate={isTimedFallback ? { opacity: [0, 0.5, 0.3] } : undefined}
+          transition={isTimedFallback ? { duration: 2, times: [0, 0.35, 1], ease: 'easeInOut' } : undefined}
+          style={isReduced ? { opacity: 0.3 } : isTimedFallback ? undefined : { opacity: bloomOpacity }}
         >
           <div className={`${idleLife ? 'hero-bloom-idle ' : ''}h-full w-full rounded-full bg-[radial-gradient(circle,rgba(245,235,200,0.9)_0%,rgba(232,217,166,0.35)_35%,transparent_70%)]`} />
         </motion.div>
@@ -118,7 +133,7 @@ export default function HeroSection() {
         <motion.div
           aria-hidden="true"
           className="pointer-events-none absolute left-1/2 top-[56%] z-[2] h-0 w-0 -translate-x-1/2 -translate-y-1/2 mix-blend-screen will-change-transform"
-          style={reduceMotion ? { opacity: 0, scale: 1 } : { opacity: beaconResolvedOpacity, scale: beaconScale }}
+          style={isFallback ? { opacity: 0, scale: 1 } : { opacity: beaconResolvedOpacity, scale: beaconScale }}
         >
           <motion.div className="absolute left-1/2 top-1/2 h-[220px] w-[220px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(232,217,166,0.10),transparent_70%)] blur-3xl" style={reduceMotion ? { opacity: 0.13 } : { opacity: haloOpacity }} />
           <div className="absolute left-1/2 top-1/2 h-[60px] w-[60px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(232,217,166,0.35),transparent_70%)] blur-lg" />
@@ -129,7 +144,7 @@ export default function HeroSection() {
           aria-hidden="true"
           className="pointer-events-none absolute left-1/2 top-[58vh] z-[2] h-[34vh] w-[26vw] min-w-28 -translate-x-1/2 blur-[10px] [clip-path:polygon(0_0,100%_0,82%_100%,18%_100%)] mix-blend-screen"
           data-reflection-path="true"
-          style={{ opacity: reduceMotion ? 1 : reflectionOpacity }}
+          style={{ opacity: isFallback ? 1 : reflectionOpacity }}
         >
           <div className={`${idleLife ? 'hero-reflection-idle ' : ''}h-full w-full bg-[linear-gradient(180deg,rgba(232,217,166,0.14),rgba(232,217,166,0.03)_70%,transparent)]`} />
         </motion.div>
@@ -137,9 +152,12 @@ export default function HeroSection() {
         <motion.div
           aria-hidden="true"
           className="pointer-events-none absolute bottom-0 left-1/2 z-[3] w-[clamp(320px,44vw,780px)] origin-bottom will-change-transform"
-          style={reduceMotion ? { x: '-50%', opacity: 0.85, scale: 1, y: 0 } : { x: '-50%', opacity: bowOpacity, scale: bowScale, y: bowY }}
+          initial={isTimedFallback ? { opacity: 0, y: 8 } : false}
+          animate={isTimedFallback ? { opacity: 0.85, y: 0 } : undefined}
+          transition={isTimedFallback ? { delay: 1.7, duration: 0.45, ease: 'easeOut' } : undefined}
+          style={isReduced ? { x: '-50%', opacity: 0.85, scale: 1, y: 0 } : isTimedFallback ? { x: '-50%', scale: 1 } : { x: '-50%', opacity: bowOpacity, scale: bowScale, y: bowY }}
         >
-          <motion.div style={reduceMotion ? { rotate: 0 } : { rotate: bowRoll }}>
+          <motion.div style={isFallback ? { rotate: 0 } : { rotate: bowRoll }}>
             <motion.div
               animate={bowIdleLife ? { rotate: [-0.6, 0.6], y: [0, 6] } : { rotate: 0, y: 0 }}
               transition={bowIdleLife ? { duration: 7, ease: 'easeInOut', repeat: Number.POSITIVE_INFINITY, repeatType: 'mirror' } : { duration: 0.35, ease: 'easeOut' }}
@@ -153,18 +171,24 @@ export default function HeroSection() {
         <motion.div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-[4] will-change-transform"
-          style={reduceMotion ? { scale: 1 } : { scale: veilScale }}
+          style={isFallback ? { scale: 1 } : { scale: veilScale }}
         >
           <motion.div
             className="absolute left-0 top-0 h-full w-[58vw] overflow-visible will-change-transform"
-            style={reduceMotion ? { x: '-108%', opacity: 0 } : { x: leftX, rotate: leftRotate, scale: panelScale, opacity: panelOpacity, maskImage: panelMaskLeft, WebkitMaskImage: panelMaskLeft }}
+            initial={isTimedFallback ? { x: '0%', opacity: 1 } : false}
+            animate={isTimedFallback ? { x: '-35%', opacity: 0 } : undefined}
+            transition={isTimedFallback ? { delay: 0.6, duration: 1, ease: 'easeInOut' } : undefined}
+            style={isReduced ? { x: '-108%', opacity: 0 } : isTimedFallback ? { maskImage: panelMaskLeft, WebkitMaskImage: panelMaskLeft } : { x: leftX, rotate: leftRotate, scale: panelScale, opacity: panelOpacity, maskImage: panelMaskLeft, WebkitMaskImage: panelMaskLeft }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/kasumi-left.png" alt="" width={1782} height={2304} loading="eager" decoding="async" fetchPriority="high" className="h-full w-full object-cover" />
           </motion.div>
           <motion.div
             className="absolute right-0 top-0 h-full w-[58vw] overflow-visible will-change-transform"
-            style={reduceMotion ? { x: '108%', opacity: 0 } : { x: rightX, rotate: rightRotate, scale: panelScale, opacity: panelOpacity, maskImage: panelMaskRight, WebkitMaskImage: panelMaskRight }}
+            initial={isTimedFallback ? { x: '0%', opacity: 1 } : false}
+            animate={isTimedFallback ? { x: '35%', opacity: 0 } : undefined}
+            transition={isTimedFallback ? { delay: 0.6, duration: 1, ease: 'easeInOut' } : undefined}
+            style={isReduced ? { x: '108%', opacity: 0 } : isTimedFallback ? { maskImage: panelMaskRight, WebkitMaskImage: panelMaskRight } : { x: rightX, rotate: rightRotate, scale: panelScale, opacity: panelOpacity, maskImage: panelMaskRight, WebkitMaskImage: panelMaskRight }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/kasumi-right.png" alt="" width={1782} height={2304} loading="eager" decoding="async" fetchPriority="high" className="h-full w-full object-cover" />
@@ -173,9 +197,9 @@ export default function HeroSection() {
 
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 z-[6] h-[30%] bg-[linear-gradient(transparent,var(--bg))]" />
         <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[7] bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(2,5,10,0.55)_100%)]" />
-        <motion.div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[7] bg-[radial-gradient(ellipse_at_center,transparent_60%,rgba(2,5,10,0.28)_100%)]" style={{ opacity: reduceMotion ? 0.45 : approachVignetteOpacity }} />
+        <motion.div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[7] bg-[radial-gradient(ellipse_at_center,transparent_60%,rgba(2,5,10,0.28)_100%)]" style={{ opacity: isFallback ? 0.45 : approachVignetteOpacity }} />
         <div aria-hidden="true" className="hero-chart-grid pointer-events-none absolute inset-0 z-[8] opacity-40" />
-        {!reduceMotion && (
+        {!isFallback && (
           <motion.div aria-hidden="true" data-gold-dust="true" className="pointer-events-none absolute inset-0 z-[9]" style={{ opacity: dustOpacity }}>
             {goldMotes.map((mote, index) => (
               <span
@@ -198,19 +222,27 @@ export default function HeroSection() {
 
         <div className="relative z-10 flex min-h-screen min-h-[100dvh] flex-col pt-16 md:pt-20">
           <div className="site-container mt-8 overflow-hidden">
-            <motion.div style={reduceMotion ? { opacity: 1, y: '0%' } : { opacity: kickerOpacity, y: kickerY }}>
+            <motion.div
+              initial={isTimedFallback ? { opacity: 0, y: '110%' } : false}
+              animate={isTimedFallback ? { opacity: 1, y: '0%' } : undefined}
+              transition={isTimedFallback ? { delay: 2, duration: 0.35, ease: 'easeOut' } : undefined}
+              style={isReduced ? { opacity: 1, y: '0%' } : isTimedFallback ? undefined : { opacity: kickerOpacity, y: kickerY }}
+            >
               <ChartKicker bearing="01" label="Acasă" coords />
             </motion.div>
           </div>
 
           <motion.div
             className="relative mt-2 flex w-full max-w-[100vw] justify-center overflow-hidden px-4"
-            style={reduceMotion ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : { opacity: lockupOpacity, scale: lockupScale, filter: lockupFilter }}
+            initial={isTimedFallback ? { opacity: 0, scale: 0.94, filter: 'blur(6px)' } : false}
+            animate={isTimedFallback ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : undefined}
+            transition={isTimedFallback ? { delay: 1, duration: 1, ease: 'easeOut' } : undefined}
+            style={isReduced ? { opacity: 1, scale: 1, filter: 'blur(0px)' } : isTimedFallback ? undefined : { opacity: lockupOpacity, scale: lockupScale, filter: lockupFilter }}
           >
             <h1 className="sr-only">MAST Studio</h1>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/images/mast-studio-title.png" alt="MAST Studio" width={5120} height={5120} loading="eager" decoding="async" fetchPriority="high" className="h-auto max-h-[52vh] w-auto max-w-full object-contain mix-blend-screen" />
-            {!reduceMotion && (
+            {!isFallback && (
               <motion.div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 flex justify-center px-4"
@@ -224,20 +256,31 @@ export default function HeroSection() {
 
           <div className="site-container mt-auto flex flex-col items-start gap-5 pb-8 sm:flex-row sm:items-end sm:justify-between md:pb-10">
             <div className="overflow-hidden">
-              <motion.p className="type-body max-w-sm text-sm" style={reduceMotion ? { opacity: 1, y: '0%' } : { opacity: paragraphOpacity, y: paragraphY }}>
+              <motion.p
+                className="type-body max-w-sm text-sm"
+                initial={isTimedFallback ? { opacity: 0, y: '110%' } : false}
+                animate={isTimedFallback ? { opacity: 1, y: '0%' } : undefined}
+                transition={isTimedFallback ? { delay: 2.2, duration: 0.35, ease: 'easeOut' } : undefined}
+                style={isReduced ? { opacity: 1, y: '0%' } : isTimedFallback ? undefined : { opacity: paragraphOpacity, y: paragraphY }}
+              >
                 Studio de web design. Site-uri livrate în 48 de ore și platforme premium pentru afaceri care știu încotro merg.
               </motion.p>
             </div>
             <div className="overflow-hidden">
-              <motion.div style={reduceMotion ? { opacity: 1, y: '0%' } : { opacity: ctaOpacity, y: ctaY }}><ContactButton hero /></motion.div>
+              <motion.div
+                initial={isTimedFallback ? { opacity: 0, y: '110%' } : false}
+                animate={isTimedFallback ? { opacity: 1, y: '0%' } : undefined}
+                transition={isTimedFallback ? { delay: 2.4, duration: 0.2, ease: 'easeOut' } : undefined}
+                style={isReduced ? { opacity: 1, y: '0%' } : isTimedFallback ? undefined : { opacity: ctaOpacity, y: ctaY }}
+              ><ContactButton hero /></motion.div>
             </div>
           </div>
         </div>
 
-        {!reduceMotion && (
+        {!isFallback && (
           <motion.div
             aria-hidden="true"
-            className="pointer-events-none absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 text-center text-[10px] uppercase tracking-[0.24em] text-[var(--text)]"
+            className="pointer-events-none absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 text-center text-[10px] uppercase tracking-[0.24em] text-[var(--text)] motion-reduce:hidden"
             style={{ opacity: cueOpacity }}
           >
             <span>urmează lumina</span>

@@ -5,13 +5,14 @@ import { useEffect, useRef, useState } from 'react'
 type AmbientVideoProps = {
   src: string
   poster: string
+  forcePoster?: boolean
 }
 
 type NavigatorWithConnection = Navigator & {
   connection?: { saveData?: boolean }
 }
 
-export default function AmbientVideo({ src, poster }: AmbientVideoProps) {
+export default function AmbientVideo({ src, poster, forcePoster = false }: AmbientVideoProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [canRenderVideo, setCanRenderVideo] = useState(false)
   const [videoFailed, setVideoFailed] = useState(false)
@@ -22,7 +23,7 @@ export default function AmbientVideo({ src, poster }: AmbientVideoProps) {
     const saveData = (navigator as NavigatorWithConnection).connection?.saveData === true
 
     const updateEligibility = () => {
-      setCanRenderVideo(!reducedMotion.matches && desktopViewport.matches && !saveData)
+      setCanRenderVideo(!forcePoster && !reducedMotion.matches && desktopViewport.matches && !saveData)
     }
 
     updateEligibility()
@@ -33,7 +34,7 @@ export default function AmbientVideo({ src, poster }: AmbientVideoProps) {
       reducedMotion.removeEventListener('change', updateEligibility)
       desktopViewport.removeEventListener('change', updateEligibility)
     }
-  }, [])
+  }, [forcePoster])
 
   useEffect(() => {
     const video = videoRef.current
