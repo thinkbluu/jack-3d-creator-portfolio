@@ -14,10 +14,7 @@ function RollingDigit({ digit, delay, active, reduced }: { digit: string; delay:
   const [display, setDisplay] = useState(digit)
 
   useEffect(() => {
-    if (!active || reduced) {
-      setDisplay(digit)
-      return
-    }
+    if (!active || reduced) return
 
     const timers = [0, 90, 180].map((offset) =>
       window.setTimeout(() => setDisplay(String(Math.floor(Math.random() * 10))), delay + offset),

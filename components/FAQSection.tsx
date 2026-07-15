@@ -38,6 +38,15 @@ export default function FAQSection() {
         <div className="overflow-hidden rounded-[20px] border border-[var(--line)]">
           {faqs.map(([question, answer], index) => <FAQItem key={question} question={question} answer={answer} delay={index * 0.08} />)}
         </div>
+        <p className="type-body mt-10 text-[var(--text-2)]">
+          Altă întrebare? Răspundem în aceeași zi.{' '}
+          <a
+            href={`https://wa.me/40755928029?text=${encodeURIComponent('Salut! Am o întrebare înainte să pornim.')}`}
+            className="text-[var(--gold)] hover:underline"
+          >
+            Scrie-ne →
+          </a>
+        </p>
       </div>
     </section>
   )
