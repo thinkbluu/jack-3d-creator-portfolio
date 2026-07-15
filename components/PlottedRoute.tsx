@@ -2,6 +2,7 @@
 
 import {
   motion,
+  useMotionValue,
   useMotionValueEvent,
   useReducedMotion,
   useScroll,
@@ -20,6 +21,7 @@ const waypointConfig = [
 
 type Point = { x: number; y: number }
 type RouteWaypoint = Point & { id: string; label: string; fraction: number }
+type ManifestTick = { x1: number; y1: number; x2: number; y2: number; fraction: number }
 type RouteLayout = {
   width: number
   height: number
@@ -47,7 +49,12 @@ export default function PlottedRoute() {
   const [fractions, setFractions] = useState<number[]>([])
   const [passed, setPassed] = useState<boolean[]>([])
   const [pings, setPings] = useState<number[]>([])
+  const [manifestTicks, setManifestTicks] = useState<ManifestTick[]>([])
+  const [passedManifestTicks, setPassedManifestTicks] = useState<boolean[]>([])
   const pathRef = useRef<SVGPathElement>(null)
+  const cometX = useMotionValue(0)
+  const cometY = useMotionValue(0)
+  const cometOpacity = useMotionValue(0)
   const previousProgress = useRef(0)
   const previousPassed = useRef<boolean[]>([])
   const reduceMotion = useReducedMotion()
@@ -161,11 +168,51 @@ export default function PlottedRoute() {
       return ((low + high) / 2) / totalLength
     })
     setFractions(nextFractions)
+
+    const main = document.querySelector('main')
+    const mainRect = main?.getBoundingClientRect()
+    const mainPageTop = mainRect ? mainRect.top + window.scrollY : 0
+    const nextManifestTicks = Array.from(document.querySelectorAll<HTMLElement>('[data-manifest-pair]')).map((pair) => {
+      const rect = pair.getBoundingClientRect()
+      const targetY = rect.top + window.scrollY - mainPageTop + rect.height / 2
+      let low = 0
+      let high = totalLength
+      for (let iteration = 0; iteration < 18; iteration += 1) {
+        const middle = (low + high) / 2
+        if (path.getPointAtLength(middle).y < targetY) low = middle
+        else high = middle
+      }
+      const length = (low + high) / 2
+      const point = path.getPointAtLength(length)
+      const before = path.getPointAtLength(Math.max(0, length - 2))
+      const after = path.getPointAtLength(Math.min(totalLength, length + 2))
+      const magnitude = Math.hypot(after.x - before.x, after.y - before.y) || 1
+      const normalX = -(after.y - before.y) / magnitude * 3
+      const normalY = (after.x - before.x) / magnitude * 3
+      return { x1: point.x - normalX, y1: point.y - normalY, x2: point.x + normalX, y2: point.y + normalY, fraction: length / totalLength }
+    })
+    setManifestTicks(nextManifestTicks)
+    setPassedManifestTicks(nextManifestTicks.map((tick) => pathLength.get() >= tick.fraction))
+
     const initialPassed = nextFractions.map((fraction) => scrollYProgress.get() >= fraction)
     previousPassed.current = initialPassed
     setPassed(initialPassed)
     setPings(nextFractions.map(() => 0))
-  }, [layout, scrollYProgress])
+  }, [layout, pathLength, scrollYProgress])
+
+  useMotionValueEvent(pathLength, 'change', (latest) => {
+    const path = pathRef.current
+    if (!supported || reduceMotion || !path) {
+      cometOpacity.set(0)
+      return
+    }
+    const totalLength = path.getTotalLength()
+    const point = path.getPointAtLength(Math.max(0, Math.min(1, latest)) * totalLength)
+    cometX.set(point.x)
+    cometY.set(point.y)
+    cometOpacity.set(latest < 0.01 ? 0 : latest > 0.985 ? Math.max(0, (1 - latest) / 0.015) : 1)
+    setPassedManifestTicks(manifestTicks.map((tick) => latest >= tick.fraction))
+  })
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
     if (!supported || reduceMotion || fractions.length === 0) return
@@ -192,9 +239,28 @@ export default function PlottedRoute() {
             <feGaussianBlur stdDeviation="6" result="blur" />
             <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
           </filter>
+          <filter id="route-comet-blur" x="-200%" y="-200%" width="500%" height="500%">
+            <feGaussianBlur stdDeviation="2" />
+          </filter>
         </defs>
         <path d={layout.path} fill="none" stroke="var(--gold)" strokeWidth="1.5" strokeDasharray="8 11" opacity="0.2" vectorEffect="non-scaling-stroke" />
         <motion.path ref={pathRef} d={layout.path} fill="none" stroke="var(--gold)" strokeWidth="1.5" strokeDasharray="8 11" opacity="0.5" pathLength={pathLength} vectorEffect="non-scaling-stroke" />
+        {manifestTicks.map((tick, index) => (
+          <line
+            key={`${tick.fraction}-${index}`}
+            x1={tick.x1}
+            y1={tick.y1}
+            x2={tick.x2}
+            y2={tick.y2}
+            stroke="var(--gold)"
+            strokeWidth="1"
+            opacity={passedManifestTicks[index] ? 0.8 : 0.35}
+            className="transition-opacity duration-200"
+            vectorEffect="non-scaling-stroke"
+          />
+        ))}
+        <motion.circle cx={cometX} cy={cometY} r="8" fill="var(--gold)" opacity={cometOpacity} fillOpacity="0.18" filter="url(#route-comet-blur)" />
+        <motion.circle cx={cometX} cy={cometY} r="3" fill="var(--gold)" opacity={cometOpacity} />
         <path d={layout.path} fill="none" stroke="rgba(10,18,32,0.35)" strokeWidth="1.5" strokeDasharray="8 11" opacity="0.25" clipPath="url(#services-route-clip)" vectorEffect="non-scaling-stroke" />
         <circle cx={layout.endpoint.x} cy={layout.endpoint.y} r="6" fill="var(--gold)" filter="url(#route-endpoint-glow)" />
       </svg>

@@ -10,6 +10,7 @@ import {
   useTransform,
 } from 'framer-motion'
 import ChartKicker from './ChartKicker'
+import ChartMarks from './ChartMarks'
 
 export default function RouteTransition() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -75,8 +76,9 @@ export default function RouteTransition() {
   }, [cursorOffset, reduceMotion, sprungBase])
 
   return (
-    <section ref={sectionRef} id="ruta" className="flex min-h-[70vh] items-center bg-[var(--bg)] py-[8vh]">
-      <div className="site-container flex w-full flex-col items-center">
+    <section ref={sectionRef} id="ruta" className="relative flex min-h-[52vh] items-center bg-[var(--bg)] pb-[6vh] pt-[8vh]">
+      <ChartMarks variant="a" />
+      <div className="site-container relative flex w-full flex-col items-center">
         <div className="w-full max-w-3xl">
           <ChartKicker bearing="02" label="Ruta e trasată." />
         </div>

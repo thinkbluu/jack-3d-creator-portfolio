@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion'
 import ChartKicker from './ChartKicker'
+import ChartMarks from './ChartMarks'
 
 const pairs = [
   { other: 'Alții: teme cumpărate, recolorate.', statement: <><span className="text-[var(--gold)]">Zero șabloane.</span> Niciodată.</> },
@@ -15,15 +16,17 @@ export default function ManifestSection() {
   const reduceMotion = useReducedMotion()
 
   return (
-    <section id="manifest" className="section-shell bg-[var(--bg)]">
-      <div className="site-container">
+    <section id="manifest" className="section-shell relative bg-[var(--bg)] pt-16 md:pt-24">
+      <ChartMarks variant="b" />
+      <div className="site-container relative">
         <ChartKicker bearing="03" label="Manifest" />
 
         <div>
           {pairs.map((pair) => (
             <motion.div
               key={pair.other}
-              className="flex min-h-[28vh] flex-col justify-center py-10 md:min-h-[32vh] md:py-12"
+              data-manifest-pair
+              className="flex min-h-[24vh] flex-col justify-center py-10 md:py-12"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.6 }}
