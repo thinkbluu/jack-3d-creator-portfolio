@@ -1,7 +1,7 @@
 'use client'
 
-import { motion, useInView, useMotionTemplate, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'framer-motion'
-import { useRef, useState, type CSSProperties } from 'react'
+import { motion, useInView, useMotionTemplate, useMotionValue, useMotionValueEvent, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion'
+import { useRef, useState, type CSSProperties, type PointerEvent } from 'react'
 import AmbientVideo from './AmbientVideo'
 import ChartKicker from './ChartKicker'
 import ContactButton from './ContactButton'
@@ -71,14 +71,34 @@ export default function HeroSection() {
   const ctaY = useTransform(scrollYProgress, [0.9, 0.98], ['110%', '0%'])
   const approachVignetteOpacity = useTransform(scrollYProgress, [0.4, 0.62], [0, 0.45])
   const cueOpacity = useTransform(scrollYProgress, [0, 0.06, 0.1], [1, 1, 0])
+  const bowOpacity = useTransform(scrollYProgress, [0, 0.15, 0.35, 0.62, 1], [0, 0, 1, 1, 0.85])
+  const bowScale = useTransform(scrollYProgress, [0.4, 0.62], [1, 1.06])
+  const bowY = useTransform(scrollYProgress, [0.4, 0.62], [0, -8])
+  const bowRollTarget = useMotionValue(0)
+  const bowRoll = useSpring(bowRollTarget, { stiffness: 40, damping: 14 })
   const idleLife = !reduceMotion && heroInView && arrivalComplete
+  const bowIdleLife = !reduceMotion && heroInView
+
+  function handleStagePointerMove(event: PointerEvent<HTMLDivElement>) {
+    if (!window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)').matches) return
+    const bounds = event.currentTarget.getBoundingClientRect()
+    bowRollTarget.set(((event.clientX - bounds.left) / bounds.width) * 2 - 1)
+  }
+
+  function handleStagePointerLeave() {
+    bowRollTarget.set(0)
+  }
 
   const panelMaskLeft = 'linear-gradient(to right, black 0%, black 92%, transparent 100%)'
   const panelMaskRight = 'linear-gradient(to left, black 0%, black 92%, transparent 100%)'
 
   return (
     <section ref={heroRef} id="home" className="relative h-[320vh] bg-[var(--bg)]">
-      <div className="sticky top-0 h-screen min-h-[100dvh] overflow-hidden bg-[var(--bg)]">
+      <div
+        className="sticky top-0 h-screen min-h-[100dvh] overflow-hidden bg-[var(--bg)]"
+        onPointerMove={handleStagePointerMove}
+        onPointerLeave={handleStagePointerLeave}
+      >
         <motion.div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 z-0 will-change-transform"
@@ -112,6 +132,22 @@ export default function HeroSection() {
           style={{ opacity: reduceMotion ? 1 : reflectionOpacity }}
         >
           <div className={`${idleLife ? 'hero-reflection-idle ' : ''}h-full w-full bg-[linear-gradient(180deg,rgba(232,217,166,0.14),rgba(232,217,166,0.03)_70%,transparent)]`} />
+        </motion.div>
+
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute bottom-0 left-1/2 z-[3] w-[clamp(320px,44vw,780px)] origin-bottom will-change-transform"
+          style={reduceMotion ? { x: '-50%', opacity: 0.85, scale: 1, y: 0 } : { x: '-50%', opacity: bowOpacity, scale: bowScale, y: bowY }}
+        >
+          <motion.div style={reduceMotion ? { rotate: 0 } : { rotate: bowRoll }}>
+            <motion.div
+              animate={bowIdleLife ? { rotate: [-0.6, 0.6], y: [0, 6] } : { rotate: 0, y: 0 }}
+              transition={bowIdleLife ? { duration: 7, ease: 'easeInOut', repeat: Number.POSITIVE_INFINITY, repeatType: 'mirror' } : { duration: 0.35, ease: 'easeOut' }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/images/bow.png" alt="" width={1600} height={659} className="h-auto w-full" />
+            </motion.div>
+          </motion.div>
         </motion.div>
 
         <motion.div
