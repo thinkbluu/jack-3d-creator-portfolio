@@ -180,8 +180,8 @@ export default function HeroSection() {
             transition={isTimedFallback ? { delay: 0.6, duration: 1, ease: 'easeInOut' } : undefined}
             style={isReduced ? { x: '-108%', opacity: 0 } : isTimedFallback ? { maskImage: panelMaskLeft, WebkitMaskImage: panelMaskLeft } : { x: leftX, rotate: leftRotate, scale: panelScale, opacity: panelOpacity, maskImage: panelMaskLeft, WebkitMaskImage: panelMaskLeft }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/kasumi-left.png" alt="" width={1782} height={2304} loading="eager" decoding="async" fetchPriority="high" className="h-full w-full object-cover" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/kasumi-left-96lbLsOr1JrPc353weQvYgVgjmY2sl.webp" alt="" width={1000} height={2400} loading="eager" decoding="async" fetchPriority="high" className="h-full w-full object-cover" />
           </motion.div>
           <motion.div
             className="absolute right-0 top-0 h-full w-[58vw] overflow-visible will-change-transform"
@@ -190,8 +190,8 @@ export default function HeroSection() {
             transition={isTimedFallback ? { delay: 0.6, duration: 1, ease: 'easeInOut' } : undefined}
             style={isReduced ? { x: '108%', opacity: 0 } : isTimedFallback ? { maskImage: panelMaskRight, WebkitMaskImage: panelMaskRight } : { x: rightX, rotate: rightRotate, scale: panelScale, opacity: panelOpacity, maskImage: panelMaskRight, WebkitMaskImage: panelMaskRight }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/kasumi-right.png" alt="" width={1782} height={2304} loading="eager" decoding="async" fetchPriority="high" className="h-full w-full object-cover" />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/kasumi-right-dVHqetRAxJLgJpXN5qjHwbrck6juEO.webp" alt="" width={1000} height={2400} loading="eager" decoding="async" fetchPriority="high" className="h-full w-full object-cover" />
           </motion.div>
         </motion.div>
 
