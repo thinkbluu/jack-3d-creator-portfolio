@@ -116,7 +116,7 @@ export default function HeroSection() {
           className="pointer-events-none absolute inset-0 z-0 will-change-transform"
           style={isFallback ? { scale: 1.08, y: 0 } : { scale: seaScale, y: seaY }}
         >
-          <AmbientVideo src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/the-flat-layered-wave-shapes-in-the-lower-part-of--NThVoHaEqxfhbh7OxbwVBlfmAhmEnu.mp4" poster="/images/sea-backdrop.jpg" forcePoster={isReduced} />
+          <AmbientVideo src="/images/sea-loop.mp4" poster="/images/sea-backdrop.jpg" forcePoster={isReduced} />
         </motion.div>
 
         <motion.div
