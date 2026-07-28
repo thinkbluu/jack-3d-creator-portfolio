@@ -2,6 +2,8 @@
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 
+export const WHATSAPP_NUMBER = '40755928029'
+
 export type Segment = 'salon' | 'servicii' | 'platforma'
 
 const messages: Record<Segment | 'general', string> = {
@@ -16,9 +18,9 @@ const SegmentContext = createContext<{
   setSegment: (segment: Segment | null) => void
 } | null>(null)
 
-export function getWaUrl(segment: Segment | null) {
-  const message = messages[segment ?? 'general']
-  return `https://wa.me/40758950453?text=${encodeURIComponent(message)}`
+export function getWaUrl(segment: Segment | null, overrideMessage?: string) {
+  const message = overrideMessage ?? messages[segment ?? 'general']
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 }
 
 export function SegmentProvider({ children }: { children: ReactNode }) {

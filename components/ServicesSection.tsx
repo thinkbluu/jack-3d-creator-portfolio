@@ -6,7 +6,7 @@ import type { CSSProperties } from 'react'
 import FadeIn from './FadeIn'
 import ChartKicker from './ChartKicker'
 import TrackedLink from './TrackedLink'
-import { useSegment, type Segment } from './SegmentContext'
+import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 
 const services = [
   { cardinal: 'N', direction: 0, name: 'Site de prezentare', description: 'Vitrina digitală a afacerii tale: design unic, copy care convinge și PageSpeed 90+ la predare.', price: 'de la 300 EUR · live în 48h de la primirea conținutului', message: 'Salut! Vreau un site de prezentare, livrat în 48 de ore. Îmi poți face o ofertă?' },
@@ -48,10 +48,6 @@ function OfferAffordance() {
   )
 }
 
-function whatsappUrl(message: string) {
-  return `https://wa.me/40755928029?text=${encodeURIComponent(message)}`
-}
-
 function ServiceCard({ service, recommended }: { service: (typeof services)[number]; recommended: boolean }) {
   const controls = useAnimationControls()
   const reduceMotion = useReducedMotion()
@@ -62,7 +58,7 @@ function ServiceCard({ service, recommended }: { service: (typeof services)[numb
 
   return (
     <motion.a
-      href={whatsappUrl(service.message)}
+      href={getWaUrl(null, service.message)}
       onClick={() => import('@vercel/analytics').then(({ track }) => track('service_whatsapp_click', { service: service.name })).catch(() => undefined)}
       target="_blank"
       rel="noopener"
@@ -121,7 +117,7 @@ export default function ServicesSection() {
           {continuingServices.map((service, index) => (
             <FadeIn key={service.name} delay={index * 0.08}>
               <TrackedLink
-      href={whatsappUrl(service.message)}
+                href={getWaUrl(null, service.message)}
                 eventName="service_whatsapp_click"
                 eventProperties={{ service: service.name }}
                 target="_blank"
