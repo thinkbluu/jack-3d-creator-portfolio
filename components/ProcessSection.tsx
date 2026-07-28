@@ -4,7 +4,7 @@ import ChartKicker from './ChartKicker'
 const steps = [
   { number: '01', title: 'Ne scrii pe WhatsApp', description: 'Ne spui în două fraze ce faci și ce îți trebuie. În aceeași zi primești întrebările noastre și oferta.' },
   { number: '02', title: 'Trimiți conținutul', description: 'Texte de bază, poze și logo, ghidate de checklist-ul nostru. Din acest moment pornește cronometrul.' },
-  { number: '03', title: 'Site-ul e live', description: '48 de ore pentru site-uri de prezentare, 7 zile pentru magazine. Plătești 50% la start și 50% la final.' },
+  { number: '03', title: 'Site-ul e live', description: '48 de ore pentru site-uri de prezentare, 7 zile pentru magazine. Nu plătești nimic în avans. Plătești 100% doar când ești mulțumit de rezultat.' },
 ]
 
 export default function ProcessSection() {

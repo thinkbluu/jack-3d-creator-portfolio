@@ -4,10 +4,11 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Plus } from 'lucide-react'
 import { memo, useState } from 'react'
 import FadeIn from './FadeIn'
+import { getWaUrl, useSegment } from './SegmentContext'
 
 const faqs = [
   ['Cine scrie textele site-ului?', 'Noi. Copywriting-ul e inclus în preț: tu ne dai informațiile brute despre afacere, noi le transformăm în texte care vând.'],
-  ['Ce se întâmplă dacă nu îmi place rezultatul?', 'Plătești 100% doar când ești mulțumit. Prima rundă de revizii este inclusă.'],
+  ['Ce se întâmplă dacă nu îmi place rezultatul?', 'Nu plătești nimic în avans. Vezi site-ul complet, cerem feedback, facem prima rundă de revizii inclusă și plătești doar când ești mulțumit.'],
   ['Domeniul și hostingul sunt ale mele?', 'Da, integral. Domeniul se cumpără pe numele firmei tale, iar accesele îți aparțin.'],
   ['Chiar 48 de ore?', 'Da, pentru site-uri de prezentare de până la 5 pagini, din momentul primirii conținutului complet.'],
   ['Ce e inclus în preț?', 'Design unic, copywriting, implementare, SEO de bază, PageSpeed 90+, versiune mobilă și instructaj la predare.'],
@@ -31,6 +32,7 @@ const FAQItem = memo(function FAQItem({ question, answer, delay }: { question: s
 })
 
 export default function FAQSection() {
+  const { segment } = useSegment()
   return (
     <section id="faq" className="section-shell bg-[var(--bg)]">
       <div className="site-container">
@@ -41,7 +43,9 @@ export default function FAQSection() {
         <p className="type-body mt-10 text-[var(--text-2)]">
           Altă întrebare? Răspundem în aceeași zi.{' '}
           <a
-            href={`https://wa.me/40755928029?text=${encodeURIComponent('Salut! Am o întrebare înainte să pornim.')}`}
+            href={getWaUrl(segment)}
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-[var(--gold)] hover:underline"
           >
             Scrie-ne →
