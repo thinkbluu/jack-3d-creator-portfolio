@@ -8,7 +8,8 @@ import { getWaUrl, useSegment } from './SegmentContext'
 
 const faqs = [
   ['Cine scrie textele site-ului?', 'Noi. Copywriting-ul e inclus în preț: tu ne dai informațiile brute despre afacere, noi le transformăm în texte care vând.'],
-  ['Ce se întâmplă dacă nu îmi place rezultatul?', 'Nu plătești nimic în avans. Vezi site-ul complet, cerem feedback, facem prima rundă de revizii inclusă și plătești doar când ești mulțumit.'],
+  ['Ce se întâmplă dacă nu îmi place rezultatul?', 'Rezervi locul cu 50 EUR, avans care se scade din prețul final. Vezi site-ul finalizat, live, și plătești restul doar dacă ești mulțumit. Dacă nu ajungem la un rezultat comun, rămâi doar cu avansul, păstrezi analiza și direcția de design făcute pentru tine, iar site-ul rămâne al nostru.'],
+  ['De ce avansul de 50 EUR?', 'Pentru că filtrează: lucrăm cu maximum 4 proiecte pe lună și vrem să le dedicăm timpul celor care chiar pornesc. Avansul se scade integral din preț și acoperă analiza afacerii tale și direcția de design, care rămân ale tale indiferent de decizie.'],
   ['Domeniul și hostingul sunt ale mele?', 'Da, integral. Domeniul se cumpără pe numele firmei tale, iar accesele îți aparțin.'],
   ['Chiar 48 de ore?', 'Da, pentru site-uri de prezentare de până la 5 pagini, din momentul primirii conținutului complet.'],
   ['Ce e inclus în preț?', 'Design unic, copywriting, implementare, SEO de bază, PageSpeed 90+, versiune mobilă și instructaj la predare.'],

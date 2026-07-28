@@ -8,7 +8,7 @@ const pairs = [
   { other: 'Alții: teme cumpărate, recolorate.', statement: <><span className="text-[var(--gold)]">Zero șabloane.</span> Niciodată.</> },
   { other: 'Alții: cod generic, umflat, lent.', statement: <>Cod <span className="text-[var(--gold)]">propriu</span>, scris pentru afacerea ta.</> },
   { other: 'Alții: luni de așteptare.', statement: <>Live în <span className="text-[var(--gold)]">48 de ore.</span></> },
-  { other: 'Alții: avans mare, promisiuni vagi.', statement: <>Plătești doar când ești <span className="text-[var(--gold)]">mulțumit.</span></> },
+  { other: 'Alții: avans mare, promisiuni vagi.', statement: <>Restul plătești doar când ești <span className="text-[var(--gold)]">mulțumit.</span></> },
   { other: 'Alții: „merge și așa".', statement: <>PageSpeed 90+, <span className="text-[var(--gold)]">garantat</span> la predare.</> },
 ]
 
