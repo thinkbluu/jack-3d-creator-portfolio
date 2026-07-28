@@ -15,7 +15,6 @@ const waypointConfig = [
   { id: 'about', label: 'Despre', x: 0.9 },
   { id: 'services', label: 'Servicii', x: 0.08 },
   { id: 'process', label: 'Proces', x: 0.88 },
-  { id: 'projects', label: 'Escale', x: 0.1 },
   { id: 'faq', label: 'Înainte de îmbarcare', x: 0.85 },
 ] as const
 

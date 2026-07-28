@@ -4,7 +4,6 @@ import RouteTransition from '@/components/RouteTransition'
 import ManifestSection from '@/components/ManifestSection'
 import AboutSection from '@/components/AboutSection'
 import ServicesSection from '@/components/ServicesSection'
-import ProjectsSection from '@/components/ProjectsSection'
 import ProcessSection from '@/components/ProcessSection'
 import FAQSection from '@/components/FAQSection'
 import FinalCTA from '@/components/FinalCTA'
@@ -41,7 +40,6 @@ export default function Page() {
         <AboutSection />
         <ServicesSection />
         <ProcessSection />
-        <ProjectsSection />
         <FAQSection />
         <FinalCTA />
         <Footer />

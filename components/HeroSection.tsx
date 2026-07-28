@@ -53,8 +53,9 @@ export default function HeroSection() {
         <motion.div {...enter(0)} className="mb-5 flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-[var(--gold)]">
           <span className="h-px w-10 bg-[var(--gold)]" /> Alegerea ta schimbă ruta
         </motion.div>
-        <motion.h1 {...enter(0.08)} className="max-w-5xl font-serif text-[clamp(2.8rem,7.4vw,7.6rem)] leading-[0.9] tracking-[-0.045em] text-balance">
-          Site-ul potrivit începe cu întrebarea potrivită.
+        <motion.h1 {...enter(0.08)} className="max-w-5xl font-sans text-[clamp(2.6rem,6.5vw,5.5rem)] font-extrabold leading-[1.04] tracking-[-0.02em] text-balance">
+          Site-ul care îți aduce clienți.<br />
+          <span className="text-[var(--gold)]">În 48 de ore.</span>
         </motion.h1>
         <motion.div {...enter(0.16)} className="mt-6 min-h-16 max-w-2xl">
           <p key={segment ?? 'default'} className="type-body text-base leading-relaxed text-[var(--muted)] md:text-lg">{subheads[segment ?? 'default']}</p>
