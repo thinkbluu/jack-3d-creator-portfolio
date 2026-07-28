@@ -93,7 +93,7 @@ function PriceLine({ children }: { children: string }) {
 
 export default function ServicesSection() {
   const { segment } = useSegment()
-  const recommendedName: Record<Segment, string> = { salon: 'Site de prezentare', servicii: 'Site de prezentare', platforma: 'Platforme personalizate (SaaS)' }
+  const recommendedName: Record<Segment, string> = { salon: 'Site de prezentare', servicii: 'Site de prezentare', ecommerce: 'Magazin online', platforma: 'Platforme personalizate (SaaS)' }
   return (
     <section id="services" className="section-shell rounded-t-[28px] bg-[var(--paper)] text-[var(--paper-text)]">
       <div className="site-container">

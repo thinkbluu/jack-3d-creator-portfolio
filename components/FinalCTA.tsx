@@ -25,7 +25,7 @@ export default function FinalCTA() {
     <section id="contact" className="section-shell relative overflow-hidden border-t border-[var(--line)] bg-[var(--bg)]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/images/output-image4.png"
+        src="/images/cta-macro.jpg"
         alt=""
         aria-hidden="true"
         width={1536}

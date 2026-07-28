@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import { Building2, Check, Layers3, Scissors } from 'lucide-react'
+import { Building2, Check, Layers3, Scissors, ShoppingCart } from 'lucide-react'
 import AmbientVideo from './AmbientVideo'
 import ContactButton from './ContactButton'
 import { useSegment, type Segment } from './SegmentContext'
@@ -9,6 +9,7 @@ import { useSegment, type Segment } from './SegmentContext'
 const options: Array<{ id: Segment; eyebrow: string; title: string; detail: string; icon: typeof Scissors }> = [
   { id: 'salon', eyebrow: 'Programări', title: 'Am un salon', detail: 'Frizerie, beauty, wellness', icon: Scissors },
   { id: 'servicii', eyebrow: 'Cereri', title: 'Ofer servicii', detail: 'Consultanță, construcții, profesii', icon: Building2 },
+  { id: 'ecommerce', eyebrow: 'Vânzări', title: 'Vând produse', detail: 'magazin online, plăți, comenzi', icon: ShoppingCart },
   { id: 'platforma', eyebrow: 'Produs digital', title: 'Construiesc o platformă', detail: 'Portal, marketplace, SaaS', icon: Layers3 },
 ]
 
@@ -16,6 +17,7 @@ const subheads: Record<Segment | 'default', string> = {
   default: 'Spune-ne ce construiești. Îți arătăm drumul cel mai scurt spre un site care produce rezultate.',
   salon: 'Transformăm atenția în programări, cu o experiență clară și rapidă pentru clienții salonului tău.',
   servicii: 'Punem valoarea serviciilor tale în cuvinte și pagini care inspiră încredere și generează cereri.',
+  ecommerce: 'Un magazin online care convertește: catalog, plăți, comenzi și facturare, fără abandon de coș.',
   platforma: 'Clarificăm produsul, fluxurile și tehnologia pentru o platformă pregătită să crească.',
 }
 
@@ -61,7 +63,7 @@ export default function HeroSection() {
           <p key={segment ?? 'default'} className="type-body text-base leading-relaxed text-[var(--muted)] md:text-lg">{subheads[segment ?? 'default']}</p>
         </motion.div>
 
-        <motion.div {...enter(0.24)} role="group" aria-label="Alege tipul afacerii" className="mt-7 grid gap-3 md:grid-cols-3">
+        <motion.div {...enter(0.24)} role="group" aria-label="Alege tipul afacerii" className="mt-7 grid gap-3 md:grid-cols-2 lg:grid-cols-4">
           {options.map((option) => {
             const selected = segment === option.id
             const Icon = option.icon

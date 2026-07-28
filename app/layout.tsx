@@ -10,8 +10,8 @@ const dmSans = DM_Sans({
   variable: '--font-dm-sans',
 })
 
-const title = 'MAST Studio | Site-ul potrivit pentru afacerea ta'
-const description = 'Alege tipul afacerii tale și descoperă ruta potrivită: site-uri de prezentare, magazine online și platforme personalizate construite cu direcție.'
+const title = 'MAST Studio | Site-uri care aduc clienți, în 48 de ore'
+const description = 'Studio de web design. Site-uri de prezentare de la 300 EUR livrate în 48 de ore, magazine online de la 900 EUR și platforme personalizate. Avans 50 EUR, restul doar dacă ești mulțumit.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://maststudio.ro'),
