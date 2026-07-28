@@ -10,8 +10,8 @@ const dmSans = DM_Sans({
   variable: '--font-dm-sans',
 })
 
-const title = 'MAST Studio | Web design Timișoara'
-const description = 'Studio de web design. Site-uri de prezentare de la 300 EUR livrate în 48 de ore și magazine online de la 900 EUR. Platforme și aplicații premium pentru afaceri în creștere.'
+const title = 'MAST Studio | Site-ul potrivit pentru afacerea ta'
+const description = 'Alege tipul afacerii tale și descoperă ruta potrivită: site-uri de prezentare, magazine online și platforme personalizate construite cu direcție.'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://maststudio.ro'),
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     siteName: 'MAST Studio',
     title,
     description,
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'MAST Studio — produse digitale construite cu direcție' }],
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'MAST Studio — site-ul potrivit începe cu întrebarea potrivită' }],
   },
   twitter: {
     card: 'summary_large_image',

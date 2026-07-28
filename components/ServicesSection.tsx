@@ -6,6 +6,7 @@ import type { CSSProperties } from 'react'
 import FadeIn from './FadeIn'
 import ChartKicker from './ChartKicker'
 import TrackedLink from './TrackedLink'
+import { useSegment, type Segment } from './SegmentContext'
 
 const services = [
   { cardinal: 'N', direction: 0, name: 'Site de prezentare', description: 'Vitrina digitală a afacerii tale: design unic, copy care convinge și PageSpeed 90+ la predare.', price: 'de la 300 EUR · live în 48h de la primirea conținutului', message: 'Salut! Vreau un site de prezentare, livrat în 48 de ore. Îmi poți face o ofertă?' },
@@ -51,7 +52,7 @@ function whatsappUrl(message: string) {
   return `https://wa.me/40755928029?text=${encodeURIComponent(message)}`
 }
 
-function ServiceCard({ service }: { service: (typeof services)[number] }) {
+function ServiceCard({ service, recommended }: { service: (typeof services)[number]; recommended: boolean }) {
   const controls = useAnimationControls()
   const reduceMotion = useReducedMotion()
   const pointTo = (degrees: number) => {
@@ -66,7 +67,7 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
       target="_blank"
       rel="noopener"
       aria-label={`Cere ofertă pe WhatsApp pentru ${service.name}`}
-      className="group flex min-h-72 flex-col rounded-[20px] border border-[var(--paper-line)] bg-[rgba(255,255,255,0.35)] p-7 transition-[border-color,box-shadow] duration-[250ms] ease-out hover:border-[var(--gold-soft)] hover:shadow-[0_12px_32px_rgba(10,18,32,0.10)] focus-visible:-translate-y-1 focus-visible:border-[var(--gold-soft)] focus-visible:shadow-[0_12px_32px_rgba(10,18,32,0.10)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--gold-soft)] md:p-8"
+      className={`group flex min-h-72 flex-col rounded-[20px] border bg-[rgba(255,255,255,0.35)] p-7 transition-[border-color,box-shadow] duration-[250ms] ease-out hover:border-[var(--gold-soft)] hover:shadow-[0_12px_32px_rgba(10,18,32,0.10)] focus-visible:-translate-y-1 focus-visible:border-[var(--gold-soft)] focus-visible:shadow-[0_12px_32px_rgba(10,18,32,0.10)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--gold-soft)] md:p-8 ${recommended ? 'border-[var(--gold)] shadow-[0_12px_32px_rgba(10,18,32,0.10)]' : 'border-[var(--paper-line)]'}`}
       whileHover={reduceMotion ? undefined : { y: -4 }}
       transition={{ duration: 0.25, ease: 'easeOut' }}
       onHoverStart={() => pointTo(service.direction)}
@@ -74,8 +75,9 @@ function ServiceCard({ service }: { service: (typeof services)[number] }) {
       onFocus={() => pointTo(service.direction)}
       onBlur={() => pointTo(0)}
     >
-      <div className="flex items-start justify-between">
+      <div className="flex min-h-10 items-start justify-between gap-3">
         <CompassRose direction={service.direction} controls={controls} reduceMotion={Boolean(reduceMotion)} />
+        <span className={`rounded-full border px-3 py-1 text-[9px] uppercase tracking-[0.14em] ${recommended ? 'border-[var(--gold)] text-[var(--gold)]' : 'invisible'}`}>Recomandat pentru tine</span>
         <span className="type-kicker !text-[rgba(10,18,32,0.35)]">{service.cardinal}</span>
       </div>
       <div className="mt-auto pt-10">
@@ -94,6 +96,8 @@ function PriceLine({ children }: { children: string }) {
 }
 
 export default function ServicesSection() {
+  const { segment } = useSegment()
+  const recommendedName: Record<Segment, string> = { salon: 'Site de prezentare', servicii: 'Site de prezentare', platforma: 'Platforme personalizate (SaaS)' }
   return (
     <section id="services" className="section-shell rounded-t-[28px] bg-[var(--paper)] text-[var(--paper-text)]">
       <div className="site-container">
@@ -108,7 +112,7 @@ export default function ServicesSection() {
         <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
           {services.map((service, index) => (
             <FadeIn key={service.cardinal} delay={index * 0.08} className="h-full">
-              <ServiceCard service={service} />
+              <ServiceCard service={service} recommended={Boolean(segment && recommendedName[segment] === service.name)} />
             </FadeIn>
           ))}
         </div>
@@ -117,7 +121,7 @@ export default function ServicesSection() {
           {continuingServices.map((service, index) => (
             <FadeIn key={service.name} delay={index * 0.08}>
               <TrackedLink
-                href={whatsappUrl(service.message)}
+      href={whatsappUrl(service.message)}
                 eventName="service_whatsapp_click"
                 eventProperties={{ service: service.name }}
                 target="_blank"
