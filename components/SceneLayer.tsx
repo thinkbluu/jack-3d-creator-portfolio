@@ -1,14 +1,19 @@
 'use client'
 
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
+import { motion, type MotionValue } from 'framer-motion'
 
 interface SceneLayerProps {
   poster: string
   video: string
   overlay?: number
+  /** Defocuses the plate so panel copy on top of it stays effortless to read. */
+  blurPx?: number
+  /** Drives container opacity so neighbouring scenes cross-fade on scroll. */
+  fade?: MotionValue<number>
 }
 
-export default function SceneLayer({ poster, video, overlay = 0.28 }: SceneLayerProps) {
+export default function SceneLayer({ poster, video, overlay = 0.28, blurPx = 0, fade }: SceneLayerProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [allowVideo, setAllowVideo] = useState(false)
@@ -40,8 +45,18 @@ export default function SceneLayer({ poster, video, overlay = 0.28 }: SceneLayer
     return () => observer.disconnect()
   }, [allowVideo, failed])
 
+  // Scale the blur slightly past the edges so no soft border shows through.
+  const plateStyle: CSSProperties = blurPx
+    ? { filter: `blur(${blurPx}px)`, transform: `scale(${1 + blurPx / 40})` }
+    : {}
+
   return (
-    <div ref={wrapRef} aria-hidden="true" className="absolute inset-0 overflow-hidden">
+    <motion.div
+      ref={wrapRef}
+      aria-hidden="true"
+      className="absolute inset-0 overflow-hidden"
+      style={fade ? { opacity: fade } : undefined}
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={poster || '/placeholder.svg'}
@@ -51,6 +66,7 @@ export default function SceneLayer({ poster, video, overlay = 0.28 }: SceneLayer
         loading="lazy"
         decoding="async"
         className="absolute inset-0 h-full w-full object-cover"
+        style={plateStyle}
       />
       {allowVideo && !failed && (
         <video
@@ -63,12 +79,13 @@ export default function SceneLayer({ poster, video, overlay = 0.28 }: SceneLayer
           preload="metadata"
           onError={() => setFailed(true)}
           className="absolute inset-0 h-full w-full object-cover"
+          style={plateStyle}
         />
       )}
       <div
         className="absolute inset-0"
         style={{ background: 'rgba(250, 247, 242, var(--scene-overlay))', '--scene-overlay': overlay } as CSSProperties}
       />
-    </div>
+    </motion.div>
   )
 }

@@ -171,7 +171,7 @@
     --brass-lite: #d4b267;
     --harbor: #2e5266;
     --glass: rgba(250, 247, 242, 0.86);
-    --glass-edge: rgba(176, 141, 63, 0.28);
+    --glass-edge: rgba(176, 141, 63, 0.42);
     --radius-panel: 28px;
     --radius-card: 18px;
     --radius-pill: 999px;
@@ -371,6 +371,13 @@
   position: relative;
 }
 
+/* Only a rig that is directly followed by another rig pulls up, so consecutive
+   scenes overlap and cross-fade against the shared var(--shell) backdrop
+   instead of butting edge to edge. The final rig keeps its full height. */
+.scene-rig:has(+ .scene-rig) {
+  margin-bottom: -40vh;
+}
+
 .scene-sticky {
   position: sticky;
   top: 0;
@@ -389,11 +396,19 @@
   max-width: min(1080px, 100%);
   margin-inline: auto;
   padding: clamp(28px, 4vw, 56px);
+  /* Extra headroom inside the panel so no heading ever crowds the top edge. */
+  padding-top: clamp(80px, 10vh, 120px);
 }
 
 .scene-section {
   padding-block: clamp(72px, 9vh, 130px);
   padding-inline: clamp(20px, 4vw, 48px);
+  padding-top: clamp(80px, 10vh, 120px);
+}
+
+/* Anchor jumps must clear the fixed hero nav. */
+section[id] {
+  scroll-margin-top: 100px;
 }
 
 .scrub-cue-line {
