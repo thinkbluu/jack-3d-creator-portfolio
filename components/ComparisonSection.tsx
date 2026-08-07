@@ -6,10 +6,11 @@ import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type Poin
 import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 import TrackedLink from './TrackedLink'
 
-const pairs: Record<Segment, { before: string; after: string; label: string }> = {
-  salon: { before: '/images/before-instal.png', after: '/images/after-instal.png', label: 'Salon' },
-  servicii: { before: '/images/transform-before.png', after: '/images/transform-after.png', label: 'Servicii' },
+const pairs: Partial<Record<Segment, { before: string; after: string; label: string }>> = {
+  salon: { before: '/images/transform-before.png', after: '/images/transform-after.png', label: 'Salon' },
+  servicii: { before: '/images/before-instal.png', after: '/images/after-instal.png', label: 'Servicii' },
   platforma: { before: '/images/before-nextvision.png', after: '/images/after-nextvision.png', label: 'Platformă' },
+  // ecommerce has no pair yet; imageExists will gate it out until assets are added
 }
 
 function imageExists(src: string) {
@@ -37,6 +38,7 @@ export default function ComparisonSection() {
     let live = true
     Promise.all((Object.keys(pairs) as Segment[]).map(async (key) => {
       const pair = pairs[key]
+      if (!pair) return null
       return (await Promise.all([imageExists(pair.before), imageExists(pair.after)])).every(Boolean) ? key : null
     })).then((results) => {
       if (!live) return
@@ -66,7 +68,9 @@ export default function ComparisonSection() {
   }
 
   if (!ready || !active) return null
-  const pair = pairs[active]
+  // active is always in available, which only contains keys whose images loaded
+  const pair = pairs[active]!
+
 
   return (
     <section id="dovada" className="section-shell bg-[var(--surface)]">
@@ -75,7 +79,7 @@ export default function ComparisonSection() {
           <p className="eyebrow">Dovada înaintea promisiunii</p>
           <h2 className="mt-4 max-w-xl font-serif text-4xl leading-tight text-balance md:text-6xl">Trage linia. Vezi diferența.</h2>
           <p className="type-body mt-5 max-w-lg">Aceeași afacere, prezentată înainte și după intervenția MAST.</p>
-          {available.length > 1 && <div role="tablist" aria-label="Exemple pe tip de afacere" className="mt-7 flex flex-wrap gap-2">{available.map((key) => <button key={key} role="tab" aria-selected={active === key} onClick={() => { position.set(50); setValue(50); setSegment(key) }} className={`border px-4 py-2 text-xs uppercase tracking-[0.16em] ${active === key ? 'border-[var(--gold)] bg-[var(--gold)] text-[var(--bg)]' : 'border-[var(--line)] text-[var(--muted)]'}`}>{pairs[key].label}</button>)}</div>}
+          {available.length > 1 && <div role="tablist" aria-label="Exemple pe tip de afacere" className="mt-7 flex flex-wrap gap-2">{available.map((key) => <button key={key} role="tab" aria-selected={active === key} onClick={() => { position.set(50); setValue(50); setSegment(key) }} className={`border px-4 py-2 text-xs uppercase tracking-[0.16em] ${active === key ? 'border-[var(--gold)] bg-[var(--gold)] text-[var(--bg)]' : 'border-[var(--line)] text-[var(--muted)]'}`}>{pairs[key]!.label}</button>)}</div>}
         </div>
         <motion.div key={active} initial={reduceMotion ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.2 }}>
           <div ref={frameRef} className="relative aspect-[16/10] cursor-ew-resize touch-none overflow-hidden border border-[var(--line)] bg-[var(--bg)]" onPointerDown={handlePointer} onPointerMove={(event) => event.currentTarget.hasPointerCapture(event.pointerId) && update(event.clientX)} role="slider" tabIndex={0} aria-label="Compară versiunea înainte și după" aria-valuemin={0} aria-valuemax={100} aria-valuenow={value} onKeyDown={handleKey}>

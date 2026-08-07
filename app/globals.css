@@ -172,6 +172,11 @@
     --paper-text: #0a1220;
     --paper-text-2: rgba(10, 18, 32, 0.55);
     --paper-line: rgba(10, 18, 32, 0.12);
+    --brass: #c9a227;
+    --brass-soft: rgba(201, 162, 39, 0.32);
+    --glass: rgba(8, 14, 26, 0.42);
+    --glass-edge: rgba(245, 241, 232, 0.16);
+    --tint: 0.1;
   }
 
   * {
@@ -307,6 +312,67 @@
   font-weight: 400;
   line-height: 1.65;
   max-width: 62ch;
+}
+
+.kicker {
+  color: var(--brass);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.type-display {
+  color: var(--text);
+  font-size: clamp(1.8rem, 2.8vw, 2.55rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+  text-wrap: pretty;
+}
+
+.porthole {
+  background: var(--glass);
+  border: 1px solid var(--glass-edge);
+  border-radius: 18px;
+  box-shadow: 0 24px 64px rgba(2, 5, 10, 0.42), inset 0 1px 0 rgba(245, 241, 232, 0.08);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+}
+
+.porthole-stat {
+  color: var(--brass);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.scrub-cue-line {
+  background: linear-gradient(180deg, var(--brass) 0%, transparent 100%);
+}
+
+@keyframes hero-dust-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -60px, 0);
+  }
+}
+
+.hero-dust {
+  animation-name: hero-dust-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-dust {
+    animation: none;
+  }
 }
 
 @media (min-width: 48rem) {
