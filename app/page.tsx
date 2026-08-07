@@ -1,4 +1,4 @@
-import HeroSection from '@/components/HeroSection'
+import CinematicHero from '@/components/CinematicHero'
 import ComparisonSection from '@/components/ComparisonSection'
 import RouteTransition from '@/components/RouteTransition'
 import ManifestSection from '@/components/ManifestSection'
@@ -33,7 +33,7 @@ export default function Page() {
     <SegmentProvider>
       <main className="relative bg-[var(--bg)]" style={{ overflowX: 'clip' }}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, '\\u003c') }} />
-        <HeroSection />
+        <CinematicHero />
         <ComparisonSection />
         <RouteTransition />
         <ManifestSection />
