@@ -20,12 +20,16 @@ function ManifestPair({ other, statement }: { other: string; statement: ReactNod
     <div className="flex flex-col justify-center gap-4 border-t border-[var(--hairline)] py-9 first:border-t-0 md:py-11">
       <p
         className="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] leading-relaxed text-[var(--ink-2)] transition-[opacity,filter] duration-500 ease-out"
-        style={landed && !reduceMotion ? { opacity: 0.32, filter: 'blur(1.5px)' } : undefined}
+        style={{
+          textShadow: '0 1px 12px rgba(250,247,242,0.9)',
+          ...(landed && !reduceMotion ? { opacity: 0.32, filter: 'blur(1.5px)' } : null),
+        }}
       >
         {other}
       </p>
       <motion.p
         className="type-h2 max-w-4xl text-balance"
+        style={{ textShadow: '0 2px 20px rgba(250,247,242,0.85)' }}
         initial={reduceMotion ? false : { opacity: 0, y: 16, filter: 'blur(4px)' }}
         whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
         viewport={{ once: true, amount: 0.5 }}
@@ -40,16 +44,25 @@ function ManifestPair({ other, statement }: { other: string; statement: ReactNod
 
 export default function ManifestSection() {
   return (
-    <section id="manifest" className="scene-section">
-      <div className="porthole scene-panel">
-        <ChartKicker label="Manifest" />
-        {pairs.map((pair) => (
-          <ManifestPair key={pair.other} other={pair.other} statement={pair.statement} />
-        ))}
-        <p className="type-body mt-8 border-t border-[var(--hairline)] pt-8">
-          Astea nu sunt promisiuni de marketing. Sunt clauze scrise în contract.
-        </p>
-      </div>
-    </section>
+    <>
+      <section id="manifest" className="scene-section">
+        {/* No glass panel here: the manifesto reads straight off the scene,
+            carried by text-shadow instead of a backing plate. */}
+        <div className="scene-panel">
+          <ChartKicker label="Manifest" />
+          {pairs.map((pair) => (
+            <ManifestPair key={pair.other} other={pair.other} statement={pair.statement} />
+          ))}
+          <p
+            className="type-body mt-8 border-t border-[var(--hairline)] pt-8"
+            style={{ textShadow: '0 1px 12px rgba(250,247,242,0.9)' }}
+          >
+            Astea nu sunt promisiuni de marketing. Sunt clauze scrise în contract.
+          </p>
+        </div>
+      </section>
+      {/* Breathing room before the next panel. */}
+      <div aria-hidden="true" style={{ height: '40vh' }} />
+    </>
   )
 }

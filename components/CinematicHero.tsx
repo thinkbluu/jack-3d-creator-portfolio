@@ -273,7 +273,13 @@ export default function CinematicHero() {
             left: 'clamp(24px, 5vw, 72px)',
             bottom: 'clamp(28px, 6vh, 72px)',
             padding: 'clamp(22px, 2.6vw, 34px)',
+            // Extra floor clearance so the stats row never sits on the panel edge.
+            paddingBottom: 'clamp(32px, 4vw, 44px)',
             maxHeight: 'calc(100dvh - 7rem)',
+            background: 'rgba(250, 247, 242, 0.90)',
+            // Column flow lets the stats row claim the leftover height with margin-top:auto.
+            display: 'flex',
+            flexDirection: 'column',
             opacity: cinematic ? panelOpacity : 1,
             y: cinematic ? panelY : 0,
             ...(depth
@@ -306,8 +312,8 @@ export default function CinematicHero() {
             {...enter(3)}
             role="group"
             aria-label="Alege tipul afacerii"
-            className="mt-5 grid gap-2.5"
-            style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))' }}
+            className="mt-5 grid"
+            style={{ gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}
           >
             {options.map((option) => (
               <MirrorCard
@@ -325,7 +331,7 @@ export default function CinematicHero() {
             <p className="text-xs leading-relaxed text-[var(--ink-2)]">Răspundem direct pe WhatsApp. Fără formular, fără prezentare de vânzări.</p>
           </motion.div>
 
-          <motion.div style={depth ? { x: statsX, y: statsY } : undefined}>
+          <motion.div style={{ marginTop: 'auto', ...(depth ? { x: statsX, y: statsY } : null) }}>
           <motion.dl {...enter(5)} className="mt-5 flex items-stretch gap-6">
             {stats.map((stat, index) => (
               <div key={stat.value} className={`flex flex-col gap-1 ${index > 0 ? 'border-l border-[var(--glass-edge)] pl-6' : ''}`}>

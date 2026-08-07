@@ -21,8 +21,9 @@ const steps = [
 
 export default function ProcessSection() {
   return (
+    <>
     <section id="process" className="scene-section">
-      <div className="porthole scene-panel">
+      <div className="porthole scene-panel" style={{ maxWidth: '860px' }}>
         <FadeIn>
           <ChartKicker label="Cum lucrăm" />
           <h2 className="type-h2 text-balance">Trei pași. Fără bătăi de cap.</h2>
@@ -46,5 +47,8 @@ export default function ProcessSection() {
         </div>
       </div>
     </section>
+    {/* Breathing room before the FAQ. */}
+    <div aria-hidden="true" style={{ height: '40vh' }} />
+    </>
   )
 }

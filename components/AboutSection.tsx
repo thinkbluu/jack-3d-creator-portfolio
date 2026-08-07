@@ -5,7 +5,8 @@ import ChartKicker from './ChartKicker'
 export default function AboutSection() {
   return (
     <section id="about" className="scene-section">
-      <div className="porthole scene-panel">
+      {/* Narrow and left-anchored, so it reads as an aside rather than a full-width slab. */}
+      <div className="porthole scene-panel" style={{ maxWidth: '720px', marginLeft: 0, marginRight: 'auto' }}>
         <FadeIn>
           <ChartKicker label="Despre" />
           <h2 className="type-h2 text-balance">Digital, dar profund uman.</h2>

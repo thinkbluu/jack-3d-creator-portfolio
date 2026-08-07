@@ -58,6 +58,14 @@ const faqs: Array<[string, string]> = [
   ],
 ]
 
+// Groups reference `faqs` by index, so the source list stays the single
+// source of truth for both the UI and the FAQPage structured data.
+const groups: Array<{ kicker: string; indices: number[] }> = [
+  { kicker: 'Bani și termene', indices: [0, 1, 2, 9] },
+  { kicker: 'Cum lucrăm', indices: [3, 4, 5] },
+  { kicker: 'Tehnic și proprietate', indices: [6, 7, 8, 10, 11] },
+]
+
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -125,23 +133,33 @@ export default function FAQSection() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, '\\u003c') }}
       />
-      <div className="porthole scene-panel">
+      <div className="porthole scene-panel" style={{ maxWidth: '900px' }}>
         <FadeIn>
           <ChartKicker label="Înainte de îmbarcare" />
           <h2 className="type-h2 text-balance">Întrebări frecvente.</h2>
         </FadeIn>
-        <div className="mt-8">
-          {faqs.map(([question, answer], index) => (
-            <FAQItem
-              key={question}
-              question={question}
-              answer={answer}
-              isOpen={openIndex === index}
-              onToggle={() => setOpenIndex((current) => (current === index ? null : index))}
-              delay={Math.min(index, 5) * 0.06}
-            />
-          ))}
-        </div>
+        {groups.map((group) => (
+          <div key={group.kicker} className="mt-10 first-of-type:mt-8">
+            <FadeIn>
+              <p className="kicker mb-2">{group.kicker}</p>
+            </FadeIn>
+            {group.indices.map((index, positionInGroup) => {
+              const [question, answer] = faqs[index]
+              return (
+                <FAQItem
+                  key={question}
+                  question={question}
+                  answer={answer}
+                  // openIndex holds a global index, so only one row is ever open
+                  // across all three groups.
+                  isOpen={openIndex === index}
+                  onToggle={() => setOpenIndex((current) => (current === index ? null : index))}
+                  delay={Math.min(positionInGroup, 5) * 0.06}
+                />
+              )
+            })}
+          </div>
+        ))}
         <p className="type-body mt-9">
           Altă întrebare? Răspundem în aceeași zi.{' '}
           <a

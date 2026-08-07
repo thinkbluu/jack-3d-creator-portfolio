@@ -436,6 +436,10 @@ section[id] {
   .hero-dust {
     animation: none;
   }
+
+  .scroll-progress {
+    display: none;
+  }
 }
 
 @media (min-width: 48rem) {
