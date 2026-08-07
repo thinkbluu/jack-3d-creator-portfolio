@@ -3,6 +3,10 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 
 export const WHATSAPP_NUMBER = '40755928029'
+export const PHONE_DISPLAY = '+40 755 928 029'
+export const PHONE_HREF = `tel:+${WHATSAPP_NUMBER}`
+export const EMAIL = 'contact@maststudio.ro'
+export const EMAIL_HREF = `mailto:${EMAIL}`
 
 export type Segment = 'salon' | 'servicii' | 'platforma' | 'ecommerce'
 

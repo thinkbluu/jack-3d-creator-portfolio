@@ -5,6 +5,7 @@
 
 @theme inline {
   --font-sans: var(--font-dm-sans), 'DM Sans', sans-serif;
+  --font-display: var(--font-fraunces), 'Fraunces', serif;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -160,23 +161,20 @@
 
 @layer base {
   :root {
-    --bg: #050a14;
-    --surface: #0b1424;
-    --line: rgba(245, 241, 232, 0.08);
-    --text: #f5f1e8;
-    --text-2: rgba(245, 241, 232, 0.6);
-    --text-3: rgba(245, 241, 232, 0.38);
-    --gold: #c9a227;
-    --gold-soft: rgba(201, 162, 39, 0.35);
-    --paper: #f2eee4;
-    --paper-text: #0a1220;
-    --paper-text-2: rgba(10, 18, 32, 0.55);
-    --paper-line: rgba(10, 18, 32, 0.12);
-    --brass: #c9a227;
-    --brass-soft: rgba(201, 162, 39, 0.32);
-    --glass: rgba(8, 14, 26, 0.42);
-    --glass-edge: rgba(245, 241, 232, 0.16);
-    --tint: 0.1;
+    --shell: #faf7f2;
+    --shell-warm: #f2ece3;
+    --ink: #1a1714;
+    --ink-2: rgba(26, 23, 20, 0.62);
+    --ink-3: rgba(26, 23, 20, 0.4);
+    --hairline: rgba(26, 23, 20, 0.1);
+    --brass: #b08d3f;
+    --brass-lite: #d4b267;
+    --harbor: #2e5266;
+    --glass: rgba(250, 247, 242, 0.72);
+    --glass-edge: rgba(176, 141, 63, 0.28);
+    --radius-panel: 28px;
+    --radius-card: 18px;
+    --radius-pill: 999px;
   }
 
   * {
@@ -191,8 +189,8 @@
 
   html,
   body {
-    background: var(--bg);
-    color: var(--text);
+    background: var(--shell);
+    color: var(--ink);
     font-family: var(--font-sans);
   }
 
@@ -283,69 +281,114 @@
   max-width: 48rem;
 }
 
-.type-kicker {
-  color: var(--text-3);
-  font-size: clamp(0.75rem, 1vw, 0.8rem);
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+.type-display {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+  font-weight: 550;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+  text-wrap: pretty;
+}
+
+/* The hero panel is a fixed-width porthole; keep its display type at the scale it was tuned for. */
+#home .type-display {
+  font-size: clamp(1.9rem, 3vw, 2.7rem);
+  line-height: 1.04;
 }
 
 .type-h2 {
-  color: var(--text);
-  font-size: clamp(2.25rem, 6vw, 4.5rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.02;
-  text-transform: uppercase;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-weight: 550;
+  letter-spacing: -0.015em;
+  line-height: 1.04;
 }
 
 .type-h3 {
-  font-size: clamp(1.05rem, 2vw, 1.5rem);
-  font-weight: 600;
-  line-height: 1.3;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.25;
 }
 
 .type-body {
-  color: var(--text-2);
-  font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+  color: var(--ink-2);
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
   font-weight: 400;
-  line-height: 1.65;
-  max-width: 62ch;
+  line-height: 1.62;
+  max-width: 64ch;
 }
 
-.kicker {
+.kicker,
+.type-kicker {
   color: var(--brass);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.26em;
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-}
-
-.type-display {
-  color: var(--text);
-  font-size: clamp(1.8rem, 2.8vw, 2.55rem);
-  font-weight: 800;
-  letter-spacing: -0.025em;
-  line-height: 1.06;
-  text-wrap: pretty;
 }
 
 .porthole {
   background: var(--glass);
+  backdrop-filter: blur(20px) saturate(1.1);
+  -webkit-backdrop-filter: blur(20px) saturate(1.1);
   border: 1px solid var(--glass-edge);
-  border-radius: 18px;
-  box-shadow: 0 24px 64px rgba(2, 5, 10, 0.42), inset 0 1px 0 rgba(245, 241, 232, 0.08);
-  backdrop-filter: blur(14px) saturate(1.1);
-  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  border-radius: var(--radius-panel);
+  box-shadow: 0 24px 70px rgba(26, 23, 20, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+.porthole::after {
+  content: '';
+  position: absolute;
+  inset: 10px;
+  border: 1px solid var(--glass-edge);
+  border-radius: calc(var(--radius-panel) - 8px);
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .porthole-stat {
   color: var(--brass);
+  font-family: var(--font-sans);
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1;
+}
+
+.scene-rig {
+  position: relative;
+}
+
+.scene-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.scene-content {
+  position: relative;
+  z-index: 10;
+  margin-top: -100vh;
+}
+
+.scene-panel {
+  max-width: min(1080px, 100%);
+  margin-inline: auto;
+  padding: clamp(28px, 4vw, 56px);
+}
+
+.scene-section {
+  padding-block: clamp(72px, 9vh, 130px);
+  padding-inline: clamp(20px, 4vw, 48px);
 }
 
 .scrub-cue-line {

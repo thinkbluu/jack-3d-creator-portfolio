@@ -242,8 +242,8 @@ export default function PlottedRoute() {
             <feGaussianBlur stdDeviation="2" />
           </filter>
         </defs>
-        <path d={layout.path} fill="none" stroke="var(--gold)" strokeWidth="1.5" strokeDasharray="8 11" opacity="0.2" vectorEffect="non-scaling-stroke" />
-        <motion.path ref={pathRef} d={layout.path} fill="none" stroke="var(--gold)" strokeWidth="1.5" strokeDasharray="8 11" opacity="0.5" pathLength={pathLength} vectorEffect="non-scaling-stroke" />
+        <path d={layout.path} fill="none" stroke="var(--brass)" strokeWidth="1.5" strokeDasharray="8 11" opacity="0.2" vectorEffect="non-scaling-stroke" />
+        <motion.path ref={pathRef} d={layout.path} fill="none" stroke="var(--brass)" strokeWidth="1.5" strokeDasharray="8 11" opacity="0.5" pathLength={pathLength} vectorEffect="non-scaling-stroke" />
         {manifestTicks.map((tick, index) => (
           <line
             key={`${tick.fraction}-${index}`}
@@ -251,17 +251,17 @@ export default function PlottedRoute() {
             y1={tick.y1}
             x2={tick.x2}
             y2={tick.y2}
-            stroke="var(--gold)"
+            stroke="var(--brass)"
             strokeWidth="1"
             opacity={passedManifestTicks[index] ? 0.8 : 0.35}
             className="transition-opacity duration-200"
             vectorEffect="non-scaling-stroke"
           />
         ))}
-        <motion.circle cx={cometX} cy={cometY} r="8" fill="var(--gold)" opacity={cometOpacity} fillOpacity="0.18" filter="url(#route-comet-blur)" />
-        <motion.circle cx={cometX} cy={cometY} r="3" fill="var(--gold)" opacity={cometOpacity} />
+        <motion.circle cx={cometX} cy={cometY} r="8" fill="var(--brass)" opacity={cometOpacity} fillOpacity="0.18" filter="url(#route-comet-blur)" />
+        <motion.circle cx={cometX} cy={cometY} r="3" fill="var(--brass)" opacity={cometOpacity} />
         <path d={layout.path} fill="none" stroke="rgba(10,18,32,0.35)" strokeWidth="1.5" strokeDasharray="8 11" opacity="0.25" clipPath="url(#services-route-clip)" vectorEffect="non-scaling-stroke" />
-        <circle cx={layout.endpoint.x} cy={layout.endpoint.y} r="6" fill="var(--gold)" filter="url(#route-endpoint-glow)" />
+        <circle cx={layout.endpoint.x} cy={layout.endpoint.y} r="6" fill="var(--brass)" filter="url(#route-endpoint-glow)" />
       </svg>
 
       {layout.waypoints.map((waypoint, index) => (
@@ -270,13 +270,13 @@ export default function PlottedRoute() {
           type="button"
           aria-label={`Mergi la ${waypoint.label}`}
           onClick={() => document.getElementById(waypoint.id)?.scrollIntoView({ behavior: 'smooth' })}
-          className="pointer-events-auto absolute flex h-6 w-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gold)]"
+          className="pointer-events-auto absolute flex h-6 w-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brass)]"
           style={{ left: waypoint.x, top: waypoint.y }}
         >
           {pings[index] > 0 && passed[index] ? (
-            <motion.span key={pings[index]} aria-hidden="true" className="absolute h-6 w-6 rounded-full border border-[var(--gold)]" initial={{ scale: 0.4, opacity: 0.65 }} animate={{ scale: 1.6, opacity: 0 }} transition={{ duration: 0.5, ease: 'easeOut' }} />
+            <motion.span key={pings[index]} aria-hidden="true" className="absolute h-6 w-6 rounded-full border border-[var(--brass)]" initial={{ scale: 0.4, opacity: 0.65 }} animate={{ scale: 1.6, opacity: 0 }} transition={{ duration: 0.5, ease: 'easeOut' }} />
           ) : null}
-          <span aria-hidden="true" className={`h-2 w-2 rounded-full border-[1.5px] border-[var(--gold)] transition-colors duration-200 ${passed[index] ? 'bg-[var(--gold)]' : 'bg-transparent'}`} />
+          <span aria-hidden="true" className={`h-2 w-2 rounded-full border-[1.5px] border-[var(--brass)] transition-colors duration-200 ${passed[index] ? 'bg-[var(--brass)]' : 'bg-transparent'}`} />
         </button>
       ))}
     </nav>

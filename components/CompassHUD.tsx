@@ -24,7 +24,7 @@ export default function CompassHUD() {
       type="button"
       aria-label="Înapoi sus"
       onClick={() => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })}
-      className="fixed bottom-8 right-8 z-40 flex h-16 w-16 items-center justify-center opacity-70 transition-opacity duration-200 hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--gold)]"
+      className="fixed bottom-8 right-8 z-40 flex h-16 w-16 items-center justify-center opacity-70 transition-opacity duration-200 hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
     >
       <motion.img
         src="/images/mast-rose.png"

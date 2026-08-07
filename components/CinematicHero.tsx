@@ -88,13 +88,13 @@ function MirrorCard({ option, selected, onSelect }: { option: (typeof options)[n
       type="button"
       aria-pressed={selected}
       onClick={onSelect}
-      className={`flex min-h-24 flex-col justify-between gap-2 rounded-[12px] border p-3 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] ${selected ? 'border-[var(--brass)] bg-[var(--brass)] text-[var(--bg)]' : 'border-[var(--glass-edge)] bg-[rgba(245,241,232,0.05)] text-[var(--text)] hover:border-[var(--brass-soft)]'}`}
+      className={`flex min-h-24 flex-col justify-between gap-2 rounded-[12px] border p-3 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] ${selected ? 'border-[var(--brass)] bg-[var(--brass)] text-[var(--shell)]' : 'border-[var(--glass-edge)] bg-[rgba(245,241,232,0.05)] text-[var(--ink)] hover:border-[var(--glass-edge)]'}`}
     >
-      <span className={`flex size-8 items-center justify-center rounded-[8px] border ${selected ? 'border-[var(--bg)]/30' : 'border-[var(--glass-edge)] text-[var(--brass)]'}`}>
+      <span className={`flex size-8 items-center justify-center rounded-[8px] border ${selected ? 'border-[var(--shell)]/30' : 'border-[var(--glass-edge)] text-[var(--brass)]'}`}>
         {selected ? <Check aria-hidden="true" size={16} /> : <Icon aria-hidden="true" size={16} />}
       </span>
       <span className="flex flex-col gap-0.5">
-        <span className={`text-[9px] uppercase tracking-[0.2em] ${selected ? 'text-[var(--bg)]/70' : 'text-[var(--brass)]'}`}>{option.eyebrow}</span>
+        <span className={`text-[9px] uppercase tracking-[0.2em] ${selected ? 'text-[var(--shell)]/70' : 'text-[var(--brass)]'}`}>{option.eyebrow}</span>
         <span className="text-sm font-semibold leading-tight">{option.title}</span>
       </span>
     </button>
@@ -231,7 +231,7 @@ export default function CinematicHero() {
                   {tier.dots.map((dot) => (
                     <span
                       key={`${dot.left}-${dot.top}`}
-                      className="hero-dust absolute rounded-full bg-[var(--text)]"
+                      className="hero-dust absolute rounded-full bg-[var(--ink)]"
                       style={{
                         left: dot.left,
                         top: dot.top,
@@ -252,16 +252,16 @@ export default function CinematicHero() {
           </>
         )}
 
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-[linear-gradient(180deg,rgba(5,10,20,0.62)_0%,transparent_100%)]" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-[linear-gradient(180deg,rgba(250,247,242,0.82)_0%,transparent_100%)]" />
 
         <header className="absolute inset-x-0 top-0 z-20">
           <nav aria-label="Navigație principală" className="site-container flex h-20 items-center justify-between">
-            <a href="#home" className="flex items-baseline gap-2 text-xl font-extrabold tracking-[0.16em] text-[var(--text)]">
+            <a href="#home" className="flex items-baseline gap-2 text-xl font-extrabold tracking-[0.16em] text-[var(--ink)]">
               MAST <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-[var(--brass)]">Studio</span>
             </a>
             <div className="flex items-center gap-5 text-xs uppercase tracking-[0.16em] md:gap-8">
-              <a href="#dovada" className="hidden text-[var(--text-2)] transition-colors hover:text-[var(--text)] sm:block">Dovada</a>
-              <a href="#servicii" className="hidden text-[var(--text-2)] transition-colors hover:text-[var(--text)] sm:block">Servicii</a>
+              <a href="#dovada" className="hidden text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] sm:block">Dovada</a>
+              <a href="#servicii" className="hidden text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] sm:block">Servicii</a>
               <ContactButton label="Vorbește cu noi" />
             </div>
           </nav>
@@ -322,7 +322,7 @@ export default function CinematicHero() {
 
           <motion.div {...enter(4)} className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
             <ContactButton hero label={segment ? 'Discută ruta potrivită' : 'Spune-ne ce construiești'} />
-            <p className="text-xs leading-relaxed text-[var(--text-2)]">Răspundem direct pe WhatsApp. Fără formular, fără prezentare de vânzări.</p>
+            <p className="text-xs leading-relaxed text-[var(--ink-2)]">Răspundem direct pe WhatsApp. Fără formular, fără prezentare de vânzări.</p>
           </motion.div>
 
           <motion.div style={depth ? { x: statsX, y: statsY } : undefined}>
@@ -330,7 +330,7 @@ export default function CinematicHero() {
             {stats.map((stat, index) => (
               <div key={stat.value} className={`flex flex-col gap-1 ${index > 0 ? 'border-l border-[var(--glass-edge)] pl-6' : ''}`}>
                 <dt className="porthole-stat">{stat.value}</dt>
-                <dd className="max-w-36 text-[11px] leading-relaxed text-[var(--text-2)]">{stat.label}</dd>
+                <dd className="max-w-36 text-[11px] leading-relaxed text-[var(--ink-2)]">{stat.label}</dd>
               </div>
             ))}
           </motion.dl>

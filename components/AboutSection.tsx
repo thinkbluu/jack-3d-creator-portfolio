@@ -4,22 +4,22 @@ import ChartKicker from './ChartKicker'
 
 export default function AboutSection() {
   return (
-    <section id="about" className="section-shell relative overflow-hidden bg-[var(--bg)]">
-      <div className="site-container relative z-10">
+    <section id="about" className="scene-section">
+      <div className="porthole scene-panel">
         <FadeIn>
-          <header className="section-header">
-            <ChartKicker bearing="04" label="Despre" />
-            <h2 className="type-h2">Digital, dar profund uman</h2>
-          </header>
+          <ChartKicker label="Despre" />
+          <h2 className="type-h2 text-balance">Digital, dar profund uman.</h2>
         </FadeIn>
 
         <FadeIn delay={0.08}>
-          <p className="max-w-3xl text-[clamp(1.3rem,2.4vw,1.9rem)] font-medium leading-[1.5] text-[var(--text)]">
-            Suntem un studio care crede că un site bun nu se vede: se simte. Combinăm strategie, design și cod propriu pentru prezențe digitale care inspiră încredere și aduc clienți, nu doar vizite.
+          <p className="type-body mt-6 max-w-[64ch] text-[clamp(1.05rem,1.6vw,1.3rem)] leading-relaxed">
+            Suntem un studio mic din Timișoara care crede că un site bun se simte, nu doar se vede. Nu folosim șabloane
+            și nu vorbim în termeni tehnici: ascultăm cum funcționează afacerea ta și construim site-ul care o vinde.
+            Simplu de înțeles, ușor de folosit, al tău cu totul.
           </p>
         </FadeIn>
 
-        <FadeIn delay={0.16} className="mt-10 flex justify-start">
+        <FadeIn delay={0.16} className="mt-9 flex justify-start">
           <ContactButton />
         </FadeIn>
       </div>
