@@ -170,7 +170,7 @@
     --brass: #b08d3f;
     --brass-lite: #d4b267;
     --harbor: #2e5266;
-    --glass: rgba(250, 247, 242, 0.72);
+    --glass: rgba(250, 247, 242, 0.86);
     --glass-edge: rgba(176, 141, 63, 0.28);
     --radius-panel: 28px;
     --radius-card: 18px;
@@ -340,6 +340,11 @@
   border: 1px solid var(--glass-edge);
   border-radius: var(--radius-panel);
   box-shadow: 0 24px 70px rgba(26, 23, 20, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+/* The ::after inset rule needs a positioned box, but never override an
+   explicit Tailwind position utility (the hero panel is absolutely placed). */
+.porthole:not(.absolute):not(.fixed):not(.sticky) {
   position: relative;
 }
 

@@ -90,7 +90,7 @@ export default function ComparisonSection() {
           </div>
         )}
 
-        <div className="mt-7">
+        <div className="mt-7 max-w-3xl">
           <AnimatePresence initial={false} mode="wait">
             {expanded ? (
               <motion.div

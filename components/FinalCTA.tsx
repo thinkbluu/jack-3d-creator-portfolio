@@ -22,9 +22,18 @@ function SonarPing() {
 
 export default function FinalCTA() {
   return (
-    <section id="contact" className="scene-section flex min-h-[100dvh] items-center justify-center">
+    <section id="contact" className="scene-section relative flex min-h-[100dvh] items-center justify-center">
+      {/* Soft radial wash so the copy stays readable over the detailed compass plate. */}
       <div
-        className="mx-auto flex max-w-[52ch] flex-col items-center text-center"
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            'radial-gradient(58% 46% at 50% 48%, rgba(250,247,242,0.94) 0%, rgba(250,247,242,0.82) 45%, rgba(250,247,242,0) 100%)',
+        }}
+      />
+      <div
+        className="relative z-10 mx-auto flex max-w-[52ch] flex-col items-center text-center"
         style={{ textShadow: '0 2px 24px rgba(250,247,242,.6)' }}
       >
         <FadeIn className="flex flex-col items-center">

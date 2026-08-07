@@ -35,26 +35,28 @@ export function getWaUrl(segment: Segment | null, overrideMessage?: string) {
 }
 
 export function SegmentProvider({ children }: { children: ReactNode }) {
-  const [segment, setSegment] = useState<Segment | null>(() => {
-    if (typeof window === 'undefined') return null
-    const stored = window.sessionStorage.getItem('mast-segment')
-    return isSegment(stored) ? stored : null
-  })
+  // Always start at null so the server and the first client render agree.
+  // Stored/URL segments are adopted after mount, which keeps hydration clean.
+  const [segment, setSegment] = useState<Segment | null>(null)
+  const [hydrated, setHydrated] = useState(false)
 
-  // Read ?s= param on mount and persist it, overriding storage; SSR-safe
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const s = params.get('s')
-    if (isSegment(s)) {
-      setSegment(s)
-      window.sessionStorage.setItem('mast-segment', s)
+    const fromUrl = new URLSearchParams(window.location.search).get('s')
+    if (isSegment(fromUrl)) {
+      setSegment(fromUrl)
+    } else {
+      const stored = window.sessionStorage.getItem('mast-segment')
+      if (isSegment(stored)) setSegment(stored)
     }
+    setHydrated(true)
   }, [])
 
+  // Only persist once the initial adoption pass has run, so it can't clear storage first.
   useEffect(() => {
+    if (!hydrated) return
     if (segment) window.sessionStorage.setItem('mast-segment', segment)
     else window.sessionStorage.removeItem('mast-segment')
-  }, [segment])
+  }, [segment, hydrated])
 
   const value = useMemo(() => ({ segment, setSegment }), [segment])
   return <SegmentContext.Provider value={value}>{children}</SegmentContext.Provider>

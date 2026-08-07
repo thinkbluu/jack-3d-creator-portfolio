@@ -36,7 +36,7 @@ export default function Page() {
 
         <div className="scene-rig">
           <div className="scene-sticky">
-            <SceneLayer poster="/scenes/scene-table-poster.png" video="/scenes/scene-table.mp4" overlay={0.32} />
+            <SceneLayer poster="/images/scene-table-poster.jpg" video="/images/scene-table.mp4" overlay={0.32} />
           </div>
           <div className="scene-content">
             <ComparisonSection />
@@ -50,7 +50,7 @@ export default function Page() {
 
         <div className="scene-rig">
           <div className="scene-sticky">
-            <SceneLayer poster="/scenes/scene-compass-poster.png" video="/scenes/scene-compass.mp4" overlay={0.18} />
+            <SceneLayer poster="/images/scene-compass-poster.jpg" video="/images/scene-compass.mp4" overlay={0.18} />
           </div>
           <div className="scene-content">
             <FinalCTA />
