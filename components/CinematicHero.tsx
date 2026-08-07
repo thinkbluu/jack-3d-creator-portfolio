@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { motion, useMotionTemplate, useScroll, useSpring, useTransform } from 'framer-motion'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion'
 import { Building2, Check, Layers3, Scissors, ShoppingCart } from 'lucide-react'
 import ContactButton from './ContactButton'
 import ScrubStage from './ScrubStage'
@@ -34,6 +34,53 @@ const stats: Array<{ value: string; label: string }> = [
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
+// Three depth tiers of dust. Parallax lives on the tier wrapper, the slow upward
+// drift lives on each dot, so the two transforms never fight each other.
+const dustTiers: Array<{
+  shift: number
+  size: number
+  opacity: number
+  blur: number
+  dots: Array<{ left: string; top: string; duration: string; delay: string }>
+}> = [
+  {
+    shift: 20,
+    size: 4,
+    opacity: 0.55,
+    blur: 0,
+    dots: [
+      { left: '18%', top: '68%', duration: '9s', delay: '0s' },
+      { left: '63%', top: '38%', duration: '11s', delay: '1.4s' },
+      { left: '81%', top: '74%', duration: '10s', delay: '2.8s' },
+      { left: '41%', top: '86%', duration: '12s', delay: '4.1s' },
+    ],
+  },
+  {
+    shift: 12,
+    size: 3,
+    opacity: 0.35,
+    blur: 0,
+    dots: [
+      { left: '29%', top: '24%', duration: '13s', delay: '0.6s' },
+      { left: '72%', top: '57%', duration: '14s', delay: '2.2s' },
+      { left: '54%', top: '17%', duration: '12s', delay: '3.5s' },
+      { left: '88%', top: '46%', duration: '15s', delay: '5s' },
+    ],
+  },
+  {
+    shift: 4,
+    size: 2,
+    opacity: 0.2,
+    blur: 1,
+    dots: [
+      { left: '11%', top: '41%', duration: '15s', delay: '1s' },
+      { left: '47%', top: '61%', duration: '16s', delay: '2.6s' },
+      { left: '68%', top: '86%', duration: '14s', delay: '4.4s' },
+      { left: '93%', top: '29%', duration: '16s', delay: '6s' },
+    ],
+  },
+]
+
 function MirrorCard({ option, selected, onSelect }: { option: (typeof options)[number]; selected: boolean; onSelect: () => void }) {
   const Icon = option.icon
   return (
@@ -58,6 +105,7 @@ export default function CinematicHero() {
   const sectionRef = useRef<HTMLElement | null>(null)
   const { segment, setSegment } = useSegment()
   const [cinematic, setCinematic] = useState(false)
+  const [depth, setDepth] = useState(false)
 
   // SSR-safe: render the static variant first, upgrade only when the device allows it.
   useEffect(() => {
@@ -67,6 +115,70 @@ export default function CinematicHero() {
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
     if (!reduceMotion && !touch && !narrow && !connection?.saveData) setCinematic(true)
   }, [])
+
+  // Depth interaction is desktop-with-a-real-cursor only, and never under reduced motion.
+  useEffect(() => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const capable = window.matchMedia('(min-width: 1024px) and (hover: hover) and (pointer: fine)').matches
+    if (!reduceMotion && capable) setDepth(true)
+  }, [])
+
+  // Raw pointer position, normalized to -0.5..0.5. Written imperatively so the
+  // pointer path never touches React state.
+  const pointerXRaw = useMotionValue(0)
+  const pointerYRaw = useMotionValue(0)
+  const pointerX = useSpring(pointerXRaw, { stiffness: 50, damping: 20 })
+  const pointerY = useSpring(pointerYRaw, { stiffness: 50, damping: 20 })
+
+  const handlePointerMove = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      const rect = event.currentTarget.getBoundingClientRect()
+      pointerXRaw.set((event.clientX - rect.left) / rect.width - 0.5)
+      pointerYRaw.set((event.clientY - rect.top) / rect.height - 0.5)
+    },
+    [pointerXRaw, pointerYRaw],
+  )
+
+  const handlePointerLeave = useCallback(() => {
+    pointerXRaw.set(0)
+    pointerYRaw.set(0)
+  }, [pointerXRaw, pointerYRaw])
+
+  // Panel tilt, with a shadow that swings opposite to the tilt.
+  const panelRotateY = useTransform(pointerX, [-0.5, 0.5], [-8, 8])
+  const panelRotateX = useTransform(pointerY, [-0.5, 0.5], [8, -8])
+  const shadowX = useTransform(pointerX, [-0.5, 0.5], [26, -26])
+  const shadowY = useTransform(pointerY, [-0.5, 0.5], [26, -26])
+  const panelShadow = useMotionTemplate`${shadowX}px ${shadowY}px 64px rgba(2, 5, 10, 0.42), inset 0 1px 0 rgba(245, 241, 232, 0.08)`
+
+  // Layered parallax inside the panel: nearer copy travels further.
+  const headingX = useTransform(pointerX, [-0.5, 0.5], [-10, 10])
+  const headingY = useTransform(pointerY, [-0.5, 0.5], [-10, 10])
+  const subheadX = useTransform(pointerX, [-0.5, 0.5], [-6, 6])
+  const subheadY = useTransform(pointerY, [-0.5, 0.5], [-6, 6])
+  const cardsX = useTransform(pointerX, [-0.5, 0.5], [-4, 4])
+  const cardsY = useTransform(pointerY, [-0.5, 0.5], [-4, 4])
+  const statsX = useTransform(pointerX, [-0.5, 0.5], [-2, 2])
+  const statsY = useTransform(pointerY, [-0.5, 0.5], [-2, 2])
+
+  // One parallax pair per dust tier, near to far.
+  const nearDustX = useTransform(pointerX, [-0.5, 0.5], [-20, 20])
+  const nearDustY = useTransform(pointerY, [-0.5, 0.5], [-20, 20])
+  const midDustX = useTransform(pointerX, [-0.5, 0.5], [-12, 12])
+  const midDustY = useTransform(pointerY, [-0.5, 0.5], [-12, 12])
+  const farDustX = useTransform(pointerX, [-0.5, 0.5], [-4, 4])
+  const farDustY = useTransform(pointerY, [-0.5, 0.5], [-4, 4])
+  const dustMotion = [
+    { x: nearDustX, y: nearDustY },
+    { x: midDustX, y: midDustY },
+    { x: farDustX, y: farDustY },
+  ]
+
+  // Vignette hotspot follows the cursor at ±6%.
+  const vignetteX = useTransform(pointerX, [-0.5, 0.5], ['-6%', '6%'])
+  const vignetteY = useTransform(pointerY, [-0.5, 0.5], ['-6%', '6%'])
+  const vignette =
+    useMotionTemplate`radial-gradient(circle at calc(50% + ${vignetteX}) calc(50% + ${vignetteY}), transparent 45%, rgba(26, 23, 20, 0.18) 100%)`
 
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] })
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 30, restDelta: 0.0005 })
@@ -85,7 +197,15 @@ export default function CinematicHero() {
 
   return (
     <section ref={sectionRef} id="home" className={`relative ${cinematic ? 'h-[320vh]' : 'h-screen'}`}>
-      <div className="sticky top-0 h-screen overflow-hidden" style={{ height: '100dvh' }}>
+      <div
+        className="sticky top-0 h-screen overflow-hidden"
+        style={{
+          height: '100dvh',
+          ...(depth ? { perspective: '1200px', transformStyle: 'preserve-3d' as const } : null),
+        }}
+        onPointerMove={depth ? handlePointerMove : undefined}
+        onPointerLeave={depth ? handlePointerLeave : undefined}
+      >
         {cinematic ? (
           <ScrubStage clips={clips} progress={progress} />
         ) : (
@@ -98,6 +218,39 @@ export default function CinematicHero() {
           className="pointer-events-none absolute inset-0"
           style={cinematic ? { background: tintBackground } : { background: 'rgba(250, 247, 242, 0.18)' }}
         />
+
+        {depth && (
+          <>
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[5]">
+              {dustTiers.map((tier, tierIndex) => (
+                <motion.div
+                  key={tier.shift}
+                  className="absolute inset-0"
+                  style={{ x: dustMotion[tierIndex].x, y: dustMotion[tierIndex].y }}
+                >
+                  {tier.dots.map((dot) => (
+                    <span
+                      key={`${dot.left}-${dot.top}`}
+                      className="hero-dust absolute rounded-full bg-[var(--text)]"
+                      style={{
+                        left: dot.left,
+                        top: dot.top,
+                        width: tier.size,
+                        height: tier.size,
+                        opacity: tier.opacity,
+                        ...(tier.blur ? { filter: `blur(${tier.blur}px)` } : null),
+                        animationDuration: dot.duration,
+                        animationDelay: dot.delay,
+                      }}
+                    />
+                  ))}
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[6]" style={{ background: vignette }} />
+          </>
+        )}
 
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-[linear-gradient(180deg,rgba(5,10,20,0.62)_0%,transparent_100%)]" />
 
@@ -123,19 +276,32 @@ export default function CinematicHero() {
             maxHeight: 'calc(100dvh - 7rem)',
             opacity: cinematic ? panelOpacity : 1,
             y: cinematic ? panelY : 0,
+            ...(depth
+              ? {
+                  rotateY: panelRotateY,
+                  rotateX: panelRotateX,
+                  boxShadow: panelShadow,
+                  transformStyle: 'preserve-3d' as const,
+                }
+              : null),
           }}
         >
           <motion.p {...enter(0)} className="kicker">Studio de web design · Timișoara</motion.p>
 
-          <motion.h1 {...enter(1)} className="type-display mt-4">
-            Site-ul care îți aduce<br />
-            <span className="text-[var(--brass)]">clienți.</span>
-          </motion.h1>
+          <motion.div style={depth ? { x: headingX, y: headingY } : undefined}>
+            <motion.h1 {...enter(1)} className="type-display mt-4">
+              Site-ul care îți aduce<br />
+              <span className="text-[var(--brass)]">clienți.</span>
+            </motion.h1>
+          </motion.div>
 
-          <motion.p {...enter(2)} key={segment ?? 'default'} className="type-body mt-4">
-            {subheads[segment ?? 'default']}
-          </motion.p>
+          <motion.div style={depth ? { x: subheadX, y: subheadY } : undefined}>
+            <motion.p {...enter(2)} key={segment ?? 'default'} className="type-body mt-4">
+              {subheads[segment ?? 'default']}
+            </motion.p>
+          </motion.div>
 
+          <motion.div style={depth ? { x: cardsX, y: cardsY } : undefined}>
           <motion.div
             {...enter(3)}
             role="group"
@@ -152,12 +318,14 @@ export default function CinematicHero() {
               />
             ))}
           </motion.div>
+          </motion.div>
 
           <motion.div {...enter(4)} className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
             <ContactButton hero label={segment ? 'Discută ruta potrivită' : 'Spune-ne ce construiești'} />
             <p className="text-xs leading-relaxed text-[var(--text-2)]">Răspundem direct pe WhatsApp. Fără formular, fără prezentare de vânzări.</p>
           </motion.div>
 
+          <motion.div style={depth ? { x: statsX, y: statsY } : undefined}>
           <motion.dl {...enter(5)} className="mt-5 flex items-stretch gap-6">
             {stats.map((stat, index) => (
               <div key={stat.value} className={`flex flex-col gap-1 ${index > 0 ? 'border-l border-[var(--glass-edge)] pl-6' : ''}`}>
@@ -166,6 +334,7 @@ export default function CinematicHero() {
               </div>
             ))}
           </motion.dl>
+          </motion.div>
         </motion.div>
 
         {cinematic && (

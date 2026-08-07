@@ -352,6 +352,29 @@
   background: linear-gradient(180deg, var(--brass) 0%, transparent 100%);
 }
 
+@keyframes hero-dust-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -60px, 0);
+  }
+}
+
+.hero-dust {
+  animation-name: hero-dust-drift;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-dust {
+    animation: none;
+  }
+}
+
 @media (min-width: 48rem) {
   .site-container {
     padding-inline: 2.5rem;
