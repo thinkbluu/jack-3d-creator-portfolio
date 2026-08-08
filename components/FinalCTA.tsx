@@ -12,8 +12,8 @@ function SonarPing() {
   return (
     <motion.span
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 top-0 z-0 h-11 rounded-[12px] border-[1.5px] border-[var(--gold)]"
-      initial={{ scale: 1, opacity: 0.08 }}
+      className="pointer-events-none absolute inset-0 z-0 rounded-[var(--radius-pill)] border-[1.5px] border-[var(--brass)]"
+      initial={{ scale: 1, opacity: 0.1 }}
       animate={{ scale: 1.5, opacity: 0 }}
       transition={{ duration: 1.6, ease: 'easeOut', repeat: Number.POSITIVE_INFINITY, repeatDelay: 4.4 }}
     />
@@ -22,35 +22,44 @@ function SonarPing() {
 
 export default function FinalCTA() {
   return (
-    <section id="contact" className="section-shell relative overflow-hidden border-t border-[var(--line)] bg-[var(--bg)]">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/images/cta-macro.jpg"
-        alt=""
+    <section id="contact" className="scene-section relative flex min-h-[100dvh] items-center justify-center">
+      {/* Soft radial wash so the copy stays readable over the detailed compass plate. */}
+      <div
         aria-hidden="true"
-        width={1536}
-        height={864}
-        loading="lazy"
-        decoding="async"
-        className="pointer-events-none absolute inset-0 z-0 h-full w-full object-cover"
+        className="pointer-events-none absolute inset-0 z-0"
+        style={{
+          background:
+            'radial-gradient(58% 46% at 50% 48%, rgba(250,247,242,0.94) 0%, rgba(250,247,242,0.82) 45%, rgba(250,247,242,0) 100%)',
+        }}
       />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] bg-[rgba(5,10,20,0.62)]" />
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-[2] bg-[linear-gradient(var(--bg),transparent_30%,transparent_70%,var(--bg))]" />
+      <div
+        className="relative z-10 mx-auto flex max-w-[52ch] flex-col items-center text-center"
+        style={{ textShadow: '0 2px 24px rgba(250,247,242,.6)' }}
+      >
+        <FadeIn className="flex flex-col items-center">
+          <ChartKicker label="Contact" />
+          <h2 className="type-h2 text-balance">
+            Setează <span className="text-[var(--brass)]">direcția</span>.
+          </h2>
+          <p className="type-body mt-5 text-[var(--ink)]">
+            Ne spui în două fraze ce faci. Primești azi oferta și lista de materiale. Poimâine ești live.
+          </p>
+          <p className="type-body mt-3 font-semibold text-[var(--ink)]">
+            Lucrăm cu maximum 4 proiecte noi pe lună. Rezervă-ți locul.
+          </p>
+        </FadeIn>
 
-      <div className="site-container relative z-10">
-        <FadeIn>
-          <header className="section-header">
-            <ChartKicker bearing="07" label="Contact" />
-            <h2 className="type-h2 text-shadow-sm">Setează <span className="text-[var(--gold)]">direcția.</span></h2>
-            <p className="type-body mt-5 text-[var(--text)] [text-shadow:0_1px_12px_rgba(0,0,0,0.8)]">Lucrăm cu maximum 4 proiecte noi pe lună. Rezervă-ți locul.</p>
-          </header>
-          <div className="relative z-0 inline-flex justify-start">
+        <FadeIn delay={0.1} className="mt-9 flex flex-col items-center">
+          <span className="relative inline-flex">
             <SonarPing />
-            <div className="relative z-10">
-              <ContactButton />
-              <p className="type-body mt-4 text-center !text-[var(--text-3)]">Ai ajuns unde trebuia.</p>
-            </div>
-          </div>
+            <span className="relative z-10">
+              <ContactButton hero note={false} />
+            </span>
+          </span>
+          <p className="mt-5 font-sans text-xs font-medium text-[var(--ink-2)]">
+            50 EUR avans · restul doar când ești mulțumit · răspuns în aceeași zi
+          </p>
+          <p className="mt-8 font-sans text-sm text-[var(--ink-3)]">Ai ajuns unde trebuia.</p>
         </FadeIn>
       </div>
     </section>

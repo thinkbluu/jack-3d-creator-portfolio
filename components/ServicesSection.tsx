@@ -1,121 +1,122 @@
 'use client'
 
-import { motion, useAnimationControls, useReducedMotion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
-import type { CSSProperties } from 'react'
 import FadeIn from './FadeIn'
 import ChartKicker from './ChartKicker'
 import TrackedLink from './TrackedLink'
 import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 
 const services = [
-  { cardinal: 'N', direction: 0, name: 'Site de prezentare', description: 'Vitrina digitală a afacerii tale: design unic, copy care convinge și PageSpeed 90+ la predare.', price: 'de la 300 EUR · live în 48h de la primirea conținutului', message: 'Salut! Vreau un site de prezentare, livrat în 48 de ore. Îmi poți face o ofertă?' },
-  { cardinal: 'E', direction: 90, name: 'Magazin online', description: 'eCommerce care convertește: catalog, plăți, comenzi și integrare facturare, fără fricțiune.', price: 'de la 900 EUR · live în 7 zile', message: 'Salut! Vreau un magazin online. Îmi poți face o ofertă?' },
-  { cardinal: 'S', direction: 180, name: 'Web & Mobile App', description: 'Aplicații web și mobile pentru operațiuni interne sau experiențe dedicate clienților tăi.', price: 'ofertă personalizată', message: 'Salut! Am nevoie de o aplicație web sau mobilă. Putem discuta?' },
-  { cardinal: 'V', direction: 270, name: 'Platforme personalizate (SaaS)', description: 'Produse digitale complete: conturi, abonamente, dashboards și automatizări.', price: 'ofertă personalizată', message: 'Salut! Vreau să construim o platformă personalizată. Putem discuta?' },
+  {
+    name: 'Site de prezentare',
+    description: 'Cartea ta de vizită online: cine ești, ce faci și de ce să te aleagă. Cu buton direct de WhatsApp și textele scrise de noi.',
+    price: 'de la 300 EUR · live în 48 de ore',
+    message: 'Salut! Vreau un site de prezentare, livrat în 48 de ore. Îmi poți face o ofertă?',
+  },
+  {
+    name: 'Magazin online',
+    description: 'Vinzi non-stop: catalog, plată cu cardul, comenzi și facturi automate. Totul legat și explicat pe înțelesul tău.',
+    price: 'de la 900 EUR · live în 7 zile',
+    message: 'Salut! Vreau un magazin online. Îmi poți face o ofertă?',
+  },
+  {
+    name: 'Aplicații web și mobile',
+    description: 'Ai un proces care îți mănâncă timpul? Îl transformăm într-o aplicație pe care echipa și clienții tăi o folosesc cu plăcere.',
+    price: 'ofertă personalizată, în 24h',
+    message: 'Salut! Am nevoie de o aplicație web sau mobilă. Putem discuta?',
+  },
+  {
+    name: 'Platforme și SaaS',
+    description: 'De la schiță la platformă cu conturi, abonamente și plăți. Construim produsul, nu doar site-ul lui.',
+    price: 'ofertă personalizată, în 24h',
+    message: 'Salut! Vreau să construim o platformă personalizată. Putem discuta?',
+  },
 ]
 
 const continuingServices = [
-  { name: 'Mentenanță & creștere', description: 'Administrare, actualizări, SEO continuu și optimizări lunare.', price: 'de la 90 EUR/lună', message: 'Salut! Mă interesează mentenanță și creștere pentru site-ul meu.' },
-  { name: 'Automatizări & AI', description: 'Chatbot, preluare clienți pe WhatsApp și fluxuri automate care elimină munca repetitivă.', price: 'de la 250 EUR', message: 'Salut! Mă interesează automatizări și AI pentru afacerea mea.' },
+  {
+    name: 'Mentenanță și creștere',
+    description: 'Ne ocupăm noi mai departe: actualizări, siguranță, mici modificări și optimizare lunară ca să urci în Google.',
+    price: 'de la 90 EUR pe lună, fără contract pe termen lung',
+    message: 'Salut! Mă interesează mentenanță și creștere pentru site-ul meu.',
+  },
+  {
+    name: 'Automatizări și WhatsApp',
+    description: 'Clienții îți scriu, un asistent automat le răspunde, ia datele și îți lasă doar decizia. Plus facturare automată.',
+    price: 'de la 250 EUR',
+    message: 'Salut! Mă interesează automatizări și WhatsApp pentru afacerea mea.',
+  },
 ]
 
-function CompassRose({ direction, controls, reduceMotion }: { direction: number; controls: ReturnType<typeof useAnimationControls>; reduceMotion: boolean }) {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 40 40" className="h-10 w-10 shrink-0 text-[var(--paper-text)]">
-      <circle cx="20" cy="20" r="16" fill="none" stroke="currentColor" strokeOpacity="0.38" strokeWidth="1" />
-      <path d="M20 2.5v4M37.5 20h-4M20 37.5v-4M2.5 20h4" fill="none" stroke="currentColor" strokeOpacity="0.55" strokeLinecap="round" strokeWidth="1" />
-      <motion.g
-        initial={{ rotate: reduceMotion ? direction : 0 }}
-        animate={controls}
-        className="origin-center [@media(pointer:coarse)]:![transform:rotate(var(--needle-direction))] motion-reduce:![transform:rotate(var(--needle-direction))]"
-        style={{ '--needle-direction': `${direction}deg`, transformBox: 'view-box' } as CSSProperties}
-      >
-        <path d="M20 7.5 22.2 20 20 18.5 17.8 20Z" fill="var(--gold)" />
-        <path d="M20 32.5 17.8 20 20 21.5 22.2 20Z" fill="currentColor" fillOpacity="0.32" />
-      </motion.g>
-      <circle cx="20" cy="20" r="1.5" fill="var(--paper-text)" />
-    </svg>
-  )
+const cardClass =
+  'group flex h-full flex-col rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--shell)]/60 p-6 transition-[transform,border-color,box-shadow] duration-[250ms] ease-out hover:-translate-y-[3px] hover:border-[var(--brass)] hover:shadow-[0_18px_44px_rgba(26,23,20,0.10)] focus-visible:-translate-y-[3px] focus-visible:border-[var(--brass)] focus-visible:shadow-[0_18px_44px_rgba(26,23,20,0.10)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] md:p-7'
+
+function PriceLine({ children }: { children: string }) {
+  return <p className="mt-4 font-sans text-sm font-bold text-[var(--brass)]">{children}</p>
 }
 
 function OfferAffordance() {
   return (
-    <span className="mt-6 flex items-center justify-end gap-2">
-      <ArrowUpRight aria-hidden="true" className="h-[18px] w-[18px] text-[var(--gold)] transition-transform duration-[250ms] ease-out group-hover:-translate-y-[3px] group-hover:translate-x-[3px] group-focus-visible:-translate-y-[3px] group-focus-visible:translate-x-[3px]" />
-      <span className="type-kicker !text-[rgba(10,18,32,0.45)] transition-colors duration-[250ms] ease-out group-hover:!text-[rgba(10,18,32,0.75)] group-focus-visible:!text-[rgba(10,18,32,0.75)]">Cere ofertă</span>
+    <span className="mt-6 flex items-center gap-2">
+      <span className="kicker">Cere ofertă</span>
+      <ArrowUpRight
+        aria-hidden="true"
+        className="h-4 w-4 text-[var(--brass)] transition-transform duration-[250ms] ease-out group-hover:-translate-y-[3px] group-hover:translate-x-[3px]"
+      />
     </span>
   )
 }
 
-function ServiceCard({ service, recommended }: { service: (typeof services)[number]; recommended: boolean }) {
-  const controls = useAnimationControls()
-  const reduceMotion = useReducedMotion()
-  const pointTo = (degrees: number) => {
-    if (reduceMotion) return
-    controls.start({ rotate: degrees, transition: { type: 'spring', stiffness: 60, damping: 9 } })
+export default function ServicesSection() {
+  const { segment } = useSegment()
+  const recommendedName: Record<Segment, string> = {
+    salon: 'Site de prezentare',
+    servicii: 'Site de prezentare',
+    ecommerce: 'Magazin online',
+    platforma: 'Platforme și SaaS',
   }
 
   return (
-    <motion.a
-      href={getWaUrl(null, service.message)}
-      onClick={() => import('@vercel/analytics').then(({ track }) => track('service_whatsapp_click', { service: service.name })).catch(() => undefined)}
-      target="_blank"
-      rel="noopener"
-      aria-label={`Cere ofertă pe WhatsApp pentru ${service.name}`}
-      className={`group flex min-h-72 flex-col rounded-[20px] border bg-[rgba(255,255,255,0.35)] p-7 transition-[border-color,box-shadow] duration-[250ms] ease-out hover:border-[var(--gold-soft)] hover:shadow-[0_12px_32px_rgba(10,18,32,0.10)] focus-visible:-translate-y-1 focus-visible:border-[var(--gold-soft)] focus-visible:shadow-[0_12px_32px_rgba(10,18,32,0.10)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--gold-soft)] md:p-8 ${recommended ? 'border-[var(--gold)] shadow-[0_12px_32px_rgba(10,18,32,0.10)]' : 'border-[var(--paper-line)]'}`}
-      whileHover={reduceMotion ? undefined : { y: -4 }}
-      transition={{ duration: 0.25, ease: 'easeOut' }}
-      onHoverStart={() => pointTo(service.direction)}
-      onHoverEnd={() => pointTo(0)}
-      onFocus={() => pointTo(service.direction)}
-      onBlur={() => pointTo(0)}
-    >
-      <div className="flex min-h-10 items-start justify-between gap-3">
-        <CompassRose direction={service.direction} controls={controls} reduceMotion={Boolean(reduceMotion)} />
-        <span className={`rounded-full border px-3 py-1 text-[9px] uppercase tracking-[0.14em] ${recommended ? 'border-[var(--gold)] text-[var(--gold)]' : 'invisible'}`}>Recomandat pentru tine</span>
-        <span className="type-kicker !text-[rgba(10,18,32,0.35)]">{service.cardinal}</span>
-      </div>
-      <div className="mt-auto pt-10">
-        <h3 className="type-h3 text-[var(--paper-text)]">{service.name}</h3>
-        <p className="type-body mt-2 !text-[var(--paper-text-2)]">{service.description}</p>
-        <PriceLine>{service.price}</PriceLine>
-        <OfferAffordance />
-      </div>
-    </motion.a>
-  )
-}
-
-function PriceLine({ children }: { children: string }) {
-  const [value, ...rest] = children.split(' · ')
-  return <p className="mt-3 text-sm font-medium text-[var(--paper-text-2)]"><span className="font-bold text-[var(--gold)]">{value}</span>{rest.length ? ` · ${rest.join(' · ')}` : null}</p>
-}
-
-export default function ServicesSection() {
-  const { segment } = useSegment()
-  const recommendedName: Record<Segment, string> = { salon: 'Site de prezentare', servicii: 'Site de prezentare', ecommerce: 'Magazin online', platforma: 'Platforme personalizate (SaaS)' }
-  return (
-    <section id="services" className="section-shell rounded-t-[28px] bg-[var(--paper)] text-[var(--paper-text)]">
-      <div className="site-container">
+    <section id="servicii" className="scene-section">
+      <div className="porthole scene-panel">
         <FadeIn>
-          <header className="section-header">
-            <ChartKicker bearing="05" label="Servicii" paper />
-            <h2 className="type-h2 !text-[var(--paper-text)]">Patru direcții. Una e a ta.</h2>
-            <p className="type-body mt-5 !text-[var(--paper-text-2)]">Soluții clare, construite în jurul obiectivelor tale de business.</p>
-          </header>
+          <ChartKicker label="Servicii" />
+          <h2 className="type-h2 text-balance">Patru direcții. Una e a ta.</h2>
+          <p className="type-body mt-4">Prețuri la vedere. Avansul de 50 EUR se scade din oricare.</p>
         </FadeIn>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-          {services.map((service, index) => (
-            <FadeIn key={service.cardinal} delay={index * 0.08} className="h-full">
-              <ServiceCard service={service} recommended={Boolean(segment && recommendedName[segment] === service.name)} />
-            </FadeIn>
-          ))}
+        <div className="mt-9 grid grid-cols-1 gap-4 md:grid-cols-2">
+          {services.map((service, index) => {
+            const recommended = Boolean(segment && recommendedName[segment] === service.name)
+            return (
+              <FadeIn key={service.name} delay={index * 0.06} className="h-full">
+                <TrackedLink
+                  href={getWaUrl(null, service.message)}
+                  eventName="service_whatsapp_click"
+                  eventProperties={{ service: service.name }}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label={`Cere ofertă pe WhatsApp pentru ${service.name}`}
+                  className={`${cardClass} ${recommended ? '!border-[var(--brass)] shadow-[0_18px_44px_rgba(26,23,20,0.10)]' : ''}`}
+                >
+                  <span className={`mb-4 w-fit rounded-[var(--radius-pill)] border border-[var(--brass)] px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.16em] text-[var(--brass)] ${recommended ? '' : 'invisible'}`}>
+                    Recomandat pentru tine
+                  </span>
+                  <h3 className="type-h3">{service.name}</h3>
+                  <p className="type-body mt-2 text-[0.95rem]">{service.description}</p>
+                  <PriceLine>{service.price}</PriceLine>
+                  <span className="mt-auto">
+                    <OfferAffordance />
+                  </span>
+                </TrackedLink>
+              </FadeIn>
+            )
+          })}
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2">
+        <div className="mt-4 grid gap-4 md:grid-cols-2">
           {continuingServices.map((service, index) => (
-            <FadeIn key={service.name} delay={index * 0.08}>
+            <FadeIn key={service.name} delay={index * 0.06} className="h-full">
               <TrackedLink
                 href={getWaUrl(null, service.message)}
                 eventName="service_whatsapp_click"
@@ -123,12 +124,14 @@ export default function ServicesSection() {
                 target="_blank"
                 rel="noopener"
                 aria-label={`Cere ofertă pe WhatsApp pentru ${service.name}`}
-                className="group flex h-full flex-col rounded-[20px] border border-[var(--paper-line)] p-6 transition-[transform,border-color,box-shadow] duration-[250ms] ease-out hover:-translate-y-1 hover:border-[var(--gold-soft)] hover:shadow-[0_12px_32px_rgba(10,18,32,0.10)] focus-visible:-translate-y-1 focus-visible:border-[var(--gold-soft)] focus-visible:shadow-[0_12px_32px_rgba(10,18,32,0.10)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--gold-soft)]"
+                className={cardClass}
               >
-                <h3 className="type-h3 text-[var(--paper-text)]">{service.name}</h3>
-                <p className="type-body mt-2 !text-[var(--paper-text-2)]">{service.description}</p>
+                <h3 className="type-h3">{service.name}</h3>
+                <p className="type-body mt-2 text-[0.95rem]">{service.description}</p>
                 <PriceLine>{service.price}</PriceLine>
-                <div className="mt-auto pt-4"><OfferAffordance /></div>
+                <span className="mt-auto">
+                  <OfferAffordance />
+                </span>
               </TrackedLink>
             </FadeIn>
           ))}

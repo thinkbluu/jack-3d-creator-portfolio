@@ -26,7 +26,7 @@ export default function CookiesPage() {
         <p>Dacă vom introduce instrumente neesențiale care necesită consimțământ, vom actualiza această politică și vom implementa mecanismul de alegere înainte de activarea lor. Poți verifica și șterge cookie-urile oricând din setările browserului.</p>
       </LegalSection>
       <LegalSection title="6. Contact">
-        <p>Pentru întrebări despre tehnologiile folosite, scrie la <a className="text-[var(--gold)] underline-offset-4 hover:underline" href="mailto:contact@maststudio.ro">contact@maststudio.ro</a>.</p>
+        <p>Pentru întrebări despre tehnologiile folosite, scrie la <a className="text-[var(--brass)] underline-offset-4 hover:underline" href="mailto:contact@maststudio.ro">contact@maststudio.ro</a>.</p>
       </LegalSection>
     </LegalPage>
   )

@@ -49,7 +49,7 @@ export default function MarqueeSection() {
   return (
     <section
       ref={sectionRef}
-      className="section-shell overflow-hidden bg-[var(--bg)]"
+      className="section-shell overflow-hidden bg-[var(--shell)]"
     >
       <div className="site-container">
         <header className="section-header">
