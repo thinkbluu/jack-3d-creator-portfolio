@@ -81,6 +81,28 @@ const dustTiers: Array<{
   },
 ]
 
+// Minimal line-art mast glyph — mast, yard arm, and a single sail — drawn
+// inline so the title card has no dependency on a separate SVG asset file.
+function MastMark({ size }: { size: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 100 100"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="50" y1="8" x2="50" y2="92" />
+      <line x1="30" y1="92" x2="70" y2="92" />
+      <line x1="50" y1="18" x2="80" y2="24" />
+      <path d="M50 18 L50 46 L21 46 Z" />
+    </svg>
+  )
+}
+
 function MirrorCard({ option, selected, onSelect }: { option: (typeof options)[number]; selected: boolean; onSelect: () => void }) {
   const Icon = option.icon
   return (
@@ -185,9 +207,14 @@ export default function CinematicHero() {
 
   const tint = useTransform(progress, [0, 0.35, 0.5, 0.75, 1], [0.1, 0.1, 0, 0.18, 0.18])
   const tintBackground = useMotionTemplate`rgba(250, 247, 242, ${tint})`
-  const panelOpacity = useTransform(progress, [0, 0.42, 0.55, 0.62, 0.78], [1, 1, 0, 0, 1])
-  const panelY = useTransform(progress, [0, 0.42, 0.55, 0.62, 0.78], [0, 0, 40, 40, 0])
+  // Panel stays hidden and non-interactive through the title-card beat, then
+  // lifts in once for the rest of the scrub — no more early show/mid-hide.
+  const panelOpacity = useTransform(progress, [0, 0.72, 0.85, 1], [0, 0, 1, 1])
+  const panelY = useTransform(progress, [0, 0.72, 0.85, 1], [28, 28, 0, 0])
+  const panelPointerEvents = useTransform(progress, (value) => (value < 0.72 ? 'none' : 'auto'))
   const cueOpacity = useTransform(progress, [0, 0.06], [1, 0])
+  // Title card: in fast, holds, then clears well before the panel begins its reveal.
+  const titleOpacity = useTransform(progress, [0, 0.04, 0.14, 0.24], [0, 1, 1, 0])
 
   const enter = (index: number) => ({
     initial: { opacity: 0, y: 18 },
@@ -267,6 +294,37 @@ export default function CinematicHero() {
           </nav>
         </header>
 
+        {cinematic && (
+          // Fades in first over the establishing shot, clears well before the
+          // panel starts its own reveal — never rendered on the static fallback,
+          // where the nav wordmark already carries the brand.
+          <motion.div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-3"
+            style={{ opacity: titleOpacity, textShadow: '0 2px 24px rgba(250, 247, 242, 0.7)' }}
+          >
+            <span className="text-[var(--brass)]">
+              <MastMark size={88} />
+            </span>
+            <div className="flex flex-col items-center gap-1">
+              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '34px', color: 'var(--ink)' }}>
+                MAST
+              </span>
+              <span
+                style={{
+                  fontFamily: 'var(--font-sans)',
+                  fontWeight: 500,
+                  fontSize: '12px',
+                  letterSpacing: '.3em',
+                  color: 'var(--ink-2)',
+                }}
+              >
+                STUDIO
+              </span>
+            </div>
+          </motion.div>
+        )}
+
         <motion.div
           className="porthole absolute z-10 w-[min(680px,calc(100%-2rem))]"
           style={{
@@ -282,6 +340,9 @@ export default function CinematicHero() {
             flexDirection: 'column',
             opacity: cinematic ? panelOpacity : 1,
             y: cinematic ? panelY : 0,
+            // Under the static/reduced-motion fallback there is no scrub progress
+            // to gate on, so the panel is simply interactive from the first paint.
+            pointerEvents: cinematic ? panelPointerEvents : 'auto',
             ...(depth
               ? {
                   rotateY: panelRotateY,
