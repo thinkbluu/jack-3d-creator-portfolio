@@ -390,7 +390,19 @@
   position: relative;
   z-index: 10;
   margin-top: -100vh;
-}
+  }
+
+/* Adjacent rigs overlap by 40vh (see .scene-rig:has(+ .scene-rig)) so their
+   scenes can cross-fade. Both .scene-content boxes share z-index: 10, and
+   since the later rig comes after in the DOM it would normally win every
+   hit-test in that band -- even though it has nothing visible there yet,
+   letting its empty, full-height section swallow clicks meant for the
+   still-visible tail of the earlier rig's content (e.g. FAQ). Dropping the
+   later rig's content below the earlier one restores clicks in the overlap,
+   with no visual change since the later rig isn't showing anything there. */
+.scene-rig ~ .scene-rig .scene-content {
+  z-index: 5;
+  }
 
 .scene-panel {
   max-width: min(1080px, 100%);
