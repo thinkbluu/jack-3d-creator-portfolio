@@ -17,19 +17,15 @@ function ManifestPair({ other, statement }: { other: string; statement: ReactNod
   const [landed, setLanded] = useState(false)
 
   return (
-    <div className="flex flex-col justify-center gap-4 border-t border-[var(--hairline)] py-9 first:border-t-0 md:py-11">
+    <div className="manifest-pair flex flex-col justify-center gap-4 border-t border-[var(--hairline)] py-9 first:border-t-0 md:py-11">
       <p
-        className="font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] leading-relaxed text-[var(--ink-2)] transition-[opacity,filter] duration-500 ease-out"
-        style={{
-          textShadow: '0 1px 12px rgba(250,247,242,0.9)',
-          ...(landed && !reduceMotion ? { opacity: 0.32, filter: 'blur(1.5px)' } : null),
-        }}
+        className="manifest-other-text font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] leading-relaxed text-[var(--ink-2)] transition-[opacity,filter] duration-500 ease-out"
+        style={landed && !reduceMotion ? { opacity: 0.32, filter: 'blur(1.5px)' } : undefined}
       >
         {other}
       </p>
       <motion.p
-        className="type-h2 max-w-4xl text-balance"
-        style={{ textShadow: '0 2px 20px rgba(250,247,242,0.85)' }}
+        className="manifest-statement-text type-h2 max-w-4xl text-balance"
         initial={reduceMotion ? false : { opacity: 0, y: 16, filter: 'blur(4px)' }}
         whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
         viewport={{ once: true, amount: 0.5 }}

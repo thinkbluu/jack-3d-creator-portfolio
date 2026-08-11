@@ -194,6 +194,10 @@
     font-family: var(--font-sans);
   }
 
+  body {
+    overscroll-behavior-y: none;
+  }
+
   a,
   button {
     transition-duration: 250ms;
@@ -284,7 +288,7 @@
 .type-display {
   color: var(--ink);
   font-family: var(--font-display);
-  font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+  font-size: clamp(2rem, 8.5vw, 5.5rem);
   font-weight: 550;
   letter-spacing: -0.02em;
   line-height: 0.98;
@@ -300,7 +304,7 @@
 .type-h2 {
   color: var(--ink);
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-size: clamp(1.6rem, 6.5vw, 3.5rem);
   font-weight: 550;
   letter-spacing: -0.015em;
   line-height: 1.04;
@@ -309,7 +313,7 @@
 .type-h3 {
   color: var(--ink);
   font-family: var(--font-sans);
-  font-size: clamp(1.05rem, 1.8vw, 1.35rem);
+  font-size: clamp(1rem, 4.2vw, 1.35rem);
   font-weight: 700;
   line-height: 1.25;
 }
@@ -317,7 +321,7 @@
 .type-body {
   color: var(--ink-2);
   font-family: var(--font-sans);
-  font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+  font-size: clamp(0.92rem, 3.6vw, 1.1rem);
   font-weight: 400;
   line-height: 1.62;
   max-width: 64ch;
@@ -381,7 +385,6 @@
 .scene-sticky {
   position: sticky;
   top: 0;
-  height: 100vh;
   height: 100dvh;
   overflow: hidden;
 }
@@ -389,7 +392,7 @@
 .scene-content {
   position: relative;
   z-index: 10;
-  margin-top: -100vh;
+  margin-top: -100dvh;
   }
 
 /* Adjacent rigs overlap by 40vh (see .scene-rig:has(+ .scene-rig)) so their
@@ -461,5 +464,100 @@ section[id] {
 
   .section-shell {
     padding-block: 10rem;
+  }
+}
+
+/* Utility for wrapping a ContactButton (not one of the files this pass may
+   edit) so it can stretch full width on mobile CTAs without touching its
+   internal markup — targets the stable data-route-contact attribute on its
+   link instead of a class owned by that component. */
+.mast-cta-full [data-route-contact='true'] {
+  width: 100%;
+  padding-block: 16px;
+}
+
+/* Horizontally scrollable segment tabs (ComparisonSection) on narrow screens,
+   with the scrollbar hidden and enough trailing padding for the last tab to
+   clear the panel edge while still being reachable by scroll. */
+.chart-tabs-scroll {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chart-tabs-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .chart-tabs-scroll {
+    overflow-x: auto;
+    padding-inline-end: 20px;
+    scroll-padding-inline: 20px;
+  }
+
+  /* Pins the overlapped comparison stack to a fixed height so the two
+     cards no longer size themselves off their native aspect ratio, which
+     otherwise grows too tall on narrow screens. */
+  .comparison-stack {
+    height: 260px;
+  }
+
+  .comparison-stack > * {
+    height: 100%;
+  }
+
+  .comparison-stack figure,
+  .comparison-stack img {
+    aspect-ratio: auto;
+    height: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .manifest-pair {
+    min-height: 30dvh;
+  }
+}
+
+.manifest-other-text {
+  text-shadow: 0 1px 12px rgba(250, 247, 242, 0.9);
+}
+
+.manifest-statement-text {
+  text-shadow: 0 2px 20px rgba(250, 247, 242, 0.85);
+}
+
+@media (max-width: 767px) {
+  /* Manifesto copy sits directly on the scene with no glass panel behind
+     it, so it needs a stronger shadow on mobile to stay legible against a
+     brighter or more detailed patch of the background video/poster. */
+  .manifest-other-text,
+  .manifest-statement-text {
+    text-shadow: 0 2px 16px rgba(250, 247, 242, 0.95), 0 0 40px rgba(250, 247, 242, 0.8);
+  }
+}
+
+@media (max-width: 767px) {
+  /* 40vh of scroll-jack overlap between consecutive scene rigs (see
+     .scene-rig:has(+ .scene-rig) above) is too much empty scroll distance
+     on tall, narrow screens. */
+  .scene-rig:has(+ .scene-rig) {
+    margin-bottom: -20dvh;
+  }
+
+  .porthole {
+    --radius-panel: 20px;
+    padding: 24px 18px;
+    border-radius: var(--radius-panel);
+  }
+
+  .scene-section {
+    padding-inline: 16px;
+  }
+
+  /* Keeps FinalCTA and the footer clear of the fixed mobile WhatsApp bar. */
+  #contact,
+  footer {
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
   }
 }

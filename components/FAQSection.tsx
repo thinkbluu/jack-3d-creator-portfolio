@@ -94,7 +94,7 @@ function FAQItem({
       <article className="border-b border-[var(--hairline)] last:border-b-0">
         <button
           type="button"
-          className="flex w-full cursor-pointer items-center justify-between gap-6 py-5 text-left"
+          className="flex min-h-[52px] w-full cursor-pointer items-center justify-between gap-6 py-5 text-left"
           aria-expanded={isOpen}
           onClick={onToggle}
         >

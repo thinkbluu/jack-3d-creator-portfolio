@@ -2,10 +2,18 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion'
-import { Building2, Check, Layers3, Scissors, ShoppingCart } from 'lucide-react'
+import { Building2, Check, Layers3, Menu, Scissors, ShoppingCart, X } from 'lucide-react'
 import ContactButton from './ContactButton'
 import ScrubStage from './ScrubStage'
 import { useSegment, type Segment } from './SegmentContext'
+
+const navLinks: Array<{ href: string; label: string }> = [
+  { href: '#dovada', label: 'Dovada' },
+  { href: '#servicii', label: 'Servicii' },
+  { href: '#process', label: 'Cum lucrăm' },
+  { href: '#faq', label: 'Întrebări' },
+  { href: '#contact', label: 'Contact' },
+]
 
 const clips = [
   { src: '/images/hero-01-exit.mp4', poster: '/images/hero-poster.jpg' },
@@ -103,21 +111,31 @@ function MastMark({ size }: { size: number }) {
   )
 }
 
-function MirrorCard({ option, selected, onSelect }: { option: (typeof options)[number]; selected: boolean; onSelect: () => void }) {
+function MirrorCard({
+  option,
+  selected,
+  onSelect,
+  compact = false,
+}: {
+  option: (typeof options)[number]
+  selected: boolean
+  onSelect: () => void
+  compact?: boolean
+}) {
   const Icon = option.icon
   return (
     <button
       type="button"
       aria-pressed={selected}
       onClick={onSelect}
-      className={`flex min-h-24 flex-col justify-between gap-2 rounded-[12px] border p-3 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] ${selected ? 'border-[var(--brass)] bg-[var(--brass)] text-[var(--shell)]' : 'border-[var(--glass-edge)] bg-[rgba(245,241,232,0.05)] text-[var(--ink)] hover:border-[var(--glass-edge)]'}`}
+      className={`flex flex-col justify-between gap-2 rounded-[12px] border text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] ${compact ? 'min-h-[76px] p-3' : 'min-h-24 p-3'} ${selected ? 'border-[var(--brass)] bg-[var(--brass)] text-[var(--shell)]' : 'border-[var(--glass-edge)] bg-[rgba(245,241,232,0.05)] text-[var(--ink)] hover:border-[var(--glass-edge)]'}`}
     >
       <span className={`flex size-8 items-center justify-center rounded-[8px] border ${selected ? 'border-[var(--shell)]/30' : 'border-[var(--glass-edge)] text-[var(--brass)]'}`}>
         {selected ? <Check aria-hidden="true" size={16} /> : <Icon aria-hidden="true" size={16} />}
       </span>
       <span className="flex flex-col gap-0.5">
-        <span className={`text-[9px] uppercase tracking-[0.2em] ${selected ? 'text-[var(--shell)]/70' : 'text-[var(--brass)]'}`}>{option.eyebrow}</span>
-        <span className="text-sm font-semibold leading-tight">{option.title}</span>
+        <span className={`uppercase tracking-[0.2em] ${compact ? 'text-[11px]' : 'text-[9px]'} ${selected ? 'text-[var(--shell)]/70' : 'text-[var(--brass)]'}`}>{option.eyebrow}</span>
+        <span className={`font-semibold leading-tight ${compact ? 'text-[13px]' : 'text-sm'}`}>{option.title}</span>
       </span>
     </button>
   )
@@ -128,6 +146,51 @@ export default function CinematicHero() {
   const { segment, setSegment } = useSegment()
   const [cinematic, setCinematic] = useState(false)
   const [depth, setDepth] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement | null>(null)
+  const menuCloseRef = useRef<HTMLButtonElement | null>(null)
+  const menuTriggerRef = useRef<HTMLButtonElement | null>(null)
+
+  // Body scroll lock + focus handoff while the mobile menu overlay is open,
+  // restored on close so the trigger regains focus.
+  useEffect(() => {
+    if (!menuOpen) return
+    const { overflow } = document.body.style
+    document.body.style.overflow = 'hidden'
+    menuCloseRef.current?.focus()
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMenuOpen(false)
+        return
+      }
+      if (event.key !== 'Tab' || !menuRef.current) return
+      const focusable = menuRef.current.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled])',
+      )
+      if (focusable.length === 0) return
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.body.style.overflow = overflow
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [menuOpen])
+
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false)
+    menuTriggerRef.current?.focus()
+  }, [])
 
   // SSR-safe: render the static variant first, upgrade only when the device allows it.
   useEffect(() => {
@@ -222,8 +285,81 @@ export default function CinematicHero() {
     transition: { duration: 0.6, delay: index * 0.09, ease: EASE },
   })
 
+  // Shared between the desktop scrub layout and the mobile stacked layout so
+  // the nav markup — including the hamburger overlay wiring — is written once.
+  const header = (
+    <header className="absolute inset-x-0 top-0 z-30">
+      <nav aria-label="Navigație principală" className="site-container flex h-20 items-center justify-between">
+        <a href="#home" className="flex items-baseline gap-2 text-xl font-extrabold tracking-[0.16em] text-[var(--ink)]">
+          MAST <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-[var(--brass)]">Studio</span>
+        </a>
+        <div className="hidden items-center gap-5 text-xs uppercase tracking-[0.16em] md:flex md:gap-8">
+          <a href="#dovada" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Dovada</a>
+          <a href="#servicii" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Servicii</a>
+          <ContactButton label="Vorbește cu noi" />
+        </div>
+        <button
+          ref={menuTriggerRef}
+          type="button"
+          aria-label="Deschide meniul"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMenuOpen(true)}
+          className="flex size-11 items-center justify-center text-[var(--ink)] md:hidden"
+        >
+          <Menu size={24} aria-hidden="true" />
+        </button>
+      </nav>
+    </header>
+  )
+
+  const menuOverlay = menuOpen && (
+    <div
+      id="mobile-menu"
+      ref={menuRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Meniu mobil"
+      className="fixed inset-0 z-50 flex flex-col bg-[var(--shell)] md:hidden"
+    >
+      <div className="site-container flex h-20 items-center justify-between">
+        <a href="#home" onClick={closeMenu} className="flex items-baseline gap-2 text-xl font-extrabold tracking-[0.16em] text-[var(--ink)]">
+          MAST <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-[var(--brass)]">Studio</span>
+        </a>
+        <button
+          ref={menuCloseRef}
+          type="button"
+          aria-label="Închide meniul"
+          onClick={closeMenu}
+          className="flex size-11 items-center justify-center text-[var(--ink)]"
+        >
+          <X size={24} aria-hidden="true" />
+        </button>
+      </div>
+      <nav aria-label="Linkuri principale" className="flex flex-1 flex-col px-5">
+        {navLinks.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            onClick={closeMenu}
+            className="border-b border-[var(--hairline)] py-[18px] text-[20px] text-[var(--ink)] transition-colors hover:text-[var(--brass)]"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+      <div className="mast-cta-full px-5 pb-8">
+        <ContactButton label="Vorbește cu noi" />
+      </div>
+    </div>
+  )
+
   return (
-    <section ref={sectionRef} id="home" className={`relative ${cinematic ? 'h-[320vh]' : 'h-screen'}`}>
+    <section ref={sectionRef} id="home" className={`relative min-h-[100dvh] ${cinematic ? 'lg:h-[320vh]' : 'lg:h-screen'}`}>
+      {header}
+      {menuOverlay}
+
+      <div className="hidden lg:block">
       <div
         className="sticky top-0 h-screen overflow-hidden"
         style={{
@@ -280,19 +416,6 @@ export default function CinematicHero() {
         )}
 
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-[linear-gradient(180deg,rgba(250,247,242,0.82)_0%,transparent_100%)]" />
-
-        <header className="absolute inset-x-0 top-0 z-20">
-          <nav aria-label="Navigație principală" className="site-container flex h-20 items-center justify-between">
-            <a href="#home" className="flex items-baseline gap-2 text-xl font-extrabold tracking-[0.16em] text-[var(--ink)]">
-              MAST <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-[var(--brass)]">Studio</span>
-            </a>
-            <div className="flex items-center gap-5 text-xs uppercase tracking-[0.16em] md:gap-8">
-              <a href="#dovada" className="hidden text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] sm:block">Dovada</a>
-              <a href="#servicii" className="hidden text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] sm:block">Servicii</a>
-              <ContactButton label="Vorbește cu noi" />
-            </div>
-          </nav>
-        </header>
 
         {cinematic && (
           // Fades in first over the establishing shot, clears well before the
@@ -410,6 +533,86 @@ export default function CinematicHero() {
             <span className="kicker">Descoperă</span>
           </motion.div>
         )}
+      </div>
+      </div>
+
+      {/* Mobile/tablet layout (<1024px): normal vertical flow instead of the
+          sticky, absolutely-positioned desktop panel — cinematic is always
+          false at this width, so there is no scrub video to coordinate with. */}
+      <div className="flex min-h-[100dvh] flex-col bg-[var(--shell)] lg:hidden">
+        <div className="relative h-[42dvh] w-full shrink-0 overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/harbor-final.jpg"
+            alt=""
+            aria-hidden="true"
+            width={1600}
+            height={1000}
+            loading="eager"
+            fetchPriority="high"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: 'center 60%' }}
+          />
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(250,247,242,0.7)_0%,transparent_100%)]" />
+        </div>
+
+        <div className="flex flex-1 flex-col" style={{ padding: '28px 20px 32px' }}>
+          <p className="kicker" style={{ fontSize: '10.5px', letterSpacing: '.18em' }}>Studio de web design · Timișoara</p>
+
+          <h1
+            className="mt-4 text-balance"
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontWeight: 550,
+              fontSize: 'clamp(2rem, 8.5vw, 2.6rem)',
+              lineHeight: 1.06,
+              letterSpacing: '-0.02em',
+              color: 'var(--ink)',
+            }}
+          >
+            Site-ul care îți aduce <span className="text-[var(--brass)]">clienți.</span>
+          </h1>
+
+          <p
+            className="mt-4"
+            style={{ fontSize: '15px', lineHeight: 1.55, maxWidth: '34ch', color: 'var(--ink-2)' }}
+          >
+            {subheads[segment ?? 'default']}
+          </p>
+
+          <div role="group" aria-label="Alege tipul afacerii" className="mt-5 grid grid-cols-2 gap-2">
+            {options.map((option) => (
+              <MirrorCard
+                key={option.id}
+                option={option}
+                selected={segment === option.id}
+                onSelect={() => setSegment(segment === option.id ? null : option.id)}
+                compact
+              />
+            ))}
+          </div>
+
+          <div className="mast-cta-full mt-5">
+            <ContactButton hero label={segment ? 'Discută ruta potrivită' : 'Spune-ne ce construiești'} />
+          </div>
+          <p className="mt-3 text-center text-[11.5px] leading-relaxed text-[var(--ink-2)]">
+            Răspundem direct pe WhatsApp. Fără formular, fără prezentare de vânzări.
+          </p>
+
+          <dl className="mt-6 grid grid-cols-2">
+            {stats.map((stat, index) => (
+              <div
+                key={stat.value}
+                className={`flex flex-col items-center gap-1 text-center ${index > 0 ? 'border-l border-[var(--glass-edge)]' : ''}`}
+              >
+                <dt style={{ fontFamily: 'var(--font-sans)', fontWeight: 700, fontSize: '26px', letterSpacing: '-0.02em', color: 'var(--brass)' }}>
+                  {stat.value}
+                </dt>
+                <dd className="max-w-36 text-[11px] leading-relaxed text-[var(--ink-2)]">{stat.label}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   )
