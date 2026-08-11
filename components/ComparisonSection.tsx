@@ -126,7 +126,7 @@ export default function ComparisonSection() {
         <p className="type-body mt-4">Exemple tipice din patru domenii. Alege-l pe al tău.</p>
 
         {available.length > 1 && (
-          <div role="tablist" aria-label="Exemple pe tip de afacere" className="mt-6 flex flex-wrap gap-2">
+          <div role="tablist" aria-label="Exemple pe tip de afacere" className="chart-tabs-scroll mt-6 flex flex-nowrap gap-2 md:flex-wrap">
             {available.map((key) => (
               <button
                 key={key}
@@ -134,7 +134,7 @@ export default function ComparisonSection() {
                 type="button"
                 aria-selected={active === key}
                 onClick={() => setSegment(key)}
-                className={`cursor-pointer rounded-[var(--radius-pill)] border px-4 py-2 font-sans text-xs font-semibold transition-colors ${
+                className={`flex min-h-11 shrink-0 cursor-pointer items-center rounded-[var(--radius-pill)] border px-4 py-2 font-sans text-xs font-semibold transition-colors ${
                   active === key
                     ? 'border-[var(--ink)] bg-[var(--ink)] text-[var(--shell)]'
                     : 'border-[var(--hairline)] text-[var(--ink-2)] hover:border-[var(--brass)] hover:text-[var(--ink)]'
@@ -152,7 +152,7 @@ export default function ComparisonSection() {
             type="button"
             onClick={() => setExpanded((open) => !open)}
             aria-expanded={expanded}
-            className="group inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap border-[1.5px] border-[var(--brass)] bg-transparent font-sans font-bold text-[var(--brass)] transition-[background-color,transform,color] duration-[250ms] ease-out hover:bg-[var(--brass)] hover:text-[var(--shell)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
+            className="group flex w-full cursor-pointer items-center justify-center gap-2 whitespace-nowrap border-[1.5px] border-[var(--brass)] bg-transparent font-sans font-bold text-[var(--brass)] transition-[background-color,transform,color] duration-[250ms] ease-out hover:bg-[var(--brass)] hover:text-[var(--shell)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] md:inline-flex md:w-auto"
             style={{ borderRadius: 'var(--radius-pill)', padding: '15px 32px', fontSize: '14.5px' }}
           >
             {expanded ? 'Suprapune-le la loc' : 'Compară-le una lângă alta'}
@@ -174,8 +174,7 @@ export default function ComparisonSection() {
                 animate={{ opacity: 1 }}
                 exit={reduceMotion ? undefined : { opacity: 0 }}
                 transition={{ duration: 0.28, ease: 'easeOut' }}
-                className="grid grid-cols-1 md:grid-cols-2"
-                style={{ gap: 20 }}
+                className="grid grid-cols-1 gap-[14px] md:grid-cols-2 md:gap-5"
               >
                 {/* Expanded: no rotation, no scale, and the "before" card drops its desaturation. */}
                 <Frame src={pair.before} alt={`Versiunea înainte pentru ${pair.label}`} tone="before" />
@@ -190,7 +189,7 @@ export default function ComparisonSection() {
                 transition={{ duration: 0.28, ease: 'easeOut' }}
                 onHoverStart={() => setHovered(true)}
                 onHoverEnd={() => setHovered(false)}
-                className="relative mx-auto w-[86%]"
+                className="comparison-stack relative mx-auto w-[86%]"
               >
                 {/* Back card: offset, rotated, desaturated so the front one clearly reads as "after". */}
                 <motion.div
