@@ -526,7 +526,13 @@ export default function CinematicHero() {
       {header}
       {menuOverlay}
 
-      <div className="hidden lg:block">
+      {/* This wrapper's own height must track the section's h-screen/h-[320vh]
+          exactly. It sits between the section and the sticky child; without an
+          explicit height it would auto-size to the sticky child's own height
+          (a plain sticky box still occupies normal-flow space), leaving no
+          extra scroll room for the child to stay pinned while the page
+          scrolls — breaking the whole scroll-jack effect on desktop. */}
+      <div className="hidden h-full lg:block">
       <div
         className="sticky top-0 h-screen overflow-hidden"
         style={{
