@@ -198,26 +198,6 @@
     overscroll-behavior-y: none;
   }
 
-  /* app/page.tsx sets `overflow-x: clip` inline on <main> to suppress
-     horizontal scroll from decorative absolutely-positioned elements. Per the
-     CSS Overflow spec, ANY non-'visible' overflow-x turns an element into a
-     "scroll container" — which silently breaks every `position: sticky`
-     descendant on the page (CinematicHero's scrub stage, the scene-sticky
-     sections), because they end up sticking relative to <main>'s own
-     non-scrolling box instead of the real viewport. Moving the same
-     protection to html/body — the actual root scroller — keeps horizontal
-     overflow clipped without that side effect, then the !important below
-     overrides the inline value so <main> stops being a scroll container.
-     Overriding is safe here because there is exactly one <main> on the page. */
-  html,
-  body {
-    overflow-x: clip;
-  }
-
-  main {
-    overflow-x: visible !important;
-  }
-
   a,
   button {
     transition-duration: 250ms;
