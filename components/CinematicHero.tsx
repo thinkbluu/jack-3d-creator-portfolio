@@ -1,8 +1,16 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { motion, useMotionTemplate, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion'
-import { Building2, Check, Layers3, Menu, Scissors, ShoppingCart, X } from 'lucide-react'
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useScroll,
+  useSpring,
+  useTransform,
+  type MotionValue,
+} from 'framer-motion'
+import { ArrowDown, Building2, Check, Layers3, Menu, Scissors, ShoppingCart, X } from 'lucide-react'
 import ContactButton from './ContactButton'
 import ScrubStage from './ScrubStage'
 import { useSegment, type Segment } from './SegmentContext'
@@ -41,6 +49,47 @@ const stats: Array<{ value: string; label: string }> = [
 ]
 
 const EASE = [0.22, 1, 0.36, 1] as const
+
+// Standard CSS cubic-bezier(x1,y1,x2,y2) evaluated at a given progress `x`
+// via Newton-Raphson, so the skip-intro scroll can reuse the exact same
+// easing curve as the rest of the site without depending on
+// `scroll-behavior: smooth` (which would apply globally to every anchor).
+function makeCubicBezierEasing(x1: number, y1: number, x2: number, y2: number) {
+  const sampleCurveX = (t: number) => 3 * (1 - t) * (1 - t) * t * x1 + 3 * (1 - t) * t * t * x2 + t ** 3
+  const sampleCurveY = (t: number) => 3 * (1 - t) * (1 - t) * t * y1 + 3 * (1 - t) * t * t * y2 + t ** 3
+  const sampleCurveDerivativeX = (t: number) =>
+    3 * (1 - t) * (1 - t) * x1 + 6 * (1 - t) * t * (x2 - x1) + 3 * t * t * (1 - x2)
+
+  return (x: number) => {
+    if (x <= 0) return 0
+    if (x >= 1) return 1
+    let t = x
+    for (let i = 0; i < 8; i++) {
+      const currentX = sampleCurveX(t) - x
+      if (Math.abs(currentX) < 1e-6) break
+      const slope = sampleCurveDerivativeX(t)
+      if (Math.abs(slope) < 1e-6) break
+      t -= currentX / slope
+    }
+    return sampleCurveY(t)
+  }
+}
+
+const skipScrollEase = makeCubicBezierEasing(0.22, 1, 0.36, 1)
+
+// `<html>` has a global `scroll-behavior: smooth`, which also governs the
+// default (`behavior: 'auto'`) case for `window.scrollTo`. Without this, the
+// browser would layer its own smooth animation on top of every frame of the
+// skip button's own eased rAF loop, wrecking the fixed 900ms timing. Toggling
+// scroll-behavior off for the instant of the call — a standard workaround —
+// keeps every other anchor on the page smooth while this one jump is instant.
+function scrollToInstant(top: number) {
+  const root = document.documentElement
+  const previous = root.style.scrollBehavior
+  root.style.scrollBehavior = 'auto'
+  window.scrollTo(0, top)
+  root.style.scrollBehavior = previous
+}
 
 // Three depth tiers of dust. Parallax lives on the tier wrapper, the slow upward
 // drift lives on each dot, so the two transforms never fight each other.
@@ -108,6 +157,37 @@ function MastMark({ size }: { size: number }) {
       <line x1="50" y1="18" x2="80" y2="24" />
       <path d="M50 18 L50 46 L21 46 Z" />
     </svg>
+  )
+}
+
+function SkipIntroButton({
+  opacity,
+  pointerEvents,
+  onSkip,
+}: {
+  opacity: MotionValue<number>
+  pointerEvents: MotionValue<'auto' | 'none'>
+  onSkip: () => void
+}) {
+  return (
+    <motion.button
+      type="button"
+      onClick={onSkip}
+      aria-label="Sari peste secvența de intro"
+      className="absolute z-20 flex items-center gap-1.5 rounded-[var(--radius-pill)] border border-[var(--glass-edge)] text-[12px] font-semibold uppercase tracking-[0.12em] text-[var(--ink-2)] transition-[background-color,color,transform] duration-200 ease-out hover:-translate-y-px hover:bg-[rgba(250,247,242,0.95)] hover:text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
+      style={{
+        bottom: 'clamp(24px, 4vh, 40px)',
+        right: 'clamp(24px, 4vw, 48px)',
+        background: 'rgba(250, 247, 242, 0.82)',
+        backdropFilter: 'blur(12px)',
+        padding: '10px 20px',
+        opacity,
+        pointerEvents,
+      }}
+    >
+      Sari peste intro
+      <ArrowDown aria-hidden="true" size={13} />
+    </motion.button>
   )
 }
 
@@ -279,6 +359,93 @@ export default function CinematicHero() {
   // Title card: in fast, holds, then clears well before the panel begins its reveal.
   const titleOpacity = useTransform(progress, [0, 0.04, 0.14, 0.24], [0, 1, 1, 0])
 
+  // Skip-intro button visibility, driven off scroll progress rather than
+  // state: pointless before the sequence gets going, pointless again once
+  // the panel has already taken over.
+  const skipOpacity = useTransform(progress, [0, 0.02, 0.06, 0.7, 0.78], [0, 0, 1, 1, 0])
+  const skipPointerEvents = useTransform(skipOpacity, (value) => (value < 0.1 ? 'none' : 'auto'))
+
+  // Whether this session already skipped the intro once — read after mount
+  // only, so there is no SSR/client mismatch on first paint.
+  const [introSkipped, setIntroSkipped] = useState(false)
+  useEffect(() => {
+    try {
+      setIntroSkipped(sessionStorage.getItem('mast-intro-skipped') === '1')
+    } catch {
+      setIntroSkipped(false)
+    }
+  }, [])
+
+  // Returning mid-session after a skip: jump straight to the end of the rig
+  // (panel already visible) instead of replaying the whole sequence. Waits a
+  // frame so the 320vh cinematic height has actually painted before measuring it.
+  useEffect(() => {
+    if (!cinematic || !introSkipped) return
+    const frame = requestAnimationFrame(() => {
+      const rig = sectionRef.current
+      if (!rig) return
+      const target = rig.offsetTop + rig.offsetHeight - window.innerHeight
+      scrollToInstant(target)
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [cinematic, introSkipped])
+
+  // Custom rAF-driven scroll for the skip button: fixed 900ms so it never
+  // takes seconds to cover the ~320vh rig, using the site's own easing curve
+  // instead of `scroll-behavior: smooth` (which would apply to every anchor
+  // on the page, not just this one).
+  const skipAnimationRef = useRef<number | null>(null)
+
+  const cancelSkipAnimation = useCallback(() => {
+    if (skipAnimationRef.current !== null) {
+      cancelAnimationFrame(skipAnimationRef.current)
+      skipAnimationRef.current = null
+    }
+  }, [])
+
+  // The animation cancels itself the moment the user intervenes.
+  useEffect(() => {
+    const stop = () => cancelSkipAnimation()
+    window.addEventListener('wheel', stop, { passive: true })
+    window.addEventListener('touchstart', stop, { passive: true })
+    return () => {
+      window.removeEventListener('wheel', stop)
+      window.removeEventListener('touchstart', stop)
+    }
+  }, [cancelSkipAnimation])
+
+  useEffect(() => cancelSkipAnimation, [cancelSkipAnimation])
+
+  const handleSkip = useCallback(() => {
+    const rig = sectionRef.current
+    if (!rig) return
+
+    try {
+      sessionStorage.setItem('mast-intro-skipped', '1')
+    } catch {
+      // sessionStorage may be unavailable (private mode, etc.) — skipping
+      // still works for this visit, it just won't be remembered.
+    }
+
+    const target = rig.offsetTop + rig.offsetHeight - window.innerHeight
+    const start = window.scrollY
+    const distance = target - start
+    const duration = 900
+    let startTime: number | null = null
+
+    cancelSkipAnimation()
+
+    const step = (now: number) => {
+      if (startTime === null) startTime = now
+      const elapsed = now - startTime
+      const t = Math.min(elapsed / duration, 1)
+      scrollToInstant(start + distance * skipScrollEase(t))
+      skipAnimationRef.current = t < 1 ? requestAnimationFrame(step) : null
+    }
+
+    skipAnimationRef.current = requestAnimationFrame(step)
+  }, [cancelSkipAnimation])
+
   const enter = (index: number) => ({
     initial: { opacity: 0, y: 18 },
     animate: { opacity: 1, y: 0 },
@@ -359,7 +526,13 @@ export default function CinematicHero() {
       {header}
       {menuOverlay}
 
-      <div className="hidden lg:block">
+      {/* This wrapper's own height must track the section's h-screen/h-[320vh]
+          exactly. It sits between the section and the sticky child; without an
+          explicit height it would auto-size to the sticky child's own height
+          (a plain sticky box still occupies normal-flow space), leaving no
+          extra scroll room for the child to stay pinned while the page
+          scrolls — breaking the whole scroll-jack effect on desktop. */}
+      <div className="hidden h-full lg:block">
       <div
         className="sticky top-0 h-screen overflow-hidden"
         style={{
@@ -532,6 +705,10 @@ export default function CinematicHero() {
             <span className="scrub-cue-line h-10 w-px" />
             <span className="kicker">Descoperă</span>
           </motion.div>
+        )}
+
+        {cinematic && !introSkipped && (
+          <SkipIntroButton opacity={skipOpacity} pointerEvents={skipPointerEvents} onSkip={handleSkip} />
         )}
       </div>
       </div>
