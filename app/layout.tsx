@@ -49,8 +49,8 @@ export const metadata: Metadata = {
     images: ['/twitter-image'],
   },
   icons: {
-    icon: [{ url: '/icon.svg', type: 'image/svg+xml' }, { url: '/icon-dark-32x32.png', media: '(prefers-color-scheme: dark)' }, { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' }],
-    apple: '/apple-icon.png',
+    icon: [{ url: '/icons/mast-mark-badge.svg', type: 'image/svg+xml' }],
+    apple: '/icons/mast-mark-badge.svg',
   },
   robots: {
     index: true,

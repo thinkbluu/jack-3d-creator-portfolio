@@ -138,28 +138,6 @@ const dustTiers: Array<{
   },
 ]
 
-// Minimal line-art mast glyph — mast, yard arm, and a single sail — drawn
-// inline so the title card has no dependency on a separate SVG asset file.
-function MastMark({ size }: { size: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 100 100"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2.5}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <line x1="50" y1="8" x2="50" y2="92" />
-      <line x1="30" y1="92" x2="70" y2="92" />
-      <line x1="50" y1="18" x2="80" y2="24" />
-      <path d="M50 18 L50 46 L21 46 Z" />
-    </svg>
-  )
-}
-
 function SkipIntroButton({
   opacity,
   pointerEvents,
@@ -457,8 +435,12 @@ export default function CinematicHero() {
   const header = (
     <header className="absolute inset-x-0 top-0 z-30">
       <nav aria-label="Navigație principală" className="site-container flex h-20 items-center justify-between">
-        <a href="#home" className="flex items-baseline gap-2 text-xl font-extrabold tracking-[0.16em] text-[var(--ink)]">
-          MAST <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-[var(--brass)]">Studio</span>
+        <a href="#home" className="flex items-center gap-2 text-[var(--ink)]">
+          <span aria-hidden="true" className="size-[22px] bg-[var(--brass)]" style={{ mask: "url('/icons/mast-mark.svg') center / contain no-repeat", WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat" }} />
+          <span className="flex items-baseline gap-2">
+            <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '20px' }}>MAST</span>
+            <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: '10px', letterSpacing: '.28em' }}>STUDIO</span>
+          </span>
         </a>
         <div className="hidden items-center gap-5 text-xs uppercase tracking-[0.16em] md:flex md:gap-8">
           <a href="#dovada" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Dovada</a>
@@ -490,8 +472,12 @@ export default function CinematicHero() {
       className="fixed inset-0 z-50 flex flex-col bg-[var(--shell)] md:hidden"
     >
       <div className="site-container flex h-20 items-center justify-between">
-        <a href="#home" onClick={closeMenu} className="flex items-baseline gap-2 text-xl font-extrabold tracking-[0.16em] text-[var(--ink)]">
-          MAST <span className="text-[10px] font-medium uppercase tracking-[0.28em] text-[var(--brass)]">Studio</span>
+        <a href="#home" onClick={closeMenu} className="flex items-center gap-2 text-[var(--ink)]">
+          <span aria-hidden="true" className="size-[22px] bg-[var(--brass)]" style={{ mask: "url('/icons/mast-mark.svg') center / contain no-repeat", WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat" }} />
+          <span className="flex items-baseline gap-2">
+            <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '20px' }}>MAST</span>
+            <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: '10px', letterSpacing: '.28em' }}>STUDIO</span>
+          </span>
         </a>
         <button
           ref={menuCloseRef}
@@ -599,9 +585,11 @@ export default function CinematicHero() {
             className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-3"
             style={{ opacity: titleOpacity, textShadow: '0 2px 24px rgba(250, 247, 242, 0.7)' }}
           >
-            <span className="text-[var(--brass)]">
-              <MastMark size={88} />
-            </span>
+            <span
+              aria-hidden="true"
+              className="size-[88px] bg-[var(--brass)]"
+              style={{ mask: "url('/icons/mast-mark.svg') center / contain no-repeat", WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat" }}
+            />
             <div className="flex flex-col items-center gap-1">
               <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '34px', color: 'var(--ink)' }}>
                 MAST
