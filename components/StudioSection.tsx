@@ -25,12 +25,6 @@ const principles = [
   },
 ]
 
-const stats = [
-  { value: '48h', label: 'de la conținut la site live' },
-  { value: '300€', label: 'site de prezentare, de la' },
-  { value: '50€', label: 'avans, se scade din preț' },
-]
-
 export default function StudioSection() {
   const reduceMotion = useReducedMotion()
   const riseY = reduceMotion ? 0 : 18
@@ -68,21 +62,6 @@ export default function StudioSection() {
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          className="studio-stats"
-          initial={{ opacity: 0, y: riseY }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration, delay: reduceMotion ? 0 : principles.length * 0.09, ease: EASE }}
-        >
-          {stats.map((stat) => (
-            <div key={stat.label} className="studio-stat">
-              <div className="studio-stat-value">{stat.value}</div>
-              <div className="studio-stat-label">{stat.label}</div>
-            </div>
-          ))}
-        </motion.div>
 
         <p className="mt-7 text-center text-sm text-[var(--ink-2)]">
           Scrii, răspundem. Direct.{' '}
