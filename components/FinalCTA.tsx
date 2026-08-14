@@ -59,7 +59,13 @@ export default function FinalCTA() {
           <p className="mt-5 font-sans text-xs font-medium text-[var(--ink-2)]">
             50 EUR avans · restul la livrare, dacă ești mulțumit
           </p>
-          <p className="mt-8 font-sans text-sm text-[var(--ink-3)]">Ai ajuns unde trebuia.</p>
+          <p className="mt-3 font-sans text-[13px] text-[var(--ink-3)]">
+            sau scrie-ne la{' '}
+            <a href="mailto:contact@maststudio.ro" className="underline decoration-[var(--brass)] underline-offset-4 transition-colors hover:text-[var(--ink)]">
+              contact@maststudio.ro
+            </a>
+          </p>
+          <p className="mt-8 font-sans text-sm text-[var(--ink-2)]">Ai ajuns unde trebuia.</p>
         </FadeIn>
       </div>
     </section>

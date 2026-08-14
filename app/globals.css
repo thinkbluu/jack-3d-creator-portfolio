@@ -203,6 +203,36 @@
     transition-duration: 250ms;
     transition-timing-function: ease-out;
   }
+
+  a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  [role='button']:focus-visible,
+  [tabindex]:not([tabindex='-1']):focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 3px;
+  }
+
+  /* Keep compact controls visually unchanged while giving every interactive
+     target the minimum 44px touch area required for keyboard and touch users. */
+  :where(button, [role='button']):not(.waypoint-control) {
+    min-height: 44px;
+  }
+
+  .waypoint-control {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  footer a {
+    padding-inline: 9px;
+    margin-inline: -9px;
+  }
 }
 
 .hero-chart-grid {
@@ -535,6 +565,11 @@ section[id] {
   .manifest-statement-text {
     text-shadow: 0 2px 16px rgba(250, 247, 242, 0.95), 0 0 40px rgba(250, 247, 242, 0.8);
   }
+}
+
+footer a {
+  min-width: 44px;
+  justify-content: center;
 }
 
 @media (max-width: 767px) {

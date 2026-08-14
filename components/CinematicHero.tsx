@@ -724,7 +724,7 @@ export default function CinematicHero() {
         <div className="flex flex-1 flex-col" style={{ padding: '28px 20px 32px' }}>
           <p className="kicker" style={{ fontSize: '10.5px', letterSpacing: '.18em' }}>Studio de web design · Timișoara</p>
 
-          <h1
+          <p
             className="mt-4 text-balance"
             style={{
               fontFamily: 'var(--font-display)',
@@ -736,7 +736,7 @@ export default function CinematicHero() {
             }}
           >
             Site-ul care îți aduce <span className="text-[var(--brass)]">clienți.</span>
-          </h1>
+          </p>
 
           <p
             className="mt-4"
