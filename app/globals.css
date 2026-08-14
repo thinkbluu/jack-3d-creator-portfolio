@@ -571,22 +571,6 @@ section[id] {
     scroll-padding-inline: 20px;
   }
 
-  /* Pins the overlapped comparison stack to a fixed height so the two
-     cards no longer size themselves off their native aspect ratio, which
-     otherwise grows too tall on narrow screens. */
-  .comparison-stack {
-    height: 260px;
-  }
-
-  .comparison-stack > * {
-    height: 100%;
-  }
-
-  .comparison-stack figure,
-  .comparison-stack img {
-    aspect-ratio: auto;
-    height: 100%;
-  }
 }
 
 @media (max-width: 767px) {
