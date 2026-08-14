@@ -7,9 +7,9 @@ import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 import TrackedLink from './TrackedLink'
 
 const pairs: Partial<Record<Segment, { before: string; after: string; label: string }>> = {
-  salon: { before: '/images/transform-before.png', after: '/images/transform-after.png', label: 'Salon' },
-  servicii: { before: '/images/before-instal.png', after: '/images/after-instal.png', label: 'Servicii' },
-  platforma: { before: '/images/before-nextvision.png', after: '/images/after-nextvision.png', label: 'Platformă' },
+  salon: { before: '/images/transform-before.webp', after: '/images/transform-after.webp', label: 'Salon' },
+  servicii: { before: '/images/before-instal.webp', after: '/images/after-instal.webp', label: 'Servicii' },
+  platforma: { before: '/images/before-nextvision.webp', after: '/images/after-nextvision.webp', label: 'Platformă' },
 }
 
 // Stacked-state placement. The hover nudge pushes each card 10px further along
