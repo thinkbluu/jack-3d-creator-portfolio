@@ -45,7 +45,7 @@ export default function FinalCTA() {
             Ne spui în două fraze ce faci. Primești azi oferta și lista de materiale. Poimâine ești live.
           </p>
           <p className="type-body mt-3 font-semibold text-[var(--ink)]">
-            Lucrăm cu maximum 4 proiecte noi pe lună. Rezervă-ți locul.
+            Răspundem în aceeași zi. Începem în 48 de ore de la avans.
           </p>
         </FadeIn>
 
@@ -57,7 +57,7 @@ export default function FinalCTA() {
             </span>
           </span>
           <p className="mt-5 font-sans text-xs font-medium text-[var(--ink-2)]">
-            50 EUR avans · restul doar când ești mulțumit · răspuns în aceeași zi
+            50 EUR avans · restul la livrare, dacă ești mulțumit
           </p>
           <p className="mt-8 font-sans text-sm text-[var(--ink-3)]">Ai ajuns unde trebuia.</p>
         </FadeIn>

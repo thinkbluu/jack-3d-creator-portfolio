@@ -673,7 +673,7 @@ export default function CinematicHero() {
 
           <motion.div {...enter(4)} className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
             <ContactButton hero label={segment ? 'Discută ruta potrivită' : 'Spune-ne ce construiești'} />
-            <p className="text-xs leading-relaxed text-[var(--ink-2)]">Răspundem direct pe WhatsApp. Fără formular, fără prezentare de vânzări.</p>
+            <p className="text-xs leading-relaxed text-[var(--ink-2)]">50 EUR avans · restul la livrare, dacă ești mulțumit</p>
           </motion.div>
 
           <motion.div style={{ marginTop: 'auto', ...(depth ? { x: statsX, y: statsY } : null) }}>
