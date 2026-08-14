@@ -401,6 +401,52 @@
   line-height: 1;
 }
 
+.studio-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 44px;
+  padding-top: 32px;
+  border-top: 1px solid var(--hairline);
+}
+
+.studio-stat {
+  border-left: 1px solid var(--hairline);
+  padding-inline: 12px;
+  text-align: center;
+}
+
+.studio-stat:first-child {
+  border-left: none;
+}
+
+.studio-stat-value {
+  color: var(--brass);
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 1;
+}
+
+.studio-stat-label {
+  margin-top: 6px;
+  color: var(--ink-3);
+  font-size: 12.5px;
+}
+
+@media (max-width: 767px) {
+  .studio-stats {
+    gap: 8px;
+  }
+
+  .studio-stat {
+    border-left: none;
+    padding-inline: 4px;
+  }
+
+  .studio-stat-value {
+    font-size: 26px;
+  }
+}
+
 .scene-rig {
   position: relative;
 }
