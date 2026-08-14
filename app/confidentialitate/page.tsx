@@ -11,7 +11,7 @@ export default function PrivacyPage() {
   return (
     <LegalPage eyebrow="Document juridic" title="Politica de confidențialitate" updated="14 iulie 2026">
       <LegalSection title="1. Cine suntem">
-        <p>Site-ul maststudio.ro este operat de MAST Consult S.R.L., cu sediul social în [DE COMPLETAT], CUI [DE COMPLETAT], număr Registrul Comerțului [DE COMPLETAT], denumită în continuare „MAST Studio”.</p>
+        <p>Site-ul maststudio.ro este operat de MAST Consult S.R.L., cu sediul social în Str. Victor Valcovici 19, cod 300503, Timișoara, județul Timiș, CUI RO49626121, număr Registrul Comerțului J2024000723352, denumită în continuare „MAST Studio”.</p>
         <p>Pentru întrebări despre datele tale ne poți contacta la <a className="text-[var(--brass)] underline-offset-4 hover:underline" href="mailto:contact@maststudio.ro">contact@maststudio.ro</a>.</p>
       </LegalSection>
       <LegalSection title="2. Ce date prelucrăm">

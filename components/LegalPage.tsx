@@ -31,9 +31,6 @@ export default function LegalPage({ eyebrow, title, updated, children }: LegalPa
           <h1 className="type-h1 text-balance">{title}</h1>
           <p className="type-body !text-[var(--ink-3)]">Ultima actualizare: {updated}</p>
         </header>
-        <aside className="rounded-2xl border border-[var(--glass-edge)] bg-[rgba(201,168,106,0.06)] p-5 text-sm leading-relaxed text-[var(--ink-2)]">
-          <strong className="text-[var(--ink)]">Înainte de publicare:</strong> completați sediul social, CUI și numărul de înregistrare la Registrul Comerțului. Aceste date nu sunt disponibile în proiect și nu au fost inventate.
-        </aside>
         {children}
       </article>
       <Footer />

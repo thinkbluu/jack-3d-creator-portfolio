@@ -11,7 +11,7 @@ export default function TermsPage() {
   return (
     <LegalPage eyebrow="Document juridic" title="Termeni și condiții" updated="14 iulie 2026">
       <LegalSection title="1. Operatorul site-ului">
-        <p>maststudio.ro este operat de MAST Consult S.R.L., sediu social [DE COMPLETAT], CUI [DE COMPLETAT], Registrul Comerțului [DE COMPLETAT], cu punct de contact la contact@maststudio.ro.</p>
+        <p>maststudio.ro este operat de MAST Consult S.R.L., cu sediul social în Str. Victor Valcovici 19, cod 300503, Timișoara, județul Timiș, CUI RO49626121, Registrul Comerțului J2024000723352, cu punct de contact la contact@maststudio.ro.</p>
       </LegalSection>
       <LegalSection title="2. Rolul site-ului">
         <p>Site-ul prezintă serviciile MAST Studio și facilitează solicitarea unei discuții sau oferte. Informațiile generale, prețurile „de la” și termenele orientative nu reprezintă singure o ofertă contractuală fermă.</p>

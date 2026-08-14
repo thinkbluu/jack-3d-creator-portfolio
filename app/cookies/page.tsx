@@ -10,7 +10,8 @@ export const metadata: Metadata = {
 export default function CookiesPage() {
   return (
     <LegalPage eyebrow="Document juridic" title="Politica privind cookie-urile" updated="14 iulie 2026">
-      <LegalSection title="1. Situația actuală">
+      <LegalSection title="1. Operator și situația actuală">
+        <p>Politica se aplică site-ului maststudio.ro, operat de MAST Consult S.R.L., cu sediul social în Str. Victor Valcovici 19, cod 300503, Timișoara, județul Timiș, CUI RO49626121 și număr Registrul Comerțului J2024000723352.</p>
         <p>În configurația actuală, maststudio.ro nu setează cookie-uri publicitare, nu creează profiluri de marketing și nu folosește cookie-uri pentru autentificare. De aceea nu afișăm un banner de consimțământ inutil.</p>
       </LegalSection>
       <LegalSection title="2. Măsurare fără profilare">
