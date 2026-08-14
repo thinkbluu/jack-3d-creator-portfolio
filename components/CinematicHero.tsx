@@ -205,8 +205,17 @@ function MirrorCard({
 export default function CinematicHero() {
   const sectionRef = useRef<HTMLElement | null>(null)
   const { segment, setSegment } = useSegment()
+  const [isDesktop, setIsDesktop] = useState(false)
   const [cinematic, setCinematic] = useState(false)
   const [depth, setDepth] = useState(false)
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 1024px)')
+    const updateViewport = () => setIsDesktop(mediaQuery.matches)
+    updateViewport()
+    mediaQuery.addEventListener('change', updateViewport)
+    return () => mediaQuery.removeEventListener('change', updateViewport)
+  }, [])
   const [menuOpen, setMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement | null>(null)
   const menuCloseRef = useRef<HTMLButtonElement | null>(null)
@@ -520,7 +529,8 @@ export default function CinematicHero() {
           (a plain sticky box still occupies normal-flow space), leaving no
           extra scroll room for the child to stay pinned while the page
           scrolls — breaking the whole scroll-jack effect on desktop. */}
-      <div className="hidden h-full lg:block">
+      {isDesktop && (
+      <div className="h-full">
       <div
         className="sticky top-0 h-screen overflow-hidden"
         style={{
@@ -534,7 +544,16 @@ export default function CinematicHero() {
           <ScrubStage clips={clips} progress={progress} />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src="/images/harbor-final.jpg" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" />
+          <img
+            src="/images/harbor-final.jpg"
+            alt=""
+            aria-hidden="true"
+            width={1600}
+            height={1000}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
         )}
 
         <motion.div
@@ -679,11 +698,13 @@ export default function CinematicHero() {
         )}
       </div>
       </div>
+      )}
 
       {/* Mobile/tablet layout (<1024px): normal vertical flow instead of the
           sticky, absolutely-positioned desktop panel — cinematic is always
           false at this width, so there is no scrub video to coordinate with. */}
-      <div className="flex min-h-[100dvh] flex-col bg-[var(--shell)] lg:hidden">
+      {!isDesktop && (
+      <div className="flex min-h-[100dvh] flex-col bg-[var(--shell)]">
         <div className="relative h-[42dvh] w-full shrink-0 overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -766,6 +787,7 @@ export default function CinematicHero() {
           </dl>
         </div>
       </div>
+      )}
     </section>
   )
 }
