@@ -36,11 +36,11 @@ const options: Array<{ id: Segment; eyebrow: string; title: string; icon: typeof
 ]
 
 const subheads: Record<Segment | 'default', string> = {
-  default: 'Spune-ne ce construiești. Îți arătăm drumul cel mai scurt spre un site care produce rezultate.',
-  salon: 'Transformăm atenția în programări, cu o experiență clară și rapidă pentru clienții salonului tău.',
-  servicii: 'Punem valoarea serviciilor tale în cuvinte și pagini care inspiră încredere și generează cereri.',
-  ecommerce: 'Un magazin online care convertește: catalog, plăți, comenzi și facturare, fără abandon de coș.',
-  platforma: 'Clarificăm produsul, fluxurile și tehnologia pentru o platformă pregătită să crească.',
+  default: 'Site de prezentare de la 300 EUR, livrat în 48 de ore. Avans 50 EUR, restul doar dacă ești mulțumit.',
+  salon: 'Rezervări online non-stop și mai puține programări ratate. De la 300 EUR, live în 48 de ore.',
+  servicii: 'Un site care aduce cereri de ofertă, nu doar vizite. De la 300 EUR, live în 48 de ore.',
+  ecommerce: 'Magazin online complet: catalog, plăți, comenzi. De la 900 EUR, live în 7 zile.',
+  platforma: 'Aplicația sau platforma ta, de la idee la primii utilizatori. Ofertă personalizată în 24h.',
 }
 
 const stats: Array<{ value: string; label: string }> = [
@@ -186,13 +186,14 @@ function MirrorCard({
       type="button"
       aria-pressed={selected}
       onClick={onSelect}
-      className={`flex flex-col justify-between gap-2 rounded-[12px] border text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] ${compact ? 'min-h-[76px] p-3' : 'min-h-24 p-3'} ${selected ? 'border-[var(--brass)] bg-[var(--brass)] text-[var(--shell)]' : 'border-[var(--glass-edge)] bg-[rgba(245,241,232,0.05)] text-[var(--ink)] hover:border-[var(--glass-edge)]'}`}
+      className={`relative flex flex-col justify-between gap-2 rounded-[12px] border text-left text-[var(--ink)] transition-[background-color,border-color,transform] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] ${compact ? 'min-h-[76px] p-3' : 'min-h-24 p-3'} ${selected ? '-translate-y-0.5 border-[1.5px] border-[var(--brass)] bg-[rgba(176,141,63,0.10)]' : 'border-[var(--glass-edge)] bg-[rgba(245,241,232,0.05)] hover:border-[var(--glass-edge)]'}`}
     >
-      <span className={`flex size-8 items-center justify-center rounded-[8px] border ${selected ? 'border-[var(--shell)]/30' : 'border-[var(--glass-edge)] text-[var(--brass)]'}`}>
+      {selected && <span aria-hidden="true" className="absolute right-2 top-2 size-2 rounded-full bg-[var(--brass)]" />}
+      <span className={`flex size-8 items-center justify-center rounded-[8px] border ${selected ? 'border-[var(--brass)] text-[var(--brass)]' : 'border-[var(--glass-edge)] text-[var(--brass)]'}`}>
         {selected ? <Check aria-hidden="true" size={16} /> : <Icon aria-hidden="true" size={16} />}
       </span>
       <span className="flex flex-col gap-0.5">
-        <span className={`uppercase tracking-[0.2em] ${compact ? 'text-[11px]' : 'text-[9px]'} ${selected ? 'text-[var(--shell)]/70' : 'text-[var(--brass)]'}`}>{option.eyebrow}</span>
+        <span className={`uppercase tracking-[0.2em] text-[var(--brass)] ${compact ? 'text-[11px]' : 'text-[9px]'}`}>{option.eyebrow}</span>
         <span className={`font-semibold leading-tight ${compact ? 'text-[13px]' : 'text-sm'}`}>{option.title}</span>
       </span>
     </button>
@@ -638,8 +639,8 @@ export default function CinematicHero() {
           </motion.div>
 
           <motion.div {...enter(4)} className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-            <ContactButton hero label={segment ? 'Discută ruta potrivită' : 'Spune-ne ce construiești'} />
-            <p className="text-xs leading-relaxed text-[var(--ink-2)]">50 EUR avans · restul la livrare, dacă ești mulțumit</p>
+            <ContactButton hero label="Cere ofertă pe WhatsApp" />
+            <p className="text-xs leading-relaxed text-[var(--ink-2)]">50 EUR avans · restul la livrare, dacă ești mulțumit · răspuns în aceeași zi</p>
           </motion.div>
 
           <motion.div style={{ marginTop: 'auto', ...(depth ? { x: statsX, y: statsY } : null) }}>
@@ -724,10 +725,10 @@ export default function CinematicHero() {
           </div>
 
           <div className="mast-cta-full mt-5">
-            <ContactButton hero label={segment ? 'Discută ruta potrivită' : 'Spune-ne ce construiești'} />
+            <ContactButton hero label="Cere ofertă pe WhatsApp" />
           </div>
           <p className="mt-3 text-center text-[11.5px] leading-relaxed text-[var(--ink-2)]">
-            Răspundem direct pe WhatsApp. Fără formular, fără prezentare de vânzări.
+            50 EUR avans · restul la livrare, dacă ești mulțumit · răspuns în aceeași zi
           </p>
 
           <dl className="mt-6 grid grid-cols-2">
