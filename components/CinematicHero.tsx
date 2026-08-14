@@ -328,19 +328,18 @@ export default function CinematicHero() {
 
   const tint = useTransform(progress, [0, 0.35, 0.5, 0.75, 1], [0.1, 0.1, 0, 0.18, 0.18])
   const tintBackground = useMotionTemplate`rgba(250, 247, 242, ${tint})`
-  // Panel stays hidden and non-interactive through the title-card beat, then
-  // lifts in once for the rest of the scrub — no more early show/mid-hide.
-  const panelOpacity = useTransform(progress, [0, 0.72, 0.85, 1], [0, 0, 1, 1])
-  const panelY = useTransform(progress, [0, 0.72, 0.85, 1], [28, 28, 0, 0])
-  const panelPointerEvents = useTransform(progress, (value) => (value < 0.72 ? 'none' : 'auto'))
+  // Panel stays hidden and non-interactive through the establishing shot,
+  // then lifts in for the rest of the scrub — reveal now lands a scroll
+  // earlier so the commercial message arrives sooner.
+  const panelOpacity = useTransform(progress, [0, 0.55, 0.68, 1], [0, 0, 1, 1])
+  const panelY = useTransform(progress, [0, 0.55, 0.68, 1], [28, 28, 0, 0])
+  const panelPointerEvents = useTransform(progress, (value) => (value < 0.55 ? 'none' : 'auto'))
   const cueOpacity = useTransform(progress, [0, 0.06], [1, 0])
-  // Title card: in fast, holds, then clears well before the panel begins its reveal.
-  const titleOpacity = useTransform(progress, [0, 0.04, 0.14, 0.24], [0, 1, 1, 0])
 
-  // Skip-intro button visibility, driven off scroll progress rather than
-  // state: pointless before the sequence gets going, pointless again once
+  // Skip-intro button is visible from the very first frame — a visitor
+  // arriving from an ad must be able to skip immediately — and clears once
   // the panel has already taken over.
-  const skipOpacity = useTransform(progress, [0, 0.02, 0.06, 0.7, 0.78], [0, 0, 1, 1, 0])
+  const skipOpacity = useTransform(progress, [0, 0.6, 0.68], [1, 1, 0])
   const skipPointerEvents = useTransform(skipOpacity, (value) => (value < 0.1 ? 'none' : 'auto'))
 
   // Whether this session already skipped the intro once — read after mount
@@ -575,39 +574,6 @@ export default function CinematicHero() {
         )}
 
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-[linear-gradient(180deg,rgba(250,247,242,0.82)_0%,transparent_100%)]" />
-
-        {cinematic && (
-          // Fades in first over the establishing shot, clears well before the
-          // panel starts its own reveal — never rendered on the static fallback,
-          // where the nav wordmark already carries the brand.
-          <motion.div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-3"
-            style={{ opacity: titleOpacity, textShadow: '0 2px 24px rgba(250, 247, 242, 0.7)' }}
-          >
-            <span
-              aria-hidden="true"
-              className="size-[88px] bg-[var(--brass)]"
-              style={{ mask: "url('/icons/mast-mark.svg') center / contain no-repeat", WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat" }}
-            />
-            <div className="flex flex-col items-center gap-1">
-              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '34px', color: 'var(--ink)' }}>
-                MAST
-              </span>
-              <span
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontWeight: 500,
-                  fontSize: '12px',
-                  letterSpacing: '.3em',
-                  color: 'var(--ink-2)',
-                }}
-              >
-                STUDIO
-              </span>
-            </div>
-          </motion.div>
-        )}
 
         <motion.div
           className="porthole absolute z-10 w-[min(680px,calc(100%-2rem))]"

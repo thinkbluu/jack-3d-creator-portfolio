@@ -89,7 +89,7 @@ export default function Page() {
             <SceneLayer
               poster="/images/scene-table-poster.jpg"
               video="/images/scene-table.mp4"
-              overlay={0.52}
+              overlay={0.5}
               blurPx={3}
               fade={tableFade}
             />
@@ -110,7 +110,7 @@ export default function Page() {
             <SceneLayer
               poster="/images/scene-compass-poster.jpg"
               video="/images/scene-compass.mp4"
-              overlay={0.24}
+              overlay={0.22}
               blurPx={2}
               fade={compassFade}
             />
