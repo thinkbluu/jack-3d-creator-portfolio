@@ -6,7 +6,7 @@ import ChartKicker from './ChartKicker'
 import TrackedLink from './TrackedLink'
 import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 
-const services = [
+export const services = [
   {
     name: 'Site de prezentare',
     description: 'Cartea ta de vizită online: cine ești, ce faci și de ce să te aleagă. Cu buton direct de WhatsApp și textele scrise de noi.',
@@ -67,6 +67,45 @@ function OfferAffordance() {
   )
 }
 
+const serviceItemListJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: services.map((service, position) => ({
+    '@type': 'ListItem',
+    position: position + 1,
+    item: {
+      '@type': 'Service',
+      name: service.name,
+      description: service.description,
+      provider: { '@id': 'https://maststudio.ro/#business' },
+      areaServed: [
+        { '@type': 'City', name: 'Timișoara' },
+        { '@type': 'Country', name: 'România' },
+      ],
+      ...(service.name === 'Site de prezentare' || service.name === 'Magazin online'
+        ? {
+            offers: {
+              '@type': 'Offer',
+              priceSpecification: {
+                '@type': 'PriceSpecification',
+                minPrice: service.name === 'Site de prezentare' ? 300 : 900,
+                priceCurrency: 'EUR',
+              },
+            },
+          }
+        : {
+            offers: {
+              '@type': 'Offer',
+              priceSpecification: {
+                '@type': 'PriceSpecification',
+                description: 'Ofertă personalizată',
+              },
+            },
+          }),
+    },
+  })),
+}
+
 export default function ServicesSection() {
   const { segment } = useSegment()
   const recommendedName: Record<Segment, string> = {
@@ -78,6 +117,7 @@ export default function ServicesSection() {
 
   return (
     <section id="servicii" className="scene-section">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceItemListJsonLd).replace(/</g, '\\u003c') }} />
       <div className="porthole scene-panel">
         <FadeIn>
           <ChartKicker label="Servicii" />

@@ -31,6 +31,30 @@ const organizationJsonLd = {
   },
 }
 
+const businessJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': 'https://maststudio.ro/#business',
+  name: 'MAST Studio',
+  image: 'https://maststudio.ro/opengraph-image',
+  url: 'https://maststudio.ro',
+  telephone: '+40755928029',
+  email: 'contact@maststudio.ro',
+  priceRange: '€€',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Timișoara',
+    addressRegion: 'Timiș',
+    addressCountry: 'RO',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Timișoara' },
+    { '@type': 'Country', name: 'România' },
+  ],
+  knowsLanguage: ['ro', 'en'],
+  sameAs: [],
+}
+
 const SPRING = { stiffness: 80, damping: 26 } as const
 // Ramp in over the first 20% of the rig's travel, hold, then ramp out over the last 20%.
 const FADE_STOPS = [0, 0.2, 0.8, 1]
@@ -56,6 +80,7 @@ export default function Page() {
     <SegmentProvider>
       <main className="relative bg-[var(--shell)]" style={{ overflowX: 'clip' }}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, '\\u003c') }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd).replace(/</g, '\\u003c') }} />
         <CinematicHero />
 
         <div ref={tableRigRef} className="scene-rig">

@@ -206,7 +206,7 @@ export default function ComparisonSection() {
                     borderRadius: 'var(--radius-card)',
                   }}
                 >
-                  <Frame src={pair.before} alt="" tone="before" dimmed />
+                  <Frame src={pair.before} alt={`Site de ${pair.label.toLowerCase()} înainte de redesign`} tone="before" dimmed />
                 </motion.div>
 
                 {/* Front card stays in flow so it defines the stack height. */}
