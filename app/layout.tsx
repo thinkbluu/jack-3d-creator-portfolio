@@ -67,6 +67,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ro" className={`${dmSans.variable} ${fraunces.variable} bg-[var(--shell)]`}>
+      <head>
+        <link rel="preload" as="image" href="/images/harbor-final.jpg" fetchPriority="high" />
+      </head>
       <body className="bg-[var(--shell)] font-sans antialiased">
         <ScrollProgress />
         {children}
