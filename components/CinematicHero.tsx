@@ -10,7 +10,7 @@ import {
   useTransform,
   type MotionValue,
 } from 'framer-motion'
-import { ArrowDown, Building2, Check, Layers3, Menu, Scissors, ShoppingCart, X } from 'lucide-react'
+import { ArrowDown, Building2, Check, Layers3, Menu, Monitor, ShoppingCart, X } from 'lucide-react'
 import ContactButton from './ContactButton'
 import ScrubStage from './ScrubStage'
 import { getWaUrl, useSegment, type Segment } from './SegmentContext'
@@ -28,8 +28,8 @@ const clips = [
   { src: '/images/hero-02-arrival.mp4', poster: '/images/harbor-final.jpg' },
 ]
 
-const options: Array<{ id: Segment; eyebrow: string; title: string; icon: typeof Scissors }> = [
-  { id: 'salon', eyebrow: 'Programări', title: 'Vreau site de prezentare', icon: Scissors },
+const options: Array<{ id: Segment; eyebrow: string; title: string; icon: typeof Monitor }> = [
+  { id: 'salon', eyebrow: 'Site web', title: 'Vreau site de prezentare', icon: Monitor },
   { id: 'servicii', eyebrow: 'Cereri', title: 'Ofer servicii', icon: Building2 },
   { id: 'ecommerce', eyebrow: 'Vânzări', title: 'Vând produse', icon: ShoppingCart },
   { id: 'platforma', eyebrow: 'Produs digital', title: 'Construiesc o platformă', icon: Layers3 },
