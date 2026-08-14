@@ -29,7 +29,7 @@ const clips = [
 ]
 
 const options: Array<{ id: Segment; eyebrow: string; title: string; icon: typeof Scissors }> = [
-  { id: 'salon', eyebrow: 'Programări', title: 'Am un salon', icon: Scissors },
+  { id: 'salon', eyebrow: 'Programări', title: 'Vreau site de prezentare', icon: Scissors },
   { id: 'servicii', eyebrow: 'Cereri', title: 'Ofer servicii', icon: Building2 },
   { id: 'ecommerce', eyebrow: 'Vânzări', title: 'Vând produse', icon: ShoppingCart },
   { id: 'platforma', eyebrow: 'Produs digital', title: 'Construiesc o platformă', icon: Layers3 },
