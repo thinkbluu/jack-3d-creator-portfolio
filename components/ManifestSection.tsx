@@ -17,10 +17,10 @@ function ManifestPair({ other, statement }: { other: string; statement: ReactNod
   const [landed, setLanded] = useState(false)
 
   return (
-    <div className="manifest-pair flex flex-col justify-center gap-4 border-t border-[var(--hairline)] py-9 first:border-t-0 md:py-11">
+    <div className="manifest-pair-card flex flex-col justify-center gap-4">
       <p
-        className="manifest-other-text font-sans text-[clamp(0.95rem,1.5vw,1.15rem)] leading-relaxed text-[var(--ink-2)] transition-[opacity,filter] duration-500 ease-out"
-        style={landed && !reduceMotion ? { opacity: 0.32, filter: 'blur(1.5px)' } : undefined}
+        className="manifest-other-text transition-[opacity,filter] duration-500 ease-out"
+        style={landed && !reduceMotion ? { opacity: 0.4, filter: 'blur(1px)' } : undefined}
       >
         {other}
       </p>
@@ -42,17 +42,14 @@ export default function ManifestSection() {
   return (
     <>
       <section id="manifest" className="scene-section">
-        {/* No glass panel here: the manifesto reads straight off the scene,
-            carried by text-shadow instead of a backing plate. */}
         <div className="scene-panel">
           <ChartKicker label="Manifest" />
-          {pairs.map((pair) => (
-            <ManifestPair key={pair.other} other={pair.other} statement={pair.statement} />
-          ))}
-          <p
-            className="type-body mt-8 border-t border-[var(--hairline)] pt-8"
-            style={{ textShadow: '0 1px 12px rgba(250,247,242,0.9)' }}
-          >
+          <div className="manifest-pairs mt-8">
+            {pairs.map((pair) => (
+              <ManifestPair key={pair.other} other={pair.other} statement={pair.statement} />
+            ))}
+          </div>
+          <p className="manifest-pair-card type-body mt-5">
             Astea nu sunt promisiuni de marketing. Sunt clauze scrise în contract.
           </p>
         </div>

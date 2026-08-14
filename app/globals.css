@@ -367,6 +367,30 @@
   text-transform: uppercase;
 }
 
+/* Subtle backing plate per manifesto pair so the "Alții vs noi" contrast
+   reads over the table scene without becoming a full opaque panel. */
+.manifest-pairs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.manifest-pair-card {
+  background: rgba(250, 247, 242, 0.82);
+  backdrop-filter: blur(14px);
+  border-radius: var(--radius-card);
+  padding: 28px 32px;
+  max-width: 900px;
+  min-height: auto;
+  margin-inline: auto;
+}
+
+.manifest-other-text {
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  color: var(--ink-2);
+  font-weight: 500;
+}
+
 .porthole {
   background: var(--glass);
   backdrop-filter: blur(20px) saturate(1.1);
