@@ -13,7 +13,7 @@ import {
 import { ArrowDown, Building2, Check, Layers3, Menu, Scissors, ShoppingCart, X } from 'lucide-react'
 import ContactButton from './ContactButton'
 import ScrubStage from './ScrubStage'
-import { useSegment, type Segment } from './SegmentContext'
+import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 
 const navLinks: Array<{ href: string; label: string }> = [
   { href: '#dovada', label: 'Dovada' },
@@ -29,18 +29,20 @@ const clips = [
 ]
 
 const options: Array<{ id: Segment; eyebrow: string; title: string; icon: typeof Scissors }> = [
-  { id: 'salon', eyebrow: 'Programări', title: 'Am un salon', icon: Scissors },
+  { id: 'salon', eyebrow: 'Programări', title: 'Vreau site de prezentare', icon: Scissors },
   { id: 'servicii', eyebrow: 'Cereri', title: 'Ofer servicii', icon: Building2 },
   { id: 'ecommerce', eyebrow: 'Vânzări', title: 'Vând produse', icon: ShoppingCart },
   { id: 'platforma', eyebrow: 'Produs digital', title: 'Construiesc o platformă', icon: Layers3 },
 ]
 
+const auditWaUrl = getWaUrl(null, 'Salut! Vreau un audit gratuit pentru site-ul meu: ')
+
 const subheads: Record<Segment | 'default', string> = {
-  default: 'Spune-ne ce construiești. Îți arătăm drumul cel mai scurt spre un site care produce rezultate.',
-  salon: 'Transformăm atenția în programări, cu o experiență clară și rapidă pentru clienții salonului tău.',
-  servicii: 'Punem valoarea serviciilor tale în cuvinte și pagini care inspiră încredere și generează cereri.',
-  ecommerce: 'Un magazin online care convertește: catalog, plăți, comenzi și facturare, fără abandon de coș.',
-  platforma: 'Clarificăm produsul, fluxurile și tehnologia pentru o platformă pregătită să crească.',
+  default: 'Site de prezentare de la 300 EUR, livrat în 48 de ore. Avans 50 EUR, restul doar dacă ești mulțumit.',
+  salon: 'Rezervări online non-stop și mai puține programări ratate. De la 300 EUR, live în 48 de ore.',
+  servicii: 'Un site care aduce cereri de ofertă, nu doar vizite. De la 300 EUR, live în 48 de ore.',
+  ecommerce: 'Magazin online complet: catalog, plăți, comenzi. De la 900 EUR, live în 7 zile.',
+  platforma: 'Aplicația sau platforma ta, de la idee la primii utilizatori. Ofertă personalizată în 24h.',
 }
 
 const stats: Array<{ value: string; label: string }> = [
@@ -186,13 +188,14 @@ function MirrorCard({
       type="button"
       aria-pressed={selected}
       onClick={onSelect}
-      className={`flex flex-col justify-between gap-2 rounded-[12px] border text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] ${compact ? 'min-h-[76px] p-3' : 'min-h-24 p-3'} ${selected ? 'border-[var(--brass)] bg-[var(--brass)] text-[var(--shell)]' : 'border-[var(--glass-edge)] bg-[rgba(245,241,232,0.05)] text-[var(--ink)] hover:border-[var(--glass-edge)]'}`}
+      className={`relative flex flex-col justify-between gap-2 rounded-[12px] border text-left text-[var(--ink)] transition-[background-color,border-color,transform] duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] ${compact ? 'min-h-[76px] p-3' : 'min-h-24 p-3'} ${selected ? '-translate-y-0.5 border-[1.5px] border-[var(--brass)] bg-[rgba(176,141,63,0.10)]' : 'border-[var(--glass-edge)] bg-[rgba(245,241,232,0.05)] hover:border-[var(--glass-edge)]'}`}
     >
-      <span className={`flex size-8 items-center justify-center rounded-[8px] border ${selected ? 'border-[var(--shell)]/30' : 'border-[var(--glass-edge)] text-[var(--brass)]'}`}>
+      {selected && <span aria-hidden="true" className="absolute right-2 top-2 size-2 rounded-full bg-[var(--brass)]" />}
+      <span className={`flex size-8 items-center justify-center rounded-[8px] border ${selected ? 'border-[var(--brass)] text-[var(--brass)]' : 'border-[var(--glass-edge)] text-[var(--brass)]'}`}>
         {selected ? <Check aria-hidden="true" size={16} /> : <Icon aria-hidden="true" size={16} />}
       </span>
       <span className="flex flex-col gap-0.5">
-        <span className={`uppercase tracking-[0.2em] ${compact ? 'text-[11px]' : 'text-[9px]'} ${selected ? 'text-[var(--shell)]/70' : 'text-[var(--brass)]'}`}>{option.eyebrow}</span>
+        <span className={`uppercase tracking-[0.2em] text-[var(--brass)] ${compact ? 'text-[11px]' : 'text-[9px]'}`}>{option.eyebrow}</span>
         <span className={`font-semibold leading-tight ${compact ? 'text-[13px]' : 'text-sm'}`}>{option.title}</span>
       </span>
     </button>
@@ -328,19 +331,18 @@ export default function CinematicHero() {
 
   const tint = useTransform(progress, [0, 0.35, 0.5, 0.75, 1], [0.1, 0.1, 0, 0.18, 0.18])
   const tintBackground = useMotionTemplate`rgba(250, 247, 242, ${tint})`
-  // Panel stays hidden and non-interactive through the title-card beat, then
-  // lifts in once for the rest of the scrub — no more early show/mid-hide.
-  const panelOpacity = useTransform(progress, [0, 0.72, 0.85, 1], [0, 0, 1, 1])
-  const panelY = useTransform(progress, [0, 0.72, 0.85, 1], [28, 28, 0, 0])
-  const panelPointerEvents = useTransform(progress, (value) => (value < 0.72 ? 'none' : 'auto'))
+  // Panel stays hidden and non-interactive through the establishing shot,
+  // then lifts in for the rest of the scrub — reveal now lands a scroll
+  // earlier so the commercial message arrives sooner.
+  const panelOpacity = useTransform(progress, [0, 0.55, 0.68, 1], [0, 0, 1, 1])
+  const panelY = useTransform(progress, [0, 0.55, 0.68, 1], [28, 28, 0, 0])
+  const panelPointerEvents = useTransform(progress, (value) => (value < 0.55 ? 'none' : 'auto'))
   const cueOpacity = useTransform(progress, [0, 0.06], [1, 0])
-  // Title card: in fast, holds, then clears well before the panel begins its reveal.
-  const titleOpacity = useTransform(progress, [0, 0.04, 0.14, 0.24], [0, 1, 1, 0])
 
-  // Skip-intro button visibility, driven off scroll progress rather than
-  // state: pointless before the sequence gets going, pointless again once
+  // Skip-intro button is visible from the very first frame — a visitor
+  // arriving from an ad must be able to skip immediately — and clears once
   // the panel has already taken over.
-  const skipOpacity = useTransform(progress, [0, 0.02, 0.06, 0.7, 0.78], [0, 0, 1, 1, 0])
+  const skipOpacity = useTransform(progress, [0, 0.6, 0.68], [1, 1, 0])
   const skipPointerEvents = useTransform(skipOpacity, (value) => (value < 0.1 ? 'none' : 'auto'))
 
   // Whether this session already skipped the intro once — read after mount
@@ -576,39 +578,6 @@ export default function CinematicHero() {
 
         <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-[linear-gradient(180deg,rgba(250,247,242,0.82)_0%,transparent_100%)]" />
 
-        {cinematic && (
-          // Fades in first over the establishing shot, clears well before the
-          // panel starts its own reveal — never rendered on the static fallback,
-          // where the nav wordmark already carries the brand.
-          <motion.div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-3"
-            style={{ opacity: titleOpacity, textShadow: '0 2px 24px rgba(250, 247, 242, 0.7)' }}
-          >
-            <span
-              aria-hidden="true"
-              className="size-[88px] bg-[var(--brass)]"
-              style={{ mask: "url('/icons/mast-mark.svg') center / contain no-repeat", WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat" }}
-            />
-            <div className="flex flex-col items-center gap-1">
-              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '34px', color: 'var(--ink)' }}>
-                MAST
-              </span>
-              <span
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontWeight: 500,
-                  fontSize: '12px',
-                  letterSpacing: '.3em',
-                  color: 'var(--ink-2)',
-                }}
-              >
-                STUDIO
-              </span>
-            </div>
-          </motion.div>
-        )}
-
         <motion.div
           className="porthole absolute z-10 w-[min(680px,calc(100%-2rem))]"
           style={{
@@ -672,9 +641,19 @@ export default function CinematicHero() {
           </motion.div>
 
           <motion.div {...enter(4)} className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-            <ContactButton hero label={segment ? 'Discută ruta potrivită' : 'Spune-ne ce construiești'} />
-            <p className="text-xs leading-relaxed text-[var(--ink-2)]">Răspundem direct pe WhatsApp. Fără formular, fără prezentare de vânzări.</p>
+            <ContactButton hero label="Cere ofertă pe WhatsApp" />
+            <p className="text-xs leading-relaxed text-[var(--ink-2)]">50 EUR avans · restul la livrare, dacă ești mulțumit · răspuns în aceeași zi</p>
           </motion.div>
+
+          <motion.a
+            {...enter(4)}
+            href={auditWaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-block text-[13.5px] leading-relaxed text-[var(--ink-2)] underline-offset-4 hover:underline"
+          >
+            sau trimite-ne site-ul actual și îți spunem gratuit ce nu merge →
+          </motion.a>
 
           <motion.div style={{ marginTop: 'auto', ...(depth ? { x: statsX, y: statsY } : null) }}>
           <motion.dl {...enter(5)} className="mt-5 flex items-stretch gap-6">
@@ -724,7 +703,7 @@ export default function CinematicHero() {
         <div className="flex flex-1 flex-col" style={{ padding: '28px 20px 32px' }}>
           <p className="kicker" style={{ fontSize: '10.5px', letterSpacing: '.18em' }}>Studio de web design · Timișoara</p>
 
-          <h1
+          <p
             className="mt-4 text-balance"
             style={{
               fontFamily: 'var(--font-display)',
@@ -736,7 +715,7 @@ export default function CinematicHero() {
             }}
           >
             Site-ul care îți aduce <span className="text-[var(--brass)]">clienți.</span>
-          </h1>
+          </p>
 
           <p
             className="mt-4"
@@ -758,11 +737,19 @@ export default function CinematicHero() {
           </div>
 
           <div className="mast-cta-full mt-5">
-            <ContactButton hero label={segment ? 'Discută ruta potrivită' : 'Spune-ne ce construiești'} />
+            <ContactButton hero label="Cere ofertă pe WhatsApp" />
           </div>
           <p className="mt-3 text-center text-[11.5px] leading-relaxed text-[var(--ink-2)]">
-            Răspundem direct pe WhatsApp. Fără formular, fără prezentare de vânzări.
+            50 EUR avans · restul la livrare, dacă ești mulțumit · răspuns în aceeași zi
           </p>
+          <a
+            href={auditWaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 block text-center text-[13.5px] leading-relaxed text-[var(--ink-2)] underline-offset-4 hover:underline"
+          >
+            sau trimite-ne site-ul actual și îți spunem gratuit ce nu merge →
+          </a>
 
           <dl className="mt-6 grid grid-cols-2">
             {stats.map((stat, index) => (

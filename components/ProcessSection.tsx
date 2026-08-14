@@ -9,13 +9,13 @@ const steps = [
   },
   {
     number: '02',
-    title: 'Rezervi locul cu 50 EUR',
+    title: 'Rezervi locul cu avansul',
     description: 'Avansul se scade din preț și pornește lucrul: ne trimiți textele de bază, pozele și sigla, ghidat de lista noastră. De aici pornește cronometrul.',
   },
   {
     number: '03',
     title: 'Vezi site-ul live și decizi',
-    description: 'În 48 de ore pentru site-uri de prezentare, 7 zile pentru magazine. Îl vezi gata, pe internet, și plătești restul doar dacă ești mulțumit. Dacă nu, rămâi doar cu avansul și cu analiza făcută pentru tine.',
+    description: 'Îl vezi gata, pe internet, și plătești restul doar dacă ești mulțumit. Dacă nu, rămâi doar cu avansul și cu analiza făcută pentru tine.',
   },
 ]
 

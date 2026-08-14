@@ -25,7 +25,7 @@ export default function Footer() {
 
         <div className="flex flex-col gap-3 border-t border-[var(--hairline)] pt-6 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <p>© 2026 MAST Studio · MAST Consult S.R.L. · Timișoara</p>
+            <p>© 2026 MAST Studio · MAST Consult S.R.L. · CUI RO49626121 · Timișoara, România</p>
             <a href={PHONE_HREF} className={linkClass}>{PHONE_DISPLAY}</a>
             <a href={EMAIL_HREF} className={linkClass}>{EMAIL}</a>
           </div>

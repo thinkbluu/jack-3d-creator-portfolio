@@ -270,7 +270,7 @@ export default function PlottedRoute() {
           type="button"
           aria-label={`Mergi la ${waypoint.label}`}
           onClick={() => document.getElementById(waypoint.id)?.scrollIntoView({ behavior: 'smooth' })}
-          className="pointer-events-auto absolute flex h-6 w-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brass)]"
+          className="waypoint-control pointer-events-auto absolute flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--brass)]"
           style={{ left: waypoint.x, top: waypoint.y }}
         >
           {pings[index] > 0 && passed[index] ? (

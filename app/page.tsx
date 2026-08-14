@@ -6,7 +6,7 @@ import CinematicHero from '@/components/CinematicHero'
 import SceneLayer from '@/components/SceneLayer'
 import ComparisonSection from '@/components/ComparisonSection'
 import ManifestSection from '@/components/ManifestSection'
-import AboutSection from '@/components/AboutSection'
+import StudioSection from '@/components/StudioSection'
 import ServicesSection from '@/components/ServicesSection'
 import ProcessSection from '@/components/ProcessSection'
 import FAQSection from '@/components/FAQSection'
@@ -29,6 +29,30 @@ const organizationJsonLd = {
     addressLocality: 'Timișoara',
     addressCountry: 'RO',
   },
+}
+
+const businessJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': 'https://maststudio.ro/#business',
+  name: 'MAST Studio',
+  image: 'https://maststudio.ro/opengraph-image',
+  url: 'https://maststudio.ro',
+  telephone: '+40755928029',
+  email: 'contact@maststudio.ro',
+  priceRange: '€€',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Timișoara',
+    addressRegion: 'Timiș',
+    addressCountry: 'RO',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Timișoara' },
+    { '@type': 'Country', name: 'România' },
+  ],
+  knowsLanguage: ['ro', 'en'],
+  sameAs: [],
 }
 
 const SPRING = { stiffness: 80, damping: 26 } as const
@@ -56,6 +80,7 @@ export default function Page() {
     <SegmentProvider>
       <main className="relative bg-[var(--shell)]" style={{ overflowX: 'clip' }}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, '\\u003c') }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd).replace(/</g, '\\u003c') }} />
         <CinematicHero />
 
         <div ref={tableRigRef} className="scene-rig">
@@ -63,17 +88,18 @@ export default function Page() {
             <SceneLayer
               poster="/images/scene-table-poster.jpg"
               video="/images/scene-table.mp4"
-              overlay={0.52}
+              overlay={0.5}
               blurPx={3}
               fade={tableFade}
             />
           </div>
           <div className="scene-content">
+            <ServicesSection />
+            {/* Future proof evidence: replace demos with the first real named client project, an authentic before/after screenshot, and a testimonial. */}
             <ComparisonSection />
             <ManifestSection />
-            <AboutSection />
-            <ServicesSection />
             <ProcessSection />
+            <StudioSection />
             <FAQSection />
           </div>
         </div>
@@ -83,7 +109,7 @@ export default function Page() {
             <SceneLayer
               poster="/images/scene-compass-poster.jpg"
               video="/images/scene-compass.mp4"
-              overlay={0.24}
+              overlay={0.22}
               blurPx={2}
               fade={compassFade}
             />

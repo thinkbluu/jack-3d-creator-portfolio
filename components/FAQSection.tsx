@@ -54,7 +54,7 @@ const faqs: Array<[string, string]> = [
   ],
   [
     'Cum îmi dau seama dacă o firmă de web design e serioasă?',
-    'Cere trei lucruri: preț clar înainte să pornești, termen scris în contract și dovada că vezi rezultatul înainte să plătești tot. Dacă primești răspunsuri vagi la oricare, mergi mai departe. Noi le punem pe toate trei pe masă din primul mesaj.',
+    'Cere trei lucruri: preț clar înainte să pornești, termen scris în contract și dovada că vezi rezultatul înainte de plata finală. Dacă primești răspunsuri vagi la oricare, mergi mai departe. Noi le punem pe toate trei pe masă din primul mesaj.',
   ],
 ]
 
