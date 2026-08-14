@@ -13,7 +13,7 @@ import {
 import { ArrowDown, Building2, Check, Layers3, Menu, Scissors, ShoppingCart, X } from 'lucide-react'
 import ContactButton from './ContactButton'
 import ScrubStage from './ScrubStage'
-import { useSegment, type Segment } from './SegmentContext'
+import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 
 const navLinks: Array<{ href: string; label: string }> = [
   { href: '#dovada', label: 'Dovada' },
@@ -34,6 +34,8 @@ const options: Array<{ id: Segment; eyebrow: string; title: string; icon: typeof
   { id: 'ecommerce', eyebrow: 'Vânzări', title: 'Vând produse', icon: ShoppingCart },
   { id: 'platforma', eyebrow: 'Produs digital', title: 'Construiesc o platformă', icon: Layers3 },
 ]
+
+const auditWaUrl = getWaUrl(null, 'Salut! Vreau un audit gratuit pentru site-ul meu: ')
 
 const subheads: Record<Segment | 'default', string> = {
   default: 'Site de prezentare de la 300 EUR, livrat în 48 de ore. Avans 50 EUR, restul doar dacă ești mulțumit.',
@@ -643,6 +645,16 @@ export default function CinematicHero() {
             <p className="text-xs leading-relaxed text-[var(--ink-2)]">50 EUR avans · restul la livrare, dacă ești mulțumit · răspuns în aceeași zi</p>
           </motion.div>
 
+          <motion.a
+            {...enter(4)}
+            href={auditWaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-block text-[13.5px] leading-relaxed text-[var(--ink-2)] underline-offset-4 hover:underline"
+          >
+            sau trimite-ne site-ul actual și îți spunem gratuit ce nu merge →
+          </motion.a>
+
           <motion.div style={{ marginTop: 'auto', ...(depth ? { x: statsX, y: statsY } : null) }}>
           <motion.dl {...enter(5)} className="mt-5 flex items-stretch gap-6">
             {stats.map((stat, index) => (
@@ -730,6 +742,14 @@ export default function CinematicHero() {
           <p className="mt-3 text-center text-[11.5px] leading-relaxed text-[var(--ink-2)]">
             50 EUR avans · restul la livrare, dacă ești mulțumit · răspuns în aceeași zi
           </p>
+          <a
+            href={auditWaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 block text-center text-[13.5px] leading-relaxed text-[var(--ink-2)] underline-offset-4 hover:underline"
+          >
+            sau trimite-ne site-ul actual și îți spunem gratuit ce nu merge →
+          </a>
 
           <dl className="mt-6 grid grid-cols-2">
             {stats.map((stat, index) => (

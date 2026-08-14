@@ -9,6 +9,7 @@ import ManifestSection from '@/components/ManifestSection'
 import AboutSection from '@/components/AboutSection'
 import StudioSection from '@/components/StudioSection'
 import ServicesSection from '@/components/ServicesSection'
+import PricingSection from '@/components/PricingSection'
 import ProcessSection from '@/components/ProcessSection'
 import FAQSection from '@/components/FAQSection'
 import FinalCTA from '@/components/FinalCTA'
@@ -100,6 +101,7 @@ export default function Page() {
             <AboutSection />
             <StudioSection />
             <ServicesSection />
+            <PricingSection />
             <ProcessSection />
             <FAQSection />
           </div>
