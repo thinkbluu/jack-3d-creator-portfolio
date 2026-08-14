@@ -95,6 +95,7 @@ export default function Page() {
           </div>
           <div className="scene-content">
             <ServicesSection />
+            {/* Future proof evidence: replace demos with the first real named client project, an authentic before/after screenshot, and a testimonial. */}
             <ComparisonSection />
             <ManifestSection />
             <ProcessSection />

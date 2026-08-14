@@ -61,15 +61,23 @@ export default function StudioSection() {
           ))}
         </div>
 
+        <p className="mt-7 border-t border-[var(--hairline)] pt-7 text-center text-[14px] text-[var(--ink-2)]">
+          Site-ul pe care ești acum a fost construit după aceleași reguli.{' '}
+          <a
+            href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fmaststudio.ro"
+            target="_blank"
+            rel="noopener"
+            className="text-[var(--brass)] underline-offset-4 hover:underline"
+          >
+            Testează-i viteza →
+          </a>
+        </p>
+
         <p className="mt-7 text-center text-sm text-[var(--ink-2)]">
           Scrii, răspundem. Direct.{' '}
-          <a href={PHONE_HREF} className="transition-colors hover:text-[var(--brass)]">
-            {PHONE_DISPLAY}
-          </a>
+          <a href={PHONE_HREF} className="transition-colors hover:text-[var(--brass)]">{PHONE_DISPLAY}</a>
           {' · '}
-          <a href={EMAIL_HREF} className="transition-colors hover:text-[var(--brass)]">
-            {EMAIL}
-          </a>
+          <a href={EMAIL_HREF} className="transition-colors hover:text-[var(--brass)]">{EMAIL}</a>
         </p>
       </div>
     </section>

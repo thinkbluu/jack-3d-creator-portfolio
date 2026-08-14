@@ -11,24 +11,28 @@ export const services = [
     name: 'Site de prezentare',
     description: 'Cartea ta de vizită online: cine ești, ce faci și de ce să te aleagă. Cu buton direct de WhatsApp și textele scrise de noi.',
     price: 'de la 300 EUR · live în 48 de ore',
+    guarantee: 'Prima rundă de modificări inclusă',
     message: 'Salut! Vreau un site de prezentare, livrat în 48 de ore. Îmi poți face o ofertă?',
   },
   {
     name: 'Magazin online',
     description: 'Vinzi non-stop: catalog, plată cu cardul, comenzi și facturi automate. Totul legat și explicat pe înțelesul tău.',
     price: 'de la 900 EUR · live în 7 zile',
+    guarantee: 'Prima rundă de modificări inclusă',
     message: 'Salut! Vreau un magazin online. Îmi poți face o ofertă?',
   },
   {
     name: 'Aplicații web și mobile',
     description: 'Ai un proces care îți mănâncă timpul? Îl transformăm într-o aplicație pe care echipa și clienții tăi o folosesc cu plăcere.',
     price: 'ofertă personalizată, în 24h',
+    guarantee: 'Ofertă fixă, fără costuri surpriză',
     message: 'Salut! Am nevoie de o aplicație web sau mobilă. Putem discuta?',
   },
   {
     name: 'Platforme și SaaS',
     description: 'De la schiță la platformă cu conturi, abonamente și plăți. Construim produsul, nu doar site-ul lui.',
     price: 'ofertă personalizată, în 24h',
+    guarantee: 'Ofertă fixă, fără costuri surpriză',
     message: 'Salut! Vreau să construim o platformă personalizată. Putem discuta?',
   },
 ]
@@ -145,6 +149,7 @@ export default function ServicesSection() {
                   <h3 className="type-h3">{service.name}</h3>
                   <p className="type-body mt-2 text-[0.95rem]">{service.description}</p>
                   <PriceLine>{service.price}</PriceLine>
+                  <p className="mt-2 font-sans text-[12.5px] text-[var(--ink-3)]">{service.guarantee}</p>
                   <span className="mt-auto">
                     <OfferAffordance />
                   </span>
