@@ -42,9 +42,7 @@ export default function StudioSection() {
           <ChartKicker label="Studioul" />
           <h2 className="type-h2 text-balance">Un studio mic, cu procese de firmă mare.</h2>
           <p className="type-body mt-6 max-w-[60ch]">
-            MAST Studio face parte din MAST Consult, o firmă de consultanță din Timișoara cu experiență în
-            strategie, finanțare și proiecte digitale. Aducem aceeași disciplină și în web design: analiză
-            înainte de execuție, procese clare și livrare la termen.
+            MAST Studio face parte din MAST Consult, firmă de consultanță din Timișoara. Credem că un site bun se simte, nu doar se vede: ascultăm cum funcționează afacerea ta și construim ce o vinde. Fără șabloane, fără jargon, fără account manageri.
           </p>
         </motion.div>
 

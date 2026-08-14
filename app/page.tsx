@@ -6,7 +6,6 @@ import CinematicHero from '@/components/CinematicHero'
 import SceneLayer from '@/components/SceneLayer'
 import ComparisonSection from '@/components/ComparisonSection'
 import ManifestSection from '@/components/ManifestSection'
-import AboutSection from '@/components/AboutSection'
 import StudioSection from '@/components/StudioSection'
 import ServicesSection from '@/components/ServicesSection'
 import ProcessSection from '@/components/ProcessSection'
@@ -95,12 +94,11 @@ export default function Page() {
             />
           </div>
           <div className="scene-content">
+            <ServicesSection />
             <ComparisonSection />
             <ManifestSection />
-            <AboutSection />
-            <StudioSection />
-            <ServicesSection />
             <ProcessSection />
+            <StudioSection />
             <FAQSection />
           </div>
         </div>
