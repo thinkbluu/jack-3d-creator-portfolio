@@ -66,10 +66,10 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
       </header>
 
       <article className="site-container py-16 md:py-24">
-        <header className="mx-auto max-w-4xl">
+        <header className="mx-auto max-w-2xl">
           <span className="kicker rounded-full border border-[var(--glass-edge)] px-3 py-1 text-[10px]">{post.categoryLabel}</span>
-          <h1 className="type-h2 mt-6 max-w-[20ch] text-balance">{post.title}</h1>
-          <p className="type-body mt-6 max-w-2xl text-[var(--ink-2)]">{post.excerpt}</p>
+          <h1 className="type-h2 mt-6 text-balance">{post.title}</h1>
+          <p className="type-body mt-6 text-[var(--ink-2)]">{post.excerpt}</p>
           <div className="mt-6 flex gap-4 font-sans text-xs text-[var(--ink-3)]">
             <time dateTime={post.publishedAt}>{formatBlogDate(post.publishedAt)}</time>
             <span>·</span>
@@ -85,8 +85,15 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
             <h2 className="type-h3">Întrebări pe acest subiect</h2>
             <div className="mt-6 divide-y divide-[var(--hairline)] border-y border-[var(--hairline)]">
               {post.faqItems.map((item) => (
-                <details key={item.question} className="py-5">
-                  <summary className="cursor-pointer font-sans font-semibold">{item.question}</summary>
+                <details key={item.question} className="faq-item group py-5">
+                  <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-4 font-sans font-semibold [&::-webkit-details-marker]:hidden">
+                    <span>{item.question}</span>
+                    <span className="faq-icon flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full border border-[var(--hairline)] text-[var(--ink)]" aria-hidden="true">
+                      <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                        <path d="M5.5 0V11M0 5.5H11" stroke="currentColor" strokeWidth="1.4" />
+                      </svg>
+                    </span>
+                  </summary>
                   <p className="mt-3 font-sans text-sm leading-relaxed text-[var(--ink-2)]">{item.answer}</p>
                 </details>
               ))}
