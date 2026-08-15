@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   motion,
@@ -18,6 +19,8 @@ import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 const navLinks: Array<{ href: string; label: string }> = [
   { href: '#dovada', label: 'Dovada' },
   { href: '#servicii', label: 'Servicii' },
+  { href: '/portofoliu', label: 'Portofoliu' },
+  { href: '/blog', label: 'Ghid' },
   { href: '#process', label: 'Cum lucrăm' },
   { href: '#faq', label: 'Întrebări' },
   { href: '#contact', label: 'Contact' },
@@ -25,7 +28,7 @@ const navLinks: Array<{ href: string; label: string }> = [
 
 const clips = [
   { src: '/images/hero-01-exit.mp4', poster: '/images/hero-poster.jpg' },
-  { src: '/images/hero-02-arrival.mp4', poster: '/images/harbor-final.jpg' },
+  { src: '/images/hero-02-arrival.mp4', poster: '/images/harbor-final.webp' },
 ]
 
 const options: Array<{ id: Segment; eyebrow: string; title: string; icon: typeof Monitor }> = [
@@ -456,6 +459,8 @@ export default function CinematicHero() {
         <div className="hidden items-center gap-5 text-xs uppercase tracking-[0.16em] md:flex md:gap-8">
           <a href="#dovada" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Dovada</a>
           <a href="#servicii" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Servicii</a>
+          <Link href="/portofoliu" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Portofoliu</Link>
+          <Link href="/blog" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Ghid</Link>
           <ContactButton label="Vorbește cu noi" />
         </div>
         <button
@@ -545,7 +550,7 @@ export default function CinematicHero() {
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src="/images/harbor-final.jpg"
+            src="/images/harbor-final.webp"
             alt=""
             aria-hidden="true"
             width={1600}
@@ -706,18 +711,22 @@ export default function CinematicHero() {
       {!isDesktop && (
       <div className="flex min-h-[100dvh] flex-col bg-[var(--shell)]">
         <div className="relative h-[42dvh] w-full shrink-0 overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/harbor-final.jpg"
-            alt=""
-            aria-hidden="true"
-            width={1600}
-            height={1000}
-            loading="eager"
-            fetchPriority="high"
-            className="absolute inset-0 h-full w-full object-cover"
-            style={{ objectPosition: 'center 60%' }}
-          />
+          <picture>
+            <source media="(max-width: 767px)" srcSet="/images/harbor-final-mobile.webp" />
+            <source media="(max-width: 1023px)" srcSet="/images/harbor-final-tablet.webp" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/harbor-final.webp"
+              width={1920}
+              height={1102}
+              loading="eager"
+              fetchPriority="high"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{ objectPosition: 'center 60%' }}
+            />
+          </picture>
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(250,247,242,0.7)_0%,transparent_100%)]" />
         </div>
 
@@ -735,7 +744,7 @@ export default function CinematicHero() {
               color: 'var(--ink)',
             }}
           >
-            Site-ul care îți aduce <span className="text-[var(--brass)]">clienți.</span>
+            Site-ul care îți aduce <span className="text-[var(--brass)]">clien��i.</span>
           </p>
 
           <p

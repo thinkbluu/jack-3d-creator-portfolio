@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import { useScroll, useSpring, useTransform } from 'framer-motion'
 import CinematicHero from '@/components/CinematicHero'
 import SceneLayer from '@/components/SceneLayer'
-import ComparisonSection from '@/components/ComparisonSection'
+import ProofSection from '@/components/ProofSection'
 import ManifestSection from '@/components/ManifestSection'
 import StudioSection from '@/components/StudioSection'
 import ServicesSection from '@/components/ServicesSection'
@@ -95,8 +95,7 @@ export default function Page() {
           </div>
           <div className="scene-content">
             <ServicesSection />
-            {/* Future proof evidence: replace demos with the first real named client project, an authentic before/after screenshot, and a testimonial. */}
-            <ComparisonSection />
+            <ProofSection />
             <ManifestSection />
             <ProcessSection />
             <StudioSection />

@@ -423,6 +423,99 @@
   }
 }
 
+@layer components {
+  .prose > *:first-child {
+    margin-top: 0;
+  }
+
+  .prose p {
+    margin-bottom: 26px;
+    color: var(--ink-2);
+    font-size: clamp(1rem, 1.15vw, 1.08rem);
+    line-height: 1.72;
+  }
+
+  .prose h2 {
+    margin-top: 64px;
+    margin-bottom: 20px;
+    color: var(--ink);
+    font-family: var(--font-display);
+    font-size: clamp(1.55rem, 3vw, 2.1rem);
+    font-weight: 550;
+    line-height: 1.15;
+  }
+
+  .prose h3 {
+    margin-top: 44px;
+    margin-bottom: 14px;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .prose ul,
+  .prose ol {
+    margin-bottom: 26px;
+    padding-left: 26px;
+    color: var(--ink-2);
+  }
+
+  .prose ul {
+    list-style: disc;
+  }
+
+  .prose ol {
+    list-style: decimal;
+  }
+
+  .prose li {
+    margin-bottom: 12px;
+    color: var(--ink-2);
+    line-height: 1.68;
+  }
+
+  .prose li::marker {
+    color: var(--brass);
+  }
+
+  .prose strong {
+    color: var(--ink);
+    font-weight: 650;
+  }
+
+  .prose a {
+    color: var(--brass);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .prose blockquote {
+    margin: 40px 0;
+    border-left: 3px solid var(--brass);
+    padding-left: 24px;
+    color: var(--ink);
+    font-size: 1.15rem;
+    font-style: italic;
+  }
+
+  .faq-item summary {
+    list-style: none;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    transition: transform 250ms ease-out;
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(45deg);
+  }
+}
+
 .porthole {
   background: var(--glass);
   backdrop-filter: blur(20px) saturate(1.1);
