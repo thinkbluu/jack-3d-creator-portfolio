@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import BlogCard from '@/components/BlogCard'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
+import { SegmentProvider } from '@/components/SegmentContext'
 import { formatBlogDate, getAllPosts, getPostBySlug } from '@/lib/blog'
 
 const siteUrl = 'https://maststudio.ro'
@@ -95,7 +96,9 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
 
         <section className="porthole mx-auto mt-16 flex max-w-2xl flex-col items-start gap-5 border-[var(--glass-edge)] p-7">
           <p className="type-h3">Vrei să aplicăm asta pentru afacerea ta?</p>
-          <ContactButton hero label="Cere ofertă pe WhatsApp" />
+          <SegmentProvider>
+            <ContactButton hero label="Cere ofertă pe WhatsApp" />
+          </SegmentProvider>
         </section>
 
         {related.length > 0 ? (
