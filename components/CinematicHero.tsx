@@ -28,7 +28,7 @@ const navLinks: Array<{ href: string; label: string }> = [
 
 const clips = [
   { src: '/images/hero-01-exit.mp4', poster: '/images/hero-poster.jpg' },
-  { src: '/images/hero-02-arrival.mp4', poster: '/images/harbor-final.jpg' },
+  { src: '/images/hero-02-arrival.mp4', poster: '/images/harbor-final.webp' },
 ]
 
 const options: Array<{ id: Segment; eyebrow: string; title: string; icon: typeof Monitor }> = [
