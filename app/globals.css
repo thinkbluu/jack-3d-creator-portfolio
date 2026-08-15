@@ -423,6 +423,56 @@
   }
 }
 
+.prose p {
+  margin-bottom: 24px;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+
+.prose h2 {
+  margin-top: 56px;
+  margin-bottom: 20px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.15;
+}
+
+.prose h3 {
+  margin-top: 40px;
+  margin-bottom: 16px;
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.prose ul,
+.prose ol {
+  margin-bottom: 24px;
+  padding-left: 24px;
+  color: var(--ink-2);
+  line-height: 1.7;
+}
+
+.prose strong {
+  color: var(--ink);
+}
+
+.prose a {
+  color: var(--brass);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.prose blockquote {
+  margin: 32px 0;
+  border-left: 3px solid var(--brass);
+  padding-left: 20px;
+  color: var(--ink-2);
+  font-style: italic;
+}
+
 .porthole {
   background: var(--glass);
   backdrop-filter: blur(20px) saturate(1.1);

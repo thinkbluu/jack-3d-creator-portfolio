@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   motion,
@@ -18,6 +19,7 @@ import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 const navLinks: Array<{ href: string; label: string }> = [
   { href: '#dovada', label: 'Dovada' },
   { href: '#servicii', label: 'Servicii' },
+  { href: '/blog', label: 'Ghid' },
   { href: '#process', label: 'Cum lucrăm' },
   { href: '#faq', label: 'Întrebări' },
   { href: '#contact', label: 'Contact' },
@@ -456,6 +458,7 @@ export default function CinematicHero() {
         <div className="hidden items-center gap-5 text-xs uppercase tracking-[0.16em] md:flex md:gap-8">
           <a href="#dovada" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Dovada</a>
           <a href="#servicii" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Servicii</a>
+          <Link href="/blog" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Ghid</Link>
           <ContactButton label="Vorbește cu noi" />
         </div>
         <button
@@ -735,7 +738,7 @@ export default function CinematicHero() {
               color: 'var(--ink)',
             }}
           >
-            Site-ul care îți aduce <span className="text-[var(--brass)]">clienți.</span>
+            Site-ul care îți aduce <span className="text-[var(--brass)]">clien��i.</span>
           </p>
 
           <p
