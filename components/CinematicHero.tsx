@@ -19,6 +19,7 @@ import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 const navLinks: Array<{ href: string; label: string }> = [
   { href: '#dovada', label: 'Dovada' },
   { href: '#servicii', label: 'Servicii' },
+  { href: '/portofoliu', label: 'Portofoliu' },
   { href: '/blog', label: 'Ghid' },
   { href: '#process', label: 'Cum lucrăm' },
   { href: '#faq', label: 'Întrebări' },
@@ -458,6 +459,7 @@ export default function CinematicHero() {
         <div className="hidden items-center gap-5 text-xs uppercase tracking-[0.16em] md:flex md:gap-8">
           <a href="#dovada" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Dovada</a>
           <a href="#servicii" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Servicii</a>
+          <Link href="/portofoliu" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Portofoliu</Link>
           <Link href="/blog" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Ghid</Link>
           <ContactButton label="Vorbește cu noi" />
         </div>
