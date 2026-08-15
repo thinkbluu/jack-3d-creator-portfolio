@@ -51,6 +51,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     dateCreated: String(project.year),
     creator: { '@type': 'Organization', name: 'MAST Studio', url: siteUrl },
     about: { '@type': 'Organization', name: project.client },
+    ...(project.liveUrl ? { url: project.liveUrl } : {}),
   }
 
   return (
@@ -64,11 +65,19 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
       <article className="site-container py-16 md:py-24">
         <header className="mx-auto max-w-2xl">
-          <span className="kicker rounded-full border border-[var(--glass-edge)] px-3 py-1 text-[10px]">{project.categoryLabel}</span>
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="kicker rounded-full border border-[var(--glass-edge)] px-3 py-1 text-[10px]">{project.categoryLabel}</span>
+            {project.status === 'in-lucru' ? (
+              <span className="kicker rounded-full border border-[var(--hairline)] px-3 py-1 text-[10px] text-[var(--ink-3)]">În lucru</span>
+            ) : null}
+            {project.type === 'concept' ? (
+              <span className="kicker rounded-full border border-[var(--hairline)] px-3 py-1 text-[10px] text-[var(--ink-3)]">Concept</span>
+            ) : null}
+          </div>
           <h1 className="type-h2 mt-6 text-balance">{project.name}</h1>
           <p className="type-body mt-4 text-[var(--ink-2)]">{project.client} · {project.year}</p>
           <p className="type-body mt-4 text-[17px]">{project.summary}</p>
-          {project.liveUrl ? (
+          {project.liveUrl && project.status === 'live' ? (
             <a
               href={project.liveUrl}
               target="_blank"
@@ -82,11 +91,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={project.cover}
-          alt={project.name}
+          src={project.cover || '/placeholder.svg'}
+          alt={`Site-ul ${project.name}, realizat de MAST Studio`}
           width={1200}
           height={750}
-          loading="lazy"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           className="mx-auto mt-12 w-full max-w-4xl object-cover"
           style={{ borderRadius: 'var(--radius-panel)' }}
         />
