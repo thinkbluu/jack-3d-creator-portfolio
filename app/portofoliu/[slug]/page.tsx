@@ -50,7 +50,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     description: project.summary,
     dateCreated: String(project.year),
     creator: { '@type': 'Organization', name: 'MAST Studio', url: siteUrl },
-    about: { '@type': 'Organization', name: project.client },
+    ...(project.type === 'concept' ? {} : { about: { '@type': 'Organization', name: project.client } }),
     ...(project.liveUrl ? { url: project.liveUrl } : {}),
   }
 
@@ -77,6 +77,19 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <h1 className="type-h2 mt-6 text-balance">{project.name}</h1>
           <p className="type-body mt-4 text-[var(--ink-2)]">{project.client} · {project.year}</p>
           <p className="type-body mt-4 text-[17px]">{project.summary}</p>
+          {project.type === 'concept' && project.conceptNote ? (
+            <div
+              className="type-body mt-4 text-[14px] text-[var(--ink-2)]"
+              style={{
+                border: '1px solid var(--hairline)',
+                borderRadius: 'var(--radius-card)',
+                padding: '16px 20px',
+                background: 'var(--shell-warm)',
+              }}
+            >
+              {project.conceptNote}
+            </div>
+          ) : null}
           {project.liveUrl && project.status === 'live' ? (
             <a
               href={project.liveUrl}
@@ -84,7 +97,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               rel="noopener noreferrer"
               className="mt-6 inline-flex items-center gap-2 rounded-[var(--radius-pill)] border-[1.5px] border-[var(--brass)] px-6 py-3 font-sans text-sm font-bold text-[var(--brass)] transition-colors duration-200 hover:bg-[var(--brass)] hover:text-[var(--shell)]"
             >
-              Vezi site-ul live ↗
+              {project.type === 'concept' ? 'Vezi conceptul live ↗' : 'Vezi site-ul live ↗'}
             </a>
           ) : null}
         </header>
