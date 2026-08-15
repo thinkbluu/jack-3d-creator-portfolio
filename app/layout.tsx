@@ -13,7 +13,8 @@ const dmSans = DM_Sans({
 
 const fraunces = Fraunces({
   subsets: ['latin', 'latin-ext'],
-  weight: 'variable',
+  weight: ['500', '600'],
+  display: 'swap',
   variable: '--font-fraunces',
 })
 
@@ -68,7 +69,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="ro" className={`${dmSans.variable} ${fraunces.variable} bg-[var(--shell)]`}>
       <head>
-        <link rel="preload" as="image" href="/images/harbor-final.jpg" fetchPriority="high" />
+        <link rel="preload" as="image" href="/images/harbor-final-mobile.webp" media="(max-width: 767px)" fetchPriority="high" />
       </head>
       <body className="bg-[var(--shell)] font-sans antialiased">
         <ScrollProgress />

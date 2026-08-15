@@ -548,7 +548,7 @@ export default function CinematicHero() {
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src="/images/harbor-final.jpg"
+            src="/images/harbor-final.webp"
             alt=""
             aria-hidden="true"
             width={1600}
@@ -709,18 +709,22 @@ export default function CinematicHero() {
       {!isDesktop && (
       <div className="flex min-h-[100dvh] flex-col bg-[var(--shell)]">
         <div className="relative h-[42dvh] w-full shrink-0 overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/harbor-final.jpg"
-            alt=""
-            aria-hidden="true"
-            width={1600}
-            height={1000}
-            loading="eager"
-            fetchPriority="high"
-            className="absolute inset-0 h-full w-full object-cover"
-            style={{ objectPosition: 'center 60%' }}
-          />
+          <picture>
+            <source media="(max-width: 767px)" srcSet="/images/harbor-final-mobile.webp" />
+            <source media="(max-width: 1023px)" srcSet="/images/harbor-final-tablet.webp" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/harbor-final.webp"
+              width={1920}
+              height={1102}
+              loading="eager"
+              fetchPriority="high"
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{ objectPosition: 'center 60%' }}
+            />
+          </picture>
           <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[linear-gradient(180deg,rgba(250,247,242,0.7)_0%,transparent_100%)]" />
         </div>
 
