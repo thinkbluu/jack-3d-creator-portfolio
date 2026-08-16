@@ -2,9 +2,10 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
-import PortfolioGrid from '@/components/PortfolioGrid'
+import ProjectCard from '@/components/ProjectCard'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { getAllProjects } from '@/lib/projects'
+import type { Project } from '@/lib/projects'
 
 export const metadata: Metadata = {
   title: 'Portofoliu | MAST Studio',
@@ -12,8 +13,30 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://maststudio.ro/portofoliu' },
 }
 
-export default function PortfolioPage() {
-  const projects = getAllProjects()
+type FilterId = Project['category'] | 'toate'
+
+const filters: Array<{ id: FilterId; label: string }> = [
+  { id: 'toate', label: 'Toate' },
+  { id: 'site-prezentare', label: 'Site de prezentare' },
+  { id: 'site-institutional', label: 'Site instituțional' },
+  { id: 'platforma', label: 'Platformă' },
+  { id: 'concept-design', label: 'Concepte' },
+]
+
+type PortfolioPageProps = {
+  searchParams: Promise<{ filtru?: string }>
+}
+
+export default async function PortfolioPage({ searchParams }: PortfolioPageProps) {
+  const { filtru } = await searchParams
+  const activeFilter: FilterId = filters.some((filter) => filter.id === filtru) ? (filtru as FilterId) : 'toate'
+
+  const allProjects = getAllProjects()
+  const filteredProjects =
+    activeFilter === 'toate' ? allProjects : allProjects.filter((project) => project.category === activeFilter)
+
+  const clientProjects = filteredProjects.filter((project) => project.type === 'client')
+  const conceptProjects = filteredProjects.filter((project) => project.type === 'concept')
 
   return (
     <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
@@ -48,7 +71,61 @@ export default function PortfolioPage() {
           </p>
         </div>
 
-        <PortfolioGrid projects={projects} />
+        <div className="mt-10 flex flex-wrap gap-3" role="group" aria-label="Filtrează după categorie">
+          {filters.map((filter) => {
+            const isActive = filter.id === activeFilter
+            const href = filter.id === 'toate' ? '/portofoliu' : `/portofoliu?filtru=${filter.id}`
+            return (
+              <Link
+                key={filter.id}
+                href={href}
+                aria-current={isActive ? 'true' : undefined}
+                className="kicker flex min-h-11 items-center rounded-full px-4 text-[11px] transition-colors duration-200"
+                style={
+                  isActive
+                    ? { background: 'var(--brass)', color: 'var(--ink)', borderColor: 'var(--brass)' }
+                    : { border: '1px solid var(--hairline)', color: 'var(--ink-2)' }
+                }
+              >
+                {filter.label}
+              </Link>
+            )
+          })}
+        </div>
+
+        {clientProjects.length > 0 ? (
+          <section aria-label="Proiecte pentru clienți" className="mt-12">
+            <h2 className="type-h3">Proiecte pentru clienți</h2>
+            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+              {clientProjects.map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {conceptProjects.length > 0 ? (
+          <section
+            aria-label="Concepte de design"
+            className="mt-[72px] border-t border-[var(--hairline)] pt-[56px]"
+          >
+            <h2 className="type-h3">Concepte de design</h2>
+            <p className="type-body mt-2 text-[14px] text-[var(--ink-2)]">
+              Exerciții de design și interacțiune, construite pentru a testa idei. Nu reprezintă afaceri reale.
+            </p>
+            <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+              {conceptProjects.map((project) => (
+                <ProjectCard key={project.slug} project={project} />
+              ))}
+            </div>
+          </section>
+        ) : null}
+
+        {clientProjects.length === 0 && conceptProjects.length === 0 ? (
+          <p className="mt-12 border-t border-[var(--hairline)] pt-6 font-sans text-sm text-[var(--ink-3)]">
+            Nu avem încă proiecte în această categorie.
+          </p>
+        ) : null}
 
         <section className="porthole mt-20 flex flex-col items-start gap-5 p-8">
           <p className="type-h3">Vrei ca proiectul tău să fie următorul?</p>

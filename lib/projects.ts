@@ -4,13 +4,14 @@ export type Project = {
   client: string
   type: 'client' | 'concept'
   status?: 'live' | 'in-lucru'
-  category: 'site-prezentare' | 'site-institutional' | 'magazin-online' | 'aplicatie' | 'platforma'
+  category: 'site-prezentare' | 'site-institutional' | 'magazin-online' | 'aplicatie' | 'platforma' | 'concept-design'
   categoryLabel: string
   year: number
   summary: string
   challenge: string
   solution: string
   result?: string
+  conceptNote?: string
   stack: string[]
   liveUrl?: string
   cover: string
@@ -149,6 +150,72 @@ export const projects: Project[] = [
     liveUrl: 'https://asesor.ro',
     cover: '/images/proj-asesor.webp',
     featured: true,
+  },
+  {
+    slug: 'lumora',
+    name: 'Lumora',
+    client: 'Concept de design',
+    type: 'concept',
+    status: 'live',
+    category: 'concept-design',
+    categoryLabel: 'Concept de design',
+    year: 2026,
+    summary:
+      'Landing page pentru un produs digital de wellness, construit ca exercițiu de atmosferă și tipografie.',
+    challenge:
+      'Un produs care vinde liniște are nevoie de o pagină care o și transmite, nu doar o descrie. Provocarea: să construiești o senzație de calm fără să pierzi claritatea comercială, într-o categorie în care majoritatea site-urilor arată identic.',
+    solution:
+      'Am construit pagina în jurul unei singure imagini de atmosferă la scară completă, cu tipografie mare și aerisită suprapusă. Formularul de înscriere e integrat direct în hero, cu un singur câmp, iar variantele de ambianță se schimbă din patru opțiuni fără reîncărcarea paginii. Totul rămâne lizibil peste fundal datorită unui strat de contrast calculat, nu unui panou opac.',
+    conceptNote:
+      'Concept demonstrativ, nu un produs real. Construit pentru a testa lizibilitatea tipografiei mari peste imagine la scară completă.',
+    stack: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
+    liveUrl: 'https://demo1.maststudio.ro',
+    cover: '/images/concept-lumora.webp',
+    featured: false,
+  },
+  {
+    slug: 'mostar',
+    name: 'Mostar',
+    client: 'Concept de design',
+    type: 'concept',
+    status: 'live',
+    category: 'concept-design',
+    categoryLabel: 'Concept de design',
+    year: 2026,
+    summary:
+      'Pagină de destinație turistică, construită ca exercițiu de narațiune vizuală pe scroll.',
+    challenge:
+      'O destinație se vinde prin imagine, dar imaginile singure nu construiesc o poveste. Provocarea: să folosești scroll-ul ca instrument de regie, astfel încât vizitatorul să parcurgă locul, nu doar o galerie.',
+    solution:
+      'Am construit o secvență în care straturile imaginii se mișcă independent pe scroll, creând adâncime reală în loc de parallax decorativ. Conținutul apare în ritmul mișcării, iar navigarea între secțiuni păstrează continuitatea vizuală. Pagina funcționează bilingv, cu comutare instantanee.',
+    conceptNote:
+      'Concept demonstrativ, nu o pagină oficială. Construit pentru a testa narațiunea vizuală controlată prin scroll.',
+    stack: ['Next.js', 'React', 'Tailwind CSS', 'Scroll-driven animation'],
+    liveUrl: 'https://demo2.maststudio.ro',
+    cover: '/images/concept-mostar.webp',
+    featured: false,
+  },
+  {
+    slug: 'lithos',
+    name: 'Lithos',
+    client: 'Concept de design',
+    type: 'concept',
+    status: 'live',
+    category: 'concept-design',
+    categoryLabel: 'Concept de design',
+    year: 2026,
+    summary:
+      'Platformă educațională de geologie, construită ca exercițiu de interacțiune și profunzime vizuală.',
+    challenge:
+      'Conținutul științific are nevoie de o interfață care să invite la explorare, nu la lectură pasivă. Provocarea: să construiești o pagină care să transmită scară și profunzime, fără să sacrifici performanța.',
+    solution:
+      'Am construit un hero cu reveal controlat de cursor, în care o a doua imagine se descoperă printr-o mască circulară care urmărește mișcarea, cu netezire aplicată pentru a evita senzația de sacadare. Navigarea e concentrată într-o singură pastilă centrală, iar întreaga interacțiune se dezactivează elegant pe dispozitivele fără cursor.',
+    conceptNote:
+      'Concept demonstrativ, nu o platformă reală. Construit pentru a testa interacțiunile bazate pe cursor și mască.',
+    stack: ['React', 'TypeScript', 'Tailwind CSS', 'Canvas API'],
+    liveUrl: 'https://demo3.maststudio.ro',
+    cover: '/images/concept-lithos.webp',
+    featured: false,
   },
 ]
 
