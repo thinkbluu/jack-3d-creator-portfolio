@@ -54,8 +54,9 @@ function ManifestPair({ other, statement }: { other: string; statement: ReactNod
 export default function ManifestSection() {
   return (
     <>
-      <section id="manifest" className="scene-section">
-        <div className="scene-panel">
+      <section id="manifest" className="scene-section relative">
+        <div className="manifest-gradient-layer" aria-hidden="true" />
+        <div className="scene-panel relative z-10">
           <ChartKicker label="Manifest" />
           <div className="manifest-pairs">
             {pairs.map((pair) => (
