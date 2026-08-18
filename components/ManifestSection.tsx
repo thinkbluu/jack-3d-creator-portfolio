@@ -17,31 +17,36 @@ function ManifestPair({ other, statement }: { other: string; statement: ReactNod
 
   useEffect(() => {
     if (!landed || reduceMotion) return
-    const timeout = window.setTimeout(() => setFaded(true), 600)
+    // Statement finishes landing at delay (250ms) + duration (800ms) = 1050ms
+    // after the "Alții" row enters view; the row then dims 600ms after that.
+    const timeout = window.setTimeout(() => setFaded(true), 1050 + 600)
     return () => window.clearTimeout(timeout)
   }, [landed, reduceMotion])
 
   return (
     <div className="manifest-pair">
-      <motion.p
-        className="manifest-other-text"
-        initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.55 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-        onViewportEnter={() => setLanded(true)}
-      >
-        {other}
-      </motion.p>
-      <motion.p
-        className="manifest-statement-text type-display max-w-[900px] text-balance"
-        initial={reduceMotion ? false : { opacity: 0, y: 20, filter: 'blur(5px)' }}
-        whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
-        viewport={{ once: true, amount: 0.55 }}
-        transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
-      >
-        {statement}
-      </motion.p>
+      <div className="manifest-pair-inner">
+        <motion.p
+          className="manifest-other-text"
+          initial={reduceMotion ? false : { opacity: 0, y: 12 }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          animate={faded ? { opacity: 0.4, filter: 'blur(1px)' } : undefined}
+          viewport={{ once: true, amount: 0.55 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
+          onViewportEnter={() => setLanded(true)}
+        >
+          {other}
+        </motion.p>
+        <motion.p
+          className="manifest-statement-text type-display text-balance"
+          initial={reduceMotion ? false : { opacity: 0, y: 20, filter: 'blur(5px)' }}
+          whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.55 }}
+          transition={{ duration: 0.8, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {statement}
+        </motion.p>
+      </div>
     </div>
   )
 }
