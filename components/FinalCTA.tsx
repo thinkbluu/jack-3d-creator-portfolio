@@ -42,10 +42,7 @@ export default function FinalCTA() {
             Setează <span className="text-[var(--brass)]">direcția</span>.
           </h2>
           <p className="type-body mt-5 text-[var(--ink)]">
-            Ne spui în două fraze ce faci. Primești azi oferta și lista de materiale. Poimâine ești live.
-          </p>
-          <p className="type-body mt-3 font-semibold text-[var(--ink)]">
-            Răspundem în aceeași zi. Începem în 48 de ore de la avans.
+            Scrie-ne ce faci. Primești oferta azi.
           </p>
         </FadeIn>
 
@@ -56,16 +53,12 @@ export default function FinalCTA() {
               <ContactButton hero note={false} />
             </span>
           </span>
-          <p className="mt-5 font-sans text-xs font-medium text-[var(--ink-2)]">
-            50 EUR avans · restul la livrare, dacă ești mulțumit
-          </p>
-          <p className="mt-3 font-sans text-[13px] text-[var(--ink-3)]">
+          <p className="mt-5 font-sans text-[13px] text-[var(--ink-3)]">
             sau scrie-ne la{' '}
             <a href="mailto:contact@maststudio.ro" className="underline decoration-[var(--brass)] underline-offset-4 transition-colors hover:text-[var(--ink)]">
               contact@maststudio.ro
             </a>
           </p>
-          <p className="mt-8 font-sans text-sm text-[var(--ink-2)]">Ai ajuns unde trebuia.</p>
         </FadeIn>
       </div>
     </section>

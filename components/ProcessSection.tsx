@@ -4,18 +4,18 @@ import ChartKicker from './ChartKicker'
 const steps = [
   {
     number: '01',
-    title: 'Ne scrii pe WhatsApp',
-    description: 'Ne spui în două fraze ce faci și ce îți trebuie. În aceeași zi primești oferta clară și lista scurtă de materiale de care avem nevoie.',
+    title: 'Ne scrii',
+    description: 'În două fraze ne spui ce faci. În aceeași zi primești oferta și lista scurtă cu ce ne trebuie de la tine.',
   },
   {
     number: '02',
-    title: 'Rezervi locul cu avansul',
-    description: 'Avansul se scade din preț și pornește lucrul: ne trimiți textele de bază, pozele și sigla, ghidat de lista noastră. De aici pornește cronometrul.',
+    title: 'Trimiți materialele',
+    description: 'Texte de bază, poze, siglă. Atât. Din momentul în care le avem, pornește cronometrul.',
   },
   {
     number: '03',
-    title: 'Vezi site-ul live și decizi',
-    description: 'Îl vezi gata, pe internet, și plătești restul doar dacă ești mulțumit. Dacă nu, rămâi doar cu avansul și cu analiza făcută pentru tine.',
+    title: 'Vezi și decizi',
+    description: 'Îți trimitem site-ul live. Îl deschizi, îl arăți cui vrei, și abia apoi plătești restul.',
   },
 ]
 

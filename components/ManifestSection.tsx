@@ -5,9 +5,9 @@ import { useEffect, useState, type ReactNode } from 'react'
 import ChartKicker from './ChartKicker'
 
 const pairs: Array<{ other: string; statement: ReactNode }> = [
-  { other: 'Alții: site-uri la fel ca alte mii.', statement: <>Al tău e făcut <span className="text-[var(--brass)]">doar pentru tine</span>.</> },
-  { other: 'Alții: gata în câteva luni.', statement: <>Live în <span className="text-[var(--brass)]">48 de ore</span>.</> },
-  { other: 'Alții: plătești tot înainte să vezi ceva.', statement: <>Vezi site-ul gata. <span className="text-[var(--brass)]">Apoi</span> plătești.</> },
+  { other: 'Alții vând același șablon la zeci de firme.', statement: <>Al tău <span className="text-[var(--brass)]">nu seamănă cu nimeni</span>.</> },
+  { other: 'Alții îți spun «revenim cu un termen».', statement: <>Noi îți spunem <span className="text-[var(--brass)]">ziua</span>.</> },
+  { other: 'Alții cer 50% avans.', statement: <>Noi, <span className="text-[var(--brass)]">50 de euro</span>.</> },
 ]
 
 function ManifestPair({ other, statement }: { other: string; statement: ReactNode }) {
