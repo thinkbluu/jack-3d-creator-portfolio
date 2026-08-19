@@ -61,8 +61,8 @@ const faqs: Array<[string, string]> = [
 // Groups reference `faqs` by index, so the source list stays the single
 // source of truth for both the UI and the FAQPage structured data.
 const groups: Array<{ kicker: string; indices: number[] }> = [
-  { kicker: 'Bani și termene', indices: [0, 1, 2, 9] },
-  { kicker: 'Cum lucrăm', indices: [3, 4, 5] },
+  { kicker: 'Bani și termene', indices: [5, 0, 1, 2, 9] },
+  { kicker: 'Cum lucrăm', indices: [3, 4] },
   { kicker: 'Tehnic și proprietate', indices: [6, 7, 8, 10, 11] },
 ]
 

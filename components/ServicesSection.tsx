@@ -9,29 +9,29 @@ import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 export const services = [
   {
     name: 'Site de prezentare',
-    description: 'Cartea ta de vizită online: cine ești, ce faci și de ce să te aleagă. Cu buton direct de WhatsApp și textele scrise de noi.',
-    price: 'de la 300 EUR · live în 48 de ore',
+    description: 'Clienții te caută pe Google, îți văd serviciile și prețurile, și îți scriu direct. Fără să sune, fără să aștepte.',
+    price: 'de la 300 EUR',
     guarantee: 'Prima rundă de modificări inclusă',
     message: 'Salut! Vreau un site de prezentare, livrat în 48 de ore. Îmi poți face o ofertă?',
   },
   {
     name: 'Magazin online',
-    description: 'Vinzi non-stop: catalog, plată cu cardul, comenzi și facturi automate. Totul legat și explicat pe înțelesul tău.',
-    price: 'de la 900 EUR · live în 7 zile',
+    description: 'Vinzi și noaptea. Catalog, plată cu cardul, comenzi și facturi care se emit singure.',
+    price: 'de la 900 EUR',
     guarantee: 'Prima rundă de modificări inclusă',
     message: 'Salut! Vreau un magazin online. Îmi poți face o ofertă?',
   },
   {
     name: 'Aplicații web și mobile',
-    description: 'Ai un proces care îți mănâncă timpul? Îl transformăm într-o aplicație pe care echipa și clienții tăi o folosesc cu plăcere.',
-    price: 'ofertă personalizată, în 24h',
+    description: 'Ai un proces care îți mănâncă orele? Îl transformăm într-un instrument pe care echipa ta chiar îl folosește.',
+    price: 'ofertă personalizată',
     guarantee: 'Ofertă fixă, fără costuri surpriză',
     message: 'Salut! Am nevoie de o aplicație web sau mobilă. Putem discuta?',
   },
   {
     name: 'Platforme și SaaS',
-    description: 'De la schiță la platformă cu conturi, abonamente și plăți. Construim produsul, nu doar site-ul lui.',
-    price: 'ofertă personalizată, în 24h',
+    description: 'Ai o idee de produs digital? O construim de la schiță până la primii utilizatori care plătesc.',
+    price: 'ofertă personalizată',
     guarantee: 'Ofertă fixă, fără costuri surpriză',
     message: 'Salut! Vreau să construim o platformă personalizată. Putem discuta?',
   },
@@ -126,7 +126,7 @@ export default function ServicesSection() {
         <FadeIn>
           <ChartKicker label="Servicii" />
           <h2 className="type-h2 text-balance">Patru direcții. Una e a ta.</h2>
-          <p className="type-body mt-4">Prețuri la vedere. Avansul de 50 EUR se scade din oricare.</p>
+          <p className="type-body mt-4">Prețuri la vedere. Alege ce ți se potrivește.</p>
         </FadeIn>
 
         <div className="mt-9 grid grid-cols-1 gap-4 md:grid-cols-2">

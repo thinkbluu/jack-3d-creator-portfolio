@@ -41,11 +41,11 @@ const options: Array<{ id: Segment; eyebrow: string; title: string; icon: typeof
 const auditWaUrl = getWaUrl(null, 'Salut! Vreau un audit gratuit pentru site-ul meu: ')
 
 const subheads: Record<Segment | 'default', string> = {
-  default: 'Site de prezentare de la 300 EUR, livrat în 48 de ore. Avans 50 EUR, restul doar dacă ești mulțumit.',
-  salon: 'Rezervări online non-stop și mai puține programări ratate. De la 300 EUR, live în 48 de ore.',
-  servicii: 'Un site care aduce cereri de ofertă, nu doar vizite. De la 300 EUR, live în 48 de ore.',
-  ecommerce: 'Magazin online complet: catalog, plăți, comenzi. De la 900 EUR, live în 7 zile.',
-  platforma: 'Aplicația sau platforma ta, de la idee la primii utilizatori. Ofertă personalizată în 24h.',
+  default: 'Plătești 50 EUR ca să rezervăm locul. Restul, doar dacă îți place rezultatul.',
+  salon: 'Rezervări online non-stop și mai puține programări ratate. Plătești 50 EUR acum, restul doar dacă îți place.',
+  servicii: 'Cereri de ofertă, nu doar vizite. Plătești 50 EUR acum, restul doar dacă îți place.',
+  ecommerce: 'Vinzi și noaptea, cu plăți și facturi automate. Plătești 50 EUR acum, restul doar dacă îți place.',
+  platforma: 'De la idee la primii utilizatori. Discutăm întâi, apoi facem oferta.',
 }
 
 const stats: Array<{ value: string; label: string }> = [
@@ -634,8 +634,8 @@ export default function CinematicHero() {
 
           <motion.div style={depth ? { x: headingX, y: headingY } : undefined}>
             <motion.h1 {...enter(1)} className="type-display mt-4">
-              Site-ul care îți aduce<br />
-              <span className="text-[var(--brass)]">clienți.</span>
+              Site-ul tău,<br />
+              <span className="text-[var(--brass)]">live în 48 de ore.</span>
             </motion.h1>
           </motion.div>
 
@@ -666,7 +666,6 @@ export default function CinematicHero() {
 
           <motion.div {...enter(4)} className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
             <ContactButton hero label="Cere ofertă pe WhatsApp" />
-            <p className="text-xs leading-relaxed text-[var(--ink-2)]">50 EUR avans · restul la livrare, dacă ești mulțumit · răspuns în aceeași zi</p>
           </motion.div>
 
           <motion.a
@@ -744,7 +743,8 @@ export default function CinematicHero() {
               color: 'var(--ink)',
             }}
           >
-            Site-ul care îți aduce <span className="text-[var(--brass)]">clien��i.</span>
+            Site-ul tău,<br />
+            <span className="text-[var(--brass)]">live în 48 de ore.</span>
           </p>
 
           <p
@@ -769,9 +769,6 @@ export default function CinematicHero() {
           <div className="mast-cta-full mt-5">
             <ContactButton hero label="Cere ofertă pe WhatsApp" />
           </div>
-          <p className="mt-3 text-center text-[11.5px] leading-relaxed text-[var(--ink-2)]">
-            50 EUR avans · restul la livrare, dacă ești mulțumit · răspuns în aceeași zi
-          </p>
           <a
             href={auditWaUrl}
             target="_blank"

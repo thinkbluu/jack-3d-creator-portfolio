@@ -31,7 +31,7 @@ export const projects: Project[] = [
     categoryLabel: 'Site de prezentare',
     year: 2026,
     summary:
-      'Primul site pentru un cabinet veterinar din Timișoara. Rezultat: cu 80% mai mulți clienți noi.',
+      'Cu 80% mai mulți clienți noi în primele luni de la lansare.',
     challenge:
       'Cabinetul funcționa de ani buni exclusiv pe recomandări și pe trecători, fără nicio prezență online. Clienții potențiali care căutau „veterinar Timișoara" pe telefon nu îl găseau, iar cei care auzeau de el nu aveau unde să verifice programul, adresa sau serviciile înainte să sune.',
     solution:
@@ -53,7 +53,7 @@ export const projects: Project[] = [
     categoryLabel: 'Site de prezentare',
     year: 2026,
     summary:
-      'Prezență digitală bilingvă pentru o firmă de consultanță la intersecția dintre drept, guvernanță corporativă și afaceri.',
+      'Site bilingv pentru o firmă care consiliază instituții și executivi.',
     challenge:
       'Firma consiliază executivi, instituții și autorități publice în piețe emergente și consacrate. Avea nevoie de un site care să transmită autoritate și discreție simultan, fără să pară o agenție de marketing, și care să funcționeze în două limbi pentru clienții internaționali.',
     solution:
@@ -75,7 +75,7 @@ export const projects: Project[] = [
     categoryLabel: 'Site instituțional',
     year: 2026,
     summary:
-      'Site instituțional complet pentru un proiect de cercetare finanțat din fonduri europene, în domeniul terapiilor celulare personalizate.',
+      'Proiect european cu cerințe stricte de conformitate, livrat integral.',
     challenge:
       'Proiectele finanțate din fonduri europene au cerințe stricte de vizibilitate: elemente obligatorii de identitate vizuală, cod SMIS, număr de contract, secțiuni pentru rezultate, echipă, parteneri și noutăți. În același timp, site-ul trebuia să comunice inteligibil un subiect științific complex, pentru un public mixt de cercetători, parteneri instituționali și evaluatori ai finanțatorului.',
     solution:
