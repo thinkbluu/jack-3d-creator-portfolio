@@ -367,18 +367,17 @@
   text-transform: uppercase;
 }
 
-.manifest-gradient-layer {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    rgba(250, 247, 242, 0.94) 0%,
-    rgba(250, 247, 242, 0.88) 45%,
-    transparent 78%
-  );
+/* Manifest is now a single compact panel, so it doesn't need the tall
+   breathing room .scene-section reserves for full-screen "scene" sections. */
+#manifest.scene-section {
+  padding-top: clamp(40px, 6vh, 72px);
+  padding-bottom: clamp(40px, 6vh, 72px);
+}
+
+.manifest-porthole {
+  max-width: 900px;
+  margin-inline: auto;
+  padding: clamp(36px, 5vw, 64px);
 }
 
 .manifest-pairs {
@@ -387,12 +386,11 @@
 }
 
 .manifest-pair {
-  display: flex;
-  min-height: 60vh;
-  align-items: center;
-  max-width: 720px;
-  margin-inline: auto;
-  padding-inline: clamp(20px, 5vw, 48px);
+  padding-block: clamp(28px, 4vw, 40px);
+}
+
+.manifest-pair:not(:first-child) {
+  border-top: 1px solid var(--hairline);
 }
 
 .manifest-pair-inner {
@@ -404,42 +402,20 @@
 }
 
 .manifest-other-text {
-  margin-bottom: 20px;
-  color: var(--ink-2);
-  font-size: clamp(1rem, 1.5vw, 1.15rem);
-  font-weight: 500;
+  margin-bottom: 14px;
+  font-size: 16px;
   text-align: left;
 }
 
 .manifest-statement-text {
-  max-width: 720px;
   text-align: left;
-  line-height: 1.02;
 }
 
 .manifest-closing {
-  max-width: 720px;
-  margin-top: 48px;
-  margin-inline: auto;
-  padding-inline: clamp(20px, 5vw, 48px);
-  color: var(--ink-2);
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
   font-size: 15px;
-  text-align: left;
-}
-
-@media (max-width: 767px) {
-  .manifest-pair {
-    min-height: 50dvh;
-  }
-
-  .manifest-gradient-layer {
-    background: linear-gradient(
-      180deg,
-      rgba(250, 247, 242, 0.94) 0%,
-      rgba(250, 247, 242, 0.9) 70%,
-      rgba(250, 247, 242, 0.5) 100%
-    );
-  }
 }
 
 @layer components {
