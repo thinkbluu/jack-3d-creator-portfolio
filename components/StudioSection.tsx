@@ -61,6 +61,23 @@ export default function StudioSection() {
           ))}
         </div>
 
+        <motion.div
+          initial={{ opacity: 0, y: riseY }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration, ease: EASE }}
+          className="type-body mt-10 text-[15px] font-medium text-[var(--ink)]"
+          style={{
+            background: 'var(--shell-warm)',
+            borderLeft: '3px solid var(--brass)',
+            borderRadius: 'var(--radius-card)',
+            padding: '20px 24px',
+          }}
+        >
+          <span className="kicker mb-2 block">Rezultate măsurate</span>
+          Un cabinet veterinar din Timișoara a raportat cu 80% mai mulți clienți noi în primele luni de la lansarea site-ului construit de noi.
+        </motion.div>
+
         <p className="mt-7 border-t border-[var(--hairline)] pt-7 text-center text-[14px] text-[var(--ink-2)]">
           Site-ul pe care ești acum a fost construit după aceleași reguli.{' '}
           <a

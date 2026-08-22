@@ -31,16 +31,23 @@ const organizationJsonLd = {
   },
 }
 
+// Populate once the studio's Facebook, Instagram, LinkedIn and Google Business
+// Profile pages exist, e.g. ['https://facebook.com/...', 'https://instagram.com/...'].
+export const SOCIAL_PROFILE_LINKS: string[] = []
+
 const businessJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
   '@id': 'https://maststudio.ro/#business',
   name: 'MAST Studio',
-  image: 'https://maststudio.ro/opengraph-image',
+  alternateName: 'MAST Studio Timișoara',
+  description:
+    'Studio de web design din Timișoara. Site-uri de prezentare de la 300 EUR livrate în 48 de ore, magazine online de la 900 EUR, aplicații și platforme personalizate.',
   url: 'https://maststudio.ro',
   telephone: '+40755928029',
   email: 'contact@maststudio.ro',
-  priceRange: '€€',
+  priceRange: '300-3000 EUR',
+  image: 'https://maststudio.ro/opengraph-image',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Timișoara',
@@ -52,7 +59,12 @@ const businessJsonLd = {
     { '@type': 'Country', name: 'România' },
   ],
   knowsLanguage: ['ro', 'en'],
-  sameAs: [],
+  parentOrganization: {
+    '@type': 'Organization',
+    name: 'MAST Consult S.R.L.',
+    identifier: 'RO49626121',
+  },
+  sameAs: SOCIAL_PROFILE_LINKS,
 }
 
 const SPRING = { stiffness: 80, damping: 26 } as const
