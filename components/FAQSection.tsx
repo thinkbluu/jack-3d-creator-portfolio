@@ -66,6 +66,15 @@ const groups: Array<{ kicker: string; indices: number[] }> = [
   { kicker: 'Tehnic și proprietate', indices: [6, 7, 8, 10, 11] },
 ]
 
+function slugifyQuestion(question: string) {
+  return question
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -91,7 +100,7 @@ function FAQItem({
 }) {
   return (
     <FadeIn delay={delay}>
-      <article className="border-b border-[var(--hairline)] last:border-b-0">
+      <article id={slugifyQuestion(question)} className="border-b border-[var(--hairline)] last:border-b-0">
         <button
           type="button"
           className="flex min-h-[52px] w-full cursor-pointer items-center justify-between gap-6 py-5 text-left"

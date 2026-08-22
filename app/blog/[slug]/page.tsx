@@ -55,6 +55,18 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
     author: { '@type': 'Organization', name: 'MAST Studio', url: siteUrl },
     publisher: { '@type': 'Organization', name: 'MAST Studio', url: siteUrl },
   }
+  const howToJsonLd = post.howToSteps?.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: post.title,
+        step: post.howToSteps.map((step) => ({
+          '@type': 'HowToStep',
+          name: step.name,
+          text: step.text,
+        })),
+      }
+    : null
 
   return (
     <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
@@ -70,13 +82,36 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
           <span className="kicker rounded-full border border-[var(--glass-edge)] px-3 py-1 text-[10px]">{post.categoryLabel}</span>
           <h1 className="type-h2 mt-6 text-balance">{post.title}</h1>
           <p className="type-body mt-6 text-[var(--ink-2)]">{post.excerpt}</p>
-          <div className="mt-6 flex gap-4 font-sans text-xs text-[var(--ink-3)]">
+          <div className="mt-6 flex flex-wrap items-center gap-4 font-sans text-xs text-[var(--ink-3)]">
+            <Link href="/" className="hover:text-[var(--ink)]">de MAST Studio</Link>
+            <span>·</span>
             <time dateTime={post.publishedAt}>{formatBlogDate(post.publishedAt)}</time>
             <span>·</span>
             <span>{post.readMin} min citire</span>
           </div>
+          {post.updatedAt ? (
+            <p className="mt-2 font-sans text-[13px] text-[var(--ink-3)]">
+              Actualizat: {formatBlogDate(post.updatedAt)}
+            </p>
+          ) : null}
           <div className="mt-8 border-t border-[var(--hairline)]" />
         </header>
+
+        <div className="mx-auto mt-10 max-w-2xl">
+          <p className="kicker">Pe scurt</p>
+          <div
+            className="type-body mt-3 text-[17px] font-medium text-[var(--ink)]"
+            style={{
+              background: 'var(--shell-warm)',
+              borderLeft: '3px solid var(--brass)',
+              borderRadius: 'var(--radius-card)',
+              padding: '20px 24px',
+              marginBottom: '32px',
+            }}
+          >
+            {post.answerCapsule}
+          </div>
+        </div>
 
         <div className="prose mx-auto mt-12 max-w-2xl" dangerouslySetInnerHTML={{ __html: post.body }} />
 
@@ -116,6 +151,7 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
         ) : null}
       </article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      {howToJsonLd ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }} /> : null}
       {post.faqItems?.length ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: post.faqItems.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })) }) }} /> : null}
       <Footer />
     </main>

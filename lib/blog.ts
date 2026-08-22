@@ -5,6 +5,11 @@ export type BlogFaqItem = {
   answer: string
 }
 
+export type HowToStep = {
+  name: string
+  text: string
+}
+
 export type BlogPost = {
   slug: string
   title: string
@@ -15,9 +20,11 @@ export type BlogPost = {
   publishedAt: string
   updatedAt?: string
   body: string
+  answerCapsule: string
   seoTitle?: string
   seoDescription?: string
   faqItems?: BlogFaqItem[]
+  howToSteps?: HowToStep[]
 }
 
 export const posts: BlogPost[] = [
@@ -29,6 +36,8 @@ export const posts: BlogPost[] = [
     categoryLabel: 'Ghid',
     readMin: 7,
     publishedAt: '2026-08-14',
+    answerCapsule:
+      'Un site de prezentare în România costă între 300 și 800 EUR la un studio serios în 2026. Sub 250 EUR primești o temă gata făcută. Peste 2.000 EUR plătești structura unei agenții mari. Un magazin online costă între 900 și 2.500 EUR.',
     seoTitle: 'Cât costă un site în România în 2026 | Prețuri reale, fără ocolișuri',
     seoDescription: 'Prețuri reale pentru site de prezentare, magazin online și aplicații web în România. Ce e inclus în preț, ce se plătește separat și cum alegi corect.',
     faqItems: [
