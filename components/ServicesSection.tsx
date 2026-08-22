@@ -102,7 +102,7 @@ const serviceItemListJsonLd = {
               '@type': 'Offer',
               priceSpecification: {
                 '@type': 'PriceSpecification',
-                description: 'Ofertă personalizată',
+                description: 'Ofertă personalizată, răspuns în 24 de ore',
               },
             },
           }),

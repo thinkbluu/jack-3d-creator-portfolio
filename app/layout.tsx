@@ -58,6 +58,9 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
   },
+  other: {
+    'ai-content-declaration': 'human-authored',
+  },
 }
 
 export const viewport: Viewport = {
