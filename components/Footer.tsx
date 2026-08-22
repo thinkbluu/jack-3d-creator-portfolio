@@ -37,6 +37,7 @@ export default function Footer() {
             <Link href="/portofoliu" className={linkClass}>Portofoliu</Link>
             <Link href="/blog" className={linkClass}>Ghid</Link>
             <Link href="/glosar" className={linkClass}>Glosar</Link>
+            <Link href="/comparatie" className={linkClass}>Comparație</Link>
             <Link href="/confidentialitate" className={linkClass}>Confidențialitate</Link>
             <Link href="/cookies" className={linkClass}>Cookies</Link>
             <Link href="/termeni" className={linkClass}>Termeni</Link>
