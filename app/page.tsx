@@ -31,6 +31,10 @@ const organizationJsonLd = {
   },
 }
 
+// Populate once the studio's Facebook, Instagram, LinkedIn and Google Business
+// Profile pages exist, e.g. ['https://facebook.com/...', 'https://instagram.com/...'].
+export const SOCIAL_PROFILE_LINKS: string[] = []
+
 const businessJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
@@ -60,7 +64,7 @@ const businessJsonLd = {
     name: 'MAST Consult S.R.L.',
     identifier: 'RO49626121',
   },
-  sameAs: [],
+  sameAs: SOCIAL_PROFILE_LINKS,
 }
 
 const SPRING = { stiffness: 80, damping: 26 } as const

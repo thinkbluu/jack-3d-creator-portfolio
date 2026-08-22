@@ -17,6 +17,7 @@ export default function Footer() {
             </span>
           </p>
           <nav aria-label="Linkuri juridice" className="flex flex-wrap gap-x-5 gap-y-2">
+            <Link href="/despre" className={linkClass}>Despre</Link>
             <Link href="/portofoliu" className={linkClass}>Portofoliu</Link>
             <Link href="/blog" className={linkClass}>Ghid</Link>
             <Link href="/confidentialitate" className={linkClass}>Confidențialitate</Link>
