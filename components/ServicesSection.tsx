@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import FadeIn from './FadeIn'
 import ChartKicker from './ChartKicker'
@@ -13,6 +14,7 @@ export const services = [
     price: 'de la 300 EUR',
     guarantee: 'Prima rundă de modificări inclusă',
     message: 'Salut! Vreau un site de prezentare, livrat în 48 de ore. Îmi poți face o ofertă?',
+    detailSlug: 'site-de-prezentare',
   },
   {
     name: 'Magazin online',
@@ -20,6 +22,7 @@ export const services = [
     price: 'de la 900 EUR',
     guarantee: 'Prima rundă de modificări inclusă',
     message: 'Salut! Vreau un magazin online. Îmi poți face o ofertă?',
+    detailSlug: 'magazin-online',
   },
   {
     name: 'Aplicații web și mobile',
@@ -27,6 +30,7 @@ export const services = [
     price: 'ofertă personalizată',
     guarantee: 'Ofertă fixă, fără costuri surpriză',
     message: 'Salut! Am nevoie de o aplicație web sau mobilă. Putem discuta?',
+    detailSlug: 'aplicatii-si-platforme',
   },
   {
     name: 'Platforme și SaaS',
@@ -34,6 +38,7 @@ export const services = [
     price: 'ofertă personalizată',
     guarantee: 'Ofertă fixă, fără costuri surpriză',
     message: 'Salut! Vreau să construim o platformă personalizată. Putem discuta?',
+    detailSlug: 'aplicatii-si-platforme',
   },
 ]
 
@@ -134,15 +139,7 @@ export default function ServicesSection() {
             const recommended = Boolean(segment && recommendedName[segment] === service.name)
             return (
               <FadeIn key={service.name} delay={index * 0.06} className="h-full">
-                <TrackedLink
-                  href={getWaUrl(null, service.message)}
-                  eventName="service_whatsapp_click"
-                  eventProperties={{ service: service.name }}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label={`Cere ofertă pe WhatsApp pentru ${service.name}`}
-                  className={`${cardClass} ${recommended ? '!border-[var(--brass)] shadow-[0_18px_44px_rgba(26,23,20,0.10)]' : ''}`}
-                >
+                <div className={`${cardClass} ${recommended ? '!border-[var(--brass)] shadow-[0_18px_44px_rgba(26,23,20,0.10)]' : ''}`}>
                   <span className={`mb-4 w-fit rounded-[var(--radius-pill)] border border-[var(--brass)] px-3 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.16em] text-[var(--brass)] ${recommended ? '' : 'invisible'}`}>
                     Recomandat pentru tine
                   </span>
@@ -150,10 +147,26 @@ export default function ServicesSection() {
                   <p className="type-body mt-2 text-[0.95rem]">{service.description}</p>
                   <PriceLine>{service.price}</PriceLine>
                   <p className="mt-2 font-sans text-[12.5px] text-[var(--ink-3)]">{service.guarantee}</p>
-                  <span className="mt-auto">
-                    <OfferAffordance />
+                  <span className="mt-auto flex flex-wrap items-center justify-between gap-3">
+                    <TrackedLink
+                      href={getWaUrl(null, service.message)}
+                      eventName="service_whatsapp_click"
+                      eventProperties={{ service: service.name }}
+                      target="_blank"
+                      rel="noopener"
+                      aria-label={`Cere ofertă pe WhatsApp pentru ${service.name}`}
+                      className="group/cta"
+                    >
+                      <OfferAffordance />
+                    </TrackedLink>
+                    <Link
+                      href={`/servicii/${service.detailSlug}`}
+                      className="font-sans text-[12px] font-medium text-[var(--ink-3)] underline decoration-[var(--hairline)] underline-offset-4 transition-colors hover:text-[var(--brass)] hover:decoration-[var(--brass)]"
+                    >
+                      Detalii și prețuri →
+                    </Link>
                   </span>
-                </TrackedLink>
+                </div>
               </FadeIn>
             )
           })}

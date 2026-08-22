@@ -83,7 +83,7 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
           <h1 className="type-h2 mt-6 text-balance">{post.title}</h1>
           <p className="type-body mt-6 text-[var(--ink-2)]">{post.excerpt}</p>
           <div className="mt-6 flex flex-wrap items-center gap-4 font-sans text-xs text-[var(--ink-3)]">
-            <Link href="/" className="hover:text-[var(--ink)]">de MAST Studio</Link>
+            <Link href="/despre" className="hover:text-[var(--ink)]">de MAST Studio</Link>
             <span>·</span>
             <time dateTime={post.publishedAt}>{formatBlogDate(post.publishedAt)}</time>
             <span>·</span>

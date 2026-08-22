@@ -73,6 +73,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="ro" className={`${dmSans.variable} ${fraunces.variable} bg-[var(--shell)]`}>
       <head>
         <link rel="preload" as="image" href="/images/harbor-final-mobile.webp" media="(max-width: 767px)" fetchPriority="high" />
+        <link rel="alternate" type="application/rss+xml" title="MAST Studio Blog" href="https://maststudio.ro/feed.xml" />
       </head>
       <body className="bg-[var(--shell)] font-sans antialiased">
         <ScrollProgress />
