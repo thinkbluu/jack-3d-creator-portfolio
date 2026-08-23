@@ -1,11 +1,13 @@
 import type { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/blog'
 import { getAllProjects } from '@/lib/projects'
+import { getAllServicePages } from '@/lib/services'
 
-const staticRoutes = ['', '/despre', '/blog', '/portofoliu', '/confidentialitate', '/cookies', '/termeni']
+const staticRoutes = ['', '/despre', '/blog', '/portofoliu', '/glosar', '/comparatie', '/confidentialitate', '/cookies', '/termeni']
 const blogRoutes = getAllPosts().map((post) => `/blog/${post.slug}`)
 const projectRoutes = getAllProjects().map((project) => `/portofoliu/${project.slug}`)
-const routes = [...staticRoutes, ...blogRoutes, ...projectRoutes]
+const serviceRoutes = getAllServicePages().map((service) => `/servicii/${service.slug}`)
+const routes = [...staticRoutes, ...blogRoutes, ...projectRoutes, ...serviceRoutes]
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return routes.map((route) => ({
