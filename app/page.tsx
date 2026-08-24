@@ -22,7 +22,7 @@ const organizationJsonLd = {
   legalName: 'MAST Consult S.R.L.',
   url: 'https://maststudio.ro',
   email: 'contact@maststudio.ro',
-  telephone: '+40755928029',
+  telephone: '+40746382204',
   areaServed: 'RO',
   address: {
     '@type': 'PostalAddress',
@@ -44,7 +44,7 @@ const businessJsonLd = {
   description:
     'Studio de web design din Timișoara. Site-uri de prezentare de la 300 EUR livrate în 48 de ore, magazine online de la 900 EUR, aplicații și platforme personalizate.',
   url: 'https://maststudio.ro',
-  telephone: '+40755928029',
+  telephone: '+40746382204',
   email: 'contact@maststudio.ro',
   priceRange: '300-3000 EUR',
   image: 'https://maststudio.ro/opengraph-image',

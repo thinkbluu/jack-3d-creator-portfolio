@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: 'https://maststudio.ro/blog' },
 }
 
-const whatsappUrl = `https://wa.me/40755928029?text=${encodeURIComponent('Salut! Am o întrebare despre un site: ')}`
+const whatsappUrl = `https://wa.me/40746382204?text=${encodeURIComponent('Salut! Am o întrebare despre un site: ')}`
 
 export default function BlogPage() {
   const posts = getAllPosts()
