@@ -72,6 +72,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="ro" className={`${dmSans.variable} ${fraunces.variable} bg-[var(--shell)]`}>
       <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-WT5MMP4M9D" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-WT5MMP4M9D');
+            `,
+          }}
+        />
         <link rel="preload" as="image" href="/images/harbor-final-mobile.webp" media="(max-width: 767px)" fetchPriority="high" />
         <link rel="alternate" type="application/rss+xml" title="MAST Studio Blog" href="https://maststudio.ro/feed.xml" />
       </head>
