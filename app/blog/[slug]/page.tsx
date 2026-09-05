@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { MDXRemote } from 'next-mdx-remote/rsc'
 import BlogCard from '@/components/BlogCard'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
@@ -89,7 +90,7 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
             <span>·</span>
             <span>{post.readMin} min citire</span>
           </div>
-          {post.updatedAt ? (
+          {post.updatedAt && post.updatedAt !== post.publishedAt ? (
             <p className="mt-2 font-sans text-[13px] text-[var(--ink-3)]">
               Actualizat: {formatBlogDate(post.updatedAt)}
             </p>
@@ -113,7 +114,9 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
           </div>
         </div>
 
-        <div className="prose mx-auto mt-12 max-w-2xl" dangerouslySetInnerHTML={{ __html: post.body }} />
+        <div className="prose mx-auto mt-12 max-w-2xl">
+          <MDXRemote source={post.body} />
+        </div>
 
         {post.faqItems?.length ? (
           <section className="mx-auto mt-16 max-w-2xl">
