@@ -1,9 +1,13 @@
 import type { Metadata, Viewport } from 'next'
 import { DM_Sans, Fraunces } from 'next/font/google'
+import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import ConsentBanner from '@/components/ConsentBanner'
 import ScrollProgress from '@/components/ScrollProgress'
 import './globals.css'
+
+const gtagId = process.env.NEXT_PUBLIC_GTAG_ID ?? 'G-WT5MMP4M9D'
 
 const dmSans = DM_Sans({
   subsets: ['latin', 'latin-ext'],
@@ -72,23 +76,40 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="ro" className={`${dmSans.variable} ${fraunces.variable} bg-[var(--shell)]`}>
       <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-WT5MMP4M9D" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
+        {gtagId ? (
+          <Script id="gtag-consent-default" strategy="beforeInteractive">
+            {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-WT5MMP4M9D');
-            `,
-          }}
-        />
+              window.gtag = gtag;
+              gtag('consent', 'default', {
+                ad_storage: 'denied',
+                ad_user_data: 'denied',
+                ad_personalization: 'denied',
+                analytics_storage: 'denied',
+                wait_for_update: 500,
+              });
+            `}
+          </Script>
+        ) : null}
         <link rel="preload" as="image" href="/images/harbor-final-mobile.webp" media="(max-width: 767px)" fetchPriority="high" />
         <link rel="alternate" type="application/rss+xml" title="MAST Studio Blog" href="https://maststudio.ro/feed.xml" />
       </head>
       <body className="bg-[var(--shell)] font-sans antialiased">
         <ScrollProgress />
         {children}
+        <ConsentBanner />
+        {gtagId ? (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`} strategy="afterInteractive" />
+            <Script id="gtag-config" strategy="afterInteractive">
+              {`
+                gtag('js', new Date());
+                gtag('config', '${gtagId}');
+              `}
+            </Script>
+          </>
+        ) : null}
         <Analytics />
         <SpeedInsights />
       </body>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import BlogCard from '@/components/BlogCard'
 import Footer from '@/components/Footer'
+import TrackedLink from '@/components/TrackedLink'
 import { getAllPosts } from '@/lib/blog'
 
 export const metadata: Metadata = {
@@ -55,9 +56,9 @@ export default function BlogPage() {
 
         <section className="mt-20 border-t border-[var(--hairline)] pt-8">
           <p className="type-body text-[var(--ink-2)]">Ai o întrebare la care nu am răspuns încă?</p>
-          <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-[var(--brass)] underline-offset-4 hover:underline">
+          <TrackedLink href={whatsappUrl} target="_blank" rel="noopener noreferrer" eventProperties={{ placement: 'blog_index' }} className="mt-3 inline-block text-[var(--brass)] underline-offset-4 hover:underline">
             Întreabă-ne →
-          </a>
+          </TrackedLink>
         </section>
       </div>
       <Footer />
