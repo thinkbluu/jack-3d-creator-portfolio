@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import LeadForm from '@/components/LeadForm'
+import TrackedLink from '@/components/TrackedLink'
 import { EMAIL, PHONE_DISPLAY, PHONE_HREF } from '@/components/SegmentContext'
 import { getFeaturedProjects } from '@/lib/projects'
 
@@ -68,12 +69,13 @@ export default function CereOfertaPage() {
               <span className="font-sans text-[10px] font-medium tracking-[0.28em]">STUDIO</span>
             </span>
           </div>
-          <a
+          <TrackedLink
             href={PHONE_HREF}
+            eventProperties={{ placement: 'offer_header' }}
             className="font-sans text-sm font-semibold text-[var(--ink)] underline decoration-[var(--hairline)] underline-offset-4 transition-colors hover:text-[var(--brass)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
           >
             {PHONE_DISPLAY}
-          </a>
+          </TrackedLink>
         </div>
       </header>
 
@@ -159,12 +161,13 @@ export default function CereOfertaPage() {
         <div className="site-container flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 MAST Studio · MAST Consult S.R.L. · CUI RO49626121 · Timișoara, România</p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <a
+            <TrackedLink
               href={PHONE_HREF}
+              eventProperties={{ placement: 'offer_footer' }}
               className="transition-colors hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
             >
               {PHONE_DISPLAY}
-            </a>
+            </TrackedLink>
             <span>{EMAIL}</span>
           </div>
         </div>

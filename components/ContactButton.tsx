@@ -25,7 +25,7 @@ export default function ContactButton({ hero = false, ghost = false, label, note
         href={getWaUrl(segment)}
         target="_blank"
         rel="noopener noreferrer"
-        eventName="whatsapp_cta_click"
+        eventName="whatsapp_click"
         eventProperties={{ placement: hero ? 'hero' : 'final_cta', segment: segment ?? 'general' }}
         className={`${base} ${skin}`}
         style={{

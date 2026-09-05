@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
+import { trackConversion } from '@/lib/analytics'
 import { WHATSAPP_NUMBER } from './SegmentContext'
 
 type LeadFormProps = {
@@ -98,6 +99,14 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
   function openWhatsApp() {
     if (!validate() || !projectType) return
 
+    trackConversion('lead_form_submit', {
+      project_type: projectType,
+      has_website: Boolean(currentSite.trim()),
+    })
+    trackConversion('whatsapp_click', {
+      placement: variant === 'page' ? 'lead_form_page' : 'lead_form_inline',
+    })
+
     setIsSubmitting(true)
     void fetch('/api/lead', {
       method: 'POST',
@@ -116,7 +125,12 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
 
   async function submitForCallback(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!validate()) return
+    if (!validate() || !projectType) return
+
+    trackConversion('lead_form_submit', {
+      project_type: projectType,
+      has_website: Boolean(currentSite.trim()),
+    })
 
     setIsSubmitting(true)
     try {
