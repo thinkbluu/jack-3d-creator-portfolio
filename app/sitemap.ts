@@ -3,7 +3,7 @@ import { getAllPosts } from '@/lib/blog'
 import { getAllProjects } from '@/lib/projects'
 import { getAllServicePages } from '@/lib/services'
 
-const staticRoutes = ['', '/despre', '/blog', '/portofoliu', '/glosar', '/comparatie', '/cerere-oferta', '/confidentialitate', '/cookies', '/termeni']
+const staticRoutes = ['', '/despre', '/blog', '/portofoliu', '/glosar', '/comparatie', '/confidentialitate', '/cookies', '/termeni']
 const blogRoutes = getAllPosts().map((post) => `/blog/${post.slug}`)
 const projectRoutes = getAllProjects().map((project) => `/portofoliu/${project.slug}`)
 const serviceRoutes = getAllServicePages().map((service) => `/servicii/${service.slug}`)
