@@ -4,7 +4,12 @@ import Script from 'next/script'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ConsentBanner from '@/components/ConsentBanner'
+import JsonLd from '@/components/JsonLd'
 import ScrollProgress from '@/components/ScrollProgress'
+import { CONSENT_STORAGE_KEY } from '@/lib/consent'
+import { businessNode, graph, websiteNode } from '@/lib/schema'
+import { DEFAULT_OG_IMAGE } from '@/lib/seo'
+import { LEGAL_NAME, SITE_LOCALE, SITE_NAME, SITE_URL } from '@/lib/site'
 import './globals.css'
 
 const gtagId = process.env.NEXT_PUBLIC_GTAG_ID ?? 'G-WT5MMP4M9D'
@@ -12,6 +17,7 @@ const gtagId = process.env.NEXT_PUBLIC_GTAG_ID ?? 'G-WT5MMP4M9D'
 const dmSans = DM_Sans({
   subsets: ['latin', 'latin-ext'],
   weight: ['400', '500', '600', '700'],
+  display: 'swap',
   variable: '--font-dm-sans',
 })
 
@@ -22,48 +28,36 @@ const fraunces = Fraunces({
   variable: '--font-fraunces',
 })
 
-const title = 'MAST Studio | Site-uri care aduc clienți, în 48 de ore'
-const description = 'Studio de web design din Timișoara. Site-uri de prezentare de la 300 EUR livrate în 48 de ore, magazine online de la 900 EUR și platforme personalizate. Avans 50 EUR, restul doar dacă ești mulțumit.'
-
+// Defaults only. Every page sets its own title, description, canonical URL and
+// social tags through `pageMetadata()` in lib/seo.ts, so nothing page-specific
+// (like the canonical URL) is ever inherited from here.
 export const metadata: Metadata = {
-  metadataBase: new URL('https://maststudio.ro'),
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: title,
-    template: '%s | MAST Studio',
+    default: 'Web design Timișoara · Creare site în 48h | MAST Studio',
+    template: `%s | ${SITE_NAME}`,
   },
-  description,
-  applicationName: 'MAST Studio',
-  keywords: ['web design Timișoara', 'site de prezentare', 'magazin online', 'aplicații web', 'platforme SaaS', 'automatizări AI'],
-  authors: [{ name: 'MAST Studio', url: 'https://maststudio.ro' }],
-  creator: 'MAST Studio',
-  publisher: 'MAST Consult S.R.L.',
-  alternates: { canonical: '/' },
+  description:
+    'Studio de web design din Timișoara: creare site de prezentare de la 300 EUR, live în 48 de ore, și magazine online de la 900 EUR. Avans 50 EUR, restul doar dacă ești mulțumit.',
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: LEGAL_NAME,
+  formatDetection: { telephone: false, email: false, address: false },
   openGraph: {
     type: 'website',
-    locale: 'ro_RO',
-    url: '/',
-    siteName: 'MAST Studio',
-    title,
-    description,
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'MAST Studio — site-ul potrivit începe cu întrebarea potrivită' }],
+    siteName: SITE_NAME,
+    locale: SITE_LOCALE,
+    images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: 'summary_large_image',
-    title,
-    description,
-    images: ['/twitter-image'],
-  },
-  icons: {
-    icon: [{ url: '/icons/mast-mark-badge.svg', type: 'image/svg+xml' }],
-    apple: '/icons/mast-mark-badge.svg',
+    images: [{ url: DEFAULT_OG_IMAGE.url, alt: DEFAULT_OG_IMAGE.alt }],
   },
   robots: {
     index: true,
     follow: true,
     googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
-  },
-  other: {
-    'ai-content-declaration': 'human-authored',
   },
 }
 
@@ -71,6 +65,8 @@ export const viewport: Viewport = {
   themeColor: '#FAF7F2',
   colorScheme: 'light',
 }
+
+const consentGrantedUpdate = "{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'}"
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -89,20 +85,30 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
                 analytics_storage: 'denied',
                 wait_for_update: 500,
               });
+              try {
+                if (localStorage.getItem('${CONSENT_STORAGE_KEY}') === 'granted') {
+                  gtag('consent', 'update', ${consentGrantedUpdate});
+                }
+              } catch (e) {}
             `}
           </Script>
         ) : null}
-        <link rel="preload" as="image" href="/images/harbor-final-mobile.webp" media="(max-width: 767px)" fetchPriority="high" />
-        <link rel="alternate" type="application/rss+xml" title="MAST Studio Blog" href="https://maststudio.ro/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="MAST Studio – Ghid" href={`${SITE_URL}/feed.xml`} />
+        {/* Without JavaScript the scroll reveals never run, so show their content as-is. */}
+        <noscript>
+          <style>{'[data-fade]{opacity:1!important;transform:none!important}'}</style>
+        </noscript>
       </head>
       <body className="bg-[var(--shell)] font-sans antialiased">
         <ScrollProgress />
         {children}
         <ConsentBanner />
+        <JsonLd data={graph(websiteNode(), businessNode())} />
         {gtagId ? (
           <>
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`} strategy="afterInteractive" />
-            <Script id="gtag-config" strategy="afterInteractive">
+            {/* Loaded once the page is idle; events sent earlier wait in dataLayer. */}
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`} strategy="lazyOnload" />
+            <Script id="gtag-config" strategy="lazyOnload">
               {`
                 gtag('js', new Date());
                 gtag('config', '${gtagId}');

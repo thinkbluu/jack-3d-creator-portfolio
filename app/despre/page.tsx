@@ -1,17 +1,28 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
+import Breadcrumbs from '@/components/Breadcrumbs'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
+import JsonLd from '@/components/JsonLd'
+import SiteHeader from '@/components/SiteHeader'
 import { SegmentProvider } from '@/components/SegmentContext'
+import { breadcrumbNode, businessRef, faqNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
+import { pageMetadata } from '@/lib/seo'
+import { ADDRESS, EMAIL, EMAIL_HREF, LEGAL_NAME, PHONE_DISPLAY, PHONE_HREF, TRADE_REGISTER_NUMBER, VAT_ID } from '@/lib/site'
 
-const siteUrl = 'https://maststudio.ro'
+const path = '/despre'
+const description =
+  'MAST Studio e un studio de web design din Timișoara, parte din MAST Consult S.R.L. Construim site-uri, magazine online și platforme pentru firme din România.'
 
-export const metadata: Metadata = {
-  title: 'Despre MAST Studio | Studio de web design din Timișoara',
-  description:
-    'MAST Studio este un studio de web design din Timișoara, parte din MAST Consult S.R.L. Construim site-uri, magazine online și platforme pentru afaceri din România.',
-  alternates: { canonical: `${siteUrl}/despre` },
-}
+export const metadata = pageMetadata({
+  title: 'Despre noi: studio de web design din Timișoara',
+  description,
+  path,
+})
+
+const crumbs: BreadcrumbItem[] = [
+  { name: 'Acasă', path: '/' },
+  { name: 'Despre', path },
+]
 
 const answerCapsule =
   'MAST Studio este un studio de web design din Timișoara, România, parte din MAST Consult S.R.L. Construiește site-uri de prezentare, magazine online, aplicații web și platforme pentru afaceri mici și mijlocii din România și internațional. Site de prezentare de la 300 EUR, livrat în 48 de ore.'
@@ -31,7 +42,7 @@ const workSteps = [
   },
   {
     title: 'Plătești restul și primești predarea completă',
-    text: 'Plata se face în avans parțial la început și restul la livrare. Primești accesele, documentația și un scurt instructaj de folosire.',
+    text: 'Avansul de 50 EUR se scade din preț, iar restul îl plătești doar dacă ești mulțumit de rezultat. Primești accesele, documentația și un scurt instructaj de folosire.',
   },
 ]
 
@@ -67,48 +78,19 @@ const faqItems = [
   {
     question: 'Ce se întâmplă după lansare, oferiți mentenanță?',
     answer:
-      'Da, la cerere. Poți continua singur folosind instructajul primit la predare sau poți opta pentru un abonament de mentenanță și modificări ulterioare, discutat separat de la caz la caz.',
+      'Da. Mentenanța pornește de la 90 EUR pe lună, fără contract pe termen lung, și acoperă actualizări, backup și mici modificări. Poți continua și singur, folosind instructajul primit la predare.',
   },
 ]
 
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqItems.map((item) => ({
-    '@type': 'Question',
-    name: item.question,
-    acceptedAnswer: { '@type': 'Answer', text: item.answer },
-  })),
-}
-
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-      <header className="border-b border-[var(--hairline)]">
-        <nav aria-label="Navigație principală" className="site-container flex h-20 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span
-              aria-hidden="true"
-              className="size-[22px] bg-[var(--brass)]"
-              style={{
-                mask: "url('/icons/mast-mark.svg') center / contain no-repeat",
-                WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat",
-              }}
-            />
-            <span className="flex items-baseline gap-2">
-              <span className="font-serif text-xl font-semibold">MAST</span>
-              <span className="font-sans text-[10px] font-medium tracking-[.28em]">STUDIO</span>
-            </span>
-          </Link>
-          <Link href="/" className="font-sans text-xs uppercase tracking-[0.16em] text-[var(--ink-2)] hover:text-[var(--ink)]">
-            Înapoi la site
-          </Link>
-        </nav>
-      </header>
-
-      <article className="site-container py-16 md:py-24">
+    <>
+      <SiteHeader current="despre" />
+      <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
+      <article className="site-container py-12 md:py-20">
         <header className="mx-auto max-w-2xl">
-          <p className="kicker">Despre studio</p>
+          <Breadcrumbs items={crumbs} />
+          <p className="kicker mt-6">Despre studio</p>
           <h1 className="type-h2 mt-4 text-balance">Despre MAST Studio</h1>
         </header>
 
@@ -154,7 +136,7 @@ export default function AboutPage() {
                   <span
                     aria-hidden="true"
                     className="flex size-8 shrink-0 items-center justify-center rounded-full font-sans text-[13px] font-semibold"
-                    style={{ background: 'var(--shell-warm)', color: 'var(--brass)', border: '1px solid var(--hairline)' }}
+                    style={{ background: 'var(--shell-warm)', color: 'var(--brass-ink)', border: '1px solid var(--hairline)' }}
                   >
                     {index + 1}
                   </span>
@@ -171,6 +153,34 @@ export default function AboutPage() {
             <h2 className="type-h3">Cine este în spatele MAST Studio</h2>
             <p className="type-body mt-4">
               MAST Studio este divizia de web design a MAST Consult S.R.L., firmă de consultanță cu sediul în Timișoara, CUI RO49626121. Echipa a lucrat cu afaceri mici și mijlocii din România la digitalizare și prezență online și a construit MAST Studio pentru a livra site-uri fără costurile și birocrația unei agenții mari: un singur punct de contact, un proces fix și predare completă la final.
+            </p>
+          </section>
+
+          <section className="mt-12 border-t border-[var(--hairline)] pt-12">
+            <h2 className="type-h3">Date de identificare</h2>
+            <dl className="type-body mt-4 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-[auto_1fr]">
+              <dt className="font-semibold text-[var(--ink)]">Firmă</dt>
+              <dd>{LEGAL_NAME}</dd>
+              <dt className="font-semibold text-[var(--ink)]">CUI</dt>
+              <dd>{VAT_ID}</dd>
+              <dt className="font-semibold text-[var(--ink)]">Reg. Com.</dt>
+              <dd>{TRADE_REGISTER_NUMBER}</dd>
+              <dt className="font-semibold text-[var(--ink)]">Sediu</dt>
+              <dd>
+                {ADDRESS.street}, {ADDRESS.postalCode} {ADDRESS.locality}, jud. {ADDRESS.region}
+              </dd>
+              <dt className="font-semibold text-[var(--ink)]">Telefon</dt>
+              <dd>
+                <a href={PHONE_HREF} className="underline-offset-4 hover:underline">{PHONE_DISPLAY}</a>
+              </dd>
+              <dt className="font-semibold text-[var(--ink)]">E-mail</dt>
+              <dd>
+                <a href={EMAIL_HREF} className="underline-offset-4 hover:underline">{EMAIL}</a>
+              </dd>
+            </dl>
+            <p className="type-body mt-4">
+              Toate canalele de contact sunt pe pagina de{' '}
+              <Link href="/contact" className="font-semibold text-[var(--ink)] underline underline-offset-4">contact</Link>.
             </p>
           </section>
 
@@ -210,15 +220,22 @@ export default function AboutPage() {
         </div>
 
         <section className="porthole mx-auto mt-16 flex max-w-2xl flex-col items-start gap-5 border-[var(--glass-edge)] p-7">
-          <p className="type-h3">Vrei să discutăm despre proiectul tău?</p>
+          <h2 className="type-h3">Vrei să discutăm despre proiectul tău?</h2>
           <SegmentProvider>
             <ContactButton hero label="Cere ofertă pe WhatsApp" />
           </SegmentProvider>
         </section>
       </article>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      </main>
       <Footer />
-    </main>
+      <JsonLd
+        data={graph(
+          webPageNode({ path, name: 'Despre MAST Studio', description, type: 'AboutPage', breadcrumb: true, mainEntity: businessRef }),
+          breadcrumbNode(crumbs),
+          faqNode(faqItems, path),
+        )}
+      />
+    </>
   )
 }

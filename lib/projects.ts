@@ -8,6 +8,8 @@ export type Project = {
   categoryLabel: string
   year: number
   summary: string
+  /** Meta description, 120-158 characters. */
+  metaDescription: string
   challenge: string
   solution: string
   result?: string
@@ -23,6 +25,8 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: 'veterinaria-timisoara',
+    metaDescription:
+      'Studiu de caz: site de prezentare mobile-first pentru un cabinet veterinar din Timișoara. Cabinetul a raportat cu 80% mai mulți clienți noi după lansare.',
     name: 'Veterinaria Timișoara',
     client: 'Cabinet veterinar',
     type: 'client',
@@ -45,6 +49,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'agd-innerpath-consulting',
+    metaDescription:
+      'Studiu de caz: site bilingv român-englez pentru o firmă de consultanță juridică și strategică ce consiliază executivi, instituții și autorități publice.',
     name: 'AGD Innerpath Consulting',
     client: 'Consultanță juridică și strategică',
     type: 'client',
@@ -67,6 +73,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'decodex',
+    metaDescription:
+      'Studiu de caz: site instituțional pentru un proiect co-finanțat prin PoCIDIF 2021-2027, cu elementele obligatorii de vizibilitate și conținut științific.',
     name: 'DECODEX',
     client: 'Proiect co-finanțat prin PoCIDIF 2021-2027',
     type: 'client',
@@ -89,6 +97,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'oncogen',
+    metaDescription:
+      'Studiu de caz: site instituțional pentru un centru de excelență în cercetare oncologică din Timișoara, cu o arhitectură de conținut clară pe publicuri.',
     name: 'OncoGen',
     client: 'Centru de excelență în cercetare',
     type: 'client',
@@ -111,6 +121,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'painea-casei',
+    metaDescription:
+      'Studiu de caz: site de prezentare pentru distribuitorul oficial DADEX în România, construit în jurul cererilor de catalog pentru echipamente de brutărie.',
     name: 'Pâinea Casei',
     client: 'Distribuitor oficial DADEX România',
     type: 'client',
@@ -133,6 +145,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'asesor',
+    metaDescription:
+      'ASESOR, platforma SaaS construită de MAST Studio pentru saloane: programări, fișe de client, echipă, stocuri și venituri într-un singur loc. În lucru.',
     name: 'ASESOR',
     client: 'Produs propriu MAST Studio',
     type: 'client',
@@ -153,6 +167,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'lumora',
+    metaDescription:
+      'Lumora, concept de design MAST Studio: landing page pentru un produs digital de wellness, construit ca exercițiu de atmosferă și tipografie mare.',
     name: 'Lumora',
     client: 'Concept de design',
     type: 'concept',
@@ -175,6 +191,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'mostar',
+    metaDescription:
+      'Mostar, concept de design MAST Studio: pagină de destinație turistică, construită ca exercițiu de narațiune vizuală controlată prin scroll.',
     name: 'Mostar',
     client: 'Concept de design',
     type: 'concept',
@@ -197,6 +215,8 @@ export const projects: Project[] = [
   },
   {
     slug: 'lithos',
+    metaDescription:
+      'Lithos, concept de design MAST Studio: platformă educațională de geologie, construită ca exercițiu de interacțiune cu cursorul și profunzime vizuală.',
     name: 'Lithos',
     client: 'Concept de design',
     type: 'concept',

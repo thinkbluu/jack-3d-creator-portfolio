@@ -84,7 +84,7 @@ export default function StudioSection() {
             href="https://pagespeed.web.dev/analysis?url=https%3A%2F%2Fmaststudio.ro"
             target="_blank"
             rel="noopener"
-            className="text-[var(--brass)] underline-offset-4 hover:underline"
+            className="text-[var(--brass-ink)] underline-offset-4 hover:underline"
           >
             Testează-i viteza →
           </a>

@@ -1,138 +1,49 @@
-'use client'
-
-import { useRef } from 'react'
-import { useScroll, useSpring, useTransform } from 'framer-motion'
-import CinematicHero from '@/components/CinematicHero'
-import SceneLayer from '@/components/SceneLayer'
-import ProofSection from '@/components/ProofSection'
-import ManifestSection from '@/components/ManifestSection'
-import StudioSection from '@/components/StudioSection'
-import ServicesSection from '@/components/ServicesSection'
-import ProcessSection from '@/components/ProcessSection'
-import FAQSection from '@/components/FAQSection'
-import FinalCTA from '@/components/FinalCTA'
 import Footer from '@/components/Footer'
-import MobileWhatsAppBar from '@/components/MobileWhatsAppBar'
-import { SegmentProvider } from '@/components/SegmentContext'
+import HomePage from '@/components/HomePage'
+import JsonLd from '@/components/JsonLd'
+import { homeFaqs } from '@/lib/home-faq'
+import { businessRef, faqNode, graph, serviceNode, webPageNode } from '@/lib/schema'
+import { pageMetadata } from '@/lib/seo'
+import { getAllServicePages } from '@/lib/services'
+import { absoluteUrl } from '@/lib/site'
 
-const organizationJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  name: 'MAST Studio',
-  legalName: 'MAST Consult S.R.L.',
-  url: 'https://maststudio.ro',
-  email: 'contact@maststudio.ro',
-  telephone: '+40746382204',
-  areaServed: 'RO',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Timișoara',
-    addressCountry: 'RO',
+const title = 'Web design Timișoara · Creare site în 48h | MAST Studio'
+const description =
+  'Studio de web design din Timișoara: creare site de prezentare de la 300 EUR, live în 48 de ore, și magazine online de la 900 EUR. Avans 50 EUR.'
+
+export const metadata = pageMetadata({
+  title,
+  description,
+  path: '/',
+  socialTitle: 'MAST Studio — web design Timișoara, site-ul tău live în 48 de ore',
+  absoluteTitle: true,
+})
+
+const services = getAllServicePages()
+
+const homeJsonLd = graph(
+  webPageNode({ path: '/', name: title, description, mainEntity: businessRef }),
+  {
+    '@type': 'ItemList',
+    '@id': `${absoluteUrl('/')}#servicii`,
+    name: 'Servicii web design MAST Studio',
+    itemListElement: services.map((service, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: serviceNode(service),
+    })),
   },
-}
-
-// Populate once the studio's Facebook, Instagram, LinkedIn and Google Business
-// Profile pages exist, e.g. ['https://facebook.com/...', 'https://instagram.com/...'].
-export const SOCIAL_PROFILE_LINKS: string[] = []
-
-const businessJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
-  '@id': 'https://maststudio.ro/#business',
-  name: 'MAST Studio',
-  alternateName: 'MAST Studio Timișoara',
-  description:
-    'Studio de web design din Timișoara. Site-uri de prezentare de la 300 EUR livrate în 48 de ore, magazine online de la 900 EUR, aplicații și platforme personalizate.',
-  url: 'https://maststudio.ro',
-  telephone: '+40746382204',
-  email: 'contact@maststudio.ro',
-  priceRange: '300-3000 EUR',
-  image: 'https://maststudio.ro/opengraph-image',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Timișoara',
-    addressRegion: 'Timiș',
-    addressCountry: 'RO',
-  },
-  areaServed: [
-    { '@type': 'City', name: 'Timișoara' },
-    { '@type': 'Country', name: 'România' },
-  ],
-  knowsLanguage: ['ro', 'en'],
-  parentOrganization: {
-    '@type': 'Organization',
-    name: 'MAST Consult S.R.L.',
-    identifier: 'RO49626121',
-  },
-  sameAs: SOCIAL_PROFILE_LINKS,
-}
-
-const SPRING = { stiffness: 80, damping: 26 } as const
-// Ramp in over the first 20% of the rig's travel, hold, then ramp out over the last 20%.
-const FADE_STOPS = [0, 0.2, 0.8, 1]
-const FADE_VALUES = [0, 1, 1, 0]
+  faqNode(
+    homeFaqs.map(([question, answer]) => ({ question, answer })),
+    '/',
+  ),
+)
 
 export default function Page() {
-  const tableRigRef = useRef<HTMLDivElement>(null)
-  const compassRigRef = useRef<HTMLDivElement>(null)
-
-  const { scrollYProgress: tableProgress } = useScroll({
-    target: tableRigRef,
-    offset: ['start end', 'end start'],
-  })
-  const tableFade = useSpring(useTransform(tableProgress, FADE_STOPS, FADE_VALUES), SPRING)
-
-  const { scrollYProgress: compassProgress } = useScroll({
-    target: compassRigRef,
-    offset: ['start end', 'end start'],
-  })
-  const compassFade = useSpring(useTransform(compassProgress, FADE_STOPS, FADE_VALUES), SPRING)
-
   return (
-    <SegmentProvider>
-      <main className="relative bg-[var(--shell)]" style={{ overflowX: 'clip' }}>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd).replace(/</g, '\\u003c') }} />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd).replace(/</g, '\\u003c') }} />
-        <CinematicHero />
-
-        <div ref={tableRigRef} className="scene-rig">
-          <div className="scene-sticky">
-            <SceneLayer
-              poster="/images/scene-table-poster.jpg"
-              video="/images/scene-table.mp4"
-              overlay={0.5}
-              blurPx={3}
-              fade={tableFade}
-            />
-          </div>
-          <div className="scene-content">
-            <ServicesSection />
-            <ProofSection />
-            <ManifestSection />
-            <ProcessSection />
-            <StudioSection />
-            <FAQSection />
-          </div>
-        </div>
-
-        <div ref={compassRigRef} className="scene-rig">
-          <div className="scene-sticky">
-            <SceneLayer
-              poster="/images/scene-compass-poster.jpg"
-              video="/images/scene-compass.mp4"
-              overlay={0.22}
-              blurPx={2}
-              fade={compassFade}
-            />
-          </div>
-          <div className="scene-content">
-            <FinalCTA />
-          </div>
-        </div>
-
-        <Footer />
-        <MobileWhatsAppBar />
-      </main>
-    </SegmentProvider>
+    <>
+      <JsonLd data={homeJsonLd} />
+      <HomePage footer={<Footer />} />
+    </>
   )
 }

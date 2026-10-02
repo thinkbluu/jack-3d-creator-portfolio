@@ -2,15 +2,17 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'MAST Studio',
-    short_name: 'MAST',
-    description: 'Studio de web design și produse digitale din Timișoara.',
+    name: 'MAST Studio — web design Timișoara',
+    short_name: 'MAST Studio',
+    description: 'Studio de web design din Timișoara: site-uri de prezentare, magazine online și aplicații pentru afaceri din România.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#050A14',
-    theme_color: '#050A14',
+    background_color: '#FAF7F2',
+    theme_color: '#FAF7F2',
     lang: 'ro',
     icons: [
+      { src: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { src: '/icon-512.png', sizes: '512x512', type: 'image/png' },
       { src: '/icons/mast-mark-badge.svg', sizes: 'any', type: 'image/svg+xml' },
     ],
   }

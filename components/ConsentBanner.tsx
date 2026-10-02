@@ -38,7 +38,7 @@ export default function ConsentBanner() {
           Folosim cookie-uri de măsurare pentru a înțelege ce funcționează. Le activăm doar cu acordul tău.{' '}
           <Link
             href="/cookies"
-            className="font-semibold text-[var(--brass)] underline underline-offset-4"
+            className="font-semibold text-[var(--brass-ink)] underline underline-offset-4"
           >
             Detalii
           </Link>

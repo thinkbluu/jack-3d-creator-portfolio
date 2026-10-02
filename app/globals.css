@@ -164,10 +164,13 @@
     --shell: #faf7f2;
     --shell-warm: #f2ece3;
     --ink: #1a1714;
-    --ink-2: rgba(26, 23, 20, 0.62);
-    --ink-3: rgba(26, 23, 20, 0.4);
+    /* Text tokens meet WCAG AA (4.5:1) on both --shell and --shell-warm. */
+    --ink-2: rgba(26, 23, 20, 0.7);
+    --ink-3: rgba(26, 23, 20, 0.62);
     --hairline: rgba(26, 23, 20, 0.1);
-    --brass: #b08d3f;
+    /* Brass passes 3:1 for large text; --brass-ink passes 4.5:1 for small text. */
+    --brass: #a3823a;
+    --brass-ink: #80672e;
     --brass-lite: #d4b267;
     --harbor: #2e5266;
     --glass: rgba(250, 247, 242, 0.86);
@@ -331,6 +334,15 @@
   line-height: 1.04;
 }
 
+.type-h1 {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 7vw, 4rem);
+  font-weight: 550;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
+}
+
 .type-h2 {
   color: var(--ink);
   font-family: var(--font-display);
@@ -351,7 +363,7 @@
 .type-body {
   color: var(--ink-2);
   font-family: var(--font-sans);
-  font-size: clamp(0.92rem, 3.6vw, 1.1rem);
+  font-size: clamp(1rem, 3.6vw, 1.1rem);
   font-weight: 400;
   line-height: 1.62;
   max-width: 64ch;
@@ -359,7 +371,7 @@
 
 .kicker,
 .type-kicker {
-  color: var(--brass);
+  color: var(--brass-ink);
   font-family: var(--font-sans);
   font-size: 11.5px;
   font-weight: 600;

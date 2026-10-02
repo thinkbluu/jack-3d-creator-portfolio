@@ -30,7 +30,7 @@ export function GET() {
       <description>${escapeXml(post.excerpt)}</description>
       <link>${link}</link>
       <guid isPermaLink="true">${link}</guid>
-      <pubDate>${toRfc822(post.updatedAt ?? post.publishedAt)}</pubDate>
+      <pubDate>${toRfc822(post.publishedAt)}</pubDate>
     </item>`
     })
     .join('\n')
@@ -38,7 +38,7 @@ export function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>MAST Studio Blog</title>
+    <title>MAST Studio – Ghid</title>
     <description>Ghiduri și prețuri reale pentru site-uri, magazine online și aplicații web în România.</description>
     <link>${siteUrl}/blog</link>
     <language>ro-ro</language>
@@ -50,7 +50,7 @@ ${items}
 
   return new Response(xml, {
     headers: {
-      'Content-Type': 'application/xml',
+      'Content-Type': 'application/rss+xml; charset=utf-8',
     },
   })
 }

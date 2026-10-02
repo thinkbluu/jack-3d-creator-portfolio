@@ -27,7 +27,7 @@ const navLinks: Array<{ href: string; label: string }> = [
 ]
 
 const clips = [
-  { src: '/images/hero-01-exit.mp4', poster: '/images/hero-poster.jpg' },
+  { src: '/images/hero-01-exit.mp4', poster: '/images/hero-poster.webp' },
   { src: '/images/hero-02-arrival.mp4', poster: '/images/harbor-final.webp' },
 ]
 
@@ -156,7 +156,7 @@ function SkipIntroButton({
     <motion.button
       type="button"
       onClick={onSkip}
-      aria-label="Sari peste secvența de intro"
+      aria-label="Sari peste intro"
       className="absolute z-20 flex items-center gap-1.5 rounded-[var(--radius-pill)] border border-[var(--glass-edge)] text-[12px] font-semibold uppercase tracking-[0.12em] text-[var(--ink-2)] transition-[background-color,color,transform] duration-200 ease-out hover:-translate-y-px hover:bg-[rgba(250,247,242,0.95)] hover:text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
       style={{
         bottom: 'clamp(24px, 4vh, 40px)',
@@ -198,7 +198,7 @@ function MirrorCard({
         {selected ? <Check aria-hidden="true" size={16} /> : <Icon aria-hidden="true" size={16} />}
       </span>
       <span className="flex flex-col gap-0.5">
-        <span className={`uppercase tracking-[0.2em] text-[var(--brass)] ${compact ? 'text-[11px]' : 'text-[9px]'}`}>{option.eyebrow}</span>
+        <span className={`uppercase tracking-[0.2em] text-[var(--brass-ink)] ${compact ? 'text-[11px]' : 'text-[9px]'}`}>{option.eyebrow}</span>
         <span className={`font-semibold leading-tight ${compact ? 'text-[13px]' : 'text-sm'}`}>{option.title}</span>
       </span>
     </button>
@@ -630,14 +630,17 @@ export default function CinematicHero() {
               : null),
           }}
         >
-          <motion.p {...enter(0)} className="kicker">Studio de web design · Timișoara</motion.p>
-
-          <motion.div style={depth ? { x: headingX, y: headingY } : undefined}>
-            <motion.h1 {...enter(1)} className="type-display mt-4">
-              Site-ul tău,<br />
-              <span className="text-[var(--brass)]">live în 48 de ore.</span>
-            </motion.h1>
-          </motion.div>
+          {/* One H1 holds the eyebrow and the headline, so the heading names the
+              service and the city. Same boxes and motion as before, now spans. */}
+          <h1>
+            <motion.span {...enter(0)} className="kicker block">Studio de web design · Timișoara</motion.span>{' '}
+            <motion.span className="block" style={depth ? { x: headingX, y: headingY } : undefined}>
+              <motion.span {...enter(1)} className="type-display mt-4 block">
+                Site-ul tău,{' '}<br />
+                <span className="text-[var(--brass)]">live în 48 de ore.</span>
+              </motion.span>
+            </motion.span>
+          </h1>
 
           <motion.div style={depth ? { x: subheadX, y: subheadY } : undefined}>
             <motion.p {...enter(2)} key={segment ?? 'default'} className="type-body mt-4">
@@ -730,22 +733,24 @@ export default function CinematicHero() {
         </div>
 
         <div className="flex flex-1 flex-col" style={{ padding: '28px 20px 32px' }}>
-          <p className="kicker" style={{ fontSize: '10.5px', letterSpacing: '.18em' }}>Studio de web design · Timișoara</p>
-
-          <p
-            className="mt-4 text-balance"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 550,
-              fontSize: 'clamp(2rem, 8.5vw, 2.6rem)',
-              lineHeight: 1.06,
-              letterSpacing: '-0.02em',
-              color: 'var(--ink)',
-            }}
-          >
-            Site-ul tău,<br />
-            <span className="text-[var(--brass)]">live în 48 de ore.</span>
-          </p>
+          {/* Server-rendered layout, so this is the H1 search engines see. */}
+          <h1>
+            <span className="kicker block" style={{ fontSize: '10.5px', letterSpacing: '.18em' }}>Studio de web design · Timișoara</span>{' '}
+            <span
+              className="mt-4 block text-balance"
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontWeight: 550,
+                fontSize: 'clamp(2rem, 8.5vw, 2.6rem)',
+                lineHeight: 1.06,
+                letterSpacing: '-0.02em',
+                color: 'var(--ink)',
+              }}
+            >
+              Site-ul tău,{' '}<br />
+              <span className="text-[var(--brass)]">live în 48 de ore.</span>
+            </span>
+          </h1>
 
           <p
             className="mt-4"

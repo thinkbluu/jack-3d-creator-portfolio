@@ -1,65 +1,59 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
+import Breadcrumbs from '@/components/Breadcrumbs'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
+import JsonLd from '@/components/JsonLd'
+import SiteHeader from '@/components/SiteHeader'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { getAllGlossaryTerms, glossaryCategoryLabels, type GlossaryCategory } from '@/lib/glossary'
+import { breadcrumbNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
+import { pageMetadata } from '@/lib/seo'
+import { absoluteUrl } from '@/lib/site'
 
-const siteUrl = 'https://maststudio.ro'
+const path = '/glosar'
+const description =
+  'Termenii din web design explicați simplu, pentru patroni: PageSpeed, domeniu, găzduire, SEO, responsive, landing page, GDPR și alții. Fără jargon tehnic.'
 
-export const metadata: Metadata = {
-  title: 'Glosar de termeni web design | MAST Studio',
-  description:
-    'Termenii din web design explicați simplu: PageSpeed, domeniu, găzduire, SEO, responsive și alții. Fără jargon.',
-  alternates: { canonical: `${siteUrl}/glosar` },
-}
+export const metadata = pageMetadata({
+  title: 'Glosar web design: termeni explicați simplu',
+  description,
+  path,
+})
+
+const crumbs: BreadcrumbItem[] = [
+  { name: 'Acasă', path: '/' },
+  { name: 'Glosar', path },
+]
 
 const categories: GlossaryCategory[] = ['tehnic', 'design', 'marketing', 'legal']
 
 export default function GlossaryPage() {
   const terms = getAllGlossaryTerms()
 
-  const definedTermSetJsonLd = {
-    '@context': 'https://schema.org',
+  const definedTermSet = {
     '@type': 'DefinedTermSet',
+    '@id': `${absoluteUrl(path)}#glosar`,
     name: 'Glosar de termeni web design MAST Studio',
-    url: `${siteUrl}/glosar`,
+    url: absoluteUrl(path),
+    inLanguage: 'ro-RO',
     hasDefinedTerm: terms.map((item) => ({
       '@type': 'DefinedTerm',
+      '@id': `${absoluteUrl(path)}#${item.slug}`,
       name: item.term,
       description: item.definition,
-      url: `${siteUrl}/glosar#${item.slug}`,
+      url: `${absoluteUrl(path)}#${item.slug}`,
+      inDefinedTermSet: { '@id': `${absoluteUrl(path)}#glosar` },
     })),
   }
 
   return (
-    <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-      <header className="border-b border-[var(--hairline)]">
-        <nav aria-label="Navigație principală" className="site-container flex h-20 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span
-              aria-hidden="true"
-              className="size-[22px] bg-[var(--brass)]"
-              style={{
-                mask: "url('/icons/mast-mark.svg') center / contain no-repeat",
-                WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat",
-              }}
-            />
-            <span className="flex items-baseline gap-2">
-              <span className="font-serif text-xl font-semibold">MAST</span>
-              <span className="font-sans text-[10px] font-medium tracking-[.28em]">STUDIO</span>
-            </span>
-          </Link>
-          <Link href="/" className="font-sans text-xs uppercase tracking-[0.16em] text-[var(--ink-2)] hover:text-[var(--ink)]">
-            Înapoi la site
-          </Link>
-        </nav>
-      </header>
-
-      <article className="glosar-page site-container py-16 md:py-24">
+    <>
+      <SiteHeader />
+      <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
+      <article className="glosar-page site-container py-12 md:py-20">
         <header className="mx-auto max-w-2xl">
-          <p className="kicker">Resurse</p>
-          <h1 className="type-h2 mt-4 text-balance">Glosar de termeni</h1>
+          <Breadcrumbs items={crumbs} />
+          <p className="kicker mt-6">Resurse</p>
+          <h1 className="type-h2 mt-4 text-balance">Glosar de termeni web design</h1>
           <p className="type-body mt-4">
             Termenii pe care îi auzi când discuți despre site-uri, explicați pe înțelesul oricui.
           </p>
@@ -107,7 +101,7 @@ export default function GlossaryPage() {
                     if (!relatedTerm) return null
                     return (
                       <span key={relatedSlug}>
-                        <a href={`#${relatedSlug}`} className="text-[var(--brass)] hover:underline">
+                        <a href={`#${relatedSlug}`} className="text-[var(--brass-ink)] hover:underline">
                           {relatedTerm.term}
                         </a>
                         {index < item.related!.length - 1 ? ',' : ''}
@@ -121,7 +115,7 @@ export default function GlossaryPage() {
         </div>
 
         <section className="porthole mx-auto mt-16 flex max-w-2xl flex-col items-start gap-5 border-[var(--glass-edge)] p-7">
-          <p className="type-h3">Nu ai găsit termenul pe care îl căutai?</p>
+          <h2 className="type-h3">Nu ai găsit termenul pe care îl căutai?</h2>
           <SegmentProvider>
             <ContactButton hero label="Întreabă-ne pe WhatsApp" />
           </SegmentProvider>
@@ -152,8 +146,15 @@ export default function GlossaryPage() {
         .glosar-page:has(#glosar-filter-legal:checked) .glosar-term:not([data-category="legal"]) { display: none; }
       `}</style>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(definedTermSetJsonLd) }} />
+      </main>
       <Footer />
-    </main>
+      <JsonLd
+        data={graph(
+          webPageNode({ path, name: 'Glosar de termeni web design', description, breadcrumb: true, mainEntity: { '@id': `${absoluteUrl(path)}#glosar` } }),
+          breadcrumbNode(crumbs),
+          definedTermSet,
+        )}
+      />
+    </>
   )
 }

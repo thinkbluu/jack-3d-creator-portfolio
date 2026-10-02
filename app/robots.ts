@@ -1,21 +1,12 @@
 import type { MetadataRoute } from 'next'
+import { SITE_URL } from '@/lib/site'
+
+// Search engines and AI assistants may crawl everything except the API.
+const crawlers = ['*', 'GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-Web', 'PerplexityBot', 'Google-Extended', 'Bingbot', 'CCBot', 'Applebot-Extended']
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [
-      { userAgent: '*', allow: '/' },
-      { userAgent: 'GPTBot', allow: '/' },
-      { userAgent: 'OAI-SearchBot', allow: '/' },
-      { userAgent: 'ChatGPT-User', allow: '/' },
-      { userAgent: 'ClaudeBot', allow: '/' },
-      { userAgent: 'Claude-Web', allow: '/' },
-      { userAgent: 'PerplexityBot', allow: '/' },
-      { userAgent: 'Google-Extended', allow: '/' },
-      { userAgent: 'Bingbot', allow: '/' },
-      { userAgent: 'CCBot', allow: '/' },
-      { userAgent: 'Applebot-Extended', allow: '/' },
-    ],
-    sitemap: 'https://maststudio.ro/sitemap.xml',
-    host: 'https://maststudio.ro',
+    rules: crawlers.map((userAgent) => ({ userAgent, allow: '/', disallow: '/api/' })),
+    sitemap: `${SITE_URL}/sitemap.xml`,
   }
 }
