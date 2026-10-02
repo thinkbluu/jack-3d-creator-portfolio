@@ -25,7 +25,7 @@ Domeniul și găzduirea, între 50 și 120 EUR pe an, cumpărate pe numele firme
 
 ## Acoperire geografică
 
-Sediu în Timișoara (Str. Victor Valcovici 19, 300503), județul Timiș. Lucrează cu clienți din toată România și internațional. Proiecte livrate în limba română și engleză.
+Din Timișoara, județul Timiș, lucrează la distanță, fără birou deschis publicului, cu clienți din toată România și internațional. Proiecte livrate în limba română și engleză.
 
 ## Identitate
 
@@ -48,3 +48,8 @@ MAST Studio este parte din MAST Consult S.R.L., CUI RO49626121, Timișoara, Rom�
 - Despre MAST Studio: https://maststudio.ro/despre
 - Contact: https://maststudio.ro/contact
 - Cerere de ofertă: https://maststudio.ro/cerere-oferta
+
+## Concurs și cariere
+
+- Site gratuit în fiecare lună: https://maststudio.ro/site-gratuit (regulament: https://maststudio.ro/site-gratuit/regulament)
+- Cariere (posturi deschise: front-end developer, mobile app developer): https://maststudio.ro/cariere

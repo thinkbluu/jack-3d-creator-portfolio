@@ -302,7 +302,7 @@ export default function ComparisonPage() {
             </ol>
             <p className="type-body mt-4">
               Pentru o listă mai completă, citește{' '}
-              <Link href="/blog/cum-alegi-firma-web-design" className="font-semibold text-[var(--ink)] underline underline-offset-4">
+              <Link href="/blog/cum-alegi-firma-web-design" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
                 cum alegi o firmă de web design: 7 întrebări de pus
               </Link>
               .
@@ -313,11 +313,11 @@ export default function ComparisonPage() {
             <h2 className="type-h3">Unde se încadrează MAST Studio</h2>
             <p className="type-body mt-4">
               Suntem un studio mic din Timișoara, parte din MAST Consult S.R.L. Lucrăm cu afaceri care vor un site clar, cu preț la vedere și un singur interlocutor: {' '}
-              <Link href="/servicii/site-de-prezentare" className="font-semibold text-[var(--ink)] underline underline-offset-4">site de prezentare</Link>{' '}
+              <Link href="/servicii/site-de-prezentare" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">site de prezentare</Link>{' '}
               de la 300 EUR, live în 48 de ore după materiale,{' '}
-              <Link href="/servicii/magazin-online" className="font-semibold text-[var(--ink)] underline underline-offset-4">magazin online</Link>{' '}
+              <Link href="/servicii/magazin-online" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">magazin online</Link>{' '}
               de la 900 EUR și{' '}
-              <Link href="/servicii/mentenanta" className="font-semibold text-[var(--ink)] underline underline-offset-4">mentenanță</Link>{' '}
+              <Link href="/servicii/mentenanta" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">mentenanță</Link>{' '}
               de la 90 EUR pe lună. Avansul este de 50 EUR, iar restul îl plătești doar dacă ești mulțumit.
             </p>
           </section>

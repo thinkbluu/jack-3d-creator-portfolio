@@ -21,6 +21,7 @@ const navLinks: Array<{ href: string; label: string }> = [
   { href: '#servicii', label: 'Servicii' },
   { href: '/portofoliu', label: 'Portofoliu' },
   { href: '/blog', label: 'Ghid' },
+  { href: '/site-gratuit', label: 'Site gratuit' },
   { href: '#process', label: 'Cum lucrăm' },
   { href: '#faq', label: 'Întrebări' },
   { href: '#contact', label: 'Contact' },
@@ -456,11 +457,12 @@ export default function CinematicHero() {
             <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: '10px', letterSpacing: '.28em' }}>STUDIO</span>
           </span>
         </a>
-        <div className="hidden items-center gap-5 text-xs uppercase tracking-[0.16em] md:flex md:gap-8">
+        <div className="hidden items-center gap-5 whitespace-nowrap text-xs uppercase tracking-[0.16em] lg:flex lg:gap-8">
           <a href="#dovada" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Dovada</a>
           <a href="#servicii" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Servicii</a>
           <Link href="/portofoliu" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Portofoliu</Link>
           <Link href="/blog" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Ghid</Link>
+          <Link href="/site-gratuit" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Site gratuit</Link>
           <ContactButton label="Vorbește cu noi" />
         </div>
         <button
@@ -470,7 +472,7 @@ export default function CinematicHero() {
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
           onClick={() => setMenuOpen(true)}
-          className="flex size-11 items-center justify-center text-[var(--ink)] md:hidden"
+          className="flex size-11 items-center justify-center text-[var(--ink)] lg:hidden"
         >
           <Menu size={24} aria-hidden="true" />
         </button>
@@ -485,7 +487,7 @@ export default function CinematicHero() {
       role="dialog"
       aria-modal="true"
       aria-label="Meniu mobil"
-      className="fixed inset-0 z-50 flex flex-col bg-[var(--shell)] md:hidden"
+      className="fixed inset-0 z-50 flex flex-col bg-[var(--shell)] lg:hidden"
     >
       <div className="site-container flex h-20 items-center justify-between">
         <a href="#home" onClick={closeMenu} className="flex items-center gap-2 text-[var(--ink)]">

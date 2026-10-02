@@ -491,10 +491,19 @@
     font-weight: 650;
   }
 
+  /* Links inside running text stay inline (WCAG exempts them from the 44px
+     target size) and use the darker brass, which passes AA contrast. */
   .prose a {
-    color: var(--brass);
+    display: inline;
+    min-height: 0;
+    color: var(--brass-ink);
     text-decoration: underline;
+    text-decoration-color: var(--brass);
     text-underline-offset: 4px;
+  }
+
+  .prose a:hover {
+    color: var(--ink);
   }
 
   .prose blockquote {
@@ -506,11 +515,23 @@
     font-style: italic;
   }
 
+  .prose .table-scroll {
+    margin-bottom: 26px;
+    overflow-x: auto;
+    border: 1px solid var(--hairline);
+    border-radius: 12px;
+  }
+
+  .prose .table-scroll:focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+  }
+
   .prose table {
     width: 100%;
-    margin-bottom: 26px;
     border-collapse: collapse;
     font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   .prose thead {
@@ -518,30 +539,27 @@
   }
 
   .prose th {
+    min-width: 7.5rem;
     background: var(--shell-warm);
     padding: 12px 16px;
     color: var(--ink);
     font-weight: 600;
     text-align: left;
+    vertical-align: bottom;
   }
 
   .prose td {
+    min-width: 7.5rem;
     border-top: 1px solid var(--hairline);
     padding: 12px 16px;
     color: var(--ink-2);
+    vertical-align: top;
   }
 
   .prose tr {
     text-align: left;
   }
 
-  @media (max-width: 767px) {
-    .prose table {
-      display: block;
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-  }
 
   .faq-item summary {
     list-style: none;

@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from 'next'
 import { DM_Sans, Fraunces } from 'next/font/google'
 import Script from 'next/script'
-import { Analytics } from '@vercel/analytics/next'
-import { SpeedInsights } from '@vercel/speed-insights/next'
 import ConsentBanner from '@/components/ConsentBanner'
+import GoogleTag from '@/components/GoogleTag'
 import JsonLd from '@/components/JsonLd'
 import ScrollProgress from '@/components/ScrollProgress'
+import VercelInsights from '@/components/VercelInsights'
 import { CONSENT_STORAGE_KEY } from '@/lib/consent'
 import { businessNode, graph, websiteNode } from '@/lib/schema'
 import { DEFAULT_OG_IMAGE } from '@/lib/seo'
@@ -104,20 +104,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {children}
         <ConsentBanner />
         <JsonLd data={graph(websiteNode(), businessNode())} />
-        {gtagId ? (
-          <>
-            {/* Loaded once the page is idle; events sent earlier wait in dataLayer. */}
-            <Script src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`} strategy="lazyOnload" />
-            <Script id="gtag-config" strategy="lazyOnload">
-              {`
-                gtag('js', new Date());
-                gtag('config', '${gtagId}');
-              `}
-            </Script>
-          </>
-        ) : null}
-        <Analytics />
-        <SpeedInsights />
+        {/* Google Tag loads only after the visitor accepts the consent banner. */}
+        {gtagId ? <GoogleTag id={gtagId} /> : null}
+        <VercelInsights />
       </body>
     </html>
   )

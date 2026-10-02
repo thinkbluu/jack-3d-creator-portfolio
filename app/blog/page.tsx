@@ -51,7 +51,7 @@ export default function BlogPage() {
             <h1 className="type-h2 mt-4 text-balance">Ghid despre site-uri, prețuri și web design</h1>
             <p className="type-body mt-6 max-w-2xl text-[var(--ink-2)]">
               Articole practice despre ce merită știut înainte, în timpul și după ce îți faci un site: prețuri reale, termene, ce include oferta și cum alegi furnizorul. Fără termeni tehnici. Pentru prețurile noastre, vezi{' '}
-              <Link href="/servicii" className="font-semibold text-[var(--ink)] underline underline-offset-4">
+              <Link href="/servicii" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
                 serviciile MAST Studio
               </Link>
               .

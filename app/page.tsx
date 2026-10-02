@@ -1,3 +1,4 @@
+import ContestTeaser from '@/components/ContestTeaser'
 import Footer from '@/components/Footer'
 import HomePage from '@/components/HomePage'
 import JsonLd from '@/components/JsonLd'
@@ -43,7 +44,7 @@ export default function Page() {
   return (
     <>
       <JsonLd data={homeJsonLd} />
-      <HomePage footer={<Footer />} />
+      <HomePage afterScenes={<ContestTeaser />} footer={<Footer />} />
     </>
   )
 }

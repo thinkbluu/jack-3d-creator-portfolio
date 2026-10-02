@@ -29,9 +29,13 @@ Câmpurile opționale sunt `updatedAt`, `seoTitle`, `seoDescription`, `faqItems`
 - Nu repeta `answerCapsule` ca prim paragraf și nu scrie o secțiune „Întrebări frecvente” în corp: pagina le afișează automat din frontmatter.
 - Scrie natural în română, fără anglicisme de agenție: „afaceri mici” (nu SMB), „actualizări” (nu update-uri), „lansare” (nu go-live), „buton de contact” (nu CTA), „magazin” (nu shop), „finalizarea comenzii” (nu checkout), „reclame” (nu ads).
 - Nu repeta în fiecare articol telefonul și e-mailul: blocul de contact de la finalul paginii este generat automat.
+- Nu încheia articolul cu o secțiune de vânzare („Ce oferim noi…”): pagina adaugă deja un bloc de contact. Prețurile MAST apar cel mult o dată, natural, cu link spre pagina serviciului.
+- Nu menționa adresa sediului social și nu sugera un birou deschis publicului: lucrăm la distanță, din Timișoara.
 - Folosește subtitluri H2 (`##`) pentru secțiunile principale și H3 (`###`) doar în interiorul lor.
 - Nu repeta titlul articolului în corp; pagina generează deja H1.
 - Scrie linkurile interne cu rute absolute, de exemplu `[site de prezentare](/servicii/site-de-prezentare)`.
+- Fiecare articol are în text 3-6 linkuri interne: ghidul principal al temei (prețuri: `/blog/cat-costa-un-site-in-romania`, termene: `/blog/cat-dureaza-constructia-unui-site`, alegerea furnizorului: `/blog/cum-alegi-firma-web-design`), 1-2 articole apropiate și pagina de serviciu potrivită. Când publici un articol nou, adaugă și tu un link spre el din 2 articole existente, ca să nu rămână legat doar din „Citește și”.
+- Textul linkului descrie pagina („cât costă un magazin online”), nu „aici” sau „click”.
 - `seoTitle` are cel mult 46 de caractere și nu conține „MAST Studio”: site-ul adaugă automat „ | MAST Studio”. `seoDescription` are între 120 și 158 de caractere.
 - Linkurile interne trebuie să ducă la pagini existente: servicii (`/servicii/site-de-prezentare`, `/servicii/magazin-online`, `/servicii/aplicatii-web`, `/servicii/platforme-saas`, `/servicii/mentenanta`, `/servicii/automatizari-whatsapp`), articole, portofoliu sau paginile principale.
 - Pentru expresia „web design Timișoara” leagă pagina principală (`/`), nu un articol.
@@ -43,7 +47,7 @@ Câmpurile opționale sunt `updatedAt`, `seoTitle`, `seoDescription`, `faqItems`
 ## Verificare înainte de publicare
 
 - Frontmatter-ul este YAML valid, iar slug-ul coincide cu numele fișierului.
-- Datele sunt ISO, categoria este acceptată și `readMin` este un număr întreg pozitiv.
+- Datele sunt ISO, categoria este acceptată și `readMin` este un număr întreg pozitiv, calculat la aproximativ 200 de cuvinte pe minut (corp, answer capsule și FAQ).
 - Articolul apare în `/blog`, se deschide la ruta lui și apare în `/sitemap.xml` și `/feed.xml`.
 - Titlul din tab are cel mult 60 de caractere, iar previzualizarea la distribuire (`/blog/<slug>/og.png`) se generează corect.
 - Answer capsule, corpul `.prose`, FAQ-ul și eventualele tabele se afișează corect pe desktop și mobil.
@@ -57,5 +61,9 @@ Aceste articole au fost comasate în pagini mai puternice. Nu le republica cu ac
 - `/blog/web-design-timisoara` → `/blog/cum-alegi-firma-web-design`
 - `/blog/lectii-veterinaria-timisoara` → `/portofoliu/veterinaria-timisoara`
 - `/blog/faq-mentenanta-site` → `/servicii/mentenanta`
+- `/blog/ce-include-pretul-unui-site` → `/blog/cat-costa-un-site-in-romania`
+- `/blog/livrare-site-48-ore` → `/blog/cat-dureaza-constructia-unui-site`
+- `/blog/avans-50-eur-cum-functioneaza` → `/blog/cat-dureaza-constructia-unui-site`
+- `/blog/creare-site-timisoara-checklist` → `/blog/cum-alegi-firma-web-design`
 
 Redirecționările sunt în `next.config.mjs`.

@@ -221,7 +221,7 @@ export default async function ServiceDetailPage({ params }: ServicePageProps) {
             </TrackedLink>
             <p className="font-sans text-sm text-[var(--ink-2)]">
               Preferi un formular?{' '}
-              <Link href="/cerere-oferta" className="font-semibold text-[var(--ink)] underline underline-offset-4">
+              <Link href="/cerere-oferta" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
                 Trimite o cerere de ofertă
               </Link>
               .
