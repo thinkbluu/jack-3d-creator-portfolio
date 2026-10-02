@@ -8,7 +8,7 @@ import { getAllProjects } from '@/lib/projects'
 import type { Project } from '@/lib/projects'
 
 export const metadata: Metadata = {
-  title: 'Portofoliu | MAST Studio',
+  title: 'Portofoliu',
   description: 'Site-uri, platforme și proiecte digitale construite de MAST Studio pentru afaceri și instituții din România.',
   alternates: { canonical: 'https://maststudio.ro/portofoliu' },
 }

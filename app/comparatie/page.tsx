@@ -7,7 +7,7 @@ import { SegmentProvider } from '@/components/SegmentContext'
 const siteUrl = 'https://maststudio.ro'
 
 export const metadata: Metadata = {
-  title: 'Freelancer, studio sau agenție: cum alegi pentru site-ul tău | MAST Studio',
+  title: 'Freelancer, studio sau agenție: cum alegi pentru site-ul tău',
   description:
     'Comparație onestă între opțiunile de a-ți face un site în România: freelancer, studio mic, agenție mare sau platformă de tip Wix. Prețuri, avantaje și dezavantaje reale.',
   alternates: { canonical: `${siteUrl}/comparatie` },

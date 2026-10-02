@@ -8,7 +8,7 @@ import { getAllGlossaryTerms, glossaryCategoryLabels, type GlossaryCategory } fr
 const siteUrl = 'https://maststudio.ro'
 
 export const metadata: Metadata = {
-  title: 'Glosar de termeni web design | MAST Studio',
+  title: 'Glosar de termeni web design',
   description:
     'Termenii din web design explicați simplu: PageSpeed, domeniu, găzduire, SEO, responsive și alții. Fără jargon.',
   alternates: { canonical: `${siteUrl}/glosar` },

@@ -7,7 +7,7 @@ import { SegmentProvider } from '@/components/SegmentContext'
 const siteUrl = 'https://maststudio.ro'
 
 export const metadata: Metadata = {
-  title: 'Despre MAST Studio | Studio de web design din Timișoara',
+  title: { absolute: 'Despre MAST Studio | Studio de web design din Timișoara' },
   description:
     'MAST Studio este un studio de web design din Timișoara, parte din MAST Consult S.R.L. Construim site-uri, magazine online și platforme pentru afaceri din România.',
   alternates: { canonical: `${siteUrl}/despre` },

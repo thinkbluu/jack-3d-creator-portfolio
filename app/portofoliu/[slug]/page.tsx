@@ -23,13 +23,13 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   if (!project) return {}
   const canonical = `${siteUrl}/portofoliu/${project.slug}`
   return {
-    title: `${project.name} | Portofoliu MAST Studio`,
+    title: `${project.name} | Portofoliu`,
     description: project.summary,
     alternates: { canonical },
     openGraph: {
       type: 'article',
       url: canonical,
-      title: `${project.name} | Portofoliu MAST Studio`,
+      title: `${project.name} | Portofoliu | MAST Studio`,
       description: project.summary,
       images: [{ url: project.cover }],
     },

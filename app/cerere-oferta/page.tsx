@@ -5,7 +5,7 @@ import LeadForm from '@/components/LeadForm'
 const siteUrl = 'https://maststudio.ro'
 
 export const metadata: Metadata = {
-  title: 'Cerere ofertă site web | MAST Studio',
+  title: 'Cerere ofertă site web',
   description:
     'Spune-ne ce tip de proiect ai, iar MAST Studio îți răspunde cu pașii potriviți pentru site-ul, magazinul online sau aplicația ta.',
   alternates: { canonical: `${siteUrl}/cerere-oferta` },

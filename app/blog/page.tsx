@@ -6,7 +6,7 @@ import TrackedLink from '@/components/TrackedLink'
 import { getAllPosts } from '@/lib/blog'
 
 export const metadata: Metadata = {
-  title: 'Ghid | MAST Studio',
+  title: 'Ghid',
   description: 'Articole practice despre ce merită știut înainte, în timpul și după ce îți faci un site.',
   alternates: { canonical: 'https://maststudio.ro/blog' },
 }

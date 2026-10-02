@@ -21,20 +21,29 @@ export function generateStaticParams() {
   return getAllServicePages().map((service) => ({ slug: service.slug }))
 }
 
+function metaDescription(text: string) {
+  if (text.length <= 160) return text
+  const head = text.slice(0, 155)
+  const lastSpace = head.lastIndexOf(' ')
+  const cut = lastSpace > 0 ? head.slice(0, lastSpace) : head
+  return `${cut}…`
+}
+
 export async function generateMetadata({ params }: ServicePageProps): Promise<Metadata> {
   const { slug } = await params
   const service = getServicePageBySlug(slug)
   if (!service) return {}
   const canonical = `${siteUrl}/servicii/${service.slug}`
-  const description = service.answerCapsule.length > 160 ? `${service.answerCapsule.slice(0, 157)}...` : service.answerCapsule
+  const title = `${service.name} | Prețuri și termene`
+  const description = metaDescription(service.answerCapsule)
   return {
-    title: `${service.name} | Prețuri și termene | MAST Studio`,
+    title,
     description,
     alternates: { canonical },
     openGraph: {
       type: 'website',
       url: canonical,
-      title: `${service.name} | Prețuri și termene | MAST Studio`,
+      title: `${title} | MAST Studio`,
       description,
     },
   }

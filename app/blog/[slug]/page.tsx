@@ -18,19 +18,23 @@ export function generateStaticParams() {
   return getAllPosts().map((post) => ({ slug: post.slug }))
 }
 
+const trailingBrand = /\s*\|\s*MAST( Studio)?\s*$/
+
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params
   const post = getPostBySlug(slug)
   if (!post) return {}
   const canonical = `${siteUrl}/blog/${post.slug}`
+  const t = (post.seoTitle ?? post.title).replace(trailingBrand, '')
+  const title = `${t} | MAST Studio`.length > 60 ? { absolute: t } : t
   return {
-    title: post.seoTitle ?? post.title,
+    title,
     description: post.seoDescription ?? post.excerpt,
     alternates: { canonical },
     openGraph: {
       type: 'article',
       url: canonical,
-      title: post.seoTitle ?? post.title,
+      title: t,
       description: post.seoDescription ?? post.excerpt,
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt ?? post.publishedAt,
