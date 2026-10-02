@@ -28,7 +28,8 @@ function validate(form: FormData): FormErrors {
   return errors
 }
 
-export default function CareerForm() {
+/** `defaultArea` preselects the position when the form sits on a job page. */
+export default function CareerForm({ defaultArea = '' }: { defaultArea?: string }) {
   const [errors, setErrors] = useState<FormErrors>({})
   const [submitError, setSubmitError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -110,7 +111,7 @@ export default function CareerForm() {
           <label htmlFor="cariere-area" className={labelClass}>
             Domeniul care te interesează
           </label>
-          <select id="cariere-area" name="area" defaultValue="" className={inputClass} aria-invalid={Boolean(errors.area)} aria-describedby={describedBy('area')} disabled={isSubmitting} required>
+          <select id="cariere-area" name="area" defaultValue={defaultArea} className={inputClass} aria-invalid={Boolean(errors.area)} aria-describedby={describedBy('area')} disabled={isSubmitting} required>
             <option value="" disabled>
               Alege un domeniu
             </option>

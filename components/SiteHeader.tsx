@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export type SiteSection = 'servicii' | 'portofoliu' | 'blog' | 'site-gratuit' | 'despre' | 'contact'
+export type SiteSection = 'servicii' | 'portofoliu' | 'blog' | 'site-gratuit' | 'despre' | 'cariere' | 'contact'
 
 const navItems: Array<{ id: SiteSection; href: string; label: string }> = [
   { id: 'servicii', href: '/servicii', label: 'Servicii' },
@@ -8,6 +8,7 @@ const navItems: Array<{ id: SiteSection; href: string; label: string }> = [
   { id: 'blog', href: '/blog', label: 'Ghid' },
   { id: 'site-gratuit', href: '/site-gratuit', label: 'Site gratuit' },
   { id: 'despre', href: '/despre', label: 'Despre' },
+  { id: 'cariere', href: '/cariere', label: 'Cariere' },
   { id: 'contact', href: '/contact', label: 'Contact' },
 ]
 
