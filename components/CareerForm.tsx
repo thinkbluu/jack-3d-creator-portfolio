@@ -64,7 +64,7 @@ export default function CareerForm() {
       <div className="porthole border-[var(--glass-edge)] p-7 md:p-9" role="status">
         <p className="type-h3 text-balance">Am primit CV-ul tău.</p>
         <p className="type-body mt-3">
-          Îți mulțumim. Ți-am trimis și o confirmare pe e-mail. Când apare un rol potrivit, te contactăm noi.
+          Îți mulțumim. Ți-am trimis și o confirmare pe e-mail. Dacă profilul tău se potrivește, te contactăm noi.
         </p>
       </div>
     )

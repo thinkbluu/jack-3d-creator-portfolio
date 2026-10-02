@@ -122,7 +122,7 @@ export async function POST(request: Request) {
         `Bună, ${name.split(' ')[0]},`,
         '',
         'Îți mulțumim că vrei să lucrezi cu MAST Studio. Am primit CV-ul tău.',
-        'Acum nu avem un post deschis, așa că nu te vom suna imediat. Când apare un rol potrivit, te contactăm noi.',
+        'Citim fiecare candidatură și te contactăm dacă profilul tău se potrivește unui post deschis sau unui rol de mai târziu.',
         `Păstrăm CV-ul cel mult ${CV_RETENTION_MONTHS} luni. Dacă vrei să-l ștergem mai devreme, răspunde la acest e-mail.`,
         '',
         'Echipa MAST Studio',

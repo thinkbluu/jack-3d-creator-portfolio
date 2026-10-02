@@ -52,4 +52,4 @@ MAST Studio este parte din MAST Consult S.R.L., CUI RO49626121, Timișoara, Rom�
 ## Concurs și cariere
 
 - Site gratuit în fiecare lună: https://maststudio.ro/site-gratuit (regulament: https://maststudio.ro/site-gratuit/regulament)
-- Cariere: https://maststudio.ro/cariere
+- Cariere (posturi deschise: front-end developer, mobile app developer): https://maststudio.ro/cariere
