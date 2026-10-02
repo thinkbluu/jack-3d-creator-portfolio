@@ -14,8 +14,10 @@ publishedAt: '2026-09-05'
 # updatedAt: '2026-09-05'
 answerCapsule: Răspunsul direct la întrebarea principală, în 2-4 propoziții utile și independente.
 # Câmpuri SEO opționale; dacă lipsesc, sunt folosite title și excerpt.
-seoTitle: Titlu SEO | MAST Studio
-seoDescription: Descriere SEO concisă pentru rezultatele de căutare.
+# seoTitle: max. 46 de caractere, fără „MAST Studio” (se adaugă automat).
+seoTitle: Titlu SEO scurt
+# seoDescription: între 120 și 158 de caractere.
+seoDescription: Descriere SEO concisă pentru rezultatele de căutare, cu răspunsul principal și un detaliu concret, de exemplu prețul sau termenul.
 # FAQ opțional. Elimină cheia dacă articolul nu are întrebări frecvente.
 faqItems:
   - question: Care este întrebarea?
@@ -25,6 +27,8 @@ howToSteps:
   - name: Numele pasului
     text: Instrucțiunea completă pentru acest pas.
 ---
+
+{/* Nu repeta answerCapsule și nu adăuga o secțiune „Întrebări frecvente”: pagina le afișează din frontmatter. */}
 
 Introducerea articolului, scrisă în Markdown obișnuit.
 
