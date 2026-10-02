@@ -1,12 +1,12 @@
 'use client'
 
 import { useEffect } from 'react'
-import { CONSENT_EVENT, getStoredConsent, type ConsentState } from '@/lib/analytics'
+import { CONSENT_EVENT, getStoredConsent, isPrivatePath, type ConsentState } from '@/lib/analytics'
 
 let requested = false
 
 function loadGoogleTag(id: string) {
-  if (requested) return
+  if (requested || isPrivatePath(window.location.pathname)) return
   requested = true
   // The consent defaults and the stub `gtag` come from the beforeInteractive
   // script in the layout; these calls queue in dataLayer until gtag.js runs.
@@ -21,7 +21,8 @@ function loadGoogleTag(id: string) {
 /**
  * Loads Google Tag only after the visitor accepts measurement, so nothing is
  * sent to Google before that (Consent Mode "basic"). Visitors who accepted on
- * an earlier visit get the tag once the page is idle.
+ * an earlier visit get the tag once the page is idle. Pages opened from
+ * personal contest links never load it, so their access tokens stay private.
  */
 export default function GoogleTag({ id }: { id: string }) {
   useEffect(() => {

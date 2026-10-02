@@ -18,7 +18,7 @@ export default function CookiesPage() {
       </LegalSection>
       <LegalSection title="2. Consimțământ și măsurare">
         <p>Folosim Vercel Analytics și Speed Insights pentru statistici agregate și indicatori tehnici, precum paginile vizitate, timpii de încărcare și tipul general de dispozitiv. Aceste instrumente nu folosesc cookie-uri, nu salvează nimic pe dispozitivul tău și nu construiesc profiluri individuale. Le folosim pentru toți vizitatorii, în baza interesului nostru legitim de a afla ce pagini sunt utile și cât de repede se încarcă site-ul.</p>
-        <p>Google Tag (Google Analytics 4) măsoară vizitele și conversiile, precum trimiterea unui formular, deschiderea WhatsApp sau un apel. Îl încărcăm doar după ce accepți banner-ul de consimțământ. Configurația noastră nu transmite către aceste servicii numele, adresa de e-mail, conținutul mesajelor WhatsApp sau alte date introduse de tine.</p>
+        <p>Google Tag (Google Analytics 4) măsoară vizitele și conversiile, precum trimiterea unui formular, deschiderea WhatsApp sau un apel. Îl încărcăm doar după ce accepți banner-ul de consimțământ și nu îl încărcăm deloc pe paginile personale ale concursului, deschise din linkurile primite pe e-mail. Configurația noastră nu transmite către aceste servicii numele, adresa de e-mail, conținutul mesajelor WhatsApp sau alte date introduse de tine.</p>
       </LegalSection>
       <LegalSection title="3. Stocare tehnică">
         <p>Site-ul folosește doar stocare tehnică în browser. În localStorage reținem alegerea ta din banner-ul de consimțământ (cheia „mast-consent”), ca să nu te întrebăm la fiecare vizită. În sessionStorage, doar pe durata sesiunii, reținem tipul de afacere ales pe pagina principală și dacă ai sărit peste animația de început. Nu folosim aceste date pentru a construi profiluri.</p>
@@ -30,7 +30,7 @@ export default function CookiesPage() {
         <p>Îți poți schimba alegerea oricând ștergând datele site-ului din setările browserului, iar banner-ul de consimțământ va reapărea. Dacă vom introduce alte instrumente neesențiale, vom actualiza această politică și le vom include în același mecanism de consimțământ înainte de activare.</p>
       </LegalSection>
       <LegalSection title="6. Contact">
-        <p>Pentru întrebări despre tehnologiile folosite, scrie la <a className="text-[var(--brass-ink)] underline-offset-4 hover:underline" href="mailto:contact@maststudio.ro">contact@maststudio.ro</a>.</p>
+        <p>Pentru întrebări despre tehnologiile folosite, scrie la <a className="inline min-h-0 text-[var(--brass-ink)] underline underline-offset-4" href="mailto:contact@maststudio.ro">contact@maststudio.ro</a>.</p>
       </LegalSection>
     </LegalPage>
   )

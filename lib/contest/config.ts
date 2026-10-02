@@ -5,6 +5,8 @@ export const CONTEST_NAME = 'Site gratuit în fiecare lună'
 export const CONTEST_PATH = '/site-gratuit'
 export const RULES_PATH = '/site-gratuit/regulament'
 export const CONTEST_HASHTAG = '#SiteGratuitMAST'
+/** Pages opened from personal links in e-mails; their address carries an access token. */
+export const PRIVATE_CONTEST_PATHS = ['/site-gratuit/confirmare', '/site-gratuit/participare', '/site-gratuit/castig', '/site-gratuit/admin/']
 export const PRIZE_VALUE_EUR = 300
 
 /** Days the winner has to accept the prize before it passes to the next post. */

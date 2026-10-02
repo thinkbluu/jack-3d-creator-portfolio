@@ -1,12 +1,11 @@
 import type { Metadata, Viewport } from 'next'
 import { DM_Sans, Fraunces } from 'next/font/google'
 import Script from 'next/script'
-import { Analytics } from '@vercel/analytics/next'
-import { SpeedInsights } from '@vercel/speed-insights/next'
 import ConsentBanner from '@/components/ConsentBanner'
 import GoogleTag from '@/components/GoogleTag'
 import JsonLd from '@/components/JsonLd'
 import ScrollProgress from '@/components/ScrollProgress'
+import VercelInsights from '@/components/VercelInsights'
 import { CONSENT_STORAGE_KEY } from '@/lib/consent'
 import { businessNode, graph, websiteNode } from '@/lib/schema'
 import { DEFAULT_OG_IMAGE } from '@/lib/seo'
@@ -107,8 +106,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <JsonLd data={graph(websiteNode(), businessNode())} />
         {/* Google Tag loads only after the visitor accepts the consent banner. */}
         {gtagId ? <GoogleTag id={gtagId} /> : null}
-        <Analytics />
-        <SpeedInsights />
+        <VercelInsights />
       </body>
     </html>
   )
