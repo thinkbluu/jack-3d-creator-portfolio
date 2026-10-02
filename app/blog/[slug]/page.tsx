@@ -188,11 +188,11 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
             </SegmentProvider>
             <p className="font-sans text-sm text-[var(--ink-2)]">
               Vezi și{' '}
-              <Link href="/servicii" className="font-semibold text-[var(--ink)] underline underline-offset-4">
+              <Link href="/servicii" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
                 serviciile și prețurile MAST Studio
               </Link>{' '}
               sau participă la{' '}
-              <Link href="/site-gratuit" className="font-semibold text-[var(--ink)] underline underline-offset-4">
+              <Link href="/site-gratuit" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
                 concursul lunar pentru un site gratuit
               </Link>
               .

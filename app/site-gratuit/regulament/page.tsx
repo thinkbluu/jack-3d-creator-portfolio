@@ -11,7 +11,7 @@ const description =
 
 export const metadata = pageMetadata({ title, description, path })
 
-const linkClass = 'text-[var(--brass-ink)] underline underline-offset-4'
+const linkClass = 'inline min-h-0 text-[var(--brass-ink)] underline underline-offset-4'
 
 export default function ContestRulesPage() {
   return (

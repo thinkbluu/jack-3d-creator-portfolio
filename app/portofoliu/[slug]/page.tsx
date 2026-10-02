@@ -229,11 +229,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </SegmentProvider>
             <p className="font-sans text-sm text-[var(--ink-2)]">
               Vezi{' '}
-              <Link href="/servicii" className="font-semibold text-[var(--ink)] underline underline-offset-4">
+              <Link href="/servicii" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
                 serviciile și prețurile
               </Link>{' '}
               sau{' '}
-              <Link href="/portofoliu" className="font-semibold text-[var(--ink)] underline underline-offset-4">
+              <Link href="/portofoliu" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
                 tot portofoliul
               </Link>
               .

@@ -176,7 +176,7 @@ export default function AboutPage() {
             </dl>
             <p className="type-body mt-4">
               Toate canalele de contact sunt pe pagina de{' '}
-              <Link href="/contact" className="font-semibold text-[var(--ink)] underline underline-offset-4">contact</Link>.
+              <Link href="/contact" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">contact</Link>.
             </p>
           </section>
 
