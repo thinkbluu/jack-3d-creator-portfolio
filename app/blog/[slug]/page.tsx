@@ -9,9 +9,15 @@ import { SegmentProvider } from '@/components/SegmentContext'
 import { formatBlogDate, getAllPosts, getPostBySlug } from '@/lib/blog'
 
 const siteUrl = 'https://maststudio.ro'
+const publisherLogoUrl = `${siteUrl}/icons/mast-mark-badge.svg`
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>
+}
+
+function laterIsoDate(publishedAt: string, updatedAt?: string) {
+  if (!updatedAt || updatedAt < publishedAt) return publishedAt
+  return updatedAt
 }
 
 export function generateStaticParams() {
@@ -33,7 +39,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       title: post.seoTitle ?? post.title,
       description: post.seoDescription ?? post.excerpt,
       publishedTime: post.publishedAt,
-      modifiedTime: post.updatedAt ?? post.publishedAt,
+      modifiedTime: laterIsoDate(post.publishedAt, post.updatedAt),
     },
   }
 }
@@ -44,17 +50,40 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
   if (!post) notFound()
 
   const related = getAllPosts().filter((item) => item.slug !== post.slug).slice(0, 2)
-  const dateModified = post.updatedAt ?? post.publishedAt
+  const canonical = `${siteUrl}/blog/${post.slug}`
+  const dateModified = laterIsoDate(post.publishedAt, post.updatedAt)
   const articleJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post.title,
     description: post.excerpt,
+    image: `${siteUrl}/opengraph-image`,
+    inLanguage: 'ro-RO',
     datePublished: post.publishedAt,
     dateModified,
-    mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
+    mainEntityOfPage: canonical,
     author: { '@type': 'Organization', name: 'MAST Studio', url: siteUrl },
-    publisher: { '@type': 'Organization', name: 'MAST Studio', url: siteUrl },
+    publisher: {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#business`,
+      name: 'MAST Studio',
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: publisherLogoUrl,
+        width: 1024,
+        height: 1024,
+      },
+    },
+  }
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Acasă', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: 'Ghid', item: `${siteUrl}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: canonical },
+    ],
   }
   const howToJsonLd = post.howToSteps?.length
     ? {
@@ -154,6 +183,7 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
         ) : null}
       </article>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       {howToJsonLd ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToJsonLd) }} /> : null}
       {post.faqItems?.length ? <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: post.faqItems.map((item) => ({ '@type': 'Question', name: item.question, acceptedAnswer: { '@type': 'Answer', text: item.answer } })) }) }} /> : null}
       <Footer />
