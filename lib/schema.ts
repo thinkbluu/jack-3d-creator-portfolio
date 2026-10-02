@@ -1,8 +1,8 @@
 import {
-  ADDRESS,
   BUSINESS_ID,
   EMAIL,
   LEGAL_NAME,
+  LOCATION,
   LOGO_URL,
   PHONE_E164,
   SITE_LANGUAGE,
@@ -28,14 +28,13 @@ const areaServed = [
 
 export const businessRef = { '@id': BUSINESS_ID }
 
+/** City-level address: the studio serves clients remotely and has no office open to visitors. */
 export function postalAddress() {
   return {
     '@type': 'PostalAddress',
-    streetAddress: ADDRESS.street,
-    postalCode: ADDRESS.postalCode,
-    addressLocality: ADDRESS.locality,
-    addressRegion: ADDRESS.region,
-    addressCountry: ADDRESS.countryCode,
+    addressLocality: LOCATION.locality,
+    addressRegion: LOCATION.region,
+    addressCountry: LOCATION.countryCode,
   }
 }
 

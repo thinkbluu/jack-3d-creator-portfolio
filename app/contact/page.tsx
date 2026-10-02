@@ -7,13 +7,12 @@ import TrackedLink from '@/components/TrackedLink'
 import { breadcrumbNode, businessRef, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import {
-  ADDRESS,
   EMAIL,
   EMAIL_HREF,
   LEGAL_NAME,
-  MAPS_URL,
   PHONE_DISPLAY,
   PHONE_HREF,
+  SOCIAL_LINKS,
   TRADE_REGISTER_NUMBER,
   VAT_ID,
   whatsappUrl,
@@ -90,20 +89,21 @@ export default function ContactPage() {
 
           <div className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-2">
             <section>
-              <h2 className="type-h3">Unde suntem</h2>
-              <address className="type-body mt-4 flex flex-col not-italic">
-                <span className="font-semibold text-[var(--ink)]">MAST Studio</span>
-                <span>{LEGAL_NAME}</span>
-                <span>{ADDRESS.street}</span>
-                <span>
-                  {ADDRESS.postalCode} {ADDRESS.locality}, jud. {ADDRESS.region}, {ADDRESS.country}
-                </span>
-              </address>
-              <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="mt-2 font-sans text-sm font-semibold text-[var(--ink)] underline underline-offset-4">
-                Deschide adresa în Google Maps ↗
-              </a>
+              <h2 className="type-h3">Unde lucrăm</h2>
               <p className="type-body mt-4">
-                Sediul este în Timișoara, județul Timiș. Lucrăm cu clienți din tot orașul și din regiunea de vest, iar la distanță cu afaceri din toată România.
+                Suntem din Timișoara și lucrăm la distanță, cu afaceri din tot orașul și din toată România. Nu avem un birou deschis publicului: discutăm pe WhatsApp, la telefon sau pe video, iar dacă ești în Timișoara ne putem vedea la tine.
+              </p>
+              <p className="type-body mt-4">
+                Ne găsești și pe{' '}
+                {SOCIAL_LINKS.map((link, index) => (
+                  <span key={link.url}>
+                    {index > 0 ? ' și ' : ''}
+                    <a href={link.url} target="_blank" rel="noopener noreferrer" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
+                      {link.label}
+                    </a>
+                  </span>
+                ))}
+                .
               </p>
             </section>
 

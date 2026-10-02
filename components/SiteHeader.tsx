@@ -1,11 +1,13 @@
 import Link from 'next/link'
+import AnpcSalBadge from '@/components/AnpcSalBadge'
 
-export type SiteSection = 'servicii' | 'portofoliu' | 'blog' | 'despre' | 'contact'
+export type SiteSection = 'servicii' | 'portofoliu' | 'blog' | 'site-gratuit' | 'despre' | 'contact'
 
 const navItems: Array<{ id: SiteSection; href: string; label: string }> = [
   { id: 'servicii', href: '/servicii', label: 'Servicii' },
   { id: 'portofoliu', href: '/portofoliu', label: 'Portofoliu' },
   { id: 'blog', href: '/blog', label: 'Ghid' },
+  { id: 'site-gratuit', href: '/site-gratuit', label: 'Site gratuit' },
   { id: 'despre', href: '/despre', label: 'Despre' },
   { id: 'contact', href: '/contact', label: 'Contact' },
 ]
@@ -49,6 +51,9 @@ export default function SiteHeader({ current }: { current?: SiteSection }) {
               Cere ofertă
             </Link>
           </li>
+          <li className="hidden xl:block">
+            <AnpcSalBadge />
+          </li>
         </ul>
 
         <details className="group md:hidden">
@@ -77,6 +82,9 @@ export default function SiteHeader({ current }: { current?: SiteSection }) {
               >
                 Cere ofertă
               </Link>
+            </li>
+            <li className="pt-4">
+              <AnpcSalBadge />
             </li>
           </ul>
         </details>

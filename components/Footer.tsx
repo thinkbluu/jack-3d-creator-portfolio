@@ -1,13 +1,14 @@
 import Link from 'next/link'
+import AnpcSalBadge from '@/components/AnpcSalBadge'
 import { getAllServicePages } from '@/lib/services'
 import {
-  ADDRESS,
   EMAIL,
   EMAIL_HREF,
   LEGAL_NAME,
   PHONE_DISPLAY,
   PHONE_HREF,
   SITE_NAME,
+  SOCIAL_LINKS,
   TRADE_REGISTER_NUMBER,
   VAT_ID,
   whatsappUrl,
@@ -18,7 +19,7 @@ const linkClass =
 
 const guideLinks = [
   { href: '/blog/cat-costa-un-site-in-romania', label: 'Cât costă un site în România' },
-  { href: '/blog/ce-include-pretul-unui-site', label: 'Ce include prețul unui site' },
+  { href: '/blog/cat-dureaza-constructia-unui-site', label: 'Cât durează un site' },
   { href: '/blog/site-prezentare-sau-magazin-online', label: 'Site de prezentare sau magazin online' },
   { href: '/blog/cum-alegi-firma-web-design', label: 'Cum alegi o firmă de web design' },
   { href: '/blog', label: 'Toate ghidurile' },
@@ -29,6 +30,8 @@ const studioLinks = [
   { href: '/portofoliu', label: 'Portofoliu' },
   { href: '/comparatie', label: 'Freelancer, studio sau agenție' },
   { href: '/glosar', label: 'Glosar web design' },
+  { href: '/site-gratuit', label: 'Site gratuit în fiecare lună' },
+  { href: '/cariere', label: 'Cariere' },
   { href: '/contact', label: 'Contact' },
   { href: '/cerere-oferta', label: 'Cerere ofertă' },
 ]
@@ -71,9 +74,7 @@ export default function Footer() {
             </p>
             <address className="flex flex-col not-italic leading-relaxed">
               <span className="text-[var(--ink)]">{SITE_NAME}</span>
-              <span>
-                {ADDRESS.street}, {ADDRESS.postalCode} {ADDRESS.locality}, jud. {ADDRESS.region}
-              </span>
+              <span>Timișoara · lucrăm la distanță în toată România</span>
               <a href={PHONE_HREF} className={linkClass}>
                 {PHONE_DISPLAY}
               </a>
@@ -84,6 +85,15 @@ export default function Footer() {
                 {EMAIL}
               </a>
             </address>
+            <ul className="flex gap-5" aria-label="MAST Studio pe rețelele sociale">
+              {SOCIAL_LINKS.map((link) => (
+                <li key={link.url}>
+                  <a href={link.url} target="_blank" rel="noopener noreferrer" className={`${linkClass} font-semibold text-[var(--ink)]`}>
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
           <FooterColumn title="Servicii" links={serviceLinks} />
           <FooterColumn title="Ghiduri" links={guideLinks} />
@@ -105,14 +115,9 @@ export default function Footer() {
               <li>
                 <Link href="/termeni" className={linkClass}>Termeni</Link>
               </li>
-              <li>
-                <a href="https://anpc.ro/ce-este-sal" target="_blank" rel="noopener noreferrer" className={linkClass}>ANPC SAL</a>
-              </li>
-              <li>
-                <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className={linkClass}>SOL</a>
-              </li>
             </ul>
           </nav>
+          <AnpcSalBadge className="mx-0 self-start lg:self-auto" />
         </div>
       </div>
     </footer>

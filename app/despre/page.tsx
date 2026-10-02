@@ -7,7 +7,7 @@ import SiteHeader from '@/components/SiteHeader'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { breadcrumbNode, businessRef, faqNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
-import { ADDRESS, EMAIL, EMAIL_HREF, LEGAL_NAME, PHONE_DISPLAY, PHONE_HREF, TRADE_REGISTER_NUMBER, VAT_ID } from '@/lib/site'
+import { EMAIL, EMAIL_HREF, LEGAL_NAME, PHONE_DISPLAY, PHONE_HREF, TRADE_REGISTER_NUMBER, VAT_ID } from '@/lib/site'
 
 const path = '/despre'
 const description =
@@ -68,7 +68,7 @@ const faqItems = [
   {
     question: 'MAST Studio lucrează doar cu afaceri din Timișoara?',
     answer:
-      'Nu. Suntem cu sediul în Timișoara, dar lucrăm de la distanță cu clienți din toată România, iar procesul nostru e construit special pentru asta, fără nicio întâlnire față în față necesară.',
+      'Nu. Suntem din Timișoara, dar lucrăm de la distanță cu clienți din toată România, iar procesul nostru e construit special pentru asta, fără nicio întâlnire față în față necesară.',
   },
   {
     question: 'Cine deține codul și conținutul site-ului după livrare?',
@@ -122,9 +122,9 @@ export default function AboutPage() {
           </section>
 
           <section className="mt-12 border-t border-[var(--hairline)] pt-12">
-            <h2 className="type-h3">Unde este MAST Studio</h2>
+            <h2 className="type-h3">Unde lucrează MAST Studio</h2>
             <p className="type-body mt-4">
-              Sediul MAST Studio este în Timișoara, județul Timiș. De aici lucrăm cu afaceri din oraș și din toată regiunea de vest a României, dar procesul nostru e construit pentru colaborare la distanță: acoperim clienți din toată România și, la cerere, proiecte pentru companii din afara țării.
+              Suntem din Timișoara și lucrăm la distanță, fără un birou deschis publicului. Colaborăm cu afaceri din oraș și din toată regiunea de vest a României, dar procesul nostru e construit pentru lucrul la distanță: acoperim clienți din toată România și, la cerere, proiecte pentru companii din afara țării.
             </p>
           </section>
 
@@ -152,7 +152,7 @@ export default function AboutPage() {
           <section className="mt-12 border-t border-[var(--hairline)] pt-12">
             <h2 className="type-h3">Cine este în spatele MAST Studio</h2>
             <p className="type-body mt-4">
-              MAST Studio este divizia de web design a MAST Consult S.R.L., firmă de consultanță cu sediul în Timișoara, CUI RO49626121. Echipa a lucrat cu afaceri mici și mijlocii din România la digitalizare și prezență online și a construit MAST Studio pentru a livra site-uri fără costurile și birocrația unei agenții mari: un singur punct de contact, un proces fix și predare completă la final.
+              MAST Studio este divizia de web design a MAST Consult S.R.L., firmă de consultanță din Timișoara, CUI RO49626121. Echipa a lucrat cu afaceri mici și mijlocii din România la digitalizare și prezență online și a construit MAST Studio pentru a livra site-uri fără costurile și birocrația unei agenții mari: un singur punct de contact, un proces fix și predare completă la final.
             </p>
           </section>
 
@@ -165,10 +165,6 @@ export default function AboutPage() {
               <dd>{VAT_ID}</dd>
               <dt className="font-semibold text-[var(--ink)]">Reg. Com.</dt>
               <dd>{TRADE_REGISTER_NUMBER}</dd>
-              <dt className="font-semibold text-[var(--ink)]">Sediu</dt>
-              <dd>
-                {ADDRESS.street}, {ADDRESS.postalCode} {ADDRESS.locality}, jud. {ADDRESS.region}
-              </dd>
               <dt className="font-semibold text-[var(--ink)]">Telefon</dt>
               <dd>
                 <a href={PHONE_HREF} className="underline-offset-4 hover:underline">{PHONE_DISPLAY}</a>

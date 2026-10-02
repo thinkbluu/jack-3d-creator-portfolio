@@ -1,5 +1,6 @@
 import LegalPage, { LegalSection } from '@/components/LegalPage'
 import { pageMetadata } from '@/lib/seo'
+import { REGISTERED_OFFICE } from '@/lib/site'
 
 const path = '/confidentialitate'
 const title = 'Politica de confidențialitate'
@@ -12,14 +13,14 @@ export default function PrivacyPage() {
   return (
     <LegalPage eyebrow="Document juridic" title={title} description={description} path={path} updated="2 octombrie 2026">
       <LegalSection title="1. Cine suntem">
-        <p>Site-ul maststudio.ro este operat de MAST Consult S.R.L., cu sediul social în Str. Victor Valcovici 19, cod 300503, Timișoara, județul Timiș, CUI RO49626121, număr Registrul Comerțului J2024000723352, denumită în continuare „MAST Studio”.</p>
+        <p>Site-ul maststudio.ro este operat de MAST Consult S.R.L., cu sediul social în {REGISTERED_OFFICE}, CUI RO49626121, număr Registrul Comerțului J2024000723352, denumită în continuare „MAST Studio”.</p>
         <p>Pentru întrebări despre datele tale ne poți contacta la <a className="text-[var(--brass-ink)] underline-offset-4 hover:underline" href="mailto:contact@maststudio.ro">contact@maststudio.ro</a>.</p>
       </LegalSection>
       <LegalSection title="2. Ce date prelucrăm">
         <p>Nu există conturi de utilizator pe acest site. Prelucrăm datele pe care alegi să ni le trimiți: prin formularul de cerere de ofertă (tipul proiectului, adresa site-ului actual, dacă o completezi, și numărul de telefon sau adresa de e-mail), prin e-mail sau prin WhatsApp (de exemplu numele, datele de contact, compania și informațiile despre proiect).</p>
         <p>Când trimiți formularul, adresa IP este folosită temporar pentru a limita trimiterile abuzive, iar împreună cu cererea primim și parametrii de campanie (UTM) ai paginii de pe care ai venit, dacă există.</p>
         <p>Vercel poate procesa date tehnice necesare livrării și securizării site-ului, precum adresa IP, tipul dispozitivului, browserul, paginile accesate și momentele accesării. Vercel Analytics și Speed Insights furnizează măsurători agregate despre utilizare și performanță.</p>
-        <p>Folosim și Google Tag (Google Analytics 4) pentru a măsura vizitele și conversiile, precum trimiterea formularului, deschiderea WhatsApp sau apelurile. Google Tag rulează în Consent Mode v2: stocarea pentru analiză și publicitate rămâne refuzată până când accepți banner-ul de consimțământ. Detalii în <a className="text-[var(--brass-ink)] underline-offset-4 hover:underline" href="/cookies">Politica privind cookie-urile</a>.</p>
+        <p>Folosim și Google Tag (Google Analytics 4) pentru a măsura vizitele și conversiile, precum trimiterea formularului, deschiderea WhatsApp sau apelurile. Google Tag se încarcă numai după ce accepți banner-ul de consimțământ; până atunci nu trimitem nimic către Google. Vercel Analytics și Speed Insights nu folosesc cookie-uri și rulează pentru toți vizitatorii. Detalii în <a className="text-[var(--brass-ink)] underline-offset-4 hover:underline" href="/cookies">Politica privind cookie-urile</a>.</p>
       </LegalSection>
       <LegalSection title="3. Scopuri și temeiuri">
         <p>Prelucrăm date pentru a răspunde solicitărilor, a pregăti și executa contracte, a comunica despre proiecte, a proteja serviciul și a înțelege performanța agregată a site-ului. Temeiurile pot fi demersurile precontractuale, executarea contractului, obligația legală și interesul legitim.</p>

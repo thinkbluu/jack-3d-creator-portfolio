@@ -12,6 +12,7 @@ import {
   type MotionValue,
 } from 'framer-motion'
 import { ArrowDown, Building2, Check, Layers3, Menu, Monitor, ShoppingCart, X } from 'lucide-react'
+import AnpcSalBadge from './AnpcSalBadge'
 import ContactButton from './ContactButton'
 import ScrubStage from './ScrubStage'
 import { getWaUrl, useSegment, type Segment } from './SegmentContext'
@@ -21,6 +22,7 @@ const navLinks: Array<{ href: string; label: string }> = [
   { href: '#servicii', label: 'Servicii' },
   { href: '/portofoliu', label: 'Portofoliu' },
   { href: '/blog', label: 'Ghid' },
+  { href: '/site-gratuit', label: 'Site gratuit' },
   { href: '#process', label: 'Cum lucrăm' },
   { href: '#faq', label: 'Întrebări' },
   { href: '#contact', label: 'Contact' },
@@ -461,7 +463,9 @@ export default function CinematicHero() {
           <a href="#servicii" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Servicii</a>
           <Link href="/portofoliu" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Portofoliu</Link>
           <Link href="/blog" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Ghid</Link>
+          <Link href="/site-gratuit" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Site gratuit</Link>
           <ContactButton label="Vorbește cu noi" />
+          <AnpcSalBadge className="hidden normal-case tracking-normal xl:inline-flex" />
         </div>
         <button
           ref={menuTriggerRef}
@@ -519,6 +523,7 @@ export default function CinematicHero() {
       </nav>
       <div className="mast-cta-full px-5 pb-8">
         <ContactButton label="Vorbește cu noi" />
+        <AnpcSalBadge className="mt-5" />
       </div>
     </div>
   )

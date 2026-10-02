@@ -5,6 +5,9 @@ export { CONSENT_STORAGE_KEY }
 
 export type ConsentState = 'granted' | 'denied'
 
+/** Fired on window when the visitor answers the consent banner; `detail` is the ConsentState. */
+export const CONSENT_EVENT = 'mast:consent'
+
 type EventData = Record<string, string | number | boolean>
 
 declare global {
@@ -15,8 +18,9 @@ declare global {
 }
 
 /**
- * Sends a conversion event to both Vercel Analytics and Google Tag (when loaded).
- * Guards against SSR and never throws, so tracking can never block a user action.
+ * Sends a conversion event to Vercel Analytics and, once the visitor has
+ * accepted measurement, to Google Tag. Guards against SSR and never throws, so
+ * tracking can never block a user action.
  */
 export function trackConversion(event: string, data?: EventData) {
   if (typeof window === 'undefined') return
@@ -27,6 +31,8 @@ export function trackConversion(event: string, data?: EventData) {
     // Vercel Analytics may be blocked or unavailable; ignore.
   }
 
+  if (getStoredConsent() !== 'granted') return
+
   try {
     window.gtag?.('event', event, data ?? {})
   } catch {
@@ -34,14 +40,17 @@ export function trackConversion(event: string, data?: EventData) {
   }
 }
 
+// Remembers the answer for this page view when localStorage is unavailable.
+let sessionConsent: ConsentState | null = null
+
 export function getStoredConsent(): ConsentState | null {
   if (typeof window === 'undefined') return null
 
   try {
     const value = window.localStorage.getItem(CONSENT_STORAGE_KEY)
-    return value === 'granted' || value === 'denied' ? value : null
+    return value === 'granted' || value === 'denied' ? value : sessionConsent
   } catch {
-    return null
+    return sessionConsent
   }
 }
 
@@ -51,6 +60,7 @@ export function getStoredConsent(): ConsentState | null {
  */
 export function applyConsent(state: ConsentState) {
   if (typeof window === 'undefined') return
+  sessionConsent = state
 
   try {
     window.localStorage.setItem(CONSENT_STORAGE_KEY, state)
@@ -68,4 +78,6 @@ export function applyConsent(state: ConsentState) {
   } catch {
     // Google Tag not present; nothing to update.
   }
+
+  window.dispatchEvent(new CustomEvent<ConsentState>(CONSENT_EVENT, { detail: state }))
 }
