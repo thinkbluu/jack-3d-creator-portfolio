@@ -22,6 +22,7 @@ const navLinks: Array<{ href: string; label: string }> = [
   { href: '/portofoliu', label: 'Portofoliu' },
   { href: '/blog', label: 'Ghid' },
   { href: '/site-gratuit', label: 'Site gratuit' },
+  { href: '/cariere', label: 'Cariere' },
   { href: '#process', label: 'Cum lucrăm' },
   { href: '#faq', label: 'Întrebări' },
   { href: '#contact', label: 'Contact' },
@@ -463,6 +464,7 @@ export default function CinematicHero() {
           <Link href="/portofoliu" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Portofoliu</Link>
           <Link href="/blog" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Ghid</Link>
           <Link href="/site-gratuit" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Site gratuit</Link>
+          <Link href="/cariere" className="hidden text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] xl:inline-flex">Cariere</Link>
           <ContactButton label="Vorbește cu noi" />
         </div>
         <button

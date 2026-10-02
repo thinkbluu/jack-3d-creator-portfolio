@@ -1,8 +1,16 @@
 // Shared by the careers page form and the /api/cariere route.
 
 export type JobOpening = {
+  /** Also the page address: /cariere/<id>. */
   id: string
   title: string
+  /** Page title without the brand suffix; at most 46 characters. */
+  seoTitle: string
+  /** Meta description, 120-158 characters. */
+  description: string
+  /** Monthly net salary in RON, on an employment contract. */
+  salaryMin: number
+  salaryMax: number
   summary: string
   responsibilities: string[]
   requirements: string[]
@@ -14,6 +22,11 @@ export const JOB_OPENINGS: JobOpening[] = [
   {
     id: 'front-end-developer',
     title: 'Front-end developer',
+    seoTitle: 'Front-end developer (React), remote România',
+    description:
+      'Angajăm front-end developer cu 2-3 ani de experiență în React și Next.js. 7.500-9.000 RON net pe lună, 8 ore pe zi, la distanță, din România.',
+    salaryMin: 7500,
+    salaryMax: 9000,
     summary:
       'Construiești site-uri de prezentare, magazine online și aplicații web rapide și accesibile pentru afaceri mici din România, de la design la lansare.',
     responsibilities: [
@@ -23,7 +36,7 @@ export const JOB_OPENINGS: JobOpening[] = [
       'lucrezi direct cu designerul și, când e nevoie, cu clientul',
     ],
     requirements: [
-      'experiență cu React, TypeScript și CSS modern (ideal Tailwind)',
+      '2-3 ani de experiență cu React, TypeScript și CSS modern (ideal Tailwind)',
       'proiecte live sau cod public pe care ni le poți arăta',
       'atenție la detalii: viteză, accesibilitate, SEO tehnic',
       'limba română la nivel de lucru',
@@ -34,6 +47,11 @@ export const JOB_OPENINGS: JobOpening[] = [
   {
     id: 'mobile-app-developer',
     title: 'Mobile app developer',
+    seoTitle: 'Mobile app developer (React Native), remote',
+    description:
+      'Angajăm mobile app developer cu 2-3 ani de experiență în React Native. 8.000-10.000 RON net pe lună, 8 ore pe zi, la distanță, din România.',
+    salaryMin: 8000,
+    salaryMax: 10000,
     summary:
       'Construiești aplicații mobile pentru iOS și Android, de la portaluri pentru clienți la programări și instrumente interne, pentru afaceri din România.',
     responsibilities: [
@@ -43,7 +61,7 @@ export const JOB_OPENINGS: JobOpening[] = [
       'lucrezi în etape scurte, cu progres pe care clientul îl poate testa',
     ],
     requirements: [
-      'experiență cu React Native (sau Flutter) și TypeScript',
+      '2-3 ani de experiență cu React Native (sau Flutter) și TypeScript',
       'cel puțin o aplicație publicată în App Store sau Google Play',
       'înțelegi bine performanța și experiența pe telefon',
       'limba română la nivel de lucru',
@@ -52,6 +70,20 @@ export const JOB_OPENINGS: JobOpening[] = [
     datePosted: '2026-10-02',
   },
 ]
+
+export const JOB_SCHEDULE = 'Normă întreagă, 8 ore pe zi'
+export const JOB_CONTRACT = 'Contract de muncă sau colaborare (PFA/SRL)'
+export const JOB_LOCATION = 'La distanță, din România'
+
+export function getJobOpening(id: string) {
+  return JOB_OPENINGS.find((job) => job.id === id)
+}
+
+/** For example "7.500-9.000 RON net/lună". */
+export function salaryLabel(job: JobOpening) {
+  const format = (value: number) => value.toLocaleString('ro-RO')
+  return `${format(job.salaryMin)}-${format(job.salaryMax)} RON net/lună`
+}
 
 export const CAREER_AREAS = [
   ...JOB_OPENINGS.map((job) => job.title),

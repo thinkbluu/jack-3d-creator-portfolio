@@ -1,12 +1,13 @@
+import Link from 'next/link'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import CareerForm from '@/components/CareerForm'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
-import { CV_RETENTION_MONTHS, JOB_OPENINGS, type JobOpening } from '@/lib/careers'
+import { CV_RETENTION_MONTHS, JOB_LOCATION, JOB_OPENINGS, JOB_SCHEDULE, salaryLabel } from '@/lib/careers'
 import { breadcrumbNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
-import { EMAIL, EMAIL_HREF, LOGO_URL, SITE_NAME, SITE_URL, absoluteUrl } from '@/lib/site'
+import { EMAIL, EMAIL_HREF } from '@/lib/site'
 
 const path = '/cariere'
 const title = 'Cariere MAST Studio: front-end și mobile developer'
@@ -20,23 +21,6 @@ const crumbs: BreadcrumbItem[] = [
   { name: 'Cariere', path },
 ]
 
-// Google job posting data; only for positions that are actually open.
-function jobPostingNode(job: JobOpening) {
-  const list = (items: string[]) => `<ul>${items.map((item) => `<li>${item}</li>`).join('')}</ul>`
-  return {
-    '@type': 'JobPosting',
-    '@id': `${absoluteUrl(path)}#${job.id}`,
-    title: job.title,
-    description: `<p>${job.summary}</p><p>Ce vei face:</p>${list(job.responsibilities)}<p>Ce căutăm:</p>${list(job.requirements)}`,
-    datePosted: job.datePosted,
-    hiringOrganization: { '@type': 'Organization', name: SITE_NAME, sameAs: SITE_URL, logo: LOGO_URL },
-    jobLocationType: 'TELECOMMUTE',
-    applicantLocationRequirements: { '@type': 'Country', name: 'România' },
-    directApply: true,
-    url: `${absoluteUrl(path)}#${job.id}`,
-  }
-}
-
 const roles = [
   { title: 'Web design', text: 'Interfețe clare pentru afaceri mici, gândite întâi pentru telefon.' },
   { title: 'Texte și conținut', text: 'Texte pentru site-uri și ghiduri în limba română, simple și precise.' },
@@ -46,7 +30,7 @@ const roles = [
 export default function CareersPage() {
   return (
     <>
-      <SiteHeader />
+      <SiteHeader current="cariere" />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
         <div className="site-container py-12 md:py-20">
           <Breadcrumbs items={crumbs} />
@@ -65,36 +49,20 @@ export default function CareersPage() {
             </h2>
             <div className="mt-6 flex flex-col gap-6">
               {JOB_OPENINGS.map((job) => (
-                <article key={job.id} id={job.id} aria-labelledby={`${job.id}-titlu`} className="porthole scroll-mt-28 p-7 md:p-9">
-                  <p className="kicker">La distanță · România</p>
+                <article key={job.id} aria-labelledby={`${job.id}-titlu`} className="porthole p-7 md:p-9">
+                  <p className="kicker">
+                    {JOB_LOCATION} · {JOB_SCHEDULE.toLowerCase()}
+                  </p>
                   <h3 id={`${job.id}-titlu`} className="type-h3 mt-3">
-                    {job.title}
+                    <Link href={`/cariere/${job.id}`} className="hover:text-[var(--brass-ink)]">
+                      {job.title}
+                    </Link>
                   </h3>
                   <p className="type-body mt-4">{job.summary}</p>
-                  <div className="mt-6 grid gap-6 md:grid-cols-2">
-                    <div>
-                      <h4 className="font-sans text-[15px] font-semibold text-[var(--ink)]">Ce vei face</h4>
-                      <ul className="type-body mt-2 flex list-disc flex-col gap-1.5 pl-5 text-[15px]">
-                        {job.responsibilities.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-sans text-[15px] font-semibold text-[var(--ink)]">Ce căutăm</h4>
-                      <ul className="type-body mt-2 flex list-disc flex-col gap-1.5 pl-5 text-[15px]">
-                        {job.requirements.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                  <p className="type-body mt-5 text-[15px]">
-                    <span className="font-semibold text-[var(--ink)]">Un plus:</span> {job.niceToHave.join(', ')}.
-                  </p>
-                  <a href="#trimite-cv" className="mt-6 w-fit font-sans text-sm font-semibold text-[var(--ink)] underline underline-offset-4 hover:text-[var(--brass-ink)]">
-                    Aplică: alege „{job.title}” în formular
-                  </a>
+                  <p className="mt-4 font-sans text-sm font-bold text-[var(--brass-ink)]">{salaryLabel(job)}</p>
+                  <Link href={`/cariere/${job.id}`} className="mt-5 w-fit font-sans text-sm font-semibold text-[var(--ink)] underline underline-offset-4 hover:text-[var(--brass-ink)]">
+                    Detalii și aplicare: {job.title.toLowerCase()} →
+                  </Link>
                 </article>
               ))}
             </div>
@@ -152,7 +120,7 @@ export default function CareersPage() {
         </div>
       </main>
       <Footer />
-      <JsonLd data={graph(webPageNode({ path, name: 'Cariere la MAST Studio', description, breadcrumb: true }), breadcrumbNode(crumbs), ...JOB_OPENINGS.map(jobPostingNode))} />
+      <JsonLd data={graph(webPageNode({ path, name: 'Cariere la MAST Studio', description, breadcrumb: true }), breadcrumbNode(crumbs))} />
     </>
   )
 }
