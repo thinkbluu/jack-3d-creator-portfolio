@@ -15,6 +15,10 @@ const nextConfig = {
       { source: '/blog/web-design-timisoara', destination: '/blog/cum-alegi-firma-web-design', permanent: true },
       { source: '/blog/lectii-veterinaria-timisoara', destination: '/portofoliu/veterinaria-timisoara', permanent: true },
       { source: '/blog/faq-mentenanta-site', destination: '/servicii/mentenanta', permanent: true },
+      { source: '/blog/ce-include-pretul-unui-site', destination: '/blog/cat-costa-un-site-in-romania', permanent: true },
+      { source: '/blog/livrare-site-48-ore', destination: '/blog/cat-dureaza-constructia-unui-site', permanent: true },
+      { source: '/blog/avans-50-eur-cum-functioneaza', destination: '/blog/cat-dureaza-constructia-unui-site', permanent: true },
+      { source: '/blog/creare-site-timisoara-checklist', destination: '/blog/cum-alegi-firma-web-design', permanent: true },
     ]
   },
   async headers() {

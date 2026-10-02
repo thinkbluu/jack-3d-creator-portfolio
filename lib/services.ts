@@ -108,10 +108,10 @@ export const servicePages: ServicePage[] = [
     relatedSlugs: ['magazin-online', 'mentenanta', 'automatizari-whatsapp'],
     relatedPosts: [
       'cat-costa-un-site-in-romania',
-      'ce-include-pretul-unui-site',
-      'livrare-site-48-ore',
+      'cat-dureaza-constructia-unui-site',
       'conversie-site-prezentare',
-      'avans-50-eur-cum-functioneaza',
+      'cum-alegi-firma-web-design',
+      'site-prezentare-sau-magazin-online',
     ],
     projectSlugs: ['veterinaria-timisoara', 'agd-innerpath-consulting', 'painea-casei'],
     waMessage: 'Salut! Vreau un site de prezentare, livrat în 48 de ore. Îmi poți face o ofertă?',
