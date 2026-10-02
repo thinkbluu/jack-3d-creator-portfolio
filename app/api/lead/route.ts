@@ -1,5 +1,7 @@
 import { createHash } from 'node:crypto'
-import { Resend } from 'resend'
+import { escapeHtml, fromAddress, resendClient } from '@/lib/email'
+import { clientIp, isRateLimited } from '@/lib/request'
+import { EMAIL } from '@/lib/site'
 
 const projectTypes = [
   'Site de prezentare',
@@ -17,35 +19,11 @@ type LeadPayload = {
   website?: unknown
 }
 
-type RateLimitEntry = {
-  count: number
-  resetAt: number
-}
-
-const rateLimits = new Map<string, RateLimitEntry>()
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 5
 
 function json(body: { ok: true } | { ok: false; error: string }, status = 200) {
   return Response.json(body, { status })
-}
-
-function getClientIp(request: Request) {
-  const forwardedFor = request.headers.get('x-forwarded-for')
-  return forwardedFor?.split(',')[0]?.trim() || request.headers.get('x-real-ip') || 'unknown'
-}
-
-function isRateLimited(ip: string) {
-  const now = Date.now()
-  const current = rateLimits.get(ip)
-
-  if (!current || current.resetAt <= now) {
-    rateLimits.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS })
-    return false
-  }
-
-  current.count += 1
-  return current.count > RATE_LIMIT_MAX
 }
 
 function isValidProjectType(value: unknown): value is ProjectType {
@@ -68,14 +46,6 @@ function isValidSite(value: string) {
   }
 }
 
-function escapeHtml(value: string) {
-  return value.replace(
-    /[&<>'"]/g,
-    (character) =>
-      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character] ?? character,
-  )
-}
-
 function getUtmParameters(referrer: string | null) {
   if (!referrer) return []
 
@@ -87,18 +57,6 @@ function getUtmParameters(referrer: string | null) {
   } catch {
     return []
   }
-}
-
-function getFromAddress() {
-  const configuredDomain = process.env.RESEND_EMAIL_DOMAIN?.trim()
-  if (!configuredDomain) return 'MAST Studio <onboarding@resend.dev>'
-
-  const domain = configuredDomain
-    .replace(/^https?:\/\//, '')
-    .replace(/^.*@/, '')
-    .replace(/\/$/, '')
-
-  return `MAST Studio <lead@${domain}>`
 }
 
 export async function POST(request: Request) {
@@ -114,8 +72,8 @@ export async function POST(request: Request) {
     return json({ ok: true })
   }
 
-  const ip = getClientIp(request)
-  if (isRateLimited(ip)) {
+  const ip = clientIp(request)
+  if (isRateLimited(`lead:${ip}`, RATE_LIMIT_MAX, RATE_LIMIT_WINDOW_MS)) {
     return json({ ok: false, error: 'Prea multe cereri. Încearcă din nou peste un minut.' }, 429)
   }
 
@@ -146,7 +104,8 @@ export async function POST(request: Request) {
     utm: Object.fromEntries(utmParameters),
   }
 
-  if (!process.env.RESEND_API_KEY) {
+  const resend = resendClient()
+  if (!resend) {
     console.info('[lead] RESEND_API_KEY lipsește; lead primit:', lead)
     return json({ ok: true })
   }
@@ -163,11 +122,10 @@ export async function POST(request: Request) {
     .slice(0, 32)
 
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY)
     const { error } = await resend.emails.send(
       {
-        from: getFromAddress(),
-        to: ['contact@maststudio.ro'],
+        from: fromAddress('lead'),
+        to: [EMAIL],
         subject: `Lead nou: ${payload.projectType}`,
         text: [
           `Tip proiect: ${payload.projectType}`,
