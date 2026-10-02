@@ -4,14 +4,18 @@ import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { getAllGlossaryTerms, glossaryCategoryLabels, type GlossaryCategory } from '@/lib/glossary'
+import { getPageSocialMetadata } from '@/lib/seo'
 
 const siteUrl = 'https://maststudio.ro'
+const title = 'Glosar de termeni web design | MAST Studio'
+const description =
+  'Termenii din web design explicați simplu: PageSpeed, domeniu, găzduire, SEO, responsive și alții. Fără jargon.'
 
 export const metadata: Metadata = {
-  title: 'Glosar de termeni web design | MAST Studio',
-  description:
-    'Termenii din web design explicați simplu: PageSpeed, domeniu, găzduire, SEO, responsive și alții. Fără jargon.',
+  title,
+  description,
   alternates: { canonical: `${siteUrl}/glosar` },
+  ...getPageSocialMetadata({ title, description, url: '/glosar' }),
 }
 
 const categories: GlossaryCategory[] = ['tehnic', 'design', 'marketing', 'legal']

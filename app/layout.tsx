@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import ConsentBanner from '@/components/ConsentBanner'
 import ScrollProgress from '@/components/ScrollProgress'
+import { defaultOgImage, defaultTwitterImage } from '@/lib/seo'
 import './globals.css'
 
 const gtagId = process.env.NEXT_PUBLIC_GTAG_ID ?? 'G-WT5MMP4M9D'
@@ -45,13 +46,13 @@ export const metadata: Metadata = {
     siteName: 'MAST Studio',
     title,
     description,
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'MAST Studio — site-ul potrivit începe cu întrebarea potrivită' }],
+    images: [defaultOgImage],
   },
   twitter: {
     card: 'summary_large_image',
     title,
     description,
-    images: ['/twitter-image'],
+    images: [defaultTwitterImage],
   },
   icons: {
     icon: [{ url: '/icons/mast-mark-badge.svg', type: 'image/svg+xml' }],

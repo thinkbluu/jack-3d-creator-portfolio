@@ -6,11 +6,16 @@ import ProjectCard from '@/components/ProjectCard'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { getAllProjects } from '@/lib/projects'
 import type { Project } from '@/lib/projects'
+import { getPageSocialMetadata } from '@/lib/seo'
+
+const title = 'Portofoliu | MAST Studio'
+const description = 'Site-uri, platforme și proiecte digitale construite de MAST Studio pentru afaceri și instituții din România.'
 
 export const metadata: Metadata = {
-  title: 'Portofoliu | MAST Studio',
-  description: 'Site-uri, platforme și proiecte digitale construite de MAST Studio pentru afaceri și instituții din România.',
+  title,
+  description,
   alternates: { canonical: 'https://maststudio.ro/portofoliu' },
+  ...getPageSocialMetadata({ title, description, url: '/portofoliu' }),
 }
 
 type FilterId = Project['category'] | 'toate'

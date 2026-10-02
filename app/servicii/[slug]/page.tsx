@@ -5,6 +5,7 @@ import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import TrackedLink from '@/components/TrackedLink'
 import { SegmentProvider, WHATSAPP_NUMBER } from '@/components/SegmentContext'
+import { getPageSocialMetadata } from '@/lib/seo'
 import { getAllServicePages, getServicePageBySlug } from '@/lib/services'
 
 const siteUrl = 'https://maststudio.ro'
@@ -26,17 +27,13 @@ export async function generateMetadata({ params }: ServicePageProps): Promise<Me
   const service = getServicePageBySlug(slug)
   if (!service) return {}
   const canonical = `${siteUrl}/servicii/${service.slug}`
+  const title = `${service.name} | Prețuri și termene | MAST Studio`
   const description = service.answerCapsule.length > 160 ? `${service.answerCapsule.slice(0, 157)}...` : service.answerCapsule
   return {
-    title: `${service.name} | Prețuri și termene | MAST Studio`,
+    title,
     description,
     alternates: { canonical },
-    openGraph: {
-      type: 'website',
-      url: canonical,
-      title: `${service.name} | Prețuri și termene | MAST Studio`,
-      description,
-    },
+    ...getPageSocialMetadata({ title, description, url: canonical }),
   }
 }
 

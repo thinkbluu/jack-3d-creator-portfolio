@@ -1,10 +1,15 @@
 import type { Metadata } from 'next'
 import LegalPage, { LegalSection } from '@/components/LegalPage'
+import { getPageSocialMetadata } from '@/lib/seo'
+
+const title = 'Politica de confidențialitate'
+const description = 'Cum prelucrează MAST Studio datele personale ale vizitatorilor și clienților.'
 
 export const metadata: Metadata = {
-  title: 'Politica de confidențialitate',
-  description: 'Cum prelucrează MAST Studio datele personale ale vizitatorilor și clienților.',
+  title,
+  description,
   alternates: { canonical: '/confidentialitate' },
+  ...getPageSocialMetadata({ title: `${title} | MAST Studio`, description, url: '/confidentialitate' }),
 }
 
 export default function PrivacyPage() {

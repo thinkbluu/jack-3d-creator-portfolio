@@ -3,14 +3,18 @@ import Link from 'next/link'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import { SegmentProvider } from '@/components/SegmentContext'
+import { getPageSocialMetadata } from '@/lib/seo'
 
 const siteUrl = 'https://maststudio.ro'
+const title = 'Freelancer, studio sau agenție: cum alegi pentru site-ul tău | MAST Studio'
+const description =
+  'Comparație onestă între opțiunile de a-ți face un site în România: freelancer, studio mic, agenție mare sau platformă de tip Wix. Prețuri, avantaje și dezavantaje reale.'
 
 export const metadata: Metadata = {
-  title: 'Freelancer, studio sau agenție: cum alegi pentru site-ul tău | MAST Studio',
-  description:
-    'Comparație onestă între opțiunile de a-ți face un site în România: freelancer, studio mic, agenție mare sau platformă de tip Wix. Prețuri, avantaje și dezavantaje reale.',
+  title,
+  description,
   alternates: { canonical: `${siteUrl}/comparatie` },
+  ...getPageSocialMetadata({ title, description, url: '/comparatie' }),
 }
 
 const answerCapsule =

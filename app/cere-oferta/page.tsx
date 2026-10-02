@@ -4,12 +4,17 @@ import LeadForm from '@/components/LeadForm'
 import TrackedLink from '@/components/TrackedLink'
 import { EMAIL, PHONE_DISPLAY, PHONE_HREF } from '@/components/SegmentContext'
 import { getFeaturedProjects } from '@/lib/projects'
+import { getPageSocialMetadata } from '@/lib/seo'
+
+const title = 'Cere ofertă pentru site | MAST Studio'
+const description =
+  'Primești oferta în aceeași zi. Site de prezentare de la 300 EUR, live în 48 de ore. Avans 50 EUR, restul doar dacă ești mulțumit.'
 
 export const metadata: Metadata = {
-  title: { absolute: 'Cere ofertă pentru site | MAST Studio' },
-  description:
-    'Primești oferta în aceeași zi. Site de prezentare de la 300 EUR, live în 48 de ore. Avans 50 EUR, restul doar dacă ești mulțumit.',
+  title: { absolute: title },
+  description,
   robots: { index: false, follow: false },
+  ...getPageSocialMetadata({ title, description, url: '/cere-oferta' }),
 }
 
 const trustPoints = [

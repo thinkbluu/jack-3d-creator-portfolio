@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 import ProjectCard from '@/components/ProjectCard'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { getAllProjects, getProjectBySlug } from '@/lib/projects'
+import { getPageSocialMetadata } from '@/lib/seo'
 
 const siteUrl = 'https://maststudio.ro'
 
@@ -22,17 +23,18 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const project = getProjectBySlug(slug)
   if (!project) return {}
   const canonical = `${siteUrl}/portofoliu/${project.slug}`
+  const title = `${project.name} | Portofoliu MAST Studio`
   return {
-    title: `${project.name} | Portofoliu MAST Studio`,
+    title,
     description: project.summary,
     alternates: { canonical },
-    openGraph: {
-      type: 'article',
-      url: canonical,
-      title: `${project.name} | Portofoliu MAST Studio`,
+    ...getPageSocialMetadata({
+      title,
       description: project.summary,
-      images: [{ url: project.cover }],
-    },
+      url: canonical,
+      type: 'article',
+      image: { url: project.cover, alt: project.name },
+    }),
   }
 }
 

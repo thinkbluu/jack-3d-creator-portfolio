@@ -4,11 +4,16 @@ import BlogCard from '@/components/BlogCard'
 import Footer from '@/components/Footer'
 import TrackedLink from '@/components/TrackedLink'
 import { getAllPosts } from '@/lib/blog'
+import { getPageSocialMetadata } from '@/lib/seo'
+
+const title = 'Ghid | MAST Studio'
+const description = 'Articole practice despre ce merită știut înainte, în timpul și după ce îți faci un site.'
 
 export const metadata: Metadata = {
-  title: 'Ghid | MAST Studio',
-  description: 'Articole practice despre ce merită știut înainte, în timpul și după ce îți faci un site.',
+  title,
+  description,
   alternates: { canonical: 'https://maststudio.ro/blog' },
+  ...getPageSocialMetadata({ title, description, url: '/blog' }),
 }
 
 const whatsappUrl = `https://wa.me/40746382204?text=${encodeURIComponent('Salut! Am o întrebare despre un site: ')}`

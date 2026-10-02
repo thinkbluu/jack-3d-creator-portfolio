@@ -7,6 +7,7 @@ import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { formatBlogDate, getAllPosts, getPostBySlug } from '@/lib/blog'
+import { getPageSocialMetadata } from '@/lib/seo'
 
 const siteUrl = 'https://maststudio.ro'
 
@@ -23,18 +24,20 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   const post = getPostBySlug(slug)
   if (!post) return {}
   const canonical = `${siteUrl}/blog/${post.slug}`
+  const title = post.seoTitle ?? post.title
+  const description = post.seoDescription ?? post.excerpt
   return {
-    title: post.seoTitle ?? post.title,
-    description: post.seoDescription ?? post.excerpt,
+    title,
+    description,
     alternates: { canonical },
-    openGraph: {
-      type: 'article',
+    ...getPageSocialMetadata({
+      title,
+      description,
       url: canonical,
-      title: post.seoTitle ?? post.title,
-      description: post.seoDescription ?? post.excerpt,
+      type: 'article',
       publishedTime: post.publishedAt,
       modifiedTime: post.updatedAt ?? post.publishedAt,
-    },
+    }),
   }
 }
 

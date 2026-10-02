@@ -3,14 +3,18 @@ import Link from 'next/link'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import { SegmentProvider } from '@/components/SegmentContext'
+import { getPageSocialMetadata } from '@/lib/seo'
 
 const siteUrl = 'https://maststudio.ro'
+const title = 'Despre MAST Studio | Studio de web design din Timișoara'
+const description =
+  'MAST Studio este un studio de web design din Timișoara, parte din MAST Consult S.R.L. Construim site-uri, magazine online și platforme pentru afaceri din România.'
 
 export const metadata: Metadata = {
-  title: 'Despre MAST Studio | Studio de web design din Timișoara',
-  description:
-    'MAST Studio este un studio de web design din Timișoara, parte din MAST Consult S.R.L. Construim site-uri, magazine online și platforme pentru afaceri din România.',
+  title,
+  description,
   alternates: { canonical: `${siteUrl}/despre` },
+  ...getPageSocialMetadata({ title, description, url: '/despre' }),
 }
 
 const answerCapsule =

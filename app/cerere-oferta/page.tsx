@@ -1,20 +1,22 @@
 import type { Metadata } from 'next'
 import Footer from '@/components/Footer'
 import LeadForm from '@/components/LeadForm'
+import { getPageSocialMetadata } from '@/lib/seo'
 
 const siteUrl = 'https://maststudio.ro'
+const title = 'Cerere ofertă site web | MAST Studio'
+const description =
+  'Spune-ne ce tip de proiect ai, iar MAST Studio îți răspunde cu pașii potriviți pentru site-ul, magazinul online sau aplicația ta.'
 
 export const metadata: Metadata = {
-  title: 'Cerere ofertă site web | MAST Studio',
-  description:
-    'Spune-ne ce tip de proiect ai, iar MAST Studio îți răspunde cu pașii potriviți pentru site-ul, magazinul online sau aplicația ta.',
+  title,
+  description,
   alternates: { canonical: `${siteUrl}/cerere-oferta` },
-  openGraph: {
-    title: 'Cerere ofertă site web | MAST Studio',
+  ...getPageSocialMetadata({
+    title,
     description: 'Trimite detaliile proiectului tău și discută direct cu MAST Studio.',
-    url: `${siteUrl}/cerere-oferta`,
-    type: 'website',
-  },
+    url: '/cerere-oferta',
+  }),
 }
 
 export default function CerereOfertaPage() {

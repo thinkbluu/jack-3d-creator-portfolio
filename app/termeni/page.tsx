@@ -1,10 +1,15 @@
 import type { Metadata } from 'next'
 import LegalPage, { LegalSection } from '@/components/LegalPage'
+import { getPageSocialMetadata } from '@/lib/seo'
+
+const title = 'Termeni și condiții'
+const description = 'Termenii de utilizare ai site-ului maststudio.ro și informații despre serviciile MAST Studio.'
 
 export const metadata: Metadata = {
-  title: 'Termeni și condiții',
-  description: 'Termenii de utilizare ai site-ului maststudio.ro și informații despre serviciile MAST Studio.',
+  title,
+  description,
   alternates: { canonical: '/termeni' },
+  ...getPageSocialMetadata({ title: `${title} | MAST Studio`, description, url: '/termeni' }),
 }
 
 export default function TermsPage() {

@@ -1,10 +1,15 @@
 import type { Metadata } from 'next'
 import LegalPage, { LegalSection } from '@/components/LegalPage'
+import { getPageSocialMetadata } from '@/lib/seo'
+
+const title = 'Politica privind cookie-urile'
+const description = 'Informații despre cookie-uri, stocare locală și măsurarea agregată pe maststudio.ro.'
 
 export const metadata: Metadata = {
-  title: 'Politica privind cookie-urile',
-  description: 'Informații despre cookie-uri, stocare locală și măsurarea agregată pe maststudio.ro.',
+  title,
+  description,
   alternates: { canonical: '/cookies' },
+  ...getPageSocialMetadata({ title: `${title} | MAST Studio`, description, url: '/cookies' }),
 }
 
 export default function CookiesPage() {
