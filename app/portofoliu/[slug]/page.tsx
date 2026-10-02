@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
+import MdxContent from '@/components/MdxContent'
 import ProjectCard from '@/components/ProjectCard'
 import SiteHeader from '@/components/SiteHeader'
 import { SegmentProvider } from '@/components/SegmentContext'
@@ -176,7 +176,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           {story ? (
             <div className="prose mx-auto mt-12 max-w-2xl">
-              <MDXRemote source={story} />
+              <MdxContent source={story} />
             </div>
           ) : null}
 

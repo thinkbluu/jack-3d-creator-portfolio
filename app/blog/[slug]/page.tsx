@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { MDXRemote } from 'next-mdx-remote/rsc'
 import BlogCard from '@/components/BlogCard'
 import Breadcrumbs from '@/components/Breadcrumbs'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
+import MdxContent from '@/components/MdxContent'
 import SiteHeader from '@/components/SiteHeader'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { formatBlogDate, getAllPosts, getPostBySlug, getRelatedPosts, type BlogPost } from '@/lib/blog'
@@ -115,26 +115,26 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
             <span className="kicker mt-6 inline-block rounded-full border border-[var(--glass-edge)] px-3 py-1 text-[10px]">{post.categoryLabel}</span>
             <h1 className="type-h2 mt-6 text-balance">{post.title}</h1>
             <p className="type-body mt-6 text-[var(--ink-2)]">{post.excerpt}</p>
-            <div className="mt-6 flex flex-wrap items-center gap-x-4 font-sans text-xs text-[var(--ink-2)]">
+            <div className="mt-6 flex flex-col gap-1 font-sans text-xs text-[var(--ink-2)] sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
               <span>
                 de{' '}
                 <Link href="/despre" rel="author" className="underline-offset-4 hover:text-[var(--ink)] hover:underline">
                   echipa MAST Studio
                 </Link>
               </span>
-              <span aria-hidden="true">·</span>
+              <span aria-hidden="true" className="hidden sm:inline">·</span>
               <span>
                 Publicat <time dateTime={post.publishedAt}>{formatBlogDate(post.publishedAt)}</time>
               </span>
               {post.updatedAt && post.updatedAt !== post.publishedAt ? (
                 <>
-                  <span aria-hidden="true">·</span>
+                  <span aria-hidden="true" className="hidden sm:inline">·</span>
                   <span>
                     Actualizat <time dateTime={post.updatedAt}>{formatBlogDate(post.updatedAt)}</time>
                   </span>
                 </>
               ) : null}
-              <span aria-hidden="true">·</span>
+              <span aria-hidden="true" className="hidden sm:inline">·</span>
               <span>{post.readMin} min citire</span>
             </div>
             <div className="mt-8 border-t border-[var(--hairline)]" />
@@ -157,7 +157,7 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
           </div>
 
           <div className="prose mx-auto mt-12 max-w-2xl">
-            <MDXRemote source={post.body} />
+            <MdxContent source={post.body} />
           </div>
 
           {post.faqItems?.length ? (
