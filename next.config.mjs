@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // The contest's daily job lists the newest posts in the newsletter draft.
+  outputFileTracingIncludes: {
+    '/api/cron/site-gratuit': ['./content/blog/**/*'],
+  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
