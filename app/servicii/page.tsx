@@ -130,11 +130,11 @@ export default function ServicesHubPage() {
             </ol>
             <p className="type-body mt-8">
               Nu știi ce ți se potrivește? Citește{' '}
-              <Link href="/blog/site-prezentare-sau-magazin-online" className="font-semibold text-[var(--ink)] underline underline-offset-4">
+              <Link href="/blog/site-prezentare-sau-magazin-online" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
                 site de prezentare sau magazin online
               </Link>{' '}
               sau compară{' '}
-              <Link href="/comparatie" className="font-semibold text-[var(--ink)] underline underline-offset-4">
+              <Link href="/comparatie" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
                 freelancer, studio și agenție
               </Link>
               .
@@ -150,6 +150,14 @@ export default function ServicesHubPage() {
               Sau completează cererea de ofertă
             </Link>
           </section>
+
+          <p className="type-body mt-10 max-w-3xl">
+            Ai o afacere mică și nu ai încă buget pentru site? În fiecare lună oferim{' '}
+            <Link href="/site-gratuit" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
+              un site de prezentare gratuit
+            </Link>{' '}
+            unei afaceri din România, prin concursul nostru lunar.
+          </p>
         </div>
       </main>
       <Footer />

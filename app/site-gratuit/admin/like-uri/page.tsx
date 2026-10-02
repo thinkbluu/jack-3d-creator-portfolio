@@ -24,7 +24,7 @@ export default async function AdminLikesPage({ searchParams }: Props) {
   const { t, stare } = await searchParams
   const round = isContestConfigured() ? verifyToken(t, 'admin-likes') : null
   const data = round ? await getRoundForAdmin(round) : null
-  const message = stare ? messages[stare] : undefined
+  const message = stare && Object.hasOwn(messages, stare) ? messages[stare] : undefined
 
   if (!round || !data) {
     return (

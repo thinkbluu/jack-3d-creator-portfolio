@@ -22,10 +22,10 @@ const FADE_VALUES = [0, 1, 1, 0]
 /**
  * The scroll-driven homepage. Kept as one client component so the scene rigs,
  * their fades and the cinematic hero behave exactly as before; the server page
- * around it only adds metadata and structured data. The footer is passed in as
- * a server-rendered node.
+ * around it only adds metadata and structured data. The footer, and the
+ * content after the scenes, are passed in as server-rendered nodes.
  */
-export default function HomePage({ footer }: { footer: React.ReactNode }) {
+export default function HomePage({ afterScenes, footer }: { afterScenes?: React.ReactNode; footer: React.ReactNode }) {
   const tableRigRef = useRef<HTMLDivElement>(null)
   const compassRigRef = useRef<HTMLDivElement>(null)
 
@@ -86,6 +86,7 @@ export default function HomePage({ footer }: { footer: React.ReactNode }) {
           </div>
         </div>
 
+        {afterScenes}
       </main>
       {footer}
       <MobileWhatsAppBar />

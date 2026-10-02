@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import ContestPrivatePage, { InvalidLink, Notice, privateMetadata } from '@/components/ContestPrivatePage'
 import { checkboxClass, checkboxLabelClass, inputClass, labelClass, primaryButtonClass, textLinkClass } from '@/components/form-styles'
+import TrackConversionOnLoad from '@/components/TrackConversionOnLoad'
 import { CLAIM_DAYS, RULES_PATH, isContestConfigured, roundLabel } from '@/lib/contest/config'
 import { formatDeadline } from '@/lib/contest/emails'
 import { getClaim } from '@/lib/contest/service'
@@ -38,6 +39,7 @@ export default async function ClaimPage({ searchParams }: Props) {
         <Notice tone="success">
           Mulțumim, {claim.name.split(' ')[0]}! Am primit confirmarea și detaliile pentru {claim.businessName}. Te contactăm în cel mult 2 zile lucrătoare.
         </Notice>
+        {stare === 'confirmat' ? <TrackConversionOnLoad event="contest_prize_claimed" /> : null}
       </ContestPrivatePage>
     )
   }
@@ -52,7 +54,7 @@ export default async function ClaimPage({ searchParams }: Props) {
 
   return (
     <ContestPrivatePage title={`Felicitări, ${claim.name.split(' ')[0]}!`}>
-      {stare && messages[stare] ? <Notice>{messages[stare]}</Notice> : null}
+      {stare && Object.hasOwn(messages, stare) ? <Notice>{messages[stare]}</Notice> : null}
       <p className="type-body">
         Postarea pentru {claim.businessName} a câștigat runda din {roundLabel(claim.round)}. Confirmă premiul
         {claim.deadline ? ` până pe ${formatDeadline(claim.deadline)}` : ''} și spune-ne câteva lucruri despre afacere, ca să începem.

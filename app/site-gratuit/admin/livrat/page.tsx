@@ -20,7 +20,7 @@ export default async function AdminDeliveredPage({ searchParams }: Props) {
   const { t, stare } = await searchParams
   const round = isContestConfigured() ? verifyToken(t, 'admin-delivered') : null
   const delivery = round ? await getDelivery(round) : null
-  const message = stare ? messages[stare] : undefined
+  const message = stare && Object.hasOwn(messages, stare) ? messages[stare] : undefined
 
   if (!round || !delivery) {
     return (

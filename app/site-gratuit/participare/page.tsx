@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import ContestPrivatePage, { InvalidLink, Notice, privateMetadata } from '@/components/ContestPrivatePage'
 import { inputClass, labelClass, primaryButtonClass, secondaryButtonClass, textLinkClass } from '@/components/form-styles'
+import TrackConversionOnLoad from '@/components/TrackConversionOnLoad'
 import { CONTEST_HASHTAG, RULES_PATH, isContestConfigured, roundEndLabel, roundLabel } from '@/lib/contest/config'
 import { getParticipation } from '@/lib/contest/service'
 import { verifyToken } from '@/lib/contest/tokens'
@@ -8,6 +9,9 @@ import { FACEBOOK_URL, INSTAGRAM_HANDLE, INSTAGRAM_URL } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
 export const metadata = privateMetadata('Participarea ta la concurs')
+
+// Conversions counted when the page is reached after a successful action.
+const conversions: Record<string, string> = { confirmat: 'contest_confirmed', salvat: 'contest_post_saved' }
 
 const messages: Record<string, { text: string; success?: boolean }> = {
   confirmat: { text: 'Înscrierea e confirmată. Ți-am trimis pe e-mail pașii și linkul către această pagină; păstrează-l.', success: true },
@@ -26,7 +30,7 @@ export default async function ParticipationPage({ searchParams }: Props) {
   const { t, stare } = await searchParams
   const entrantId = isContestConfigured() ? verifyToken(t, 'manage') : null
   const participation = entrantId ? await getParticipation(entrantId) : null
-  const message = stare ? messages[stare] : undefined
+  const message = stare && Object.hasOwn(messages, stare) ? messages[stare] : undefined
 
   if (!entrantId || !participation) {
     return (
@@ -42,6 +46,7 @@ export default async function ParticipationPage({ searchParams }: Props) {
   return (
     <ContestPrivatePage title={`Bună, ${participation.name.split(' ')[0]}`}>
       {message ? <Notice tone={message.success ? 'success' : 'info'}>{message.text}</Notice> : null}
+      {stare && Object.hasOwn(conversions, stare) ? <TrackConversionOnLoad event={conversions[stare]} /> : null}
 
       <section className="porthole flex flex-col gap-3 p-6">
         <p className="kicker">Runda din {roundLabel(round)}</p>
