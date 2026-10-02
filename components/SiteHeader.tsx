@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import AnpcSalBadge from '@/components/AnpcSalBadge'
 
 export type SiteSection = 'servicii' | 'portofoliu' | 'blog' | 'site-gratuit' | 'despre' | 'contact'
 
@@ -13,7 +12,7 @@ const navItems: Array<{ id: SiteSection; href: string; label: string }> = [
 ]
 
 const linkClass =
-  'text-xs uppercase tracking-[0.16em] text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] aria-[current=page]:text-[var(--ink)]'
+  'whitespace-nowrap text-xs uppercase tracking-[0.16em] text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] aria-[current=page]:text-[var(--ink)]'
 
 export default function SiteHeader({ current }: { current?: SiteSection }) {
   return (
@@ -35,7 +34,7 @@ export default function SiteHeader({ current }: { current?: SiteSection }) {
           </span>
         </Link>
 
-        <ul className="hidden items-center gap-7 md:flex">
+        <ul className="hidden items-center gap-7 lg:flex">
           {navItems.map((item) => (
             <li key={item.id}>
               <Link href={item.href} aria-current={current === item.id ? 'page' : undefined} className={linkClass}>
@@ -46,17 +45,14 @@ export default function SiteHeader({ current }: { current?: SiteSection }) {
           <li>
             <Link
               href="/cerere-oferta"
-              className="rounded-[var(--radius-pill)] bg-[var(--ink)] px-5 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--shell)] transition-colors hover:bg-[#2E2822]"
+              className="whitespace-nowrap rounded-[var(--radius-pill)] bg-[var(--ink)] px-5 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--shell)] transition-colors hover:bg-[#2E2822]"
             >
               Cere ofertă
             </Link>
           </li>
-          <li className="hidden xl:block">
-            <AnpcSalBadge />
-          </li>
         </ul>
 
-        <details className="group md:hidden">
+        <details className="group lg:hidden">
           <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--ink)] [&::-webkit-details-marker]:hidden">
             <span>Meniu</span>
             <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" className="transition-transform group-open:rotate-45">
@@ -82,9 +78,6 @@ export default function SiteHeader({ current }: { current?: SiteSection }) {
               >
                 Cere ofertă
               </Link>
-            </li>
-            <li className="pt-4">
-              <AnpcSalBadge />
             </li>
           </ul>
         </details>

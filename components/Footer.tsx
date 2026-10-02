@@ -72,7 +72,7 @@ export default function Footer() {
             <p className="max-w-xs leading-relaxed">
               Studio de web design din Timișoara. Site-uri de prezentare de la 300 EUR, live în 48 de ore, magazine online și aplicații pentru afaceri din toată România.
             </p>
-            <address className="flex flex-col not-italic leading-relaxed">
+            <address className="flex flex-col items-start not-italic leading-relaxed">
               <span className="text-[var(--ink)]">{SITE_NAME}</span>
               <span>Timișoara · lucrăm la distanță în toată România</span>
               <a href={PHONE_HREF} className={linkClass}>
@@ -104,7 +104,7 @@ export default function Footer() {
           <p>
             © {year} {SITE_NAME} · {LEGAL_NAME} · CUI {VAT_ID} · Reg. Com. {TRADE_REGISTER_NUMBER}
           </p>
-          <nav aria-label="Linkuri juridice">
+          <nav aria-label="Linkuri juridice" className="shrink-0">
             <ul className="flex flex-wrap gap-x-5">
               <li>
                 <Link href="/confidentialitate" className={linkClass}>Confidențialitate</Link>
@@ -114,6 +114,9 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/termeni" className={linkClass}>Termeni</Link>
+              </li>
+              <li>
+                <Link href="/site-gratuit/regulament" className={linkClass}>Regulament concurs</Link>
               </li>
             </ul>
           </nav>
