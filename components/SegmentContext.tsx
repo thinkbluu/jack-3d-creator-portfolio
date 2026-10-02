@@ -1,12 +1,9 @@
 'use client'
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { WHATSAPP_NUMBER } from '@/lib/contact'
 
-export const WHATSAPP_NUMBER = '40746382204'
-export const PHONE_DISPLAY = '+40 746 382 204'
-export const PHONE_HREF = `tel:+${WHATSAPP_NUMBER}`
-export const EMAIL = 'contact@maststudio.ro'
-export const EMAIL_HREF = `mailto:${EMAIL}`
+export { EMAIL, EMAIL_HREF, PHONE_DISPLAY, PHONE_HREF, WHATSAPP_NUMBER } from '@/lib/contact'
 
 export type Segment = 'salon' | 'servicii' | 'platforma' | 'ecommerce'
 

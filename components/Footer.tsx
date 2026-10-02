@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { EMAIL, EMAIL_HREF, PHONE_DISPLAY, PHONE_HREF } from './SegmentContext'
+import { EMAIL, EMAIL_HREF, PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact'
 import { getAllServicePages } from '@/lib/services'
 
 const linkClass =

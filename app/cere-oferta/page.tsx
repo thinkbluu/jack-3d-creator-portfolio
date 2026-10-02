@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import LeadForm from '@/components/LeadForm'
 import TrackedLink from '@/components/TrackedLink'
-import { EMAIL, PHONE_DISPLAY, PHONE_HREF } from '@/components/SegmentContext'
+import { EMAIL, PHONE_DISPLAY, PHONE_HREF } from '@/lib/contact'
 import { getFeaturedProjects } from '@/lib/projects'
 
 export const metadata: Metadata = {
