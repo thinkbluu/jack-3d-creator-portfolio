@@ -1,60 +1,118 @@
 import Link from 'next/link'
-import { EMAIL, EMAIL_HREF, PHONE_DISPLAY, PHONE_HREF } from './SegmentContext'
 import { getAllServicePages } from '@/lib/services'
+import {
+  ADDRESS,
+  EMAIL,
+  EMAIL_HREF,
+  LEGAL_NAME,
+  PHONE_DISPLAY,
+  PHONE_HREF,
+  SITE_NAME,
+  TRADE_REGISTER_NUMBER,
+  VAT_ID,
+  whatsappUrl,
+} from '@/lib/site'
 
 const linkClass =
   'transition-colors hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]'
 
+const guideLinks = [
+  { href: '/blog/cat-costa-un-site-in-romania', label: 'Cât costă un site în România' },
+  { href: '/blog/ce-include-pretul-unui-site', label: 'Ce include prețul unui site' },
+  { href: '/blog/site-prezentare-sau-magazin-online', label: 'Site de prezentare sau magazin online' },
+  { href: '/blog/cum-alegi-firma-web-design', label: 'Cum alegi o firmă de web design' },
+  { href: '/blog', label: 'Toate ghidurile' },
+]
+
+const studioLinks = [
+  { href: '/despre', label: 'Despre MAST Studio' },
+  { href: '/portofoliu', label: 'Portofoliu' },
+  { href: '/comparatie', label: 'Freelancer, studio sau agenție' },
+  { href: '/glosar', label: 'Glosar web design' },
+  { href: '/contact', label: 'Contact' },
+  { href: '/cerere-oferta', label: 'Cerere ofertă' },
+]
+
+function FooterColumn({ title, links }: { title: string; links: Array<{ href: string; label: string }> }) {
+  return (
+    <nav aria-label={title} className="flex flex-col gap-1">
+      <p className="kicker mb-2">{title}</p>
+      <ul className="flex flex-col">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link href={link.href} className={linkClass}>
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
 export default function Footer() {
-  const servicePages = getAllServicePages()
+  const serviceLinks = getAllServicePages().map((service) => ({ href: `/servicii/${service.slug}`, label: service.name }))
+  const year = new Date().getFullYear()
 
   return (
-    <footer className="relative z-10 border-t border-[var(--hairline)] bg-[var(--shell-warm)] font-sans text-sm text-[var(--ink-3)]">
-      <div className="site-container flex flex-col gap-6 py-10">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <p className="flex items-center gap-2 text-[var(--ink)]">
-            <span aria-hidden="true" className="size-5 bg-[var(--brass)]" style={{ mask: "url('/icons/mast-mark.svg') center / contain no-repeat", WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat" }} />
-            <span className="flex items-baseline gap-2">
-              <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '20px' }}>MAST</span>
-              <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: '10px', letterSpacing: '.28em' }}>STUDIO</span>
-            </span>
+    <footer className="relative z-10 border-t border-[var(--hairline)] bg-[var(--shell-warm)] font-sans text-sm text-[var(--ink-2)]">
+      <div className="site-container flex flex-col gap-10 py-12">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
+          <div className="flex flex-col gap-4">
+            <p className="flex items-center gap-2 text-[var(--ink)]">
+              <span aria-hidden="true" className="size-5 bg-[var(--brass)]" style={{ mask: "url('/icons/mast-mark.svg') center / contain no-repeat", WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat" }} />
+              <span className="flex items-baseline gap-2">
+                <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '20px' }}>MAST</span>
+                <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: '10px', letterSpacing: '.28em' }}>STUDIO</span>
+              </span>
+            </p>
+            <p className="max-w-xs leading-relaxed">
+              Studio de web design din Timișoara. Site-uri de prezentare de la 300 EUR, live în 48 de ore, magazine online și aplicații pentru afaceri din toată România.
+            </p>
+            <address className="flex flex-col not-italic leading-relaxed">
+              <span className="text-[var(--ink)]">{SITE_NAME}</span>
+              <span>
+                {ADDRESS.street}, {ADDRESS.postalCode} {ADDRESS.locality}, jud. {ADDRESS.region}
+              </span>
+              <a href={PHONE_HREF} className={linkClass}>
+                {PHONE_DISPLAY}
+              </a>
+              <a href={whatsappUrl('Salut! Vreau să discutăm despre un site pentru afacerea mea.')} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                WhatsApp: {PHONE_DISPLAY}
+              </a>
+              <a href={EMAIL_HREF} className={linkClass}>
+                {EMAIL}
+              </a>
+            </address>
+          </div>
+          <FooterColumn title="Servicii" links={serviceLinks} />
+          <FooterColumn title="Ghiduri" links={guideLinks} />
+          <FooterColumn title="Studio" links={studioLinks} />
+        </div>
+
+        <div className="flex flex-col gap-4 border-t border-[var(--hairline)] pt-6 lg:flex-row lg:items-center lg:justify-between">
+          <p>
+            © {year} {SITE_NAME} · {LEGAL_NAME} · CUI {VAT_ID} · Reg. Com. {TRADE_REGISTER_NUMBER}
           </p>
-          <nav aria-label="Servicii" className="flex flex-col gap-2 sm:items-end">
-            <span className="kicker">Servicii</span>
-            <span className="flex flex-wrap gap-x-5 gap-y-2 sm:justify-end">
-              {servicePages.map((service) => (
-                <Link key={service.slug} href={`/servicii/${service.slug}`} className={linkClass}>
-                  {service.shortName}
-                </Link>
-              ))}
-            </span>
+          <nav aria-label="Linkuri juridice">
+            <ul className="flex flex-wrap gap-x-5">
+              <li>
+                <Link href="/confidentialitate" className={linkClass}>Confidențialitate</Link>
+              </li>
+              <li>
+                <Link href="/cookies" className={linkClass}>Cookies</Link>
+              </li>
+              <li>
+                <Link href="/termeni" className={linkClass}>Termeni</Link>
+              </li>
+              <li>
+                <a href="https://anpc.ro/ce-este-sal" target="_blank" rel="noopener noreferrer" className={linkClass}>ANPC SAL</a>
+              </li>
+              <li>
+                <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className={linkClass}>SOL</a>
+              </li>
+            </ul>
           </nav>
-        </div>
-
-        <div className="flex flex-col gap-4 border-t border-[var(--hairline)] pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <nav aria-label="Linkuri juridice" className="flex flex-wrap gap-x-5 gap-y-2">
-            <Link href="/despre" className={linkClass}>Despre</Link>
-            <Link href="/portofoliu" className={linkClass}>Portofoliu</Link>
-            <Link href="/blog" className={linkClass}>Ghid</Link>
-            <Link href="/glosar" className={linkClass}>Glosar</Link>
-            <Link href="/comparatie" className={linkClass}>Comparație</Link>
-            <Link href="/cere-oferta" className={linkClass}>Cerere ofertă</Link>
-            <Link href="/confidentialitate" className={linkClass}>Confidențialitate</Link>
-            <Link href="/cookies" className={linkClass}>Cookies</Link>
-            <Link href="/termeni" className={linkClass}>Termeni</Link>
-          </nav>
-        </div>
-
-        <div className="flex flex-col gap-3 border-t border-[var(--hairline)] pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <p>© 2026 MAST Studio · MAST Consult S.R.L. · CUI RO49626121 · Timișoara, România</p>
-            <a href={PHONE_HREF} className={linkClass}>{PHONE_DISPLAY}</a>
-            <a href={EMAIL_HREF} className={linkClass}>{EMAIL}</a>
-          </div>
-          <div className="flex flex-wrap gap-x-5 gap-y-2">
-            <a href="https://anpc.ro/ce-este-sal" target="_blank" rel="noopener" className={linkClass}>ANPC SAL</a>
-            <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener" className={linkClass}>SOL</a>
-          </div>
         </div>
       </div>
     </footer>

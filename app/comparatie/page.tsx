@@ -1,17 +1,27 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
+import Breadcrumbs from '@/components/Breadcrumbs'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
+import JsonLd from '@/components/JsonLd'
+import SiteHeader from '@/components/SiteHeader'
 import { SegmentProvider } from '@/components/SegmentContext'
+import { breadcrumbNode, faqNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
+import { pageMetadata } from '@/lib/seo'
 
-const siteUrl = 'https://maststudio.ro'
+const path = '/comparatie'
+const description =
+  'Freelancer, studio mic, agenție sau Wix? Comparație onestă pentru un site de firmă în România: prețuri, termene, riscuri tipice și când merită fiecare.'
 
-export const metadata: Metadata = {
-  title: 'Freelancer, studio sau agenție: cum alegi pentru site-ul tău | MAST Studio',
-  description:
-    'Comparație onestă între opțiunile de a-ți face un site în România: freelancer, studio mic, agenție mare sau platformă de tip Wix. Prețuri, avantaje și dezavantaje reale.',
-  alternates: { canonical: `${siteUrl}/comparatie` },
-}
+export const metadata = pageMetadata({
+  title: 'Freelancer, studio sau agenție: cum alegi',
+  description,
+  path,
+})
+
+const crumbs: BreadcrumbItem[] = [
+  { name: 'Acasă', path: '/' },
+  { name: 'Freelancer, studio sau agenție', path },
+]
 
 const answerCapsule =
   'Pentru un site simplu sub 500 EUR, un freelancer sau o platformă de tip Wix poate fi suficient. Pentru un site care trebuie să aducă clienți, un studio mic oferă cel mai bun raport între preț și calitate. Agențiile mari sunt potrivite pentru proiecte peste 3.000 EUR care necesită echipă dedicată.'
@@ -29,7 +39,7 @@ const comparisonRows: ComparisonRow[] = [
     label: 'Preț tipic',
     wix: '0-30 EUR/lună',
     freelancer: '150-600 EUR',
-    studio: '300-2.500 EUR',
+    studio: '300-3.000 EUR',
     agentie: '3.000-15.000+ EUR',
   },
   {
@@ -101,6 +111,32 @@ const agencyNotFit = [
   'Dacă bugetul tău e sub 3.000 EUR, majoritatea agențiilor mari nici nu vor accepta proiectul sau vor livra un rezultat sub-dimensionat pentru procesul lor standard.',
 ]
 
+const typicalRisks = [
+  {
+    option: 'Platformă de tip Wix',
+    risk: 'Economisești acum, dar riști un site lent și greu de întreținut, pe care îl refaci peste un an.',
+  },
+  {
+    option: 'Freelancer',
+    risk: 'Poate livra excelent. Riscul tipic: dispare după lansare, nu documentează accesele sau ține site-ul pe contul lui. Cere predare scrisă.',
+  },
+  {
+    option: 'Studio mic',
+    risk: 'Dacă studioul nu are portofoliu live sau un preț „de la” scris, e doar un freelancer cu alt nume. Verifică proiecte reale.',
+  },
+  {
+    option: 'Agenție mare',
+    risk: 'Poate livra proiecte mari. Riscul tipic: plătești coordonare, prezentări și timp de așteptare pentru un site care putea fi un livrabil simplu.',
+  },
+]
+
+const questionsBeforeDeposit = [
+  'Cine deține domeniul și găzduirea: tu sau furnizorul?',
+  'Termenul pornește după ce trimiți materialele sau „când apucăm”?',
+  'Ce e inclus în preț și ce se plătește separat?',
+  'Cine răspunde după lansare dacă site-ul nu mai merge?',
+]
+
 const faqItems = [
   {
     question: 'Care e cea mai ieftină opțiune pentru un site?',
@@ -123,21 +159,21 @@ const faqItems = [
       'Nu neapărat mai bună — oferă altceva: echipă mai mare, procese de management de proiect mai formale și capacitate de a gestiona cerințe complexe. Pentru un site simplu, aceste avantaje nu se traduc automat în rezultat vizibil mai bun, dar costă semnificativ mai mult.',
   },
   {
+    question: 'Ce este un studio de web design?',
+    answer:
+      'O echipă mică specializată pe site-uri și produse digitale: mai structurată decât un freelancer care lucrează singur și mai ușoară decât o agenție full-service, cu account manageri și prezentări lungi.',
+  },
+  {
+    question: 'Care e riscul tipic când lucrezi cu un freelancer?',
+    answer:
+      'Dispariția după lansare, lipsa unei copii de siguranță pentru găzduire și domeniu și o proprietate neclară asupra site-ului. Cere în scris cine deține domeniul, cine are accesele și ce se întâmplă dacă proiectul se blochează.',
+  },
+  {
     question: 'Pot trece de la o platformă tip Wix la un studio mai târziu?',
     answer:
       'Da. Mulți clienți își testează ideea pe o platformă, iar când afacerea crește și au nevoie de un site care convertește mai bine sau de funcționalități personalizate, migrează către un studio sau o soluție construită de la zero.',
   },
 ]
-
-const faqJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqItems.map((item) => ({
-    '@type': 'Question',
-    name: item.question,
-    acceptedAnswer: { '@type': 'Answer', text: item.answer },
-  })),
-}
 
 function HonestList({ items }: { items: string[] }) {
   return (
@@ -154,35 +190,11 @@ function HonestList({ items }: { items: string[] }) {
 
 export default function ComparisonPage() {
   return (
-    <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-      <header className="border-b border-[var(--hairline)]">
-        <nav aria-label="Navigație principală" className="site-container flex h-20 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <span
-              aria-hidden="true"
-              className="size-[22px] bg-[var(--brass)]"
-              style={{
-                mask: "url('/icons/mast-mark.svg') center / contain no-repeat",
-                WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat",
-              }}
-            />
-            <span className="flex items-baseline gap-2">
-              <span className="font-serif text-xl font-semibold">MAST</span>
-              <span className="font-sans text-[10px] font-medium tracking-[.28em]">STUDIO</span>
-            </span>
-          </Link>
-          <Link href="/" className="font-sans text-xs uppercase tracking-[0.16em] text-[var(--ink-2)] hover:text-[var(--ink)]">
-            Înapoi la site
-          </Link>
-        </nav>
-      </header>
-
-      <article className="site-container py-16 md:py-24">
-        <nav aria-label="Breadcrumb" className="mx-auto max-w-2xl font-sans text-xs text-[var(--ink-3)]">
-          <Link href="/" className="hover:text-[var(--ink)]">Acasă</Link>
-          <span className="mx-2">/</span>
-          <span className="text-[var(--ink)]">Freelancer, studio sau agenție</span>
-        </nav>
+    <>
+      <SiteHeader />
+      <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
+      <article className="site-container py-12 md:py-20">
+        <Breadcrumbs items={crumbs} className="mx-auto max-w-2xl" />
 
         <header className="mx-auto mt-6 max-w-2xl">
           <p className="kicker">Comparație</p>
@@ -269,6 +281,48 @@ export default function ComparisonPage() {
           </section>
 
           <section className="mt-12 border-t border-[var(--hairline)] pt-12">
+            <h2 className="type-h3">Ce riscuri apar des la fiecare alegere</h2>
+            <dl className="mt-4 flex flex-col gap-4">
+              {typicalRisks.map((item) => (
+                <div key={item.option}>
+                  <dt className="font-sans font-semibold text-[var(--ink)]">{item.option}</dt>
+                  <dd className="type-body mt-1">{item.risk}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+
+          <section className="mt-12 border-t border-[var(--hairline)] pt-12">
+            <h2 className="type-h3">Patru întrebări de pus înainte de avans</h2>
+            <p className="type-body mt-4">Indiferent pe cine alegi, cere răspunsul în scris:</p>
+            <ol className="type-body mt-4 flex list-decimal flex-col gap-2 pl-5">
+              {questionsBeforeDeposit.map((question) => (
+                <li key={question}>{question}</li>
+              ))}
+            </ol>
+            <p className="type-body mt-4">
+              Pentru o listă mai completă, citește{' '}
+              <Link href="/blog/cum-alegi-firma-web-design" className="font-semibold text-[var(--ink)] underline underline-offset-4">
+                cum alegi o firmă de web design: 7 întrebări de pus
+              </Link>
+              .
+            </p>
+          </section>
+
+          <section className="mt-12 border-t border-[var(--hairline)] pt-12">
+            <h2 className="type-h3">Unde se încadrează MAST Studio</h2>
+            <p className="type-body mt-4">
+              Suntem un studio mic din Timișoara, parte din MAST Consult S.R.L. Lucrăm cu afaceri care vor un site clar, cu preț la vedere și un singur interlocutor: {' '}
+              <Link href="/servicii/site-de-prezentare" className="font-semibold text-[var(--ink)] underline underline-offset-4">site de prezentare</Link>{' '}
+              de la 300 EUR, live în 48 de ore după materiale,{' '}
+              <Link href="/servicii/magazin-online" className="font-semibold text-[var(--ink)] underline underline-offset-4">magazin online</Link>{' '}
+              de la 900 EUR și{' '}
+              <Link href="/servicii/mentenanta" className="font-semibold text-[var(--ink)] underline underline-offset-4">mentenanță</Link>{' '}
+              de la 90 EUR pe lună. Avansul este de 50 EUR, iar restul îl plătești doar dacă ești mulțumit.
+            </p>
+          </section>
+
+          <section className="mt-12 border-t border-[var(--hairline)] pt-12">
             <h2 className="type-h3">Întrebări frecvente</h2>
             <div className="mt-6 divide-y divide-[var(--hairline)] border-y border-[var(--hairline)]">
               {faqItems.map((item) => (
@@ -292,15 +346,22 @@ export default function ComparisonPage() {
         </div>
 
         <section className="porthole mx-auto mt-16 flex max-w-2xl flex-col items-start gap-5 border-[var(--glass-edge)] p-7">
-          <p className="type-h3">Dacă un studio mic e alegerea potrivită pentru tine</p>
+          <h2 className="type-h3">Dacă un studio mic e alegerea potrivită pentru tine</h2>
           <SegmentProvider>
             <ContactButton hero label="Cere ofertă pe WhatsApp" />
           </SegmentProvider>
         </section>
       </article>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      </main>
       <Footer />
-    </main>
+      <JsonLd
+        data={graph(
+          webPageNode({ path, name: 'Freelancer, studio, agenție sau platformă: cum alegi', description, breadcrumb: true }),
+          breadcrumbNode(crumbs),
+          faqNode(faqItems, path),
+        )}
+      />
+    </>
   )
 }

@@ -15,7 +15,7 @@ export default function ContactButton({ hero = false, ghost = false, label, note
     'group inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap font-sans font-bold transition-[background-color,transform,color] duration-[250ms] ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]'
 
   const skin = ghost
-    ? 'border-[1.5px] border-[var(--brass)] bg-transparent text-[var(--brass)] hover:bg-[var(--brass)] hover:text-[var(--shell)]'
+    ? 'border-[1.5px] border-[var(--brass)] bg-transparent text-[var(--brass-ink)] hover:bg-[var(--brass)] hover:text-[var(--ink)]'
     : 'bg-[var(--ink)] text-[var(--shell)] hover:bg-[#2E2822] hover:-translate-y-px'
 
   return (

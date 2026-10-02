@@ -101,6 +101,15 @@ function parseFrontmatter(data: Record<string, unknown>, fileName: string): Blog
     throw new Error(`Frontmatter field "readMin" must be a positive integer in ${fileName}`)
   }
 
+  const publishedAt = stringDate(data.publishedAt, 'publishedAt', fileName)
+  const updatedAt = data.updatedAt ? stringDate(data.updatedAt, 'updatedAt', fileName) : undefined
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(publishedAt) || (updatedAt && !/^\d{4}-\d{2}-\d{2}$/.test(updatedAt))) {
+    throw new Error(`Dates must use the YYYY-MM-DD format in ${fileName}`)
+  }
+  if (updatedAt && updatedAt < publishedAt) {
+    throw new Error(`Frontmatter field "updatedAt" (${updatedAt}) is earlier than "publishedAt" (${publishedAt}) in ${fileName}`)
+  }
+
   return {
     slug,
     title: requiredString(data.title, 'title', fileName),
@@ -108,8 +117,8 @@ function parseFrontmatter(data: Record<string, unknown>, fileName: string): Blog
     category,
     categoryLabel: requiredString(data.categoryLabel, 'categoryLabel', fileName),
     readMin,
-    publishedAt: stringDate(data.publishedAt, 'publishedAt', fileName),
-    updatedAt: data.updatedAt ? stringDate(data.updatedAt, 'updatedAt', fileName) : undefined,
+    publishedAt,
+    updatedAt,
     answerCapsule: requiredString(data.answerCapsule, 'answerCapsule', fileName),
     seoTitle: optionalString(data.seoTitle, 'seoTitle', fileName),
     seoDescription: optionalString(data.seoDescription, 'seoDescription', fileName),
@@ -118,14 +127,37 @@ function parseFrontmatter(data: Record<string, unknown>, fileName: string): Blog
   }
 }
 
+const normalizeText = (value: string) => value.replace(/[\s*_]+/g, ' ').replace(/[„”"]/g, '"').trim()
+
+/**
+ * The article template already renders the answer capsule ("Pe scurt") and the
+ * FAQ block from frontmatter. Drop a body paragraph or section that repeats them,
+ * so a page never shows the same text twice.
+ */
+function removeTemplateDuplicates(body: string, frontmatter: BlogFrontmatter) {
+  let result = body.trim()
+
+  const [firstBlock, ...rest] = result.split(/\n\s*\n/)
+  if (firstBlock && normalizeText(firstBlock) === normalizeText(frontmatter.answerCapsule)) {
+    result = rest.join('\n\n').trim()
+  }
+
+  if (frontmatter.faqItems?.length) {
+    result = result.replace(/^## [^\n]*întrebările frecvente[^\n]*\n[\s\S]*?(?=^## |(?![\s\S]))/im, '').trim()
+  }
+
+  return result
+}
+
 function readPost(fileName: string): BlogPost {
   const filePath = path.join(blogDirectory, fileName)
   const file = fs.readFileSync(filePath, 'utf8')
   const { data, content } = matter(file)
+  const frontmatter = parseFrontmatter(data, fileName)
 
   return {
-    ...parseFrontmatter(data, fileName),
-    body: content.trim(),
+    ...frontmatter,
+    body: removeTemplateDuplicates(content, frontmatter),
   }
 }
 
@@ -148,6 +180,92 @@ export function getPostBySlug(slug: string): BlogPost | undefined {
   if (!fs.existsSync(filePath)) return undefined
 
   return readPost(fileName)
+}
+
+const STOPWORDS = new Set(
+  'a ai al ale am ar are as asa au ca cat ce cel cea cei cele cand care cu cum da dar de din doar dupa e este fara fi ii il in inainte la le li lui mai mult nu o ori pe pentru sa sau se si sunt te tu un una unei unui va vs tau ta tale ti iti'.split(' '),
+)
+
+/** Every post appears in at least MIN and, while there is a choice, at most MAX "Citește și" lists. */
+const MIN_TIMES_RECOMMENDED = 2
+const MAX_TIMES_RECOMMENDED = 5
+
+function topicTokens(post: BlogPost) {
+  const text = `${post.slug.replace(/-/g, ' ')} ${post.title}`
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+  return new Set(text.split(/[^a-z0-9]+/).filter((token) => token.length > 2 && !STOPWORDS.has(token)))
+}
+
+function linkedPaths(post: BlogPost) {
+  return new Set(Array.from(post.body.matchAll(/\]\((\/(?:servicii|portofoliu|blog)\/[^)#\s]+)\)/g), (match) => match[1]))
+}
+
+/** Words or links that most posts share say little about the topic, so rarer ones weigh more. */
+function rarityWeights(sets: Array<Set<string>>) {
+  const counts = new Map<string, number>()
+  for (const set of sets) for (const value of set) counts.set(value, (counts.get(value) ?? 0) + 1)
+  return (value: string) => Math.log(sets.length / (counts.get(value) ?? sets.length))
+}
+
+/**
+ * "Citește și" for every post at once. Pairs are taken from the closest topics
+ * down (shared title words, then shared links, then category) in three passes:
+ * the first gives every post its MIN_TIMES_RECOMMENDED spots, the second fills
+ * the lists while no post goes past MAX_TIMES_RECOMMENDED, the last fills any
+ * gaps. No guide is left without links from other guides, and none becomes a hub.
+ */
+function relatedPostsIndex(posts: BlogPost[], limit: number) {
+  const tokens = new Map(posts.map((post) => [post.slug, topicTokens(post)]))
+  const links = new Map(posts.map((post) => [post.slug, linkedPaths(post)]))
+  const tokenWeight = rarityWeights([...tokens.values()])
+  const linkWeight = rarityWeights([...links.values()])
+
+  const score = (post: BlogPost, candidate: BlogPost) => {
+    const postLinks = links.get(post.slug)!
+    const candidateLinks = links.get(candidate.slug)!
+    const sharedTokens = [...tokens.get(candidate.slug)!].filter((token) => tokens.get(post.slug)!.has(token))
+    const sharedLinks = [...candidateLinks].filter((link) => postLinks.has(link))
+    const linksEachOther = postLinks.has(`/blog/${candidate.slug}`) || candidateLinks.has(`/blog/${post.slug}`) ? 2 : 0
+    const sameCategory = candidate.category === post.category ? 0.5 : 0
+    return (
+      sharedTokens.reduce((sum, token) => sum + 3 * tokenWeight(token), 0) +
+      sharedLinks.reduce((sum, link) => sum + linkWeight(link), 0) +
+      linksEachOther +
+      sameCategory
+    )
+  }
+
+  type Pair = { post: BlogPost; candidate: BlogPost; score: number }
+  const closestFirst = (a: Pair, b: Pair) =>
+    b.score - a.score ||
+    b.candidate.publishedAt.localeCompare(a.candidate.publishedAt) ||
+    a.candidate.slug.localeCompare(b.candidate.slug) ||
+    a.post.slug.localeCompare(b.post.slug)
+
+  const pairs: Pair[] = posts
+    .flatMap((post) =>
+      posts.filter((candidate) => candidate !== post).map((candidate) => ({ post, candidate, score: score(post, candidate) })),
+    )
+    .sort(closestFirst)
+
+  const related = new Map(posts.map((post) => [post.slug, [] as Pair[]]))
+  const timesRecommended = new Map<string, number>()
+  for (const cap of [MIN_TIMES_RECOMMENDED, MAX_TIMES_RECOMMENDED, Infinity]) {
+    for (const pair of pairs) {
+      const list = related.get(pair.post.slug)!
+      const times = timesRecommended.get(pair.candidate.slug) ?? 0
+      if (list.length >= limit || list.includes(pair) || times >= cap) continue
+      list.push(pair)
+      timesRecommended.set(pair.candidate.slug, times + 1)
+    }
+  }
+  return new Map([...related].map(([slug, list]) => [slug, list.sort(closestFirst).map((pair) => pair.candidate)]))
+}
+
+export function getRelatedPosts(post: BlogPost, limit = 3): BlogPost[] {
+  return relatedPostsIndex(getAllPosts(), limit).get(post.slug) ?? []
 }
 
 export function formatBlogDate(date: string) {

@@ -166,7 +166,7 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
             href={whatsAppUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-semibold text-[var(--brass)] underline underline-offset-4"
+            className="font-semibold text-[var(--brass-ink)] underline underline-offset-4"
           >
             scrie-ne pe WhatsApp.
           </a>
@@ -217,7 +217,7 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
             })}
           </div>
           {errors.projectType ? (
-            <p id="project-type-error" className="mt-2 font-sans text-sm text-[var(--brass)]">
+            <p id="project-type-error" className="mt-2 font-sans text-sm text-[var(--brass-ink)]">
               {errors.projectType}
             </p>
           ) : null}
@@ -241,7 +241,7 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
             disabled={isSubmitting}
           />
           {errors.currentSite ? (
-            <p id="current-site-error" className="mt-2 font-sans text-sm text-[var(--brass)]">
+            <p id="current-site-error" className="mt-2 font-sans text-sm text-[var(--brass-ink)]">
               {errors.currentSite}
             </p>
           ) : null}
@@ -265,7 +265,7 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
             required
           />
           {errors.contact ? (
-            <p id="contact-error" className="mt-2 font-sans text-sm text-[var(--brass)]">
+            <p id="contact-error" className="mt-2 font-sans text-sm text-[var(--brass-ink)]">
               {errors.contact}
             </p>
           ) : null}
@@ -311,7 +311,7 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
                 href={whatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-[var(--brass)] underline underline-offset-4"
+                className="font-semibold text-[var(--brass-ink)] underline underline-offset-4"
               >
                 Scrie-ne direct pe WhatsApp.
               </a>

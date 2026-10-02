@@ -4,12 +4,12 @@
 
 ## Servicii și prețuri
 
-- Site de prezentare: de la 300 EUR, livrat live în 48 de ore de la primirea materialelor de la client
-- Magazin online: de la 900 EUR, livrat în 7 zile
-- Aplicații web și mobile: ofertă personalizată, răspuns în 24 de ore
-- Platforme și SaaS: ofertă personalizată, răspuns în 24 de ore
-- Mentenanță și creștere: de la 90 EUR pe lună, fără contract pe termen lung
-- Automatizări WhatsApp și integrare facturare: de la 250 EUR
+- [Site de prezentare](https://maststudio.ro/servicii/site-de-prezentare): de la 300 EUR, livrat live în 48 de ore de la primirea materialelor de la client
+- [Magazin online](https://maststudio.ro/servicii/magazin-online): de la 900 EUR, livrat în 7 zile
+- [Aplicații web și mobile](https://maststudio.ro/servicii/aplicatii-web): ofertă personalizată, răspuns în 24 de ore
+- [Platforme SaaS](https://maststudio.ro/servicii/platforme-saas): ofertă personalizată, răspuns în 24 de ore
+- [Mentenanță și creștere](https://maststudio.ro/servicii/mentenanta): de la 90 EUR pe lună, fără contract pe termen lung
+- [Automatizări WhatsApp](https://maststudio.ro/servicii/automatizari-whatsapp) și integrare facturare: de la 250 EUR
 
 ## Model de plată
 
@@ -25,7 +25,7 @@ Domeniul și găzduirea, între 50 și 120 EUR pe an, cumpărate pe numele firme
 
 ## Acoperire geografică
 
-Sediu în Timișoara, județul Timiș. Lucrează cu clienți din toată România și internațional. Proiecte livrate în limba română și engleză.
+Sediu în Timișoara (Str. Victor Valcovici 19, 300503), județul Timiș. Lucrează cu clienți din toată România și internațional. Proiecte livrate în limba română și engleză.
 
 ## Identitate
 
@@ -40,7 +40,11 @@ MAST Studio este parte din MAST Consult S.R.L., CUI RO49626121, Timișoara, Rom�
 
 ## Pagini principale
 
-- Servicii și prețuri: https://maststudio.ro/#servicii
+- Servicii și prețuri: https://maststudio.ro/servicii
 - Portofoliu de proiecte: https://maststudio.ro/portofoliu
 - Ghid și articole: https://maststudio.ro/blog
-- Întrebări frecvente: https://maststudio.ro/#faq
+- Freelancer, studio sau agenție: https://maststudio.ro/comparatie
+- Glosar web design: https://maststudio.ro/glosar
+- Despre MAST Studio: https://maststudio.ro/despre
+- Contact: https://maststudio.ro/contact
+- Cerere de ofertă: https://maststudio.ro/cerere-oferta

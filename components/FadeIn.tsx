@@ -22,6 +22,7 @@ export default function FadeIn({
 }: FadeInProps) {
   return (
     <motion.div
+      data-fade
       className={className}
       initial={{ opacity: 0, x, y }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}

@@ -1,10 +1,15 @@
-import Link from 'next/link'
 import type { ReactNode } from 'react'
+import Breadcrumbs from './Breadcrumbs'
 import Footer from './Footer'
+import JsonLd from './JsonLd'
+import SiteHeader from './SiteHeader'
+import { breadcrumbNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 
 type LegalPageProps = {
   eyebrow: string
   title: string
+  description: string
+  path: string
   updated: string
   children: ReactNode
 }
@@ -18,22 +23,28 @@ export function LegalSection({ title, children }: { title: string; children: Rea
   )
 }
 
-export default function LegalPage({ eyebrow, title, updated, children }: LegalPageProps) {
+export default function LegalPage({ eyebrow, title, description, path, updated, children }: LegalPageProps) {
+  const crumbs: BreadcrumbItem[] = [
+    { name: 'Acasă', path: '/' },
+    { name: title, path },
+  ]
+
   return (
-    <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-      <header className="site-container flex items-center justify-between gap-4 border-b border-[var(--hairline)] py-6">
-        <Link href="/" className="type-kicker text-[var(--brass)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]">MAST Studio</Link>
-        <Link href="/" className="text-sm text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]">Înapoi la bord</Link>
-      </header>
-      <article className="site-container flex max-w-4xl flex-col gap-12 py-16 md:py-24">
-        <header className="flex flex-col gap-5">
-          <p className="type-kicker text-[var(--brass)]">{eyebrow}</p>
-          <h1 className="type-h1 text-balance">{title}</h1>
-          <p className="type-body !text-[var(--ink-3)]">Ultima actualizare: {updated}</p>
-        </header>
-        {children}
-      </article>
+    <>
+      <SiteHeader />
+      <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
+        <article className="site-container flex max-w-4xl flex-col gap-12 py-12 md:py-20">
+          <header className="flex flex-col gap-5">
+            <Breadcrumbs items={crumbs} />
+            <p className="type-kicker">{eyebrow}</p>
+            <h1 className="type-h1 text-balance">{title}</h1>
+            <p className="type-body !text-[var(--ink-2)]">Ultima actualizare: {updated}</p>
+          </header>
+          {children}
+        </article>
+      </main>
       <Footer />
-    </main>
+      <JsonLd data={graph(webPageNode({ path, name: title, description, breadcrumb: true }), breadcrumbNode(crumbs))} />
+    </>
   )
 }

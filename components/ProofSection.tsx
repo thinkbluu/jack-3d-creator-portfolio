@@ -27,7 +27,7 @@ export default function ProofSection() {
         <div className="mt-8 flex justify-center">
           <Link
             href="/portofoliu"
-            className="font-sans text-sm font-semibold text-[var(--brass)] underline decoration-transparent underline-offset-4 transition-colors hover:decoration-[var(--brass)]"
+            className="font-sans text-sm font-semibold text-[var(--brass-ink)] underline decoration-transparent underline-offset-4 transition-colors hover:decoration-[var(--brass)]"
           >
             Vezi toate proiectele →
           </Link>

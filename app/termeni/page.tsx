@@ -1,15 +1,16 @@
-import type { Metadata } from 'next'
 import LegalPage, { LegalSection } from '@/components/LegalPage'
+import { pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Termeni și condiții',
-  description: 'Termenii de utilizare ai site-ului maststudio.ro și informații despre serviciile MAST Studio.',
-  alternates: { canonical: '/termeni' },
-}
+const path = '/termeni'
+const title = 'Termeni și condiții'
+const description =
+  'Termenii de utilizare ai site-ului maststudio.ro: cine operează site-ul, cum se fac ofertele și contractele, proprietatea intelectuală și reclamațiile.'
+
+export const metadata = pageMetadata({ title, description, path })
 
 export default function TermsPage() {
   return (
-    <LegalPage eyebrow="Document juridic" title="Termeni și condiții" updated="14 iulie 2026">
+    <LegalPage eyebrow="Document juridic" title={title} description={description} path={path} updated="14 iulie 2026">
       <LegalSection title="1. Operatorul site-ului">
         <p>maststudio.ro este operat de MAST Consult S.R.L., cu sediul social în Str. Victor Valcovici 19, cod 300503, Timișoara, județul Timiș, CUI RO49626121, Registrul Comerțului J2024000723352, cu punct de contact la contact@maststudio.ro.</p>
       </LegalSection>

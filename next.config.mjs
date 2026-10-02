@@ -1,22 +1,36 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       { protocol: 'https', hostname: 'placehold.co' },
     ],
   },
+  async redirects() {
+    return [
+      // Apps and SaaS platforms now have separate service pages.
+      { source: '/servicii/aplicatii-si-platforme', destination: '/servicii/aplicatii-web', permanent: true },
+      // Posts merged into stronger pages on the same topic (one URL per search intent).
+      { source: '/blog/agentie-vs-freelancer-vs-studio', destination: '/comparatie', permanent: true },
+      { source: '/blog/web-design-timisoara', destination: '/blog/cum-alegi-firma-web-design', permanent: true },
+      { source: '/blog/lectii-veterinaria-timisoara', destination: '/portofoliu/veterinaria-timisoara', permanent: true },
+      { source: '/blog/faq-mentenanta-site', destination: '/servicii/mentenanta', permanent: true },
+    ]
+  },
   async headers() {
+    // Google Tag (GA4) is allowed explicitly; it stays in Consent Mode until the
+    // visitor accepts the banner.
     const contentSecurityPolicy = [
       "default-src 'self'",
       "base-uri 'self'",
       "form-action 'self'",
       "frame-ancestors 'none'",
       "object-src 'none'",
-      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com`,
+      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://*.googletagmanager.com`,
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https://placehold.co",
+      "img-src 'self' data: blob: https://placehold.co https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com",
       "font-src 'self' data:",
-      "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com",
+      "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com",
       "upgrade-insecure-requests",
     ].join('; ')
 

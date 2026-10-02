@@ -1,6 +1,7 @@
 import { track } from '@vercel/analytics'
+import { CONSENT_STORAGE_KEY } from './consent'
 
-export const CONSENT_STORAGE_KEY = 'mast-consent'
+export { CONSENT_STORAGE_KEY }
 
 export type ConsentState = 'granted' | 'denied'
 

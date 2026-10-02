@@ -1,21 +1,24 @@
-import type { Metadata } from 'next'
 import Image from 'next/image'
 import LeadForm from '@/components/LeadForm'
 import TrackedLink from '@/components/TrackedLink'
-import { EMAIL, PHONE_DISPLAY, PHONE_HREF } from '@/components/SegmentContext'
 import { getFeaturedProjects } from '@/lib/projects'
+import { pageMetadata } from '@/lib/seo'
+import { EMAIL, PHONE_DISPLAY, PHONE_HREF } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: { absolute: 'Cere ofertă pentru site | MAST Studio' },
+// Landing page for paid campaigns. It duplicates /cerere-oferta on purpose, so it
+// stays out of the index (links are still followed) and out of the sitemap.
+export const metadata = pageMetadata({
+  title: 'Cere ofertă pentru site',
   description:
-    'Primești oferta în aceeași zi. Site de prezentare de la 300 EUR, live în 48 de ore. Avans 50 EUR, restul doar dacă ești mulțumit.',
-  robots: { index: false, follow: false },
-}
+    'Primești oferta în aceeași zi. Site de prezentare de la 300 EUR, live în 48 de ore. Avans 50 EUR, restul doar dacă ești mulțumit de rezultat.',
+  path: '/cere-oferta',
+  noindex: true,
+})
 
 const trustPoints = [
   '48h de la conținut la site live',
   'de la 300 EUR',
-  '50 EUR avans, restul la livrare',
+  '50 EUR avans, restul doar dacă ești mulțumit',
 ]
 
 const reasons = [
