@@ -150,6 +150,15 @@ export function getPostBySlug(slug: string): BlogPost | undefined {
   return readPost(fileName)
 }
 
+/** Same category first (newest first), then newest posts from other categories. */
+export function getRelatedPosts(post: Pick<BlogPost, 'slug' | 'category'>, limit = 3): BlogPost[] {
+  const others = getAllPosts().filter((item) => item.slug !== post.slug)
+  const sameCategory = others.filter((item) => item.category === post.category)
+  const otherCategories = others.filter((item) => item.category !== post.category)
+
+  return [...sameCategory, ...otherCategories].slice(0, limit)
+}
+
 export function formatBlogDate(date: string) {
   return new Intl.DateTimeFormat('ro-RO', {
     day: 'numeric',

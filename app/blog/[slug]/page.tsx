@@ -6,7 +6,7 @@ import BlogCard from '@/components/BlogCard'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import { SegmentProvider } from '@/components/SegmentContext'
-import { formatBlogDate, getAllPosts, getPostBySlug } from '@/lib/blog'
+import { formatBlogDate, getAllPosts, getPostBySlug, getRelatedPosts } from '@/lib/blog'
 
 const siteUrl = 'https://maststudio.ro'
 
@@ -43,7 +43,7 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
   const post = getPostBySlug(slug)
   if (!post) notFound()
 
-  const related = getAllPosts().filter((item) => item.slug !== post.slug).slice(0, 2)
+  const related = getRelatedPosts(post)
   const dateModified = post.updatedAt ?? post.publishedAt
   const articleJsonLd = {
     '@context': 'https://schema.org',
@@ -149,7 +149,7 @@ export default async function BlogArticlePage({ params }: ArticlePageProps) {
         {related.length > 0 ? (
           <section className="mx-auto mt-20 max-w-5xl">
             <h2 className="type-h3">Citește și</h2>
-            <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2">{related.map((item) => <BlogCard key={item.slug} post={item} />)}</div>
+            <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">{related.map((item) => <BlogCard key={item.slug} post={item} headingLevel="h3" />)}</div>
           </section>
         ) : null}
       </article>

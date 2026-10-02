@@ -3,9 +3,12 @@ import { formatBlogDate, type BlogPost } from '@/lib/blog'
 
 type BlogCardProps = {
   post: BlogPost
+  headingLevel?: 'h2' | 'h3'
 }
 
-export default function BlogCard({ post }: BlogCardProps) {
+export default function BlogCard({ post, headingLevel = 'h2' }: BlogCardProps) {
+  const Heading = headingLevel
+
   return (
     <Link
       href={`/blog/${post.slug}`}
@@ -17,7 +20,7 @@ export default function BlogCard({ post }: BlogCardProps) {
         </span>
         <span className="font-sans text-xs text-[var(--ink-3)]">{post.readMin} min citire</span>
       </div>
-      <h2 className="type-h3 text-pretty">{post.title}</h2>
+      <Heading className="type-h3 text-pretty">{post.title}</Heading>
       <p className="type-body line-clamp-3 text-[14px] text-[var(--ink-2)]">{post.excerpt}</p>
       <time dateTime={post.publishedAt} className="mt-auto font-sans text-xs text-[var(--ink-3)]">
         {formatBlogDate(post.publishedAt)}
