@@ -1,22 +1,26 @@
 import { createHash } from 'node:crypto'
 import { escapeHtml, fromAddress, resendClient } from '@/lib/email'
+import type { Locale } from '@/lib/i18n/locale'
 import { clientIp, isRateLimited } from '@/lib/request'
 import { EMAIL } from '@/lib/site'
 
-const projectTypes = [
-  'Site de prezentare',
-  'Magazin online',
-  'Aplicație sau platformă',
-  'Nu știu încă',
-] as const
+const projectTypeLabels = {
+  presentation: 'Site de prezentare',
+  store: 'Magazin online',
+  app: 'Aplicație sau platformă',
+  unsure: 'Nu știu încă',
+} as const
 
-type ProjectType = (typeof projectTypes)[number]
+type ProjectTypeId = keyof typeof projectTypeLabels
+
+const legacyLabels = new Set<string>(Object.values(projectTypeLabels))
 
 type LeadPayload = {
   projectType?: unknown
   currentSite?: unknown
   contact?: unknown
   website?: unknown
+  locale?: unknown
 }
 
 const RATE_LIMIT_WINDOW_MS = 60_000
@@ -26,8 +30,36 @@ function json(body: { ok: true } | { ok: false; error: string }, status = 200) {
   return Response.json(body, { status })
 }
 
-function isValidProjectType(value: unknown): value is ProjectType {
-  return typeof value === 'string' && projectTypes.includes(value as ProjectType)
+function requestLocale(value: unknown): Locale {
+  return value === 'en' ? 'en' : 'ro'
+}
+
+function errors(locale: Locale) {
+  if (locale === 'en') {
+    return {
+      invalid: 'Invalid request.',
+      rate: 'Too many requests. Try again in a minute.',
+      type: 'The project type isn’t valid.',
+      contact: 'The phone number or email address isn’t valid.',
+      site: 'The website address isn’t valid.',
+      send: 'The lead couldn’t be sent.',
+    }
+  }
+  return {
+    invalid: 'Cerere invalidă.',
+    rate: 'Prea multe cereri. Încearcă din nou peste un minut.',
+    type: 'Tipul proiectului nu este valid.',
+    contact: 'Telefonul sau adresa de email nu este validă.',
+    site: 'Adresa site-ului nu este validă.',
+    send: 'Lead-ul nu a putut fi trimis.',
+  }
+}
+
+function romanianProjectType(value: unknown) {
+  if (typeof value !== 'string') return null
+  if (value in projectTypeLabels) return projectTypeLabels[value as ProjectTypeId]
+  if (legacyLabels.has(value)) return value
+  return null
 }
 
 function isValidContact(value: string) {
@@ -65,8 +97,11 @@ export async function POST(request: Request) {
   try {
     payload = (await request.json()) as LeadPayload
   } catch {
-    return json({ ok: false, error: 'Cerere invalidă.' }, 400)
+    return json({ ok: false, error: errors('ro').invalid }, 400)
   }
+
+  const locale = requestLocale(payload.locale)
+  const error = errors(locale)
 
   if (typeof payload.website === 'string' && payload.website.trim()) {
     return json({ ok: true })
@@ -74,29 +109,31 @@ export async function POST(request: Request) {
 
   const ip = clientIp(request)
   if (isRateLimited(`lead:${ip}`, RATE_LIMIT_MAX, RATE_LIMIT_WINDOW_MS)) {
-    return json({ ok: false, error: 'Prea multe cereri. Încearcă din nou peste un minut.' }, 429)
+    return json({ ok: false, error: error.rate }, 429)
   }
 
-  if (!isValidProjectType(payload.projectType)) {
-    return json({ ok: false, error: 'Tipul proiectului nu este valid.' }, 400)
+  const projectType = romanianProjectType(payload.projectType)
+  if (!projectType) {
+    return json({ ok: false, error: error.type }, 400)
   }
 
   const contact = typeof payload.contact === 'string' ? payload.contact.trim() : ''
   const currentSite = typeof payload.currentSite === 'string' ? payload.currentSite.trim() : ''
 
   if (!isValidContact(contact) || contact.length > 320) {
-    return json({ ok: false, error: 'Telefonul sau adresa de email nu este validă.' }, 400)
+    return json({ ok: false, error: error.contact }, 400)
   }
 
   if (currentSite.length > 2048 || !isValidSite(currentSite)) {
-    return json({ ok: false, error: 'Adresa site-ului nu este validă.' }, 400)
+    return json({ ok: false, error: error.site }, 400)
   }
 
   const timeBucket = Math.floor(Date.now() / RATE_LIMIT_WINDOW_MS)
   const timestamp = new Date(timeBucket * RATE_LIMIT_WINDOW_MS).toISOString()
   const utmParameters = getUtmParameters(request.headers.get('referer'))
   const lead = {
-    projectType: payload.projectType,
+    projectType,
+    locale,
     currentSite: currentSite || 'Nu a fost furnizat',
     contact,
     timestamp,
@@ -116,19 +153,21 @@ export async function POST(request: Request) {
   const utmHtml = utmParameters.length
     ? `<ul>${utmParameters.map(([key, value]) => `<li><strong>${escapeHtml(key)}:</strong> ${escapeHtml(value)}</li>`).join('')}</ul>`
     : '<p>Nu sunt disponibili</p>'
+  const languageLine = locale === 'en' ? 'Limbă formular: engleză' : ''
   const idempotencyHash = createHash('sha256')
-    .update(`${payload.projectType}\n${currentSite}\n${contact}\n${JSON.stringify(utmParameters)}\n${timeBucket}`)
+    .update(`${projectType}\n${currentSite}\n${contact}\n${JSON.stringify(utmParameters)}\n${timeBucket}`)
     .digest('hex')
     .slice(0, 32)
 
   try {
-    const { error } = await resend.emails.send(
+    const { error: sendError } = await resend.emails.send(
       {
         from: fromAddress('lead'),
         to: [EMAIL],
-        subject: `Lead nou: ${payload.projectType}`,
+        subject: `Lead nou: ${projectType}`,
         text: [
-          `Tip proiect: ${payload.projectType}`,
+          ...(languageLine ? [languageLine, ''] : []),
+          `Tip proiect: ${projectType}`,
           `Site actual: ${currentSite || 'Nu a fost furnizat'}`,
           `Contact: ${contact}`,
           `Timestamp: ${timestamp}`,
@@ -137,8 +176,9 @@ export async function POST(request: Request) {
           utmText,
         ].join('\n'),
         html: `
-          <h1>Lead nou: ${escapeHtml(payload.projectType)}</h1>
-          <p><strong>Tip proiect:</strong> ${escapeHtml(payload.projectType)}</p>
+          ${languageLine ? `<p><strong>${escapeHtml(languageLine)}</strong></p>` : ''}
+          <h1>Lead nou: ${escapeHtml(projectType)}</h1>
+          <p><strong>Tip proiect:</strong> ${escapeHtml(projectType)}</p>
           <p><strong>Site actual:</strong> ${escapeHtml(currentSite || 'Nu a fost furnizat')}</p>
           <p><strong>Contact:</strong> ${escapeHtml(contact)}</p>
           <p><strong>Timestamp:</strong> ${escapeHtml(timestamp)}</p>
@@ -149,14 +189,14 @@ export async function POST(request: Request) {
       { idempotencyKey: `lead/${idempotencyHash}` },
     )
 
-    if (error) {
-      console.error('[lead] Resend nu a putut trimite emailul:', error.message)
-      return json({ ok: false, error: 'Lead-ul nu a putut fi trimis.' }, 502)
+    if (sendError) {
+      console.error('[lead] Resend nu a putut trimite emailul:', sendError.message)
+      return json({ ok: false, error: error.send }, 502)
     }
 
     return json({ ok: true })
-  } catch (error) {
-    console.error('[lead] Eroare neașteptată la trimitere:', error)
-    return json({ ok: false, error: 'Lead-ul nu a putut fi trimis.' }, 502)
+  } catch (sendFailure) {
+    console.error('[lead] Eroare neașteptată la trimitere:', sendFailure)
+    return json({ ok: false, error: error.send }, 502)
   }
 }

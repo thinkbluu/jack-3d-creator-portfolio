@@ -1,6 +1,8 @@
 'use client'
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import type { Locale } from '@/lib/i18n/locale'
+import { ui } from '@/lib/i18n/ui'
 import { EMAIL, EMAIL_HREF, PHONE_DISPLAY, PHONE_HREF, WHATSAPP_NUMBER } from '@/lib/site'
 
 // Re-exported for the client components that already import them from here.
@@ -14,21 +16,13 @@ function isSegment(v: unknown): v is Segment {
   return VALID_SEGMENTS.includes(v as Segment)
 }
 
-const messages: Record<Segment | 'general', string> = {
-  salon: 'Salut! Am un salon și vreau un site care să aducă mai multe programări.',
-  servicii: 'Salut! Ofer servicii și vreau un site care să transforme vizitatorii în clienți.',
-  platforma: 'Salut! Am o idee de platformă și vreau să discutăm cum o construim.',
-  ecommerce: 'Salut! Vând produse și vreau un magazin online. Ce presupune și cât costă?',
-  general: 'Salut! Vreau să discutăm despre un site pentru afacerea mea.',
-}
-
 const SegmentContext = createContext<{
   segment: Segment | null
   setSegment: (segment: Segment | null) => void
 } | null>(null)
 
-export function getWaUrl(segment: Segment | null, overrideMessage?: string) {
-  const message = overrideMessage ?? messages[segment ?? 'general']
+export function getWaUrl(segment: Segment | null, overrideMessage?: string, locale: Locale = 'ro') {
+  const message = overrideMessage ?? ui[locale].whatsapp[segment ?? 'general']
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 }
 

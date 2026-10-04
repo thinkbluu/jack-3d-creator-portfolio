@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Project } from '@/lib/projects'
+import { useHref, useUi } from '@/lib/i18n/context'
 
 type ProjectCardProps = {
   project: Project
@@ -15,15 +16,17 @@ type ProjectCardProps = {
 
 export default function ProjectCard({ project, headingLevel = 'h2', priority = false }: ProjectCardProps) {
   const [imageFailed, setImageFailed] = useState(false)
+  const href = useHref()
+  const copy = useUi().projects
   const Heading = headingLevel
   const alt =
     project.type === 'concept'
-      ? `Captură din conceptul de design ${project.name}`
-      : `Captură din site-ul ${project.name}, realizat de MAST Studio`
+      ? `${copy.altConcept} ${project.name}`
+      : `${copy.altClient} ${project.name}${copy.altClientBy}`
 
   return (
     <Link
-      href={`/portofoliu/${project.slug}`}
+      href={href(`/portofoliu/${project.slug}`)}
       className="porthole group flex flex-col overflow-hidden p-0 transition-[transform,border-color] duration-[350ms] hover:-translate-y-[3px] hover:border-[var(--brass)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
     >
       <span className="relative block w-full overflow-hidden" style={{ aspectRatio: '16 / 10' }}>
@@ -58,12 +61,12 @@ export default function ProjectCard({ project, headingLevel = 'h2', priority = f
             </span>
             {project.status === 'in-lucru' ? (
               <span className="kicker rounded-full border border-[var(--hairline)] px-3 py-1 text-[10px] text-[var(--ink-2)]">
-                În lucru
+                {copy.inProgress}
               </span>
             ) : null}
             {project.type === 'concept' ? (
               <span className="kicker rounded-full border border-[var(--hairline)] px-3 py-1 text-[10px] text-[var(--ink-2)]">
-                Concept
+                {copy.concept}
               </span>
             ) : null}
           </span>

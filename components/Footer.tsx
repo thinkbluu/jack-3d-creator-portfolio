@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import AnpcSalBadge from '@/components/AnpcSalBadge'
+import { useHref, useLocale, useUi } from '@/lib/i18n/context'
 import { getAllServicePages } from '@/lib/services'
 import {
   EMAIL,
@@ -16,25 +19,6 @@ import {
 
 const linkClass =
   'transition-colors hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]'
-
-const guideLinks = [
-  { href: '/blog/cat-costa-un-site-in-romania', label: 'Cât costă un site în România' },
-  { href: '/blog/cat-dureaza-constructia-unui-site', label: 'Cât durează un site' },
-  { href: '/blog/site-prezentare-sau-magazin-online', label: 'Site de prezentare sau magazin online' },
-  { href: '/blog/cum-alegi-firma-web-design', label: 'Cum alegi o firmă de web design' },
-  { href: '/blog', label: 'Toate ghidurile' },
-]
-
-const studioLinks = [
-  { href: '/despre', label: 'Despre MAST Studio' },
-  { href: '/portofoliu', label: 'Portofoliu' },
-  { href: '/comparatie', label: 'Freelancer, studio sau agenție' },
-  { href: '/glosar', label: 'Glosar web design' },
-  { href: '/site-gratuit', label: 'Site gratuit în fiecare lună' },
-  { href: '/cariere', label: 'Cariere' },
-  { href: '/contact', label: 'Contact' },
-  { href: '/cerere-oferta', label: 'Cerere ofertă' },
-]
 
 function FooterColumn({ title, links }: { title: string; links: Array<{ href: string; label: string }> }) {
   return (
@@ -54,7 +38,13 @@ function FooterColumn({ title, links }: { title: string; links: Array<{ href: st
 }
 
 export default function Footer() {
-  const serviceLinks = getAllServicePages().map((service) => ({ href: `/servicii/${service.slug}`, label: service.name }))
+  const locale = useLocale()
+  const href = useHref()
+  const { footer, whatsapp } = useUi()
+  const serviceLinks = getAllServicePages(locale).map((service) => ({ href: href(`/servicii/${service.slug}`), label: service.name }))
+  // Guides stay on the Romanian URLs: the articles themselves are not translated.
+  const guideLinks = footer.guideLinks.map((link) => ({ ...link, href: link.href }))
+  const studioLinks = footer.studioLinks.map((link) => ({ ...link, href: href(link.href) }))
   const year = new Date().getFullYear()
 
   return (
@@ -70,22 +60,22 @@ export default function Footer() {
               </span>
             </p>
             <p className="max-w-xs leading-relaxed">
-              Studio de web design din Timișoara. Site-uri de prezentare de la 300 EUR, live în 48 de ore, magazine online și aplicații pentru afaceri din toată România.
+              {footer.blurb}
             </p>
             <address className="flex flex-col items-start not-italic leading-relaxed">
               <span className="text-[var(--ink)]">{SITE_NAME}</span>
-              <span>Timișoara · lucrăm la distanță în toată România</span>
+              <span>{footer.location}</span>
               <a href={PHONE_HREF} className={linkClass}>
                 {PHONE_DISPLAY}
               </a>
-              <a href={whatsappUrl('Salut! Vreau să discutăm despre un site pentru afacerea mea.')} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                WhatsApp: {PHONE_DISPLAY}
+              <a href={whatsappUrl(whatsapp.general)} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                {footer.whatsapp}: {PHONE_DISPLAY}
               </a>
               <a href={EMAIL_HREF} className={linkClass}>
                 {EMAIL}
               </a>
             </address>
-            <ul className="flex gap-5" aria-label="MAST Studio pe rețelele sociale">
+            <ul className="flex gap-5" aria-label={footer.social}>
               {SOCIAL_LINKS.map((link) => (
                 <li key={link.url}>
                   <a href={link.url} target="_blank" rel="noopener noreferrer" className={`${linkClass} font-semibold text-[var(--ink)]`}>
@@ -95,28 +85,28 @@ export default function Footer() {
               ))}
             </ul>
           </div>
-          <FooterColumn title="Servicii" links={serviceLinks} />
-          <FooterColumn title="Ghiduri" links={guideLinks} />
-          <FooterColumn title="Studio" links={studioLinks} />
+          <FooterColumn title={footer.services} links={serviceLinks} />
+          <FooterColumn title={footer.guides} links={guideLinks} />
+          <FooterColumn title={footer.studio} links={studioLinks} />
         </div>
 
         <div className="flex flex-col gap-4 border-t border-[var(--hairline)] pt-6 lg:flex-row lg:items-center lg:justify-between">
           <p>
-            © {year} {SITE_NAME} · {LEGAL_NAME} · CUI {VAT_ID} · Reg. Com. {TRADE_REGISTER_NUMBER}
+            © {year} {SITE_NAME} · {LEGAL_NAME} · CUI {VAT_ID} · {footer.register} {TRADE_REGISTER_NUMBER}
           </p>
-          <nav aria-label="Linkuri juridice" className="shrink-0">
+          <nav aria-label={footer.legal} className="shrink-0">
             <ul className="flex flex-wrap gap-x-5">
               <li>
-                <Link href="/confidentialitate" className={linkClass}>Confidențialitate</Link>
+                <Link href={href('/confidentialitate')} className={linkClass}>{footer.privacy}</Link>
               </li>
               <li>
-                <Link href="/cookies" className={linkClass}>Cookies</Link>
+                <Link href={href('/cookies')} className={linkClass}>{footer.cookies}</Link>
               </li>
               <li>
-                <Link href="/termeni" className={linkClass}>Termeni</Link>
+                <Link href={href('/termeni')} className={linkClass}>{footer.terms}</Link>
               </li>
               <li>
-                <Link href="/site-gratuit/regulament" className={linkClass}>Regulament concurs</Link>
+                <Link href={href('/site-gratuit/regulament')} className={linkClass}>{footer.rules}</Link>
               </li>
             </ul>
           </nav>

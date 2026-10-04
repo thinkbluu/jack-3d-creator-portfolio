@@ -1,3 +1,6 @@
+import type { Locale } from './i18n/locale'
+import { glossaryCategoryLabelsEn, glossaryTextEn } from './i18n/content/glossary.en'
+
 export type GlossaryCategory = 'tehnic' | 'design' | 'marketing' | 'legal'
 
 export type GlossaryTerm = {
@@ -228,10 +231,21 @@ export const glossaryTerms: GlossaryTerm[] = [
   },
 ]
 
-export function getAllGlossaryTerms() {
-  return glossaryTerms
+function localizeTerm(term: GlossaryTerm, locale: Locale): GlossaryTerm {
+  if (locale === 'ro') return term
+  const text = glossaryTextEn[term.slug]
+  return text ? { ...term, ...text } : term
 }
 
-export function getGlossaryTermBySlug(slug: string) {
-  return glossaryTerms.find((item) => item.slug === slug)
+export function getGlossaryCategoryLabels(locale: Locale = 'ro') {
+  return locale === 'en' ? glossaryCategoryLabelsEn : glossaryCategoryLabels
+}
+
+export function getAllGlossaryTerms(locale: Locale = 'ro') {
+  return glossaryTerms.map((term) => localizeTerm(term, locale))
+}
+
+export function getGlossaryTermBySlug(slug: string, locale: Locale = 'ro') {
+  const term = glossaryTerms.find((item) => item.slug === slug)
+  return term ? localizeTerm(term, locale) : undefined
 }

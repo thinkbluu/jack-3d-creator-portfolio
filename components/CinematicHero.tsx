@@ -12,48 +12,19 @@ import {
   type MotionValue,
 } from 'framer-motion'
 import { ArrowDown, Building2, Check, Layers3, Menu, Monitor, ShoppingCart, X } from 'lucide-react'
+import LanguageSwitcher from './LanguageSwitcher'
 import ContactButton from './ContactButton'
 import ScrubStage from './ScrubStage'
+import { useHref, useLocale, useUi } from '@/lib/i18n/context'
 import { getWaUrl, useSegment, type Segment } from './SegmentContext'
-
-const navLinks: Array<{ href: string; label: string }> = [
-  { href: '#dovada', label: 'Dovada' },
-  { href: '#servicii', label: 'Servicii' },
-  { href: '/portofoliu', label: 'Portofoliu' },
-  { href: '/blog', label: 'Ghid' },
-  { href: '/site-gratuit', label: 'Site gratuit' },
-  { href: '/cariere', label: 'Cariere' },
-  { href: '#process', label: 'Cum lucrăm' },
-  { href: '#faq', label: 'Întrebări' },
-  { href: '#contact', label: 'Contact' },
-]
 
 const clips = [
   { src: '/images/hero-01-exit.mp4', poster: '/images/hero-poster.webp' },
   { src: '/images/hero-02-arrival.mp4', poster: '/images/harbor-final.webp' },
 ]
 
-const options: Array<{ id: Segment; eyebrow: string; title: string; icon: typeof Monitor }> = [
-  { id: 'salon', eyebrow: 'Site web', title: 'Vreau site de prezentare', icon: Monitor },
-  { id: 'servicii', eyebrow: 'Cereri', title: 'Ofer servicii', icon: Building2 },
-  { id: 'ecommerce', eyebrow: 'Vânzări', title: 'Vând produse', icon: ShoppingCart },
-  { id: 'platforma', eyebrow: 'Produs digital', title: 'Construiesc o platformă', icon: Layers3 },
-]
-
-const auditWaUrl = getWaUrl(null, 'Salut! Vreau un audit gratuit pentru site-ul meu: ')
-
-const subheads: Record<Segment | 'default', string> = {
-  default: 'Plătești 50 EUR ca să rezervăm locul. Restul, doar dacă îți place rezultatul.',
-  salon: 'Rezervări online non-stop și mai puține programări ratate. Plătești 50 EUR acum, restul doar dacă îți place.',
-  servicii: 'Cereri de ofertă, nu doar vizite. Plătești 50 EUR acum, restul doar dacă îți place.',
-  ecommerce: 'Vinzi și noaptea, cu plăți și facturi automate. Plătești 50 EUR acum, restul doar dacă îți place.',
-  platforma: 'De la idee la primii utilizatori. Discutăm întâi, apoi facem oferta.',
-}
-
-const stats: Array<{ value: string; label: string }> = [
-  { value: '48h', label: 'de la conținut la site live' },
-  { value: '300€', label: 'site de prezentare de la' },
-]
+const optionIcons = { salon: Monitor, servicii: Building2, ecommerce: ShoppingCart, platforma: Layers3 } as const
+type HeroOption = { id: Segment; eyebrow: string; title: string; icon: typeof Monitor }
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
@@ -149,16 +120,18 @@ function SkipIntroButton({
   opacity,
   pointerEvents,
   onSkip,
+  label,
 }: {
   opacity: MotionValue<number>
   pointerEvents: MotionValue<'auto' | 'none'>
   onSkip: () => void
+  label: string
 }) {
   return (
     <motion.button
       type="button"
       onClick={onSkip}
-      aria-label="Sari peste intro"
+      aria-label={label}
       className="absolute z-20 flex items-center gap-1.5 rounded-[var(--radius-pill)] border border-[var(--glass-edge)] text-[12px] font-semibold uppercase tracking-[0.12em] text-[var(--ink-2)] transition-[background-color,color,transform] duration-200 ease-out hover:-translate-y-px hover:bg-[rgba(250,247,242,0.95)] hover:text-[var(--ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
       style={{
         bottom: 'clamp(24px, 4vh, 40px)',
@@ -170,7 +143,7 @@ function SkipIntroButton({
         pointerEvents,
       }}
     >
-      Sari peste intro
+      {label}
       <ArrowDown aria-hidden="true" size={13} />
     </motion.button>
   )
@@ -182,7 +155,7 @@ function MirrorCard({
   onSelect,
   compact = false,
 }: {
-  option: (typeof options)[number]
+  option: HeroOption
   selected: boolean
   onSelect: () => void
   compact?: boolean
@@ -210,6 +183,29 @@ function MirrorCard({
 export default function CinematicHero() {
   const sectionRef = useRef<HTMLElement | null>(null)
   const { segment, setSegment } = useSegment()
+  const locale = useLocale()
+  const href = useHref()
+  const { hero, nav } = useUi()
+  const options: Array<{ id: Segment; eyebrow: string; title: string; icon: typeof Monitor }> = (Object.keys(optionIcons) as Segment[]).map((id) => ({
+    id,
+    eyebrow: hero.options[id].eyebrow,
+    title: hero.options[id].title,
+    icon: optionIcons[id],
+  }))
+  const subheads = hero.subheads
+  const stats = hero.stats
+  const auditWaUrl = getWaUrl(null, hero.auditMessage, locale)
+  const navLinks = [
+    { href: '#dovada', label: hero.proof },
+    { href: '#servicii', label: hero.services },
+    { href: href('/portofoliu'), label: nav.portfolio },
+    { href: href('/blog'), label: nav.guide },
+    { href: href('/site-gratuit'), label: nav.freeSite },
+    { href: href('/cariere'), label: nav.careers },
+    { href: '#process', label: hero.how },
+    { href: '#faq', label: hero.questions },
+    { href: '#contact', label: nav.contact },
+  ]
   const [isDesktop, setIsDesktop] = useState(false)
   const [cinematic, setCinematic] = useState(false)
   const [depth, setDepth] = useState(false)
@@ -450,7 +446,7 @@ export default function CinematicHero() {
   // the nav markup — including the hamburger overlay wiring — is written once.
   const header = (
     <header className="absolute inset-x-0 top-0 z-30">
-      <nav aria-label="Navigație principală" className="site-container flex h-20 items-center justify-between">
+      <nav aria-label={nav.label} className="site-container flex h-20 items-center justify-between">
         <a href="#home" className="flex items-center gap-2 text-[var(--ink)]">
           <span aria-hidden="true" className="size-[22px] bg-[var(--brass)]" style={{ mask: "url('/icons/mast-mark.svg') center / contain no-repeat", WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat" }} />
           <span className="flex items-baseline gap-2">
@@ -459,18 +455,19 @@ export default function CinematicHero() {
           </span>
         </a>
         <div className="hidden items-center gap-5 whitespace-nowrap text-xs uppercase tracking-[0.16em] lg:flex lg:gap-8">
-          <a href="#dovada" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Dovada</a>
-          <a href="#servicii" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Servicii</a>
-          <Link href="/portofoliu" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Portofoliu</Link>
-          <Link href="/blog" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Ghid</Link>
-          <Link href="/site-gratuit" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">Site gratuit</Link>
-          <Link href="/cariere" className="hidden text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] xl:inline-flex">Cariere</Link>
-          <ContactButton label="Vorbește cu noi" />
+          <a href="#dovada" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">{hero.proof}</a>
+          <a href="#servicii" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">{hero.services}</a>
+          <Link href={href('/portofoliu')} className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">{nav.portfolio}</Link>
+          <Link href={href('/blog')} className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">{nav.guide}</Link>
+          <Link href={href('/site-gratuit')} className="hidden text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] xl:inline-flex">{nav.freeSite}</Link>
+          <Link href={href('/cariere')} className="hidden text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] 2xl:inline-flex">{nav.careers}</Link>
+          <LanguageSwitcher />
+          <ContactButton label={nav.talk} />
         </div>
         <button
           ref={menuTriggerRef}
           type="button"
-          aria-label="Deschide meniul"
+          aria-label={nav.openMenu}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
           onClick={() => setMenuOpen(true)}
@@ -488,7 +485,7 @@ export default function CinematicHero() {
       ref={menuRef}
       role="dialog"
       aria-modal="true"
-      aria-label="Meniu mobil"
+      aria-label={nav.mobileMenu}
       className="fixed inset-0 z-50 flex flex-col bg-[var(--shell)] lg:hidden"
     >
       <div className="site-container flex h-20 items-center justify-between">
@@ -502,14 +499,14 @@ export default function CinematicHero() {
         <button
           ref={menuCloseRef}
           type="button"
-          aria-label="Închide meniul"
+          aria-label={nav.closeMenu}
           onClick={closeMenu}
           className="flex size-11 items-center justify-center text-[var(--ink)]"
         >
           <X size={24} aria-hidden="true" />
         </button>
       </div>
-      <nav aria-label="Linkuri principale" className="flex flex-1 flex-col px-5">
+      <nav aria-label={nav.mobileLinks} className="flex flex-1 flex-col px-5">
         {navLinks.map((link) => (
           <a
             key={link.href}
@@ -521,8 +518,11 @@ export default function CinematicHero() {
           </a>
         ))}
       </nav>
-      <div className="mast-cta-full px-5 pb-8">
-        <ContactButton label="Vorbește cu noi" />
+      <div className="flex flex-col items-start gap-4 px-5 pb-8">
+        <LanguageSwitcher />
+        <div className="mast-cta-full w-full">
+          <ContactButton label={nav.talk} />
+        </div>
       </div>
     </div>
   )
@@ -637,11 +637,11 @@ export default function CinematicHero() {
           {/* One H1 holds the eyebrow and the headline, so the heading names the
               service and the city. Same boxes and motion as before, now spans. */}
           <h1>
-            <motion.span {...enter(0)} className="kicker block">Studio de web design · Timișoara</motion.span>{' '}
+            <motion.span {...enter(0)} className="kicker block">{hero.kicker}</motion.span>{' '}
             <motion.span className="block" style={depth ? { x: headingX, y: headingY } : undefined}>
               <motion.span {...enter(1)} className="type-display mt-4 block">
-                Site-ul tău,{' '}<br />
-                <span className="text-[var(--brass)]">live în 48 de ore.</span>
+                {hero.titleBefore}{' '}<br />
+                <span className="text-[var(--brass)]">{hero.titleAccent}</span>
               </motion.span>
             </motion.span>
           </h1>
@@ -656,7 +656,7 @@ export default function CinematicHero() {
           <motion.div
             {...enter(3)}
             role="group"
-            aria-label="Alege tipul afacerii"
+            aria-label={hero.choose}
             className="mt-5 grid"
             style={{ gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }}
           >
@@ -672,7 +672,7 @@ export default function CinematicHero() {
           </motion.div>
 
           <motion.div {...enter(4)} className="mt-5 flex flex-col items-start gap-3 sm:flex-row sm:items-center">
-            <ContactButton hero label="Cere ofertă pe WhatsApp" />
+            <ContactButton hero label={hero.quote} />
           </motion.div>
 
           <motion.a
@@ -682,7 +682,7 @@ export default function CinematicHero() {
             rel="noopener noreferrer"
             className="mt-3 inline-block text-[13.5px] leading-relaxed text-[var(--ink-2)] underline-offset-4 hover:underline"
           >
-            sau trimite-ne site-ul actual și îți spunem gratuit ce nu merge →
+            {hero.audit}
           </motion.a>
 
           <motion.div style={{ marginTop: 'auto', ...(depth ? { x: statsX, y: statsY } : null) }}>
@@ -700,12 +700,12 @@ export default function CinematicHero() {
         {cinematic && (
           <motion.div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-8 z-10 flex flex-col items-center gap-3" style={{ opacity: cueOpacity }}>
             <span className="scrub-cue-line h-10 w-px" />
-            <span className="kicker">Descoperă</span>
+            <span className="kicker">{hero.discover}</span>
           </motion.div>
         )}
 
         {cinematic && !introSkipped && (
-          <SkipIntroButton opacity={skipOpacity} pointerEvents={skipPointerEvents} onSkip={handleSkip} />
+          <SkipIntroButton opacity={skipOpacity} pointerEvents={skipPointerEvents} onSkip={handleSkip} label={hero.skip} />
         )}
       </div>
       </div>
@@ -720,7 +720,6 @@ export default function CinematicHero() {
           <picture>
             <source media="(max-width: 767px)" srcSet="/images/harbor-final-mobile.webp" />
             <source media="(max-width: 1023px)" srcSet="/images/harbor-final-tablet.webp" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/harbor-final.webp"
               width={1920}
@@ -739,7 +738,7 @@ export default function CinematicHero() {
         <div className="flex flex-1 flex-col" style={{ padding: '28px 20px 32px' }}>
           {/* Server-rendered layout, so this is the H1 search engines see. */}
           <h1>
-            <span className="kicker block" style={{ fontSize: '10.5px', letterSpacing: '.18em' }}>Studio de web design · Timișoara</span>{' '}
+            <span className="kicker block" style={{ fontSize: '10.5px', letterSpacing: '.18em' }}>{hero.kicker}</span>{' '}
             <span
               className="mt-4 block text-balance"
               style={{
@@ -751,8 +750,8 @@ export default function CinematicHero() {
                 color: 'var(--ink)',
               }}
             >
-              Site-ul tău,{' '}<br />
-              <span className="text-[var(--brass)]">live în 48 de ore.</span>
+              {hero.titleBefore}{' '}<br />
+              <span className="text-[var(--brass)]">{hero.titleAccent}</span>
             </span>
           </h1>
 
@@ -763,7 +762,7 @@ export default function CinematicHero() {
             {subheads[segment ?? 'default']}
           </p>
 
-          <div role="group" aria-label="Alege tipul afacerii" className="mt-5 grid grid-cols-2 gap-2">
+          <div role="group" aria-label={hero.choose} className="mt-5 grid grid-cols-2 gap-2">
             {options.map((option) => (
               <MirrorCard
                 key={option.id}
@@ -776,7 +775,7 @@ export default function CinematicHero() {
           </div>
 
           <div className="mast-cta-full mt-5">
-            <ContactButton hero label="Cere ofertă pe WhatsApp" />
+            <ContactButton hero label={hero.quote} />
           </div>
           <a
             href={auditWaUrl}
@@ -784,7 +783,7 @@ export default function CinematicHero() {
             rel="noopener noreferrer"
             className="mt-3 block text-center text-[13.5px] leading-relaxed text-[var(--ink-2)] underline-offset-4 hover:underline"
           >
-            sau trimite-ne site-ul actual și îți spunem gratuit ce nu merge →
+            {hero.audit}
           </a>
 
           <dl className="mt-6 grid grid-cols-2">

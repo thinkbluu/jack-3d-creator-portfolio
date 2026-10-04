@@ -3,6 +3,8 @@
 import { FormEvent, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
 import { trackConversion } from '@/lib/analytics'
+import { useLocale, useUi } from '@/lib/i18n/context'
+import { canonicalServiceSlug } from '@/lib/i18n/paths'
 import { WHATSAPP_NUMBER } from './SegmentContext'
 
 type LeadFormProps = {
@@ -10,7 +12,7 @@ type LeadFormProps = {
   serviceSlug?: string
 }
 
-type ProjectType = 'Site de prezentare' | 'Magazin online' | 'Aplicație sau platformă' | 'Nu știu încă'
+type ProjectTypeId = 'presentation' | 'store' | 'app' | 'unsure'
 
 type FormErrors = {
   projectType?: string
@@ -18,17 +20,19 @@ type FormErrors = {
   currentSite?: string
 }
 
-const projectTypes: ProjectType[] = [
-  'Site de prezentare',
-  'Magazin online',
-  'Aplicație sau platformă',
-  'Nu știu încă',
-]
+const serviceProjectType: Record<string, ProjectTypeId> = {
+  'site-de-prezentare': 'presentation',
+  'magazin-online': 'store',
+  'aplicatii-web': 'app',
+  'platforme-saas': 'app',
+  'aplicatii-si-platforme': 'app',
+}
 
-const serviceProjectType: Record<string, ProjectType> = {
-  'site-de-prezentare': 'Site de prezentare',
-  'magazin-online': 'Magazin online',
-  'aplicatii-si-platforme': 'Aplicație sau platformă',
+function projectTypeForSlug(slug?: string): ProjectTypeId | '' {
+  if (!slug) return ''
+  if (serviceProjectType[slug]) return serviceProjectType[slug]
+  const canonical = canonicalServiceSlug(slug)
+  return canonical && serviceProjectType[canonical] ? serviceProjectType[canonical] : ''
 }
 
 function hasValidContact(value: string) {
@@ -47,43 +51,47 @@ function hasValidSite(value: string) {
   }
 }
 
-function buildWhatsAppUrl(projectType: ProjectType, currentSite: string, contact: string) {
-  const lines = [`Salut! Vreau ${projectType.toLowerCase()}.`]
-  if (currentSite.trim()) lines.push(`Site actual: ${currentSite.trim()}.`)
-  lines.push(`Mă puteți contacta la: ${contact.trim()}.`)
+function fill(template: string, values: Record<string, string>) {
+  return Object.entries(values).reduce((text, [key, value]) => text.split(`{${key}}`).join(value), template)
+}
 
+function buildWhatsAppUrl(intro: string, siteLine: string | null, contactLine: string) {
+  const lines = [intro]
+  if (siteLine) lines.push(siteLine)
+  lines.push(contactLine)
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(lines.join('\n'))}`
 }
 
 export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormProps) {
-  const [projectType, setProjectType] = useState<ProjectType | ''>(
-    serviceSlug ? (serviceProjectType[serviceSlug] ?? '') : '',
-  )
+  const locale = useLocale()
+  const lead = useUi().lead
+  const [projectType, setProjectType] = useState<ProjectTypeId | ''>(projectTypeForSlug(serviceSlug))
   const [currentSite, setCurrentSite] = useState('')
   const [contact, setContact] = useState('')
   const [website, setWebsite] = useState('')
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccessful, setIsSuccessful] = useState(false)
-  const [submitError, setSubmitError] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
+  const typeLabel = lead.types.find((option) => option.id === projectType)?.label ?? ''
   const whatsAppUrl = projectType
-    ? buildWhatsAppUrl(projectType, currentSite, contact)
+    ? buildWhatsAppUrl(
+        fill(lead.waIntro, { type: typeLabel }),
+        currentSite.trim() ? fill(lead.waSite, { site: currentSite.trim() }) : null,
+        fill(lead.waContact, { contact: contact.trim() }),
+      )
     : `https://wa.me/${WHATSAPP_NUMBER}`
 
   function validate() {
     const nextErrors: FormErrors = {}
 
-    if (!projectType) nextErrors.projectType = 'Alege tipul proiectului.'
-    if (!hasValidContact(contact.trim())) {
-      nextErrors.contact = 'Introdu un telefon cu minimum 9 cifre sau o adresă de email.'
-    }
-    if (!hasValidSite(currentSite)) {
-      nextErrors.currentSite = 'Introdu o adresă validă, de exemplu firmata.ro.'
-    }
+    if (!projectType) nextErrors.projectType = lead.chooseType
+    if (!hasValidContact(contact.trim())) nextErrors.contact = lead.badContact
+    if (!hasValidSite(currentSite)) nextErrors.currentSite = lead.badSite
 
     setErrors(nextErrors)
-    setSubmitError(false)
+    setSubmitError('')
     return Object.keys(nextErrors).length === 0
   }
 
@@ -93,6 +101,17 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
       currentSite: currentSite.trim(),
       contact: contact.trim(),
       website,
+      locale,
+    }
+  }
+
+  async function errorFrom(response: Response) {
+    try {
+      const result = (await response.json()) as { ok?: boolean; error?: string }
+      if (!response.ok || !result.ok) return result.error || lead.error
+      return ''
+    } catch {
+      return lead.error
     }
   }
 
@@ -115,12 +134,12 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
       keepalive: true,
     })
       .then(async (response) => {
-        const result = (await response.json()) as { ok?: boolean }
-        if (!response.ok || !result.ok) setSubmitError(true)
+        const message = await errorFrom(response)
+        if (message) setSubmitError(message)
       })
-      .catch(() => setSubmitError(true))
+      .catch(() => setSubmitError(lead.error))
       .finally(() => setIsSubmitting(false))
-    window.open(buildWhatsAppUrl(projectType, currentSite, contact), '_blank', 'noopener,noreferrer')
+    window.open(whatsAppUrl, '_blank', 'noopener,noreferrer')
   }
 
   async function submitForCallback(event: FormEvent<HTMLFormElement>) {
@@ -139,36 +158,36 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload()),
       })
-      const result = (await response.json()) as { ok?: boolean }
-
-      if (!response.ok || !result.ok) throw new Error('Lead submission failed')
+      const message = await errorFrom(response)
+      if (message) {
+        setSubmitError(message)
+        return
+      }
       setIsSuccessful(true)
     } catch {
-      setSubmitError(true)
+      setSubmitError(lead.error)
     } finally {
       setIsSubmitting(false)
     }
   }
 
   if (isSuccessful) {
+    const [successTitle, ...successRest] = lead.success.split(/(?<=\.)\s+/)
     return (
       <div
         className={variant === 'page' ? 'porthole border-[var(--glass-edge)] p-7 md:p-9' : ''}
         role="status"
       >
-        <p className="type-h3 text-balance">Am primit datele.</p>
-        <p className="type-body mt-3">
-          Te contactăm în cel mai scurt timp, în timpul programului.
-        </p>
+        <p className="type-h3 text-balance">{successTitle}</p>
+        {successRest.length > 0 ? <p className="type-body mt-3">{successRest.join(' ')}</p> : null}
         <p className="mt-4 font-sans text-[13px] text-[var(--ink-3)]">
-          Dacă vrei răspuns imediat,{' '}
           <a
             href={whatsAppUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="font-semibold text-[var(--brass-ink)] underline underline-offset-4"
           >
-            scrie-ne pe WhatsApp.
+            {lead.errorLink}
           </a>
         </p>
       </div>
@@ -188,23 +207,23 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
     >
       <div className="flex flex-col gap-6">
         <fieldset aria-describedby={errors.projectType ? 'project-type-error' : undefined}>
-          <legend className="font-sans text-sm font-semibold text-[var(--ink)]">Tip de proiect</legend>
+          <legend className="font-sans text-sm font-semibold text-[var(--ink)]">{lead.legend}</legend>
           <div className="mt-3 flex flex-wrap gap-2">
-            {projectTypes.map((option) => {
-              const selected = projectType === option
+            {lead.types.map((option) => {
+              const selected = projectType === option.id
               return (
-                <label key={option} className="relative cursor-pointer">
+                <label key={option.id} className="relative cursor-pointer">
                   <input
                     type="radio"
                     name="projectType"
-                    value={option}
+                    value={option.id}
                     checked={selected}
-                    onChange={() => setProjectType(option)}
+                    onChange={() => setProjectType(option.id as ProjectTypeId)}
                     className="peer sr-only"
                     disabled={isSubmitting}
                   />
                   <span className="relative flex min-h-11 items-center rounded-[var(--radius-pill)] border-[1.5px] border-[var(--hairline)] px-4 py-2.5 font-sans text-sm font-semibold text-[var(--ink-2)] transition-colors hover:border-[var(--brass)] peer-checked:border-[var(--brass)] peer-checked:bg-[rgba(176,141,63,0.08)] peer-checked:text-[var(--ink)] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--brass)]">
-                    {option}
+                    {option.label}
                     {selected ? (
                       <span
                         aria-hidden="true"
@@ -225,7 +244,7 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
 
         <div>
           <label htmlFor="lead-current-site" className="font-sans text-sm font-semibold text-[var(--ink)]">
-            Ai deja un site? (opțional)
+            {lead.siteLabel}
           </label>
           <input
             id="lead-current-site"
@@ -233,7 +252,7 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
             inputMode="url"
             value={currentSite}
             onChange={(event) => setCurrentSite(event.target.value)}
-            placeholder="ex: firmata.ro"
+            placeholder={lead.sitePlaceholder}
             maxLength={2048}
             className={`${inputClass} mt-3 rounded-[var(--radius-card)]`}
             aria-invalid={Boolean(errors.currentSite)}
@@ -249,7 +268,7 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
 
         <div>
           <label htmlFor="lead-contact" className="font-sans text-sm font-semibold text-[var(--ink)]">
-            Telefon sau email
+            {lead.contactLabel}
           </label>
           <input
             id="lead-contact"
@@ -291,7 +310,7 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
             disabled={isSubmitting}
             className={primaryButtonClass}
           >
-            {isSubmitting ? 'Se trimite...' : 'Deschide WhatsApp cu datele completate'}
+            {isSubmitting ? lead.sending : lead.openWhatsapp}
             {!isSubmitting ? <ArrowUpRight aria-hidden="true" size={16} /> : null}
           </button>
           <button
@@ -299,21 +318,21 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
             disabled={isSubmitting}
             className="min-h-11 font-sans text-sm font-semibold text-[var(--ink-3)] underline decoration-[var(--hairline)] underline-offset-4 transition-colors hover:text-[var(--brass)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brass)] disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {isSubmitting ? 'Se trimite...' : 'Sau trimite-ne datele și te contactăm noi'}
+            {isSubmitting ? lead.sending : lead.send}
           </button>
         </div>
 
         <div aria-live="polite">
           {submitError ? (
             <p className="font-sans text-sm text-[var(--ink-2)]">
-              Ceva nu a mers.{' '}
+              {submitError}{' '}
               <a
                 href={whatsAppUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold text-[var(--brass-ink)] underline underline-offset-4"
               >
-                Scrie-ne direct pe WhatsApp.
+                {lead.errorLink}
               </a>
             </p>
           ) : null}

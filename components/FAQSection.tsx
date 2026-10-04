@@ -4,7 +4,8 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
-import { homeFaqGroups, homeFaqs } from '@/lib/home-faq'
+import { getHomeFaqGroups, getHomeFaqs } from '@/lib/home-faq'
+import { useHref, useLocale, useUi } from '@/lib/i18n/context'
 import FadeIn from './FadeIn'
 import ChartKicker from './ChartKicker'
 import { getWaUrl, useSegment } from './SegmentContext'
@@ -73,14 +74,19 @@ function FAQItem({
 
 export default function FAQSection() {
   const { segment } = useSegment()
+  const locale = useLocale()
+  const href = useHref()
+  const copy = useUi().faq
+  const homeFaqs = getHomeFaqs(locale)
+  const homeFaqGroups = getHomeFaqGroups(locale)
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
     <section id="faq" className="scene-section">
       <div className="porthole scene-panel" style={{ maxWidth: '900px' }}>
         <FadeIn>
-          <ChartKicker label="Înainte de îmbarcare" />
-          <h2 className="type-h2 text-balance">Întrebări frecvente.</h2>
+          <ChartKicker label={copy.kicker} />
+          <h2 className="type-h2 text-balance">{copy.title}</h2>
         </FadeIn>
         {homeFaqGroups.map((group) => (
           <div key={group.kicker} className="mt-10 first-of-type:mt-8">
@@ -105,21 +111,21 @@ export default function FAQSection() {
           </div>
         ))}
         <p className="type-body mt-9">
-          Altă întrebare? Răspundem în aceeași zi.{' '}
+          {copy.more}{' '}
           <a
-            href={getWaUrl(segment)}
+            href={getWaUrl(segment, undefined, locale)}
             target="_blank"
             rel="noopener noreferrer"
             className="font-semibold text-[var(--brass-ink)] underline decoration-[var(--glass-edge)] underline-offset-4 transition-colors hover:text-[var(--ink)]"
           >
-            Scrie-ne →
+            {copy.write}
           </a>{' '}
-          sau citește{' '}
+          {copy.orRead}{' '}
           <Link
-            href="/blog"
+            href={href('/blog')}
             className="font-semibold text-[var(--brass-ink)] underline decoration-[var(--glass-edge)] underline-offset-4 transition-colors hover:text-[var(--ink)]"
           >
-            ghidurile despre prețuri și termene
+            {copy.guides}
           </Link>
           .
         </p>

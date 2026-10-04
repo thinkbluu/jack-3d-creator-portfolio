@@ -1,6 +1,8 @@
 import { isContestConfigured } from '@/lib/contest/config'
 import { claimPrize } from '@/lib/contest/service'
 import { verifyToken } from '@/lib/contest/tokens'
+import type { Locale } from '@/lib/i18n/locale'
+import { localizePath } from '@/lib/i18n/paths'
 import { seeOther } from '@/lib/request'
 
 const briefFields: Array<[string, string]> = [
@@ -13,11 +15,13 @@ const briefFields: Array<[string, string]> = [
 
 export async function POST(request: Request) {
   const form = await request.formData().catch(() => null)
+  const locale: Locale = form?.get('locale') === 'en' ? 'en' : 'ro'
+  const page = localizePath('/site-gratuit/castig', locale)
   const token = String(form?.get('t') ?? '')
   const entryId = isContestConfigured() ? verifyToken(token, 'claim') : null
-  if (!form || !entryId) return seeOther(request, '/site-gratuit/castig?eroare=link')
+  if (!form || !entryId) return seeOther(request, `${page}?eroare=link`)
 
-  const back = (state: string) => seeOther(request, `/site-gratuit/castig?t=${encodeURIComponent(token)}&stare=${state}`)
+  const back = (state: string) => seeOther(request, `${page}?t=${encodeURIComponent(token)}&stare=${state}`)
   if (form.get('accept') !== 'da') return back('fara-acord')
 
   const brief = Object.fromEntries(briefFields.map(([key, label]) => [label, String(form.get(key) ?? '').trim().slice(0, 2000)]))

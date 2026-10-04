@@ -9,6 +9,12 @@
 
 Un fișier valid este descoperit automat de lista blogului, ruta `/blog/<slug>`, sitemap și feed-ul RSS. Nu modifica codul pentru a înregistra articolul.
 
+## Versiunea în engleză
+
+Articolele în engleză stau în `content/blog/en/<slug>.mdx`, cu același frontmatter. Nu există încă. Indexul `/en/blog` arată doar articolele din acel dosar și, cât timp e gol, trimite cititorul la ghidul în română (`/blog`). Un articol nou din `content/blog/en/` apare automat la `/en/blog/<slug>`. Nu traduce automat articolele existente: fiecare versiune engleză se scrie separat.
+
+Studiile de caz lungi din portofoliu urmează același model: `content/portofoliu/<slug>.mdx` pentru română și `content/portofoliu/en/<slug>.mdx` pentru engleză. Fără fișierul englez, pagina `/en/work/<slug>` nu afișează eseul românesc.
+
 ## Frontmatter obligatoriu
 
 - `slug`: identic cu numele fișierului.

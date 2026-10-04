@@ -1,14 +1,15 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import ChartKicker from './ChartKicker'
 import { getWaUrl, useSegment, type Segment } from './SegmentContext'
+import { useLocale, useUi } from '@/lib/i18n/context'
 import TrackedLink from './TrackedLink'
 
-const pairs: Partial<Record<Segment, { before: string; after: string; label: string }>> = {
-  salon: { before: '/images/transform-before.webp', after: '/images/transform-after.webp', label: 'Salon' },
-  servicii: { before: '/images/before-instal.webp', after: '/images/after-instal.webp', label: 'Servicii' },
-  platforma: { before: '/images/before-nextvision.webp', after: '/images/after-nextvision.webp', label: 'Platformă' },
+const pairImages: Partial<Record<Segment, { before: string; after: string }>> = {
+  salon: { before: '/images/transform-before.webp', after: '/images/transform-after.webp' },
+  servicii: { before: '/images/before-instal.webp', after: '/images/after-instal.webp' },
+  platforma: { before: '/images/before-nextvision.webp', after: '/images/after-nextvision.webp' },
 }
 
 function imageExists(src: string) {
@@ -38,7 +39,7 @@ function Pill({ tone, children }: { tone: 'before' | 'after'; children: string }
   )
 }
 
-function Frame({ src, alt, tone }: { src: string; alt: string; tone: 'before' | 'after' }) {
+function Frame({ src, alt, tone, before, after }: { src: string; alt: string; tone: 'before' | 'after'; before: string; after: string }) {
   return (
     <figure
       className="relative overflow-hidden rounded-[var(--radius-card)] bg-[var(--shell-warm)]"
@@ -57,13 +58,23 @@ function Frame({ src, alt, tone }: { src: string; alt: string; tone: 'before' | 
         decoding="async"
         style={tone === 'before' ? { filter: 'grayscale(0.7) brightness(0.9)' } : undefined}
       />
-      <Pill tone={tone}>{tone === 'before' ? 'ÎNAINTE' : 'DUPĂ'}</Pill>
+      <Pill tone={tone}>{tone === 'before' ? before : after}</Pill>
     </figure>
   )
 }
 
 export default function ComparisonSection() {
   const { segment, setSegment } = useSegment()
+  const locale = useLocale()
+  const copy = useUi().comparison
+  const pairs = useMemo<Partial<Record<Segment, { before: string; after: string; label: string }>>>(
+    () => ({
+      salon: { ...pairImages.salon!, label: copy.labels.salon },
+      servicii: { ...pairImages.servicii!, label: copy.labels.servicii },
+      platforma: { ...pairImages.platforma!, label: copy.labels.platforma },
+    }),
+    [copy.labels.salon, copy.labels.servicii, copy.labels.platforma],
+  )
   const [available, setAvailable] = useState<Segment[]>([])
   const [ready, setReady] = useState(false)
   const active = segment && available.includes(segment) ? segment : available[0]
@@ -84,7 +95,7 @@ export default function ComparisonSection() {
     return () => {
       live = false
     }
-  }, [])
+  }, [pairs])
 
   if (!ready || !active) return null
   const pair = pairs[active]!
@@ -92,14 +103,12 @@ export default function ComparisonSection() {
   return (
     <section id="dovada" className="scene-section">
       <div className="porthole scene-panel">
-        <ChartKicker label="Dovada" />
-        <h2 className="type-h2 text-balance">Vezi diferența cu ochii tăi.</h2>
-        <p className="type-body mt-4">
-          Exemple construite de noi pentru domenii tipice. Primele proiecte cu clienți reali apar aici în curând.
-        </p>
+        <ChartKicker label={copy.kicker} />
+        <h2 className="type-h2 text-balance">{copy.title}</h2>
+        <p className="type-body mt-4">{copy.intro}</p>
 
         {available.length > 1 && (
-          <div role="tablist" aria-label="Exemple pe tip de afacere" className="chart-tabs-scroll mt-6 flex flex-nowrap gap-2 md:flex-wrap">
+          <div role="tablist" aria-label={copy.tabs} className="chart-tabs-scroll mt-6 flex flex-nowrap gap-2 md:flex-wrap">
             {available.map((key) => (
               <button
                 key={key}
@@ -121,30 +130,30 @@ export default function ComparisonSection() {
 
         <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
           <div>
-            <Frame src={pair.before} alt={`Site de ${pair.label.toLowerCase()} înainte de redesign`} tone="before" />
-            <p className="mt-3 font-sans text-[13px] text-[var(--ink-2)]">Ce vede clientul acum</p>
+            <Frame src={pair.before} alt={`${pair.label} ${copy.beforeAlt}`} tone="before" before={copy.before} after={copy.after} />
+            <p className="mt-3 font-sans text-[13px] text-[var(--ink-2)]">{copy.now}</p>
           </div>
           <div>
-            <Frame src={pair.after} alt={`Versiunea după pentru ${pair.label}`} tone="after" />
-            <p className="mt-3 font-sans text-[13px] text-[var(--ink-2)]">Ce vede după 48 de ore</p>
+            <Frame src={pair.after} alt={`${copy.afterAlt} ${pair.label}`} tone="after" before={copy.before} after={copy.after} />
+            <p className="mt-3 font-sans text-[13px] text-[var(--ink-2)]">{copy.afterHours}</p>
           </div>
         </div>
 
         <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
           <TrackedLink
-            href={getWaUrl(segment)}
+            href={getWaUrl(segment, undefined, locale)}
             target="_blank"
             rel="noopener noreferrer"
             eventName="whatsapp_cta_click"
             eventProperties={{ placement: 'comparison', segment: segment ?? 'general' }}
             className="font-sans text-sm font-semibold text-[var(--brass)] underline decoration-[var(--glass-edge)] underline-offset-4 transition-colors hover:text-[var(--ink)]"
           >
-            Vreau varianta de după →
+            {copy.cta}
           </TrackedLink>
         </div>
 
         <p className="mt-5 font-sans text-xs leading-relaxed text-[var(--ink-3)]">
-          Exemple demonstrative. Al tău poate arăta așa în 48 de ore.
+          {copy.note}
         </p>
       </div>
     </section>
