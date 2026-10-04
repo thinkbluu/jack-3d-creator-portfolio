@@ -2,13 +2,9 @@
 
 import { motion, useReducedMotion } from 'framer-motion'
 import { useEffect, useState, type ReactNode } from 'react'
-import ChartKicker from './ChartKicker'
 
-const pairs: Array<{ other: string; statement: ReactNode }> = [
-  { other: 'Alții vând același șablon la zeci de firme.', statement: <>Al tău <span className="text-[var(--brass)]">nu seamănă cu nimeni</span>.</> },
-  { other: 'Alții îți spun «revenim cu un termen».', statement: <>Noi îți spunem <span className="text-[var(--brass)]">ziua</span>.</> },
-  { other: 'Alții cer 50% avans.', statement: <>Noi, <span className="text-[var(--brass)]">50 de euro</span>.</> },
-]
+import ChartKicker from './ChartKicker'
+import { useUi } from '@/lib/i18n/context'
 
 function ManifestPair({ other, statement }: { other: string; statement: ReactNode }) {
   const reduceMotion = useReducedMotion()
@@ -52,18 +48,27 @@ function ManifestPair({ other, statement }: { other: string; statement: ReactNod
 }
 
 export default function ManifestSection() {
+  const copy = useUi().manifest
   return (
     <section id="manifest" className="scene-section">
       <div className="porthole manifest-porthole">
-        <ChartKicker label="Manifest" />
+        <ChartKicker label={copy.kicker} />
         <div className="manifest-pairs mt-8">
-          {pairs.map((pair) => (
-            <ManifestPair key={pair.other} other={pair.other} statement={pair.statement} />
+          {copy.pairs.map((pair) => (
+            <ManifestPair
+              key={pair.highlight}
+              other={pair.other}
+              statement={
+                <>
+                  {pair.before}
+                  <span className="text-[var(--brass)]">{pair.highlight}</span>
+                  {pair.after}
+                </>
+              }
+            />
           ))}
         </div>
-        <p className="manifest-closing type-body">
-          Astea nu sunt promisiuni de marketing. Sunt clauze scrise în contract.
-        </p>
+        <p className="manifest-closing type-body">{copy.closing}</p>
       </div>
     </section>
   )

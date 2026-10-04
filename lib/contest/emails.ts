@@ -1,4 +1,5 @@
 import { escapeHtml, fromAddress, resendClient } from '@/lib/email'
+import { intlLocale, type Locale } from '@/lib/i18n/locale'
 import { EMAIL, INSTAGRAM_HANDLE, absoluteUrl } from '@/lib/site'
 import { CLAIM_DAYS, CONTEST_HASHTAG, CONTEST_NAME, RULES_PATH, roundEndLabel, roundLabel, shiftRound } from './config'
 
@@ -22,27 +23,42 @@ const firstName = (name: string) => name.trim().split(/\s+/)[0]
 const rules = { label: 'Regulamentul concursului', url: absoluteUrl(RULES_PATH) }
 const signature = 'Echipa MAST Studio'
 
-export function formatDeadline(date: Date) {
-  return new Intl.DateTimeFormat('ro-RO', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Bucharest' }).format(date)
+export function formatDeadline(date: Date, locale: Locale = 'ro') {
+  return new Intl.DateTimeFormat(intlLocale(locale), { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Bucharest' }).format(date)
 }
 
 export const contestMails = {
-  confirm: (to: string, name: string, businessName: string, link: string) =>
-    compose(to, `Confirmă înscrierea la concursul „${CONTEST_NAME}”`, [
-      `Bună, ${firstName(name)},`,
-      `Mai ai un pas: confirmă înscrierea pentru ${businessName}. Linkul e valabil 3 zile.`,
-      { label: 'Confirmă înscrierea', url: link },
-      'Dacă nu te-ai înscris tu, ignoră acest e-mail. Nu păstrăm înscrierile neconfirmate.',
-      signature,
-    ]),
+  confirm: (to: string, name: string, businessName: string, link: string, locale: Locale = 'ro') =>
+    locale === 'en'
+      ? compose(to, 'Confirm your entry in the “A free website every month” contest', [
+          `Hello ${firstName(name)},`,
+          `One step left: confirm the entry for ${businessName}. The link is valid for 3 days.`,
+          { label: 'Confirm your entry', url: link },
+          'If you did not sign up, ignore this email. We do not keep unconfirmed entries.',
+          'The MAST Studio team',
+        ])
+      : compose(to, `Confirmă înscrierea la concursul „${CONTEST_NAME}”`, [
+          `Bună, ${firstName(name)},`,
+          `Mai ai un pas: confirmă înscrierea pentru ${businessName}. Linkul e valabil 3 zile.`,
+          { label: 'Confirmă înscrierea', url: link },
+          'Dacă nu te-ai înscris tu, ignoră acest e-mail. Nu păstrăm înscrierile neconfirmate.',
+          signature,
+        ]),
 
-  alreadyRegistered: (to: string, name: string, link: string) =>
-    compose(to, 'Ești deja înscris la concurs', [
-      `Bună, ${firstName(name)},`,
-      'Adresa ta e deja înscrisă și confirmată. Pe pagina ta de participare vezi runda curentă și poți adăuga linkul postării.',
-      { label: 'Pagina ta de participare', url: link },
-      signature,
-    ]),
+  alreadyRegistered: (to: string, name: string, link: string, locale: Locale = 'ro') =>
+    locale === 'en'
+      ? compose(to, 'You are already entered in the contest', [
+          `Hello ${firstName(name)},`,
+          'This address is already entered and confirmed. On your entry page you can see the current round and add the link to your post.',
+          { label: 'Your entry page', url: link },
+          'The MAST Studio team',
+        ])
+      : compose(to, 'Ești deja înscris la concurs', [
+          `Bună, ${firstName(name)},`,
+          'Adresa ta e deja înscrisă și confirmată. Pe pagina ta de participare vezi runda curentă și poți adăuga linkul postării.',
+          { label: 'Pagina ta de participare', url: link },
+          signature,
+        ]),
 
   welcome: (to: string, name: string, round: string, manageLink: string) =>
     compose(to, `Ești înscris în runda din ${roundLabel(round)}`, [

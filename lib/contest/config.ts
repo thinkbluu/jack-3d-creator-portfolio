@@ -1,3 +1,5 @@
+import { intlLocale, type Locale } from '@/lib/i18n/locale'
+
 // The monthly free-site contest ("Site gratuit în fiecare lună"). Each round
 // is one calendar month in Romanian time; the post with the most likes wins.
 
@@ -55,13 +57,14 @@ export function daysInRound(round: string) {
   return new Date(Date.UTC(year, month, 0)).getUTCDate()
 }
 
-/** "octombrie 2026" */
-export function roundLabel(round: string) {
+/** "octombrie 2026" / "October 2026". Defaults to Romanian so cron emails stay unchanged. */
+export function roundLabel(round: string, locale: Locale = 'ro') {
   const [year, month] = round.split('-').map(Number)
-  return new Intl.DateTimeFormat('ro-RO', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(Date.UTC(year, month - 1, 15)))
+  return new Intl.DateTimeFormat(intlLocale(locale), { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(Date.UTC(year, month - 1, 15)))
 }
 
-/** "31 octombrie 2026, ora 23:59" */
-export function roundEndLabel(round: string) {
-  return `${daysInRound(round)} ${roundLabel(round)}, ora 23:59`
+/** "31 octombrie 2026, ora 23:59" / "31 October 2026, 23:59". */
+export function roundEndLabel(round: string, locale: Locale = 'ro') {
+  const label = roundLabel(round, locale)
+  return locale === 'en' ? `${daysInRound(round)} ${label}, 23:59` : `${daysInRound(round)} ${label}, ora 23:59`
 }

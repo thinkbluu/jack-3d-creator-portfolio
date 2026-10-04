@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from 'framer-motion'
 import ContactButton from './ContactButton'
 import FadeIn from './FadeIn'
 import ChartKicker from './ChartKicker'
+import { useUi } from '@/lib/i18n/context'
 
 function SonarPing() {
   const reduceMotion = useReducedMotion()
@@ -21,6 +22,7 @@ function SonarPing() {
 }
 
 export default function FinalCTA() {
+  const copy = useUi().finalCta
   return (
     <section id="contact" className="scene-section relative flex min-h-[100dvh] items-center justify-center">
       {/* Soft radial wash so the copy stays readable over the detailed compass plate. */}
@@ -37,12 +39,12 @@ export default function FinalCTA() {
         style={{ textShadow: '0 2px 24px rgba(250,247,242,.6)' }}
       >
         <FadeIn className="flex flex-col items-center">
-          <ChartKicker label="Contact" />
+          <ChartKicker label={copy.kicker} />
           <h2 className="type-h2 text-balance">
-            Setează <span className="text-[var(--brass)]">direcția</span>.
+            {copy.titleBefore}<span className="text-[var(--brass)]">{copy.titleAccent}</span>{copy.titleAfter}
           </h2>
           <p className="type-body mt-5 text-[var(--ink)]">
-            Scrie-ne ce faci. Primești oferta azi.
+            {copy.body}
           </p>
         </FadeIn>
 
@@ -54,7 +56,7 @@ export default function FinalCTA() {
             </span>
           </span>
           <p className="mt-5 font-sans text-[13px] text-[var(--ink-3)]">
-            sau scrie-ne la{' '}
+            {copy.orEmail}{' '}
             <a href="mailto:contact@maststudio.ro" className="underline decoration-[var(--brass)] underline-offset-4 transition-colors hover:text-[var(--ink)]">
               contact@maststudio.ro
             </a>

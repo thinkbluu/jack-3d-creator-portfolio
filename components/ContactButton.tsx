@@ -1,6 +1,7 @@
 'use client'
 
 import { ArrowUpRight } from 'lucide-react'
+import { useLocale, useUi } from '@/lib/i18n/context'
 import { getWaUrl, useSegment } from './SegmentContext'
 import TrackedLink from './TrackedLink'
 
@@ -8,7 +9,9 @@ type ContactButtonProps = { hero?: boolean; ghost?: boolean; label?: string; not
 
 export default function ContactButton({ hero = false, ghost = false, label, note }: ContactButtonProps) {
   const { segment } = useSegment()
-  const text = label ?? (hero ? 'Vreau site-ul meu în 48 de ore' : 'Cere ofertă pe WhatsApp')
+  const locale = useLocale()
+  const { whatsapp } = useUi()
+  const text = label ?? (hero ? whatsapp.heroDefault : whatsapp.defaultCta)
   const showNote = note ?? !label
 
   const base =
@@ -22,7 +25,7 @@ export default function ContactButton({ hero = false, ghost = false, label, note
     <div className="flex flex-col items-center">
       <TrackedLink
         data-route-contact="true"
-        href={getWaUrl(segment)}
+        href={getWaUrl(segment, undefined, locale)}
         target="_blank"
         rel="noopener noreferrer"
         eventName="whatsapp_click"
@@ -39,7 +42,7 @@ export default function ContactButton({ hero = false, ghost = false, label, note
       </TrackedLink>
       {showNote && (
         <p className="mt-3 text-center font-sans text-xs font-medium text-[var(--ink-3)]">
-          răspuns în aceeași zi · fără nicio obligație
+          {whatsapp.note}
         </p>
       )}
     </div>

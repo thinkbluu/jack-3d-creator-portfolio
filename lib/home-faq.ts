@@ -1,3 +1,6 @@
+import type { Locale } from './i18n/locale'
+import { homeFaqGroupKickersEn, homeFaqsEn } from './i18n/content/home-faq.en'
+
 // Homepage FAQ. Shared by the accordion (client) and the FAQPage structured data (server).
 
 export const homeFaqs: Array<[string, string]> = [
@@ -58,4 +61,15 @@ export const homeFaqGroups: Array<{ kicker: string; indices: number[] }> = [
   { kicker: 'Cum lucrăm', indices: [3, 4] },
   { kicker: 'Tehnic și proprietate', indices: [6, 7, 8, 10, 11] },
 ]
+
+const groupIndices = homeFaqGroups.map((group) => group.indices)
+
+export function getHomeFaqs(locale: Locale = 'ro') {
+  return locale === 'en' ? homeFaqsEn : homeFaqs
+}
+
+export function getHomeFaqGroups(locale: Locale = 'ro') {
+  const kickers = locale === 'en' ? homeFaqGroupKickersEn : homeFaqGroups.map((group) => group.kicker)
+  return groupIndices.map((indices, index) => ({ kicker: kickers[index], indices }))
+}
 

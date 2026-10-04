@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
-import { DEFAULT_OG_IMAGE_PATH, SITE_LOCALE, SITE_NAME, absoluteUrl } from './site'
+import { alternatePublicPath, toCanonicalPath } from './i18n/paths'
+import { ogLocale, type Locale } from './i18n/locale'
+import { ui } from './i18n/ui'
+import { DEFAULT_OG_IMAGE_PATH, SITE_NAME, absoluteUrl } from './site'
 
 export const TITLE_SUFFIX = ` | ${SITE_NAME}`
 // Google truncates titles at roughly 60 characters on mobile.
@@ -16,7 +19,16 @@ export const DEFAULT_OG_IMAGE: SeoImage = {
   url: DEFAULT_OG_IMAGE_PATH,
   width: 1200,
   height: 630,
-  alt: 'MAST Studio — studio de web design din Timișoara. Site de prezentare de la 300 EUR, live în 48 de ore.',
+  alt: ui.ro.meta.ogAlt,
+}
+
+export function defaultOgImage(locale: Locale = 'ro'): SeoImage {
+  return {
+    url: locale === 'en' ? '/en/opengraph-image' : DEFAULT_OG_IMAGE_PATH,
+    width: 1200,
+    height: 630,
+    alt: ui[locale].meta.ogAlt,
+  }
 }
 
 type PageMetadataInput = {
@@ -34,6 +46,12 @@ type PageMetadataInput = {
   noindex?: boolean
   /** Use the title exactly as given (no brand suffix). */
   absoluteTitle?: boolean
+  locale?: Locale
+  /**
+   * Mirror this page in the other language (default).
+   * Pass false for content that exists in only one language, such as a Romanian article.
+   */
+  hreflang?: boolean
 }
 
 /** Appends ` | MAST Studio` unless the result would be truncated in search results. */
@@ -58,21 +76,36 @@ export function pageMetadata({
   modifiedTime,
   noindex = false,
   absoluteTitle = false,
+  locale = 'ro',
+  hreflang = true,
 }: PageMetadataInput): Metadata {
   const url = absoluteUrl(path)
   const documentTitle = absoluteTitle ? title : resolveTitle(title)
   const shareTitle = socialTitle ?? stripBrandSuffix(title)
-  const images = [{ url: image.url, width: image.width ?? 1200, height: image.height ?? 630, alt: image.alt }]
+  const resolvedImage = image === DEFAULT_OG_IMAGE ? defaultOgImage(locale) : image
+  const images = [{ url: resolvedImage.url, width: resolvedImage.width ?? 1200, height: resolvedImage.height ?? 630, alt: resolvedImage.alt }]
+  const languages: Record<string, string> = {}
+  if (hreflang) {
+    const roPath = locale === 'ro' ? path : toCanonicalPath(path)
+    const enPath = locale === 'en' ? path : alternatePublicPath(path)
+    languages.ro = absoluteUrl(roPath)
+    languages.en = absoluteUrl(enPath)
+    languages['x-default'] = languages.ro
+  } else {
+    languages[locale] = url
+    languages['x-default'] = locale === 'ro' ? url : absoluteUrl('/')
+  }
 
   return {
     title: { absolute: documentTitle },
     description,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages },
     openGraph: {
       type,
       url,
       siteName: SITE_NAME,
-      locale: SITE_LOCALE,
+      locale: ogLocale(locale),
+      alternateLocale: locale === 'en' ? 'ro_RO' : 'en_US',
       title: shareTitle,
       description,
       images,

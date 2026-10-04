@@ -1,15 +1,19 @@
 import { isContestConfigured } from '@/lib/contest/config'
 import { getRoundForAdmin, recordLikes } from '@/lib/contest/service'
 import { verifyToken } from '@/lib/contest/tokens'
+import type { Locale } from '@/lib/i18n/locale'
+import { localizePath } from '@/lib/i18n/paths'
 import { seeOther } from '@/lib/request'
 
 export async function POST(request: Request) {
   const form = await request.formData().catch(() => null)
+  const locale: Locale = form?.get('locale') === 'en' ? 'en' : 'ro'
+  const page = localizePath('/site-gratuit/admin/like-uri', locale)
   const token = String(form?.get('t') ?? '')
   const round = isContestConfigured() ? verifyToken(token, 'admin-likes') : null
-  if (!form || !round) return seeOther(request, '/site-gratuit/admin/like-uri?eroare=link')
+  if (!form || !round) return seeOther(request, `${page}?eroare=link`)
 
-  const back = (state: string) => seeOther(request, `/site-gratuit/admin/like-uri?t=${encodeURIComponent(token)}&stare=${state}`)
+  const back = (state: string) => seeOther(request, `${page}?t=${encodeURIComponent(token)}&stare=${state}`)
 
   try {
     const { entries } = await getRoundForAdmin(round)

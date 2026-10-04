@@ -1,6 +1,8 @@
 import { createHash } from 'node:crypto'
 import { getAllPosts } from '@/lib/blog'
 import { escapeHtml, fromAddress, resendClient } from '@/lib/email'
+import type { Locale } from '@/lib/i18n/locale'
+import { localizePath } from '@/lib/i18n/paths'
 import { EMAIL, absoluteUrl } from '@/lib/site'
 import {
   CLAIM_DAYS,
@@ -36,8 +38,8 @@ export type SignupInput = {
 }
 
 export const contestLinks = {
-  confirm: (entrantId: string) => absoluteUrl(`${CONTEST_PATH}/confirmare?t=${signToken('confirm', entrantId, 3)}`),
-  manage: (entrantId: string) => absoluteUrl(`${CONTEST_PATH}/participare?t=${signToken('manage', entrantId, 400)}`),
+  confirm: (entrantId: string, locale: Locale = 'ro') => absoluteUrl(`${localizePath(`${CONTEST_PATH}/confirmare`, locale)}?t=${signToken('confirm', entrantId, 3)}`),
+  manage: (entrantId: string, locale: Locale = 'ro') => absoluteUrl(`${localizePath(`${CONTEST_PATH}/participare`, locale)}?t=${signToken('manage', entrantId, 400)}`),
   claim: (entryId: string) => absoluteUrl(`${CONTEST_PATH}/castig?t=${signToken('claim', entryId, CLAIM_DAYS + 1)}`),
   adminLikes: (round: string) => absoluteUrl(`${CONTEST_PATH}/admin/like-uri?t=${signToken('admin-likes', round, 30)}`),
   adminDelivered: (round: string) => absoluteUrl(`${CONTEST_PATH}/admin/livrat?t=${signToken('admin-delivered', round, 180)}`),
@@ -66,7 +68,8 @@ function ipHash(ip: string) {
 // ---------------------------------------------------------------------------
 // Sign-up, confirmation and the entrant's participation page
 
-export async function registerEntrant(input: SignupInput, ip: string) {
+/** `locale` is taken from the request and is not stored. Later cron emails stay Romanian. */
+export async function registerEntrant(input: SignupInput, ip: string, locale: Locale = 'ro') {
   await ensureSchema()
   const db = sql()
   const email = input.email.toLowerCase()
@@ -79,7 +82,7 @@ export async function registerEntrant(input: SignupInput, ip: string) {
   const [existing] = await db<{ id: string; name: string; confirmed_at: Date | null; withdrawn_at: Date | null }[]>`
     select id, name, confirmed_at, withdrawn_at from contest_entrants where email = ${email}`
   if (existing?.confirmed_at && !existing.withdrawn_at) {
-    await sendMails([contestMails.alreadyRegistered(email, existing.name, contestLinks.manage(existing.id))])
+    await sendMails([contestMails.alreadyRegistered(email, existing.name, contestLinks.manage(existing.id, locale), locale)])
     return 'already-confirmed' as const
   }
 
@@ -99,7 +102,7 @@ export async function registerEntrant(input: SignupInput, ip: string) {
       confirmed_at = null, withdrawn_at = null
     returning id`
 
-  const sent = await sendMails([contestMails.confirm(email, input.name, input.businessName, contestLinks.confirm(entrant.id))])
+  const sent = await sendMails([contestMails.confirm(email, input.name, input.businessName, contestLinks.confirm(entrant.id, locale), locale)])
   return sent ? ('confirm-sent' as const) : ('email-failed' as const)
 }
 

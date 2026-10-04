@@ -3,19 +3,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import ProjectCard from '@/components/ProjectCard'
 import type { Project } from '@/lib/projects'
+import { useUi } from '@/lib/i18n/context'
 
-type FilterId = Project['category'] | 'toate'
-
-const filters: Array<{ id: FilterId; label: string }> = [
-  { id: 'toate', label: 'Toate' },
-  { id: 'site-prezentare', label: 'Site de prezentare' },
-  { id: 'site-institutional', label: 'Site instituțional' },
-  { id: 'platforma', label: 'Platformă' },
-  { id: 'concept-design', label: 'Concepte' },
-]
+const filterIds = ['toate', 'site-prezentare', 'site-institutional', 'platforma', 'concept-design'] as const
+type FilterId = (typeof filterIds)[number]
 
 function isFilterId(value: string | null): value is FilterId {
-  return filters.some((filter) => filter.id === value)
+  return filterIds.some((id) => id === value)
 }
 
 /**
@@ -23,6 +17,8 @@ function isFilterId(value: string | null): value is FilterId {
  * HTML lists every project; a `?filtru=` link from elsewhere is applied after mount.
  */
 export default function PortfolioGrid({ projects }: { projects: Project[] }) {
+  const copy = useUi().projects
+  const filters = filterIds.map((id) => ({ id, label: copy.filters[id] }))
   const [activeFilter, setActiveFilter] = useState<FilterId>('toate')
 
   // Read the URL after mount (it does not exist during prerendering). Deferred to
@@ -50,7 +46,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
 
   return (
     <>
-      <div className="mt-10 flex flex-wrap gap-3" role="group" aria-label="Filtrează după categorie">
+      <div className="mt-10 flex flex-wrap gap-3" role="group" aria-label={copy.filtersLabel}>
         {filters.map((filter) => {
           const isActive = filter.id === activeFilter
           return (
@@ -75,7 +71,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
       {clientProjects.length > 0 ? (
         <section aria-labelledby="proiecte-clienti" className="mt-12">
           <h2 id="proiecte-clienti" className="type-h3">
-            Proiecte pentru clienți
+            {copy.clients}
           </h2>
           <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
             {clientProjects.map((project, index) => (
@@ -88,10 +84,10 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
       {conceptProjects.length > 0 ? (
         <section aria-labelledby="concepte-design" className="mt-[72px] border-t border-[var(--hairline)] pt-[56px]">
           <h2 id="concepte-design" className="type-h3">
-            Concepte de design
+            {copy.concepts}
           </h2>
           <p className="type-body mt-2 text-[14px] text-[var(--ink-2)]">
-            Exerciții de design și interacțiune, construite pentru a testa idei. Nu reprezintă afaceri reale.
+            {copy.conceptsNote}
           </p>
           <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
             {conceptProjects.map((project) => (
@@ -103,7 +99,7 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
 
       {filteredProjects.length === 0 ? (
         <p className="mt-12 border-t border-[var(--hairline)] pt-6 font-sans text-sm text-[var(--ink-2)]">
-          Nu avem încă proiecte în această categorie.
+          {copy.empty}
         </p>
       ) : null}
     </>

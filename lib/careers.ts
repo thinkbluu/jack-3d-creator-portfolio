@@ -1,3 +1,6 @@
+import type { Locale } from './i18n/locale'
+import { careerLabelsEn, jobTextEn } from './i18n/content/careers.en'
+
 // Shared by the careers page form and the /api/cariere route.
 
 export type JobOpening = {
@@ -75,14 +78,59 @@ export const JOB_SCHEDULE = 'Normă întreagă, 8 ore pe zi'
 export const JOB_CONTRACT = 'Contract de muncă sau colaborare (PFA/SRL)'
 export const JOB_LOCATION = 'La distanță, din România'
 
-export function getJobOpening(id: string) {
-  return JOB_OPENINGS.find((job) => job.id === id)
+function localizeJob(job: JobOpening, locale: Locale): JobOpening {
+  if (locale === 'ro') return job
+  const text = jobTextEn[job.id]
+  return text ? { ...job, ...text } : job
+}
+
+export function getJobOpenings(locale: Locale = 'ro') {
+  return JOB_OPENINGS.map((job) => localizeJob(job, locale))
+}
+
+export function getJobOpening(id: string, locale: Locale = 'ro') {
+  const job = JOB_OPENINGS.find((item) => item.id === id)
+  return job ? localizeJob(job, locale) : undefined
+}
+
+export function careerSchedule(locale: Locale = 'ro') {
+  return locale === 'en' ? careerLabelsEn.schedule : JOB_SCHEDULE
+}
+
+export function careerContract(locale: Locale = 'ro') {
+  return locale === 'en' ? careerLabelsEn.contract : JOB_CONTRACT
+}
+
+export function careerLocation(locale: Locale = 'ro') {
+  return locale === 'en' ? careerLabelsEn.location : JOB_LOCATION
+}
+
+/** Extra areas beyond the open roles. Values submitted to the API stay the Romanian labels. */
+export function careerAreaOptions(locale: Locale = 'ro') {
+  const extras = locale === 'en'
+    ? [
+        { value: 'Web design', label: 'Web design' },
+        { value: 'Texte și conținut', label: 'Copy and content' },
+        { value: 'Marketing și vânzări', label: 'Marketing and sales' },
+        { value: 'Altceva', label: 'Something else' },
+      ]
+    : [
+        { value: 'Web design', label: 'Web design' },
+        { value: 'Texte și conținut', label: 'Texte și conținut' },
+        { value: 'Marketing și vânzări', label: 'Marketing și vânzări' },
+        { value: 'Altceva', label: 'Altceva' },
+      ]
+  return [
+    ...getJobOpenings(locale).map((job) => ({ value: JOB_OPENINGS.find((item) => item.id === job.id)?.title ?? job.title, label: job.title })),
+    ...extras,
+  ]
 }
 
 /** For example "7.500-9.000 RON net/lună". */
-export function salaryLabel(job: JobOpening) {
-  const format = (value: number) => value.toLocaleString('ro-RO')
-  return `${format(job.salaryMin)}-${format(job.salaryMax)} RON net/lună`
+export function salaryLabel(job: JobOpening, locale: Locale = 'ro') {
+  const format = (value: number) => value.toLocaleString(locale === 'en' ? 'en-GB' : 'ro-RO')
+  const suffix = locale === 'en' ? careerLabelsEn.salarySuffix : 'RON net/lună'
+  return `${format(job.salaryMin)}-${format(job.salaryMax)} ${suffix}`
 }
 
 export const CAREER_AREAS = [

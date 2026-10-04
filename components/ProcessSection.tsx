@@ -1,35 +1,21 @@
+'use client'
+
 import FadeIn from './FadeIn'
 import ChartKicker from './ChartKicker'
-
-const steps = [
-  {
-    number: '01',
-    title: 'Ne scrii',
-    description: 'În două fraze ne spui ce faci. În aceeași zi primești oferta și lista scurtă cu ce ne trebuie de la tine.',
-  },
-  {
-    number: '02',
-    title: 'Trimiți materialele',
-    description: 'Texte de bază, poze, siglă. Atât. Din momentul în care le avem, pornește cronometrul.',
-  },
-  {
-    number: '03',
-    title: 'Vezi și decizi',
-    description: 'Îți trimitem site-ul live. Îl deschizi, îl arăți cui vrei, și abia apoi plătești restul.',
-  },
-]
+import { useUi } from '@/lib/i18n/context'
 
 export default function ProcessSection() {
+  const copy = useUi().process
   return (
     <>
     <section id="process" className="scene-section">
       <div className="porthole scene-panel" style={{ maxWidth: '860px' }}>
         <FadeIn>
-          <ChartKicker label="Cum lucrăm" />
-          <h2 className="type-h2 text-balance">Trei pași. Fără bătăi de cap.</h2>
+          <ChartKicker label={copy.kicker} />
+          <h2 className="type-h2 text-balance">{copy.title}</h2>
         </FadeIn>
         <div className="mt-9 grid gap-8 md:grid-cols-3">
-          {steps.map((step, index) => (
+          {copy.steps.map((step, index) => (
             <FadeIn key={step.number} delay={index * 0.08}>
               <article>
                 <span

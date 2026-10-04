@@ -1,25 +1,31 @@
+'use client'
+
 import Link from 'next/link'
+import LanguageSwitcher from '@/components/LanguageSwitcher'
+import { useHref, useUi } from '@/lib/i18n/context'
 
 export type SiteSection = 'servicii' | 'portofoliu' | 'blog' | 'site-gratuit' | 'despre' | 'cariere' | 'contact'
-
-const navItems: Array<{ id: SiteSection; href: string; label: string }> = [
-  { id: 'servicii', href: '/servicii', label: 'Servicii' },
-  { id: 'portofoliu', href: '/portofoliu', label: 'Portofoliu' },
-  { id: 'blog', href: '/blog', label: 'Ghid' },
-  { id: 'site-gratuit', href: '/site-gratuit', label: 'Site gratuit' },
-  { id: 'despre', href: '/despre', label: 'Despre' },
-  { id: 'cariere', href: '/cariere', label: 'Cariere' },
-  { id: 'contact', href: '/contact', label: 'Contact' },
-]
 
 const linkClass =
   'whitespace-nowrap text-xs uppercase tracking-[0.16em] text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] aria-[current=page]:text-[var(--ink)]'
 
 export default function SiteHeader({ current }: { current?: SiteSection }) {
+  const href = useHref()
+  const { nav } = useUi()
+  const navItems: Array<{ id: SiteSection; href: string; label: string }> = [
+    { id: 'servicii', href: href('/servicii'), label: nav.services },
+    { id: 'portofoliu', href: href('/portofoliu'), label: nav.portfolio },
+    { id: 'blog', href: href('/blog'), label: nav.guide },
+    { id: 'site-gratuit', href: href('/site-gratuit'), label: nav.freeSite },
+    { id: 'despre', href: href('/despre'), label: nav.about },
+    { id: 'cariere', href: href('/cariere'), label: nav.careers },
+    { id: 'contact', href: href('/contact'), label: nav.contact },
+  ]
+
   return (
     <header className="border-b border-[var(--hairline)]">
-      <nav aria-label="Navigație principală" className="site-container relative flex h-20 items-center justify-between gap-6">
-        <Link href="/" className="flex items-center gap-2 text-[var(--ink)]">
+      <nav aria-label={nav.label} className="site-container relative flex h-20 items-center justify-between gap-6">
+        <Link href={href('/')} className="flex items-center gap-2 text-[var(--ink)]">
           <span
             aria-hidden="true"
             className="size-[22px] bg-[var(--brass)]"
@@ -31,7 +37,7 @@ export default function SiteHeader({ current }: { current?: SiteSection }) {
           <span className="flex items-baseline gap-2">
             <span className="font-serif text-xl font-semibold">MAST</span>
             <span className="font-sans text-[10px] font-medium tracking-[.28em]">STUDIO</span>
-            <span className="sr-only">, pagina principală</span>
+            <span className="sr-only">, {nav.home}</span>
           </span>
         </Link>
 
@@ -44,18 +50,21 @@ export default function SiteHeader({ current }: { current?: SiteSection }) {
             </li>
           ))}
           <li>
+            <LanguageSwitcher />
+          </li>
+          <li>
             <Link
-              href="/cerere-oferta"
+              href={href('/cerere-oferta')}
               className="whitespace-nowrap rounded-[var(--radius-pill)] bg-[var(--ink)] px-5 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--shell)] transition-colors hover:bg-[#2E2822]"
             >
-              Cere ofertă
+              {nav.quote}
             </Link>
           </li>
         </ul>
 
         <details className="group lg:hidden">
           <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-[var(--ink)] [&::-webkit-details-marker]:hidden">
-            <span>Meniu</span>
+            <span>{nav.menu}</span>
             <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" className="transition-transform group-open:rotate-45">
               <path d="M9 2v14M2 9h14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
             </svg>
@@ -72,12 +81,13 @@ export default function SiteHeader({ current }: { current?: SiteSection }) {
                 </Link>
               </li>
             ))}
-            <li className="pt-4">
+            <li className="flex flex-col items-start gap-4 pt-4">
+              <LanguageSwitcher />
               <Link
-                href="/cerere-oferta"
+                href={href('/cerere-oferta')}
                 className="w-full justify-center rounded-[var(--radius-pill)] bg-[var(--ink)] px-5 font-semibold text-[var(--shell)]"
               >
-                Cere ofertă
+                {nav.quote}
               </Link>
             </li>
           </ul>

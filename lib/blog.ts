@@ -1,6 +1,8 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
+import type { Locale } from './i18n/locale'
+import { intlLocale } from './i18n/locale'
 
 export type BlogCategory = 'ghid' | 'comparatie' | 'sfat'
 
@@ -33,7 +35,10 @@ export type BlogPost = {
 
 type BlogFrontmatter = Omit<BlogPost, 'body'>
 
-const blogDirectory = path.join(process.cwd(), 'content', 'blog')
+function blogDirectory(locale: Locale = 'ro') {
+  const root = path.join(process.cwd(), 'content', 'blog')
+  return locale === 'en' ? path.join(root, 'en') : root
+}
 const validCategories = new Set<BlogCategory>(['ghid', 'comparatie', 'sfat'])
 
 function requiredString(value: unknown, field: string, fileName: string) {
@@ -149,8 +154,8 @@ function removeTemplateDuplicates(body: string, frontmatter: BlogFrontmatter) {
   return result
 }
 
-function readPost(fileName: string): BlogPost {
-  const filePath = path.join(blogDirectory, fileName)
+function readPost(fileName: string, locale: Locale): BlogPost {
+  const filePath = path.join(blogDirectory(locale), fileName)
   const file = fs.readFileSync(filePath, 'utf8')
   const { data, content } = matter(file)
   const frontmatter = parseFrontmatter(data, fileName)
@@ -161,25 +166,26 @@ function readPost(fileName: string): BlogPost {
   }
 }
 
-export function getAllPosts(): BlogPost[] {
-  if (!fs.existsSync(blogDirectory)) return []
+export function getAllPosts(locale: Locale = 'ro'): BlogPost[] {
+  const directory = blogDirectory(locale)
+  if (!fs.existsSync(directory)) return []
 
   return fs
-    .readdirSync(blogDirectory)
+    .readdirSync(directory)
     .filter((fileName) => fileName.endsWith('.mdx'))
-    .map(readPost)
+    .map((fileName) => readPost(fileName, locale))
     .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
 }
 
-export function getPostBySlug(slug: string): BlogPost | undefined {
+export function getPostBySlug(slug: string, locale: Locale = 'ro'): BlogPost | undefined {
   const safeSlug = path.basename(slug)
   if (safeSlug !== slug) return undefined
 
   const fileName = `${safeSlug}.mdx`
-  const filePath = path.join(blogDirectory, fileName)
+  const filePath = path.join(blogDirectory(locale), fileName)
   if (!fs.existsSync(filePath)) return undefined
 
-  return readPost(fileName)
+  return readPost(fileName, locale)
 }
 
 const STOPWORDS = new Set(
@@ -264,12 +270,12 @@ function relatedPostsIndex(posts: BlogPost[], limit: number) {
   return new Map([...related].map(([slug, list]) => [slug, list.sort(closestFirst).map((pair) => pair.candidate)]))
 }
 
-export function getRelatedPosts(post: BlogPost, limit = 3): BlogPost[] {
-  return relatedPostsIndex(getAllPosts(), limit).get(post.slug) ?? []
+export function getRelatedPosts(post: BlogPost, limit = 3, locale: Locale = 'ro'): BlogPost[] {
+  return relatedPostsIndex(getAllPosts(locale), limit).get(post.slug) ?? []
 }
 
-export function formatBlogDate(date: string) {
-  return new Intl.DateTimeFormat('ro-RO', {
+export function formatBlogDate(date: string, locale: Locale = 'ro') {
+  return new Intl.DateTimeFormat(intlLocale(locale), {
     day: 'numeric',
     month: 'long',
     year: 'numeric',

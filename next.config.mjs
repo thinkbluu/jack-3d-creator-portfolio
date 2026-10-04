@@ -23,6 +23,9 @@ const nextConfig = {
       { source: '/blog/livrare-site-48-ore', destination: '/blog/cat-dureaza-constructia-unui-site', permanent: true },
       { source: '/blog/avans-50-eur-cum-functioneaza', destination: '/blog/cat-dureaza-constructia-unui-site', permanent: true },
       { source: '/blog/creare-site-timisoara-checklist', destination: '/blog/cum-alegi-firma-web-design', permanent: true },
+      // Romanian stays unprefixed. /ro is not a public locale prefix.
+      { source: '/ro', destination: '/', permanent: true },
+      { source: '/ro/:path*', destination: '/:path*', permanent: true },
     ]
   },
   async headers() {

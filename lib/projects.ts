@@ -1,3 +1,6 @@
+import type { Locale } from './i18n/locale'
+import { projectTextEn } from './i18n/content/projects.en'
+
 export type Project = {
   slug: string
   name: string
@@ -239,14 +242,21 @@ export const projects: Project[] = [
   },
 ]
 
-export function getAllProjects(): Project[] {
-  return [...projects].sort((a, b) => Number(b.featured) - Number(a.featured))
+function localizeProject(project: Project, locale: Locale): Project {
+  if (locale === 'ro') return project
+  const text = projectTextEn[project.slug]
+  return text ? { ...project, ...text } : project
 }
 
-export function getProjectBySlug(slug: string): Project | undefined {
-  return projects.find((project) => project.slug === slug)
+export function getAllProjects(locale: Locale = 'ro'): Project[] {
+  return projects.map((project) => localizeProject(project, locale)).sort((a, b) => Number(b.featured) - Number(a.featured))
 }
 
-export function getFeaturedProjects(limit: number): Project[] {
-  return projects.filter((project) => project.featured).slice(0, limit)
+export function getProjectBySlug(slug: string, locale: Locale = 'ro'): Project | undefined {
+  const project = projects.find((item) => item.slug === slug)
+  return project ? localizeProject(project, locale) : undefined
+}
+
+export function getFeaturedProjects(limit: number, locale: Locale = 'ro'): Project[] {
+  return getAllProjects(locale).filter((project) => project.featured).slice(0, limit)
 }

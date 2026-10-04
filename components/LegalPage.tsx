@@ -3,12 +3,17 @@ import Breadcrumbs from './Breadcrumbs'
 import Footer from './Footer'
 import JsonLd from './JsonLd'
 import SiteHeader from './SiteHeader'
+import type { Locale } from '@/lib/i18n/locale'
+import { localizePath } from '@/lib/i18n/paths'
+import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 
 type LegalPageProps = {
+  locale?: Locale
   eyebrow: string
   title: string
   description: string
+  /** Public path, already localized by the page. */
   path: string
   updated: string
   children: ReactNode
@@ -23,9 +28,10 @@ export function LegalSection({ title, children }: { title: string; children: Rea
   )
 }
 
-export default function LegalPage({ eyebrow, title, description, path, updated, children }: LegalPageProps) {
+export default function LegalPage({ locale = 'ro', eyebrow, title, description, path, updated, children }: LegalPageProps) {
+  const copy = ui[locale].common
   const crumbs: BreadcrumbItem[] = [
-    { name: 'Acasă', path: '/' },
+    { name: copy.home, path: localizePath('/', locale) },
     { name: title, path },
   ]
 
@@ -38,13 +44,13 @@ export default function LegalPage({ eyebrow, title, description, path, updated, 
             <Breadcrumbs items={crumbs} />
             <p className="type-kicker">{eyebrow}</p>
             <h1 className="type-h1 text-balance">{title}</h1>
-            <p className="type-body !text-[var(--ink-2)]">Ultima actualizare: {updated}</p>
+            <p className="type-body !text-[var(--ink-2)]">{copy.updated}: {updated}</p>
           </header>
           {children}
         </article>
       </main>
       <Footer />
-      <JsonLd data={graph(webPageNode({ path, name: title, description, breadcrumb: true }), breadcrumbNode(crumbs))} />
+      <JsonLd data={graph(webPageNode({ path, name: title, description, breadcrumb: true, locale }), breadcrumbNode(crumbs))} />
     </>
   )
 }

@@ -1,6 +1,7 @@
 import { track } from '@vercel/analytics'
 import { CONSENT_STORAGE_KEY } from './consent'
 import { PRIVATE_CONTEST_PATHS } from './contest/config'
+import { localizePath } from './i18n/paths'
 
 export { CONSENT_STORAGE_KEY }
 
@@ -24,7 +25,7 @@ declare global {
  * without the query string.
  */
 export function isPrivatePath(pathname: string) {
-  return PRIVATE_CONTEST_PATHS.some((path) => pathname.startsWith(path))
+  return PRIVATE_CONTEST_PATHS.some((path) => pathname.startsWith(path) || pathname.startsWith(localizePath(path, 'en')))
 }
 
 /** Vercel Analytics and Speed Insights `beforeSend`: personal contest pages are reported by path only. */
