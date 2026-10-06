@@ -48,6 +48,7 @@ The site is in excellent shape. Every critical SEO system works end-to-end: uniq
 - **GA4 ID fallback is hardcoded** (`G-WT5MMP4M9D` in `LocaleDocument`) — Consent Mode gates it correctly, but staging/dev traffic counts toward the GA property unless `NEXT_PUBLIC_GTAG_ID` is overridden per environment.
 - **hreflang renders as `hrefLang`** in raw HTML — valid (HTML attributes are case-insensitive; Google parses it fine). Some third-party validators flag it; no action needed.
 - **`/en/get-a-quote` + `/cere-oferta` funnel pair** is correctly noindex,follow in both languages and excluded from the sitemap — verified working.
+- **robots.txt is functionally correct but bloated (~110 lines)** — all 11 per-bot groups are byte-identical to `User-Agent: *`, so they change nothing (a bot falls back to `*` when no group names it). Two tokens are dead: `Claude-Web` (deprecated by Anthropic) and `Google-Extended` (retired by Google). `Allow: /` is redundant — allow is the default, it only means something as an exception inside a broader `Disallow`. The trailing-slash asymmetry (`/site-gratuit/admin/` keeps its slash, `/en/free-website/admin` loses it) comes from `localizePath` dropping trailing slashes via `filter(Boolean)`. Every private route is covered in both languages either way, the sitemap contains no private URLs, and production matches local byte-for-byte. Fix: collapse to one `User-Agent: *` group + the Sitemap line; keep explicit per-bot groups only if their rules ever need to diverge.
 
 ---
 
@@ -60,7 +61,7 @@ The site is in excellent shape. Every critical SEO system works end-to-end: uniq
 | Canonicals | Correct self-canonicals on all pages incl. EN slug mirrors |
 | hreflang | ro/en/x-default correct; RO-only posts emit only ro+x-default (no EN pointer to a 404); service slugs map correctly (`/servicii/aplicatii-web` ↔ `/en/services/web-and-mobile-apps`) |
 | Sitemap | 77 URLs, zero duplicates, no noindex/private URLs, lastmod maintained per page |
-| robots.txt | Per-bot rules for 11 crawlers, private contest paths blocked, sitemap declared |
+| robots.txt | Private contest paths blocked in both languages (all 10 real routes covered), sitemap declared; see Low note for bloat/dead tokens |
 | JSON-LD | Valid graph on every page type (WebPage, BreadcrumbList, Service, BlogPosting, FAQPage, ItemList, ContactPage, AboutPage, CollectionPage, WebSite, ProfessionalService); all required fields present; no self-serving reviews |
 | OG/Twitter | Per-page dynamic OG images all render (200 image/png); article:published/modified present |
 | Redirects | All 308s work (`/ro/*` → `/*`, merged blog posts → canonical pages) |
