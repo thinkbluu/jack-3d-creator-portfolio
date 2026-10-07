@@ -447,14 +447,16 @@ export default function CinematicHero() {
   const header = (
     <header className="absolute inset-x-0 top-0 z-30">
       <nav aria-label={nav.label} className="site-container flex h-20 items-center justify-between">
-        <a href="#home" className="flex items-center gap-2 text-[var(--ink)]">
+        <a href="#home" className="flex shrink-0 items-center gap-2 text-[var(--ink)]">
           <span aria-hidden="true" className="size-[22px] bg-[var(--brass)]" style={{ mask: "url('/icons/mast-mark.svg') center / contain no-repeat", WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat" }} />
           <span className="flex items-baseline gap-2">
             <span style={{ fontFamily: 'var(--font-display)', fontWeight: 600, fontSize: '20px' }}>MAST</span>
             <span style={{ fontFamily: 'var(--font-sans)', fontWeight: 500, fontSize: '10px', letterSpacing: '.28em' }}>STUDIO</span>
           </span>
         </a>
-        <div className="hidden items-center gap-5 whitespace-nowrap text-xs uppercase tracking-[0.16em] lg:flex lg:gap-8">
+        {/* gap-6 at lg: at 2xl all eight items need ~1100px in a 1152px container —
+            gap-8 left only a few px of free space and the nav collided with the logo. */}
+        <div className="hidden items-center gap-5 whitespace-nowrap text-xs uppercase tracking-[0.16em] lg:flex lg:gap-6">
           <a href="#dovada" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">{hero.proof}</a>
           <a href="#servicii" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">{hero.services}</a>
           <Link href={href('/portofoliu')} className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">{nav.portfolio}</Link>
