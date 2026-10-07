@@ -234,6 +234,7 @@ const ro = {
     details: 'Detalii',
     refuse: 'Refuz',
     accept: 'Accept',
+    settings: 'Setări cookie',
   },
   notFound: {
     kicker: 'BRG 404 · În afara hărții',
@@ -630,6 +631,7 @@ const en: typeof ro = {
     details: 'Details',
     refuse: 'Refuse',
     accept: 'Accept',
+    settings: 'Cookie settings',
   },
   notFound: {
     kicker: 'BRG 404 · Off the chart',
