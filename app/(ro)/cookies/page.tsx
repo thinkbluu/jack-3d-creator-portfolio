@@ -29,7 +29,7 @@ const ro = {
     'Accesarea WhatsApp, Facebook, Instagram, ANPC sau a altor servicii externe te mută în mediul acelui furnizor, unde se aplică propria politică de cookie-uri și confidențialitate. MAST Studio nu controlează cookie-urile setate după ce părăsești domeniul nostru.',
   changesTitle: '5. Schimbări viitoare',
   changesBody:
-    'Îți poți schimba alegerea oricând ștergând datele site-ului din setările browserului, iar banner-ul de consimțământ va reapărea. Dacă vom introduce alte instrumente neesențiale, vom actualiza această politică și le vom include în același mecanism de consimțământ înainte de activare.',
+    'Îți poți schimba alegerea oricând: apasă „Setări cookie” din subsolul paginii ca să redeschizi banner-ul de consimțământ, sau șterge datele site-ului din setările browserului și banner-ul va reapărea. Dacă vom introduce alte instrumente neesențiale, vom actualiza această politică și le vom include în același mecanism de consimțământ înainte de activare.',
   contactTitle: '6. Contact',
   contactBody: 'Pentru întrebări despre tehnologiile folosite, scrie la ',
 }
@@ -57,7 +57,7 @@ const en: typeof ro = {
     'Opening WhatsApp, Facebook, Instagram, ANPC or other external services takes you into that provider’s environment, where its own cookie and privacy policy applies. MAST Studio does not control cookies set after you leave our domain.',
   changesTitle: '5. Future changes',
   changesBody:
-    'You can change your choice at any time by deleting the website’s data in your browser settings, and the consent banner will appear again. If we introduce other non-essential tools, we will update this policy and include them in the same consent mechanism before they are switched on.',
+    'You can change your choice at any time: press “Cookie settings” in the page footer to reopen the consent banner, or delete the website’s data in your browser settings and the banner will appear again. If we introduce other non-essential tools, we will update this policy and include them in the same consent mechanism before they are switched on.',
   contactTitle: '6. Contact',
   contactBody: 'For questions about the technologies used, write to ',
 }

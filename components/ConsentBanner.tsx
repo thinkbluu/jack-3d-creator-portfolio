@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { applyConsent, getStoredConsent } from '@/lib/analytics'
+import { CONSENT_OPEN_EVENT } from '@/lib/consent'
 import { useHref, useUi } from '@/lib/i18n/context'
 
 const GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID ?? 'G-WT5MMP4M9D'
@@ -19,6 +20,14 @@ export default function ConsentBanner() {
       if (getStoredConsent() === null) setVisible(true)
     })
     return () => cancelAnimationFrame(id)
+  }, [])
+
+  // The footer "Cookie settings" button re-opens the banner, even after the
+  // visitor has already answered, so the choice can be changed at any time.
+  useEffect(() => {
+    const open = () => setVisible(true)
+    window.addEventListener(CONSENT_OPEN_EVENT, open)
+    return () => window.removeEventListener(CONSENT_OPEN_EVENT, open)
   }, [])
 
   const href = useHref()

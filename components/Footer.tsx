@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import AnpcSalBadge from '@/components/AnpcSalBadge'
+import { openConsentSettings } from '@/lib/consent'
 import { useHref, useLocale, useUi } from '@/lib/i18n/context'
 import { getAllServicePages } from '@/lib/services'
 import {
@@ -40,7 +41,7 @@ function FooterColumn({ title, links }: { title: string; links: Array<{ href: st
 export default function Footer() {
   const locale = useLocale()
   const href = useHref()
-  const { footer, whatsapp } = useUi()
+  const { footer, whatsapp, consent } = useUi()
   const serviceLinks = getAllServicePages(locale).map((service) => ({ href: href(`/servicii/${service.slug}`), label: service.name }))
   // Guides stay on the Romanian URLs: the articles themselves are not translated.
   const guideLinks = footer.guideLinks.map((link) => ({ ...link, href: link.href }))
@@ -101,6 +102,11 @@ export default function Footer() {
               </li>
               <li>
                 <Link href={href('/cookies')} className={linkClass}>{footer.cookies}</Link>
+              </li>
+              <li>
+                <button type="button" onClick={openConsentSettings} className={linkClass}>
+                  {consent.settings}
+                </button>
               </li>
               <li>
                 <Link href={href('/termeni')} className={linkClass}>{footer.terms}</Link>
