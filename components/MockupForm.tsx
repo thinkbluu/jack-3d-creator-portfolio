@@ -4,84 +4,22 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { submitMockupRequest } from '@/lib/mockup'
+import { DOMAINS, mockupSchema, type MockupFormInput, type MockupFormOutput } from '@/lib/mockup'
 import { useHref } from '@/lib/i18n/context'
 import { checkboxClass, checkboxLabelClass, errorClass, inputClass, labelClass, primaryButtonClass, textLinkClass } from './form-styles'
-
-const DOMAINS = [
-  'Clinică / cabinet medical',
-  'Cabinet veterinar',
-  'Stomatologie',
-  'Salon / beauty',
-  'Meserii și construcții',
-  'Consultanță / servicii B2B',
-  'Restaurant / HoReCa',
-  'Magazin / retail',
-  'Altul',
-] as const
-
-/** Accepts 07XXXXXXXX, +407XXXXXXXX or 00407XXXXXXXX, ignoring spaces. */
-const RO_MOBILE = /^(?:(?:\+40|0040)7|07)\d{8}$/
-
-const mockupSchema = z
-  .object({
-    nume: z.string().trim().min(2, 'Scrie numele tău.'),
-    firma: z.string().trim().min(2, 'Scrie numele firmei.'),
-    telefon: z
-      .string()
-      .transform((v) => v.replace(/[\s.\-()]/g, ''))
-      .refine((v) => RO_MOBILE.test(v), { message: 'Introdu un număr de mobil valid.' })
-      .transform((v) => `+40${v.replace(/^(?:\+40|0040|0)/, '')}`),
-    email: z
-      .string()
-      .trim()
-      .refine((v) => v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v), { message: 'Introdu o adresă de e-mail validă.' }),
-    domeniu: z
-      .string()
-      .refine((v) => (DOMAINS as readonly string[]).includes(v), { message: 'Alege domeniul de activitate.' }),
-    site: z.string().trim(),
-    noSite: z.boolean(),
-    projectType: z
-      .string()
-      .refine((v) => v === 'prezentare' || v === 'magazin', { message: 'Alege ce vrei pentru firma ta.' }),
-    servicii: z.string().trim().min(3, 'Scrie serviciile sau produsele principale.'),
-    consent: z.boolean().refine((v) => v === true, { message: 'Bifează acordul ca să putem trimite mockup-ul.' }),
-    // Honeypot: real people and screen readers never see or fill this.
-    website: z.string(),
-    // Tracking fields, filled from the URL for now.
-    gclid: z.string(),
-    utm_source: z.string(),
-    utm_medium: z.string(),
-    utm_campaign: z.string(),
-    utm_term: z.string(),
-  })
-  .superRefine((data, ctx) => {
-    if (data.noSite) return
-    if (!data.site) {
-      ctx.addIssue({ code: 'custom', path: ['site'], message: 'Scrie adresa site-ului actual sau bifează „Nu am site”.' })
-      return
-    }
-    if (!/^(https?:\/\/)?[\w-]+(\.[\w-]+)+/.test(data.site)) {
-      ctx.addIssue({ code: 'custom', path: ['site'], message: 'Introdu o adresă validă, de ex. www.firmata.ro.' })
-    }
-  })
-
-type FormInput = z.input<typeof mockupSchema>
-type FormOutput = z.output<typeof mockupSchema>
 
 const UTM_FIELDS = ['gclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term'] as const
 
 export default function MockupForm() {
   const href = useHref()
-  const [sent, setSent] = useState(false)
+  const [submitFailed, setSubmitFailed] = useState(false)
   const {
     register,
     handleSubmit,
     watch,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<FormInput, unknown, FormOutput>({
+  } = useForm<MockupFormInput, unknown, MockupFormOutput>({
     resolver: zodResolver(mockupSchema),
     defaultValues: {
       nume: '',
@@ -123,33 +61,39 @@ export default function MockupForm() {
     return () => window.removeEventListener('mockup:preselect', preselect)
   }, [setValue])
 
-  async function onSubmit(data: FormOutput) {
-    // Honeypot filled: silently drop the submission.
-    if (data.website) {
-      setSent(true)
-      return
+  async function onSubmit(data: MockupFormOutput) {
+    setSubmitFailed(false)
+    try {
+      const response = await fetch('/api/mockup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      const body = (await response.json().catch(() => null)) as { ok: boolean; id?: string } | null
+      if (!response.ok || !body?.ok) {
+        setSubmitFailed(true)
+        return
+      }
+      try {
+        sessionStorage.setItem('ms_lead', JSON.stringify({ id: body.id, phone: data.telefon, email: data.email }))
+      } catch {
+        // Private mode or storage disabled — the thank-you page just hides the id.
+      }
+      // Full navigation: router.push after awaits is silently dropped in Next 16.
+      window.location.assign(href('/mockup/multumim'))
+    } catch {
+      setSubmitFailed(true)
     }
-    await submitMockupRequest(data)
-    setSent(true)
   }
 
   // Errors reserve their slot (fixed-height <p>) so appearing text never
   // shifts the layout.
-  const errorSlot = (field: keyof FormInput, id: string) => (
+  const errorSlot = (field: keyof MockupFormInput, id: string) => (
     <p id={id} className={`${errorClass} min-h-6`}>
       {errors[field] instanceof Object && 'message' in errors[field]! ? String((errors[field] as { message: string }).message) : ''}
     </p>
   )
-  const describedBy = (field: keyof FormInput, id: string) => (errors[field] ? id : undefined)
-
-  if (sent) {
-    return (
-      <div className="porthole border-[var(--glass-edge)] p-7 md:p-9" role="status">
-        <p className="type-h3 text-balance">Am primit cererea.</p>
-        <p className="type-body mt-3">Îți răspundem pe WhatsApp în maximum 24 de ore lucrătoare.</p>
-      </div>
-    )
-  }
+  const describedBy = (field: keyof MockupFormInput, id: string) => (errors[field] ? id : undefined)
 
   const radioCard = (value: 'prezentare' | 'magazin', labelText: string) => (
     <label className="relative cursor-pointer">
@@ -354,6 +298,23 @@ export default function MockupForm() {
         {process.env.NEXT_PUBLIC_MOCKUP_FULL === 'true' ? (
           <p className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--shell-warm)] px-4 py-3 font-sans text-sm font-semibold text-[var(--ink)]">
             Locurile de azi s-au ocupat. Cererea ta intră în programul de mâine.
+          </p>
+        ) : null}
+
+        {submitFailed ? (
+          <p
+            role="alert"
+            className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--shell-warm)] px-4 py-3 font-sans text-sm text-[var(--ink)]"
+          >
+            Nu am putut trimite cererea.{' '}
+            <a
+              href="https://wa.me/40746382204"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={textLinkClass}
+            >
+              Scrie-ne direct pe WhatsApp și rezolvăm imediat.
+            </a>
           </p>
         ) : null}
 
