@@ -11,6 +11,7 @@ import ServicesSection from '@/components/ServicesSection'
 import ProcessSection from '@/components/ProcessSection'
 import FAQSection from '@/components/FAQSection'
 import FinalCTA from '@/components/FinalCTA'
+import GoogleReviews from '@/components/GoogleReviews'
 import MobileWhatsAppBar from '@/components/MobileWhatsAppBar'
 import { SegmentProvider } from '@/components/SegmentContext'
 
@@ -64,6 +65,7 @@ export default function HomePage({ afterScenes, footer }: { afterScenes?: React.
           <div className="scene-content">
             <ServicesSection />
             <ProofSection />
+            <GoogleReviews className="scene-section" />
             <ManifestSection />
             <ProcessSection />
             <StudioSection />

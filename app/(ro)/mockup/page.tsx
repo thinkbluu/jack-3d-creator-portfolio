@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Footer from '@/components/Footer'
+import GoogleReviews from '@/components/GoogleReviews'
 import JsonLd from '@/components/JsonLd'
 import MockupForm from '@/components/MockupForm'
 import PreselectLink from '@/components/PreselectLink'
@@ -212,7 +213,10 @@ export default function MockupPage() {
           </div>
         </section>
 
-        {/* 5. FAQ */}
+        {/* 5. Google reviews */}
+        <GoogleReviews className="site-container pb-14 md:pb-20" />
+
+        {/* 6. FAQ */}
         <section aria-labelledby="intrebari" className="site-container pb-14 pt-14 md:pb-20 md:pt-20">
           <h2 id="intrebari" className="type-h3">
             Întrebări frecvente
