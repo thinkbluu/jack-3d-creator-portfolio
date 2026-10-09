@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Exposes the deployment environment (production/preview) to client code so
+  // Google Ads tracking only loads on production deployments.
+  env: {
+    NEXT_PUBLIC_TRACKING_ENV: process.env.VERCEL_ENV ?? '',
+  },
   // The contest's daily job lists the newest posts in the newsletter draft.
   outputFileTracingIncludes: {
     '/api/cron/site-gratuit': ['./content/blog/**/*'],

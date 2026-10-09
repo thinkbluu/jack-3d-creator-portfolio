@@ -236,14 +236,6 @@ export function ServicesView({ locale }: { locale: Locale }) {
               {copy.form}
             </Link>
           </section>
-
-          <p className="type-body mt-10 max-w-3xl">
-            {copy.freeBefore}{' '}
-            <Link href={localizePath('/site-gratuit', locale)} className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
-              {copy.freeLink}
-            </Link>{' '}
-            {copy.freeAfter}
-          </p>
         </div>
       </main>
       <Footer />

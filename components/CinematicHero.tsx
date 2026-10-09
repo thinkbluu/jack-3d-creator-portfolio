@@ -200,7 +200,6 @@ export default function CinematicHero() {
     { href: '#servicii', label: hero.services },
     { href: href('/portofoliu'), label: nav.portfolio },
     { href: href('/blog'), label: nav.guide },
-    { href: href('/site-gratuit'), label: nav.freeSite },
     { href: href('/cariere'), label: nav.careers },
     { href: '#process', label: hero.how },
     { href: '#faq', label: hero.questions },
@@ -461,7 +460,6 @@ export default function CinematicHero() {
           <a href="#servicii" className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">{hero.services}</a>
           <Link href={href('/portofoliu')} className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">{nav.portfolio}</Link>
           <Link href={href('/blog')} className="text-[var(--ink-2)] transition-colors hover:text-[var(--ink)]">{nav.guide}</Link>
-          <Link href={href('/site-gratuit')} className="hidden text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] xl:inline-flex">{nav.freeSite}</Link>
           <Link href={href('/cariere')} className="hidden text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] 2xl:inline-flex">{nav.careers}</Link>
           <LanguageSwitcher />
           <ContactButton label={nav.talk} />

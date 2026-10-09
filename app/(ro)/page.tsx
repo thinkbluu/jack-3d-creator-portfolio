@@ -63,7 +63,7 @@ export function HomeView({ locale }: { locale: Locale }) {
   return (
     <>
       <JsonLd data={homeJsonLd} />
-      <HomePage afterScenes={<ContestTeaser />} footer={<Footer />} />
+      <HomePage footer={<Footer />} />
     </>
   )
 }

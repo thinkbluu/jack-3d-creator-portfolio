@@ -16,7 +16,6 @@ export default function SiteHeader({ current }: { current?: SiteSection }) {
     { id: 'servicii', href: href('/servicii'), label: nav.services },
     { id: 'portofoliu', href: href('/portofoliu'), label: nav.portfolio },
     { id: 'blog', href: href('/blog'), label: nav.guide },
-    { id: 'site-gratuit', href: href('/site-gratuit'), label: nav.freeSite },
     { id: 'despre', href: href('/despre'), label: nav.about },
     { id: 'cariere', href: href('/cariere'), label: nav.careers },
     { id: 'contact', href: href('/contact'), label: nav.contact },

@@ -20,8 +20,7 @@ const staticPages: Array<{ path: string; lastModified: string; changeFrequency: 
   { path: '/cerere-oferta', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/comparatie', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/glosar', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.5 },
-  { path: '/site-gratuit', lastModified: '2026-10-04', changeFrequency: 'weekly', priority: 0.8 },
-  { path: '/site-gratuit/regulament', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.3 },
+
   { path: '/cariere', lastModified: '2026-10-03', changeFrequency: 'monthly', priority: 0.5 },
   { path: '/confidentialitate', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/cookies', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.2 },
@@ -63,6 +62,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const mirrorPages: Entry[] = [
     ...staticPages.map((page) => entry(page.path, page.lastModified, page.changeFrequency, page.priority)),
+    // Romanian-only campaign landing page — no English alternate.
+    entry('/mockup', '2026-10-09', 'weekly', 0.8, ['ro']),
     entry('/blog', latestPost, 'weekly', 0.7),
     ...getAllServicePages('ro').map((service) => entry(`/servicii/${service.slug}`, service.updatedAt, 'monthly', 0.9)),
     ...getJobOpenings('ro').map((job) => entry(`/cariere/${job.id}`, '2026-10-03', 'monthly', 0.5)),
@@ -72,12 +73,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
 
   // English URLs are listed as their own sitemap rows as well as hreflang alternates.
-  const englishMirrors: Entry[] = mirrorPages.map((page) => {
-    const languages = page.alternates?.languages
-    const enUrl = languages?.en
-    return enUrl
-      ? { ...page, url: enUrl }
-      : page
+  // Romanian-only entries (no `en` alternate) are not mirrored.
+  const englishMirrors: Entry[] = mirrorPages.flatMap((page) => {
+    const enUrl = page.alternates?.languages?.en
+    return enUrl ? [{ ...page, url: enUrl }] : []
   })
 
   return [

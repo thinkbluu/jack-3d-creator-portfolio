@@ -3,16 +3,15 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { applyConsent, getStoredConsent } from '@/lib/analytics'
+import { GA4_ID } from '@/lib/ads'
 import { CONSENT_OPEN_EVENT } from '@/lib/consent'
 import { useHref, useUi } from '@/lib/i18n/context'
-
-const GTAG_ID = process.env.NEXT_PUBLIC_GTAG_ID ?? 'G-WT5MMP4M9D'
 
 export default function ConsentBanner() {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    if (!GTAG_ID) return
+    if (!GA4_ID) return
     // Read consent only after mount: localStorage is client-only, so gating on it
     // during render would cause a hydration mismatch. Defer to the next frame to
     // keep this out of the synchronous effect body.
@@ -33,7 +32,7 @@ export default function ConsentBanner() {
   const href = useHref()
   const { consent } = useUi()
 
-  if (!GTAG_ID || !visible) return null
+  if (!GA4_ID || !visible) return null
 
   function decide(state: 'granted' | 'denied') {
     applyConsent(state)

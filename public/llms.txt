@@ -51,7 +51,6 @@ MAST Studio este parte din MAST Consult S.R.L., CUI RO49626121, Timișoara, Rom�
 
 ## Concurs și cariere
 
-- Site gratuit în fiecare lună: https://maststudio.ro/site-gratuit (regulament: https://maststudio.ro/site-gratuit/regulament)
 - Cariere: https://maststudio.ro/cariere
 - Post deschis, front-end developer (7.500-9.000 RON net/lună, la distanță): https://maststudio.ro/cariere/front-end-developer
 - Post deschis, mobile app developer (8.000-10.000 RON net/lună, la distanță): https://maststudio.ro/cariere/mobile-app-developer

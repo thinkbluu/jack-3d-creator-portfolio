@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-head-element, @next/next/no-before-interactive-script-outside-document -- this component is the <html> shell for both root layouts */
 import type { Metadata, Viewport } from 'next'
 import Script from 'next/script'
+import AdsTracking from '@/components/AdsTracking'
 import ConsentBanner from '@/components/ConsentBanner'
-import GoogleTag from '@/components/GoogleTag'
 import JsonLd from '@/components/JsonLd'
 import ScrollProgress from '@/components/ScrollProgress'
 import VercelInsights from '@/components/VercelInsights'
@@ -10,12 +10,12 @@ import { LocaleProvider } from '@/lib/i18n/context'
 import { htmlLang, ogLocale, type Locale } from '@/lib/i18n/locale'
 import { ui } from '@/lib/i18n/ui'
 import { CONSENT_STORAGE_KEY } from '@/lib/consent'
+import { TRACKING_ACTIVE } from '@/lib/ads'
 import { fontClassName } from '@/lib/fonts'
 import { businessNode, graph, websiteNode } from '@/lib/schema'
 import { defaultOgImage } from '@/lib/seo'
 import { LEGAL_NAME, SITE_NAME, SITE_URL } from '@/lib/site'
 
-const gtagId = process.env.NEXT_PUBLIC_GTAG_ID ?? 'G-WT5MMP4M9D'
 const consentGrantedUpdate = "{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'}"
 
 export const localeViewport: Viewport = {
@@ -61,7 +61,7 @@ export default function LocaleDocument({ locale, children }: { locale: Locale; c
   return (
     <html lang={htmlLang(locale)} className={`${fontClassName} bg-[var(--shell)]`}>
       <head>
-        {gtagId ? (
+        {TRACKING_ACTIVE ? (
           <Script id="gtag-consent-default" strategy="beforeInteractive">
             {`
               window.dataLayer = window.dataLayer || [];
@@ -73,6 +73,8 @@ export default function LocaleDocument({ locale, children }: { locale: Locale; c
                 ad_personalization: 'denied',
                 analytics_storage: 'denied',
                 wait_for_update: 500,
+                url_passthrough: true,
+                ads_data_redaction: true,
               });
               try {
                 if (localStorage.getItem('${CONSENT_STORAGE_KEY}') === 'granted') {
@@ -93,7 +95,7 @@ export default function LocaleDocument({ locale, children }: { locale: Locale; c
           {children}
           <ConsentBanner />
           <JsonLd data={graph(websiteNode(locale), businessNode(locale))} />
-          {gtagId ? <GoogleTag id={gtagId} /> : null}
+          <AdsTracking />
           <VercelInsights />
         </LocaleProvider>
       </body>
