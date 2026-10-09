@@ -111,9 +111,6 @@ export default function Footer() {
               <li>
                 <Link href={href('/termeni')} className={linkClass}>{footer.terms}</Link>
               </li>
-              <li>
-                <Link href={href('/site-gratuit/regulament')} className={linkClass}>{footer.rules}</Link>
-              </li>
             </ul>
           </nav>
           <AnpcSalBadge className="mx-0 self-start lg:self-auto" />

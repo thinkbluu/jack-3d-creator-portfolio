@@ -141,13 +141,6 @@ export function PrivacyView({ locale }: { locale: Locale }) {
           </a>
           {t.careersAfter}
         </p>
-        <p>
-          {t.contestBefore}
-          <a className={linkClass} href={localizePath('/site-gratuit', locale)}>
-            {t.contestLink}
-          </a>
-          {t.contestAfter}
-        </p>
         <p>{t.dataQuote}</p>
         <p>{t.dataVercel}</p>
         <p>

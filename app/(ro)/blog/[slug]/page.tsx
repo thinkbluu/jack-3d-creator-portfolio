@@ -197,12 +197,7 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
               {copy.seeAlso}{' '}
               <Link href={localizePath('/servicii', locale)} className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
                 {copy.prices}
-              </Link>{' '}
-              {copy.orJoin}{' '}
-              <Link href={localizePath('/site-gratuit', locale)} className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
-                {copy.contest}
-              </Link>
-              .
+              </Link>.
             </p>
           </section>
 

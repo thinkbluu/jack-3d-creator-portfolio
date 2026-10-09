@@ -20,8 +20,7 @@ const staticPages: Array<{ path: string; lastModified: string; changeFrequency: 
   { path: '/cerere-oferta', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/comparatie', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/glosar', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.5 },
-  { path: '/site-gratuit', lastModified: '2026-10-04', changeFrequency: 'weekly', priority: 0.8 },
-  { path: '/site-gratuit/regulament', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.3 },
+
   { path: '/cariere', lastModified: '2026-10-03', changeFrequency: 'monthly', priority: 0.5 },
   { path: '/confidentialitate', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.2 },
   { path: '/cookies', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.2 },
