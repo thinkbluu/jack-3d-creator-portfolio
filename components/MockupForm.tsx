@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { readAttribution } from '@/lib/ads'
 import { DOMAINS, mockupSchema, type MockupFormInput, type MockupFormOutput } from '@/lib/mockup'
 import { useHref } from '@/lib/i18n/context'
 import { checkboxClass, checkboxLabelClass, errorClass, inputClass, labelClass, primaryButtonClass, textLinkClass } from './form-styles'
@@ -46,10 +47,13 @@ export default function MockupForm() {
 
   // Read tracking params and the ?tip= preselect from the URL on mount, and
   // listen for PreselectLink clicks (Black Friday band → "Magazin online").
+  // Tracking params missing from the URL fall back to the 90-day click
+  // attribution saved by AdsTracking (e.g. ad click → later direct visit).
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
+    const attribution = readAttribution()
     for (const field of UTM_FIELDS) {
-      const value = params.get(field)
+      const value = params.get(field) ?? attribution[field] ?? ''
       if (value) setValue(field, value)
     }
     if (params.get('tip') === 'magazin') setValue('projectType', 'magazin')

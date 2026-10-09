@@ -3,6 +3,7 @@ import Link from 'next/link'
 import SiteHeader from '@/components/SiteHeader'
 import Footer from '@/components/Footer'
 import { primaryButtonClass, textLinkClass } from '@/components/form-styles'
+import MockupConversion from '@/components/MockupConversion'
 import LeadId from './LeadId'
 
 export const metadata: Metadata = {
@@ -39,6 +40,7 @@ export default function MockupThankYouPage() {
           <div className="mt-8">
             <LeadId />
           </div>
+          <MockupConversion />
         </div>
       </main>
       <Footer />
