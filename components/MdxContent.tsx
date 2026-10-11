@@ -3,6 +3,15 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
 
 const components = {
+  // Images in posts: ![Alt text](/blog/slug/image.webp "Optional caption").
+  // Spans, not a figure, because Markdown puts images inside paragraphs.
+  img: ({ src, alt, title }: ComponentProps<'img'>) => (
+    <span className="mdx-figure">
+      {/* eslint-disable-next-line @next/next/no-img-element -- MDX images have no known size */}
+      <img src={typeof src === 'string' ? src : undefined} alt={alt ?? ''} loading="lazy" decoding="async" />
+      {title ? <span className="mdx-caption">{title}</span> : null}
+    </span>
+  ),
   // Wide tables scroll inside their own box on small screens, so the page
   // itself never scrolls sideways. The box is focusable for keyboard users.
   table: (props: ComponentProps<'table'>) => (

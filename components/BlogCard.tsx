@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { formatBlogDate, type BlogPost } from '@/lib/blog'
 import type { Locale } from '@/lib/i18n/locale'
@@ -18,6 +19,17 @@ export default function BlogCard({ post, locale = 'ro', headingLevel = 'h2' }: B
       href={localizePath(`/blog/${post.slug}`, locale)}
       className="group flex min-h-[260px] flex-col items-stretch justify-start gap-5 border-t border-[var(--ink)] pt-6 pb-8 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
     >
+      {post.cover ? (
+        <span className="relative block aspect-[16/10] overflow-hidden rounded-[14px] bg-[var(--shell-warm)]">
+          <Image
+            src={post.cover}
+            alt={post.coverAlt ?? ''}
+            fill
+            sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 92vw"
+            className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.04]"
+          />
+        </span>
+      ) : null}
       <span className="mono-label flex items-center justify-between gap-3 text-[var(--ink-3)]">
         <span className="text-[var(--brass-ink)]">{post.categoryLabel}</span>
         <span>
