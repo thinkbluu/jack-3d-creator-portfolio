@@ -482,28 +482,30 @@ export function ComparisonView({ locale }: { locale: Locale }) {
           <section className="mt-12">
             <h2 className="type-h3">{copy.tableTitle}</h2>
             <div className="prose mt-6">
-              <table>
-                <thead>
-                  <tr>
-                    <th scope="col">{copy.columns.criterion}</th>
-                    <th scope="col">{copy.columns.wix}</th>
-                    <th scope="col">{copy.columns.freelancer}</th>
-                    <th scope="col">{copy.columns.studio}</th>
-                    <th scope="col">{copy.columns.agency}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {copy.rows.map((row) => (
-                    <tr key={row.label}>
-                      <th scope="row">{row.label}</th>
-                      <td>{row.wix}</td>
-                      <td>{row.freelancer}</td>
-                      <td>{row.studio}</td>
-                      <td>{row.agentie}</td>
+              <div className="table-scroll" tabIndex={0} role="region" aria-label={copy.tableTitle}>
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">{copy.columns.criterion}</th>
+                      <th scope="col">{copy.columns.wix}</th>
+                      <th scope="col">{copy.columns.freelancer}</th>
+                      <th scope="col">{copy.columns.studio}</th>
+                      <th scope="col">{copy.columns.agency}</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {copy.rows.map((row) => (
+                      <tr key={row.label}>
+                        <th scope="row">{row.label}</th>
+                        <td>{row.wix}</td>
+                        <td>{row.freelancer}</td>
+                        <td>{row.studio}</td>
+                        <td>{row.agentie}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </section>
 

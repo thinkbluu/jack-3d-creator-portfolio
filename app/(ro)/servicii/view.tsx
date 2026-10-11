@@ -148,10 +148,10 @@ export function ServicesView({ locale }: { locale: Locale }) {
             {services.map((service, index) => (
               <li key={service.slug} className="border-b border-[var(--hairline)]">
                 <Reveal>
-                  <article className="grid gap-6 py-10 md:grid-cols-[4rem_1.3fr_1fr_auto] md:items-baseline md:gap-8 md:py-14">
+                  <article className="grid gap-6 py-10 md:grid-cols-[4rem_minmax(0,1.3fr)_minmax(0,1fr)_auto] md:items-baseline md:gap-8 md:py-14">
                     <span className="mono-label text-[var(--brass-ink)]">{String(index + 1).padStart(2, '0')}</span>
-                    <div>
-                      <h2 className="display-xl text-[clamp(2rem,4vw,3.8rem)]">
+                    <div className="min-w-0">
+                      <h2 className="display-xl text-[clamp(1.85rem,4vw,3.8rem)]">
                         <Link href={localizePath(`/servicii/${service.slug}`, locale)} className="inline min-h-0 transition-colors hover:text-[var(--brass-ink)]">
                           {service.name}
                         </Link>
@@ -170,7 +170,7 @@ export function ServicesView({ locale }: { locale: Locale }) {
                     </dl>
                     <Link
                       href={localizePath(`/servicii/${service.slug}`, locale)}
-                      className="mono-label items-center self-start rounded-[var(--radius-pill)] border border-[var(--ink)] px-5 transition-colors hover:bg-[var(--ink)] hover:text-[var(--shell)]"
+                      className="mono-label max-w-full items-center self-start whitespace-normal rounded-[var(--radius-pill)] border border-[var(--ink)] px-5 text-left transition-colors hover:bg-[var(--ink)] hover:text-[var(--shell)] md:whitespace-nowrap"
                     >
                       {copy.includes} {phraseName(service.shortName, locale)} →
                     </Link>

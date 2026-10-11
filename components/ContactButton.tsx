@@ -15,14 +15,14 @@ export default function ContactButton({ hero = false, ghost = false, label, note
   const showNote = note ?? !label
 
   const base =
-    'group inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap font-sans font-bold transition-[background-color,transform,color] duration-[250ms] ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]'
+    'group inline-flex max-w-full cursor-pointer items-center justify-center gap-2 whitespace-normal text-center font-sans font-bold transition-[background-color,transform,color] duration-[250ms] ease-out focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] sm:whitespace-nowrap'
 
   const skin = ghost
     ? 'border-[1.5px] border-[var(--brass)] bg-transparent text-[var(--brass-ink)] hover:bg-[var(--brass)] hover:text-[var(--ink)]'
     : 'bg-[var(--ink)] text-[var(--shell)] hover:bg-[#2E2822] hover:-translate-y-px'
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex w-full max-w-full flex-col items-center">
       <TrackedLink
         data-route-contact="true"
         href={getWaUrl(segment, undefined, locale)}
@@ -33,7 +33,7 @@ export default function ContactButton({ hero = false, ghost = false, label, note
         className={`${base} ${skin}`}
         style={{
           borderRadius: 'var(--radius-pill)',
-          padding: hero ? '17px 38px' : '15px 32px',
+          padding: hero ? '17px clamp(1rem, 4vw, 2.375rem)' : '15px clamp(1rem, 4vw, 2rem)',
           fontSize: hero ? '15.5px' : '14.5px',
         }}
       >

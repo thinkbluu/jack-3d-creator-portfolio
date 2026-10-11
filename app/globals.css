@@ -915,6 +915,14 @@ html.lenis {
     font-weight: 400;
     letter-spacing: -0.035em;
     line-height: 0.9;
+    /* Long Romanian compounds (automatizările, confidențialitate) must wrap
+       inside narrow columns instead of stretching the page sideways. */
+    overflow-wrap: anywhere;
+  }
+
+  /* Sticky mobile WhatsApp bar reserves space so closing CTAs stay above it. */
+  html.has-mobile-wa-bar body {
+    padding-bottom: var(--mobile-wa-bar, 0px);
   }
 
   .display-italic {
