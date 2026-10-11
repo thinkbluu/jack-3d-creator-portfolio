@@ -1672,7 +1672,9 @@ html[data-visit='4'] .salut-back[data-visit='4'] {
   gap: 0.3rem;
   margin-top: auto;
   padding-top: 1rem;
-  border-top: 1px solid var(--hairline);
+  /* Ink hairline: the card stays light even when the section is tone-dark,
+     where var(--hairline) flips to a light-on-dark value. */
+  border-top: 1px solid rgba(26,23,20,0.1);
 }
 .salut-orbit-reviewer {
   font-weight: 600;

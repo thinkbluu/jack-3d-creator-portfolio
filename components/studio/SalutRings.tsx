@@ -15,7 +15,7 @@ export function ReviewsBlock() {
   if (reviewCards.length < 5) return null
   return (
     <SalutOrbit
-      tone="cream"
+      tone="dark"
       title={copy.reviewsTitle}
       intro={copy.reviewsIntro}
       cta={
