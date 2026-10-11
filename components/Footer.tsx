@@ -73,6 +73,7 @@ export default function Footer({ cta = true }: { cta?: boolean } = {}) {
               href={whatsappUrl(whatsapp.general)}
               target="_blank"
               rel="noopener noreferrer"
+              data-magnetic
               className="shrink-0 self-start rounded-[var(--radius-pill)] bg-[var(--brass-lite)] px-7 text-base font-semibold text-[var(--night)] transition-colors hover:bg-[var(--on-dark)] lg:self-auto"
             >
               {redesign.footer.cta}

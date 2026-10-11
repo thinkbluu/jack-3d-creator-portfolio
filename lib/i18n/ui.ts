@@ -389,6 +389,7 @@ const ro = {
   },
   redesign: {
     menu: { label: 'Meniu', recent: 'Proiecte recente', close: 'Închide', write: 'Scrie-ne' },
+    cursor: { view: 'Vezi', open: 'Deschide', all: 'Toate' },
     footer: { headline: 'Ai o idee?', headlineAccent: 'Hai să-i dăm formă.', cta: 'Scrie-ne pe WhatsApp', back: 'Înapoi sus' },
     loader: { label: 'Se încarcă', line: 'Construim o lume pentru tine' },
     story: {
@@ -833,6 +834,7 @@ const en: typeof ro = {
   },
   redesign: {
     menu: { label: 'Menu', recent: 'Recent work', close: 'Close', write: 'Write to us' },
+    cursor: { view: 'View', open: 'Open', all: 'All' },
     footer: { headline: 'Got an idea?', headlineAccent: 'Let’s give it shape.', cta: 'Message us on WhatsApp', back: 'Back to top' },
     loader: { label: 'Loading', line: 'Building a world for you' },
     story: {

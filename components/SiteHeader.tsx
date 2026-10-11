@@ -57,14 +57,17 @@ export default function SiteHeader({
       setScrolled(window.scrollY > 24)
       if (!overlay) return
       const stack = document.elementsFromPoint(window.innerWidth / 2, 40)
+      let next: 'light' | 'dark' = 'light'
       for (const element of stack) {
         if (headerRef.current?.contains(element)) continue
         const surface = element.closest('.tone-cream, .tone-warm, .tone-dark, .tone-navy')
         if (surface) {
-          setSurfaceTone(surface.matches('.tone-cream, .tone-warm') ? 'light' : 'dark')
-          return
+          next = surface.matches('.tone-cream, .tone-warm') ? 'light' : 'dark'
+          break
         }
       }
+      // Pages without a toned section under the header sit on cream.
+      setSurfaceTone(next)
     }
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(readTone)
@@ -138,6 +141,7 @@ export default function SiteHeader({
             <LanguageSwitcher className="hidden md:block" />
             <Link
               href={quote.href}
+              data-magnetic
               className={`mono-label hidden whitespace-nowrap rounded-[var(--radius-pill)] px-5 transition-colors sm:inline-flex ${
                 dark
                   ? 'bg-[var(--brass-lite)] text-[var(--night)] hover:bg-[var(--on-dark)]'

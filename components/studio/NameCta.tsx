@@ -166,6 +166,7 @@ export default function NameCta() {
               rel="noopener noreferrer"
               eventName="whatsapp_click"
               eventProperties={{ placement: 'home_name_cta' }}
+              data-magnetic
               className="items-center justify-center rounded-[var(--radius-pill)] bg-[var(--brass-lite)] px-8 py-4 text-center text-base font-semibold text-[var(--night)] transition-colors hover:bg-[var(--on-dark)]"
             >
               {copy.whatsapp} →

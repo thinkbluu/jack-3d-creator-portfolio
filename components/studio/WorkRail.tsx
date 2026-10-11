@@ -74,6 +74,7 @@ export default function WorkRail() {
             <Link
               key={project.slug}
               href={href(`/portofoliu/${project.slug}`)}
+              data-cursor={redesign.cursor.view}
               className="link-block group w-[82vw] shrink-0 snap-start md:w-[min(56vw,110svh)]"
             >
               <article>
@@ -114,6 +115,7 @@ export default function WorkRail() {
 
           <Link
             href={href('/portofoliu')}
+            data-magnetic
             className="link-block group flex w-[60vw] shrink-0 snap-start items-center md:w-[26vw]"
           >
             <span className="flex aspect-square w-full flex-col items-center justify-center rounded-full border border-[var(--line)] text-center transition-colors duration-500 group-hover:border-[var(--brass-lite)] group-hover:bg-[var(--brass-lite)] group-hover:text-[var(--night)]">

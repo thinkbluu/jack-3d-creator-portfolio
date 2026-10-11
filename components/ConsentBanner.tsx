@@ -43,35 +43,31 @@ export default function ConsentBanner() {
     <div
       role="dialog"
       aria-label={consent.label}
-      className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-2xl rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--shell-warm)] p-5 shadow-[0_18px_40px_-24px_rgba(28,24,20,0.55)] md:inset-x-0"
+      className="fixed inset-x-3 bottom-3 z-[60] max-w-md rounded-[10px] border border-[rgba(250,247,242,0.12)] bg-[rgba(11,15,22,0.92)] p-5 text-[#faf7f2] shadow-[0_24px_60px_-30px_rgba(0,0,0,0.8)] backdrop-blur-xl md:inset-x-auto md:bottom-6 md:left-6"
     >
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-sans text-sm leading-relaxed text-[var(--ink-2)]">
-          {consent.body}{' '}
-          <Link
-            href={href('/cookies')}
-            className="font-semibold text-[var(--brass-ink)] underline underline-offset-4"
-          >
-            {consent.details}
-          </Link>
-          .
-        </p>
-        <div className="flex shrink-0 items-center gap-2">
-          <button
-            type="button"
-            onClick={() => decide('denied')}
-            className="min-h-11 rounded-[var(--radius-pill)] border-[1.5px] border-[var(--hairline)] px-5 font-sans text-sm font-semibold text-[var(--ink-2)] transition-colors hover:border-[var(--brass)] hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brass)]"
-          >
-            {consent.refuse}
-          </button>
-          <button
-            type="button"
-            onClick={() => decide('granted')}
-            className="min-h-11 rounded-[var(--radius-pill)] bg-[var(--ink)] px-5 font-sans text-sm font-bold text-[var(--shell)] transition-colors hover:bg-[#2E2822] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brass)]"
-          >
-            {consent.accept}
-          </button>
-        </div>
+      <p className="mono-label text-[var(--brass-lite)]">Cookies</p>
+      <p className="mt-3 font-sans text-sm leading-relaxed text-[rgba(250,247,242,0.74)]">
+        {consent.body}{' '}
+        <Link href={href('/cookies')} className="inline min-h-0 text-[#faf7f2] underline underline-offset-4">
+          {consent.details}
+        </Link>
+        .
+      </p>
+      <div className="mt-4 flex items-center gap-2">
+        <button
+          type="button"
+          onClick={() => decide('denied')}
+          className="mono-label min-h-11 rounded-[var(--radius-pill)] border border-[rgba(250,247,242,0.2)] px-5 text-[#faf7f2] transition-colors hover:border-[#faf7f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brass-lite)]"
+        >
+          {consent.refuse}
+        </button>
+        <button
+          type="button"
+          onClick={() => decide('granted')}
+          className="mono-label min-h-11 rounded-[var(--radius-pill)] bg-[var(--brass-lite)] px-5 text-[var(--night)] transition-colors hover:bg-[#faf7f2] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brass-lite)]"
+        >
+          {consent.accept}
+        </button>
       </div>
     </div>
   )

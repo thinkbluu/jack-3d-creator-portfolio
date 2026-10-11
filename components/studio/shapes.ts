@@ -5,7 +5,13 @@ import type { Shape } from './particle-engine'
  * the viewport (y up, like the WebGL scene). Pixels are sampled on a grid and
  * then drawn at random with a little jitter, so any count fills any shape.
  */
-function sample(width: number, height: number, count: number, draw: (ctx: CanvasRenderingContext2D) => void): Shape {
+function sample(
+  width: number,
+  height: number,
+  count: number,
+  draw: (ctx: CanvasRenderingContext2D) => void,
+  depth?: (x: number, y: number) => number,
+): Shape {
   const canvas = document.createElement('canvas')
   canvas.width = width
   canvas.height = height
@@ -33,7 +39,7 @@ function sample(width: number, height: number, count: number, draw: (ctx: Canvas
     const k = (Math.random() * xs.length) | 0
     data[i * 3] = xs[k] + (Math.random() - 0.5) * gap - width / 2
     data[i * 3 + 1] = height / 2 - (ys[k] + (Math.random() - 0.5) * gap)
-    data[i * 3 + 2] = (Math.random() - 0.5) * 80
+    data[i * 3 + 2] = depth ? depth(data[i * 3], data[i * 3 + 1]) : (Math.random() - 0.5) * 80
   }
   return { kind: 'points', data }
 }
@@ -63,9 +69,21 @@ export async function compassShape(width: number, height: number, count: number,
   const image = await loadMark()
   if (!image) return { kind: 'chaos' }
   const size = Math.min(width * 0.9, height * 0.95)
-  return sample(width, height, count, (ctx) => {
-    ctx.drawImage(image, width / 2 - size / 2, height / 2 - lift - size / 2, size, size)
-  })
+  const radius = size / 2
+  return sample(
+    width,
+    height,
+    count,
+    (ctx) => {
+      ctx.drawImage(image, width / 2 - size / 2, height / 2 - lift - size / 2, size, size)
+    },
+    // A raised star: the centre stands proud and the points fall away, so the
+    // rose shows its volume as the field turns.
+    (x, y) => {
+      const r = Math.hypot(x, y - lift) / radius
+      return (1 - Math.min(1, r)) * radius * 0.55 + (Math.random() - 0.5) * 24
+    },
+  )
 }
 
 /** A word set in the display face, fitted to the width. */

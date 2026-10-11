@@ -7,6 +7,7 @@ import JsonLd from '@/components/JsonLd'
 import ScrollProgress from '@/components/ScrollProgress'
 import SmoothScroll from '@/components/SmoothScroll'
 import StudioCursor from '@/components/StudioCursor'
+import PageTransition from '@/components/PageTransition'
 import VercelInsights from '@/components/VercelInsights'
 import { LocaleProvider } from '@/lib/i18n/context'
 import { htmlLang, ogLocale, type Locale } from '@/lib/i18n/locale'
@@ -101,6 +102,7 @@ export default function LocaleDocument({ locale, children }: { locale: Locale; c
           <AdsTracking />
           <VercelInsights />
           <StudioCursor />
+          <PageTransition />
         </LocaleProvider>
       </body>
     </html>

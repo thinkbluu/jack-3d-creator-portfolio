@@ -56,6 +56,7 @@ const vertexShader = /* glsl */ `
   uniform vec2 uRes;
   uniform vec2 uMouse;
   uniform vec2 uShockPos;
+  uniform vec2 uTilt;
 
   varying float vAlpha;
   varying float vAccent;
@@ -120,9 +121,22 @@ const vertexShader = /* glsl */ `
     float band = exp(-pow((sdist - ring) / 70.0, 2.0)) * exp(-uShockT * 1.6);
     p.xy += sd / sdist * band * 140.0;
 
+    // Turn the whole field a little toward the pointer and project it with a
+    // real perspective, so depth in the shapes reads as volume.
+    vec3 q = p - vec3(0.0, uLift, 0.0);
+    float cy = cos(uTilt.x);
+    float sy = sin(uTilt.x);
+    q = vec3(q.x * cy + q.z * sy, q.y, -q.x * sy + q.z * cy);
+    float cx = cos(uTilt.y);
+    float sx = sin(uTilt.y);
+    q = vec3(q.x, q.y * cx - q.z * sx, q.y * sx + q.z * cx);
+    float focal = uRes.y * 1.8;
+    float persp = focal / max(focal - q.z, focal * 0.25);
+    p = vec3(q.xy * persp + vec2(0.0, uLift), q.z);
+
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p.xy, 0.0, 1.0);
     float depth = clamp(p.z / max(uScale * 0.34, 1.0) * 0.5 + 0.5, 0.0, 1.0);
-    gl_PointSize = uSize * uPR * (0.55 + depth * 0.95) * (aSeed.w > 0.5 ? 1.6 : 1.0);
+    gl_PointSize = uSize * uPR * persp * (0.55 + depth * 0.95) * (aSeed.w > 0.5 ? 1.6 : 1.0);
     vAlpha = (0.32 + depth * 0.68) * (0.4 + intro * 0.6);
     vAccent = aSeed.w;
   }
@@ -234,6 +248,7 @@ export class ParticleEngine {
         uRes: { value: new THREE.Vector2(1, 1) },
         uMouse: { value: new THREE.Vector2(-99999, -99999) },
         uShockPos: { value: new THREE.Vector2(-99999, -99999) },
+        uTilt: { value: new THREE.Vector2(0, 0) },
         uInk: { value: new THREE.Color(opts.ink) },
         uAccent: { value: new THREE.Color(opts.accent) },
       },
@@ -368,6 +383,14 @@ export class ParticleEngine {
     mouse.x += (this.pointerTarget.x - mouse.x) * 0.18
     mouse.y += (this.pointerTarget.y - mouse.y) * 0.18
     u.uPointer.value += (this.pointerTarget.strength - u.uPointer.value) * 0.08
+    const tilt = u.uTilt.value as THREE.Vector2
+    if (!reduced) {
+      const active = this.pointerTarget.strength > 0
+      const tx = active ? (this.pointerTarget.x / this.width) * 0.55 : Math.sin(elapsed * 0.31) * 0.16
+      const ty = active ? (-this.pointerTarget.y / this.height) * 0.38 : Math.sin(elapsed * 0.23 + 1.3) * 0.07
+      tilt.x += (tx - tilt.x) * 0.04
+      tilt.y += (ty - tilt.y) * 0.04
+    }
     u.uAttract.value += (this.attractTarget - u.uAttract.value) * 0.06
 
     if (this.opts.trails && !reduced) {
