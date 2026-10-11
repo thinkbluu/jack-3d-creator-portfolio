@@ -1,8 +1,8 @@
-import Breadcrumbs from '@/components/Breadcrumbs'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
+import PageHero from '@/components/studio/PageHero'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { getAllGlossaryTerms, getGlossaryCategoryLabels, type GlossaryCategory } from '@/lib/glossary'
 import type { Locale } from '@/lib/i18n/locale'
@@ -88,17 +88,11 @@ export function GlossaryView({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-      <article className="glosar-page site-container py-12 md:py-20">
-        <header className="mx-auto max-w-2xl">
-          <Breadcrumbs items={crumbs} />
-          <p className="kicker mt-6">{copy.kicker}</p>
-          <h1 className="type-h2 mt-4 text-balance">{copy.heading}</h1>
-          <p className="type-body mt-4">{copy.intro}</p>
-        </header>
-
-        <div className="mx-auto mt-8 max-w-2xl">
+      <PageHero crumbs={crumbs} kicker={copy.kicker} title={copy.heading} intro={copy.intro} />
+      <article className="glosar-page site-container py-20 md:py-28">
+        <div className="mx-auto max-w-2xl">
           <fieldset className="flex flex-wrap gap-2">
             <legend className="sr-only">{copy.filterLegend}</legend>
 

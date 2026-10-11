@@ -35,7 +35,7 @@ export default function PageHero({
       {dark ? (
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -right-[12vw] -top-[8vw] size-[56vw] max-w-[52rem] bg-[var(--navy-2)] opacity-60"
+          className="pointer-events-none absolute -right-[28vw] top-28 size-[80vw] max-w-[52rem] bg-[var(--navy-2)] opacity-60 md:-right-[12vw] md:-top-[8vw] md:size-[56vw]"
           style={{
             mask: "url('/icons/mast-mark.svg') center / contain no-repeat",
             WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat",
