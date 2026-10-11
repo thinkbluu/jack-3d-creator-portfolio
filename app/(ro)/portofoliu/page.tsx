@@ -1,10 +1,9 @@
-import Breadcrumbs from '@/components/Breadcrumbs'
-import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import PortfolioGrid from '@/components/PortfolioGrid'
 import SiteHeader from '@/components/SiteHeader'
-import { SegmentProvider } from '@/components/SegmentContext'
+import CtaBand from '@/components/studio/CtaBand'
+import PageHero from '@/components/studio/PageHero'
 import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
@@ -77,29 +76,32 @@ export function PortfolioView({ locale }: { locale: Locale }) {
     },
   )
 
+  const clientCount = projects.filter((project) => project.type === 'client').length
+
   return (
     <>
-      <SiteHeader current="portofoliu" />
+      <SiteHeader current="portofoliu" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <div className="site-container py-12 md:py-20">
-          <Breadcrumbs items={crumbs} />
-          <div className="mt-6 max-w-3xl">
-            <p className="kicker">{ui[locale].nav.portfolio}</p>
-            <h1 className="type-h2 mt-4 text-balance">{copy.title}</h1>
-            <p className="type-body mt-6 max-w-2xl text-[var(--ink-2)]">{copy.intro}</p>
-          </div>
-
+        <PageHero
+          crumbs={crumbs}
+          kicker={ui[locale].nav.portfolio}
+          title={copy.title}
+          intro={copy.intro}
+          aside={
+            <p className="flex items-end gap-4 lg:justify-end">
+              <span className="display-xl text-[clamp(5rem,10vw,9rem)] leading-[0.8] text-[var(--brass-lite)]">
+                {String(clientCount).padStart(2, '0')}
+              </span>
+              <span className="mono-label max-w-[10rem] pb-2 text-[var(--fg-3)]">{ui[locale].projects.clients}</span>
+            </p>
+          }
+        />
+        <div className="studio-container py-20 md:py-28">
           <PortfolioGrid projects={projects} />
-
-          <section className="porthole mt-20 flex flex-col items-start gap-5 p-8">
-            <h2 className="type-h3">{copy.next}</h2>
-            <SegmentProvider>
-              <ContactButton hero label={ui[locale].whatsapp.defaultCta} />
-            </SegmentProvider>
-          </section>
         </div>
+        <CtaBand title={copy.next} placement="portfolio_cta" />
       </main>
-      <Footer />
+      <Footer cta={false} />
       <JsonLd data={jsonLd} />
     </>
   )

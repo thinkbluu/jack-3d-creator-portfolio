@@ -19,13 +19,22 @@ export default function NotFoundView({ locale }: { locale: Locale }) {
   const copy = ui[locale].notFound
   return (
     <>
-      <SiteHeader />
-      <main className="flex min-h-[70vh] items-center bg-[var(--shell)] text-[var(--ink)]">
-        <div className="site-container flex max-w-4xl flex-col gap-7 py-24">
+      <SiteHeader tone="dark" overlay />
+      <main className="tone-dark grain relative flex min-h-svh items-center overflow-hidden">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-[10vw] top-1/2 size-[70vw] max-w-[60rem] -translate-y-1/2 bg-[var(--navy-2)] opacity-70"
+          style={{
+            mask: "url('/icons/mast-mark.svg') center / contain no-repeat",
+            WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat",
+          }}
+        />
+        <div className="studio-container relative flex flex-col gap-7 py-32">
           <p className="type-kicker">{copy.kicker}</p>
-          <h1 className="type-h1 text-balance">{copy.title}</h1>
+          <h1 className="display-xl max-w-4xl text-balance text-[clamp(3rem,8vw,8rem)]">{copy.title}</h1>
           <p className="type-body max-w-2xl !text-[var(--ink-2)]">{copy.body}</p>
-          <Link href={localizePath('/', locale)} className="w-fit rounded-full border border-[var(--brass)] px-6 py-3 font-medium text-[var(--brass-ink)] transition-colors hover:bg-[var(--brass)] hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]">
+          <Link href={localizePath('/', locale)} data-magnetic
+            className="mono-label w-fit items-center rounded-full bg-[var(--brass-lite)] px-6 text-[var(--night)] transition-colors hover:bg-[var(--on-dark)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass-lite)]">
             {copy.back}
           </Link>
           <nav aria-label={copy.useful}>
@@ -41,7 +50,7 @@ export default function NotFoundView({ locale }: { locale: Locale }) {
           </nav>
         </div>
       </main>
-      <Footer />
+      <Footer cta={false} />
     </>
   )
 }

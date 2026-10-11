@@ -17,7 +17,8 @@ type ProjectCardProps = {
 export default function ProjectCard({ project, headingLevel = 'h2', priority = false }: ProjectCardProps) {
   const [imageFailed, setImageFailed] = useState(false)
   const href = useHref()
-  const copy = useUi().projects
+  const { projects: copy, redesign } = useUi()
+  const cursor = redesign.cursor
   const Heading = headingLevel
   const alt =
     project.type === 'concept'
@@ -27,11 +28,12 @@ export default function ProjectCard({ project, headingLevel = 'h2', priority = f
   return (
     <Link
       href={href(`/portofoliu/${project.slug}`)}
-      className="porthole group flex flex-col overflow-hidden p-0 transition-[transform,border-color] duration-[350ms] hover:-translate-y-[3px] hover:border-[var(--brass)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+      data-cursor={cursor.view}
+      className="link-block group flex flex-col focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
     >
-      <span className="relative block w-full overflow-hidden" style={{ aspectRatio: '16 / 10' }}>
+      <span className="relative block w-full overflow-hidden rounded-[6px] bg-[var(--shell-warm)]" style={{ aspectRatio: '16 / 10' }}>
         {imageFailed || !project.cover ? (
-          <span className="flex h-full w-full items-center justify-center bg-[var(--shell-warm)] px-6">
+          <span className="flex h-full w-full items-center justify-center px-6">
             <span className="kicker text-center">{project.name}</span>
           </span>
         ) : (
@@ -41,40 +43,35 @@ export default function ProjectCard({ project, headingLevel = 'h2', priority = f
             fill
             loading={priority ? 'eager' : 'lazy'}
             fetchPriority={priority ? 'high' : 'auto'}
-            sizes="(min-width: 1024px) 560px, (min-width: 768px) 50vw, 100vw"
+            sizes="(min-width: 1024px) 50vw, 100vw"
             onError={() => setImageFailed(true)}
-            className="object-cover transition-transform duration-[350ms] group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            className="object-cover object-top transition-transform duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
         )}
       </span>
-      <span className="flex flex-1 flex-col gap-3 p-6">
-        <span className="flex items-center justify-between gap-3">
-          <span className="flex flex-wrap items-center gap-2">
-            <span
-              className={
-                project.type === 'concept'
-                  ? 'kicker rounded-full border border-[var(--hairline)] px-3 py-1 text-[10px] text-[var(--ink-2)]'
-                  : 'kicker rounded-full border border-[var(--glass-edge)] px-3 py-1 text-[10px]'
-              }
-            >
-              {project.categoryLabel}
-            </span>
-            {project.status === 'in-lucru' ? (
-              <span className="kicker rounded-full border border-[var(--hairline)] px-3 py-1 text-[10px] text-[var(--ink-2)]">
-                {copy.inProgress}
-              </span>
-            ) : null}
-            {project.type === 'concept' ? (
-              <span className="kicker rounded-full border border-[var(--hairline)] px-3 py-1 text-[10px] text-[var(--ink-2)]">
-                {copy.concept}
-              </span>
-            ) : null}
-          </span>
-          <span className="shrink-0 font-sans text-xs text-[var(--ink-2)]">{project.year}</span>
+      <span className="mt-5 flex flex-col gap-3">
+        <span className="mono-label flex flex-wrap items-center gap-x-3 gap-y-1 text-[var(--ink-3)]">
+          <span>{project.categoryLabel}</span>
+          <span aria-hidden="true">·</span>
+          <span>{project.year}</span>
+          {project.status === 'in-lucru' ? (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>{copy.inProgress}</span>
+            </>
+          ) : null}
+          {project.type === 'concept' ? (
+            <>
+              <span aria-hidden="true">·</span>
+              <span className="text-[var(--brass-ink)]">{copy.concept}</span>
+            </>
+          ) : null}
         </span>
-        <Heading className="type-h3 text-pretty">{project.name}</Heading>
-        <span className="type-body text-[13.5px] text-[var(--ink-2)]">{project.client}</span>
-        <span className="type-body line-clamp-2 text-[14px] text-[var(--ink-2)]">{project.summary}</span>
+        <Heading className="display-xl text-pretty text-[clamp(1.9rem,3vw,3rem)] transition-colors duration-500 group-hover:text-[var(--brass-ink)]">
+          {project.name}
+        </Heading>
+        <span className="text-[var(--ink-2)]">{project.client}</span>
+        <span className="line-clamp-2 max-w-xl text-[var(--ink-2)]">{project.summary}</span>
       </span>
     </Link>
   )

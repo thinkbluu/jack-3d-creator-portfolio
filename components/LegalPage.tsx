@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
-import Breadcrumbs from './Breadcrumbs'
 import Footer from './Footer'
 import JsonLd from './JsonLd'
 import SiteHeader from './SiteHeader'
+import PageHero from './studio/PageHero'
 import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
@@ -37,16 +37,15 @@ export default function LegalPage({ locale = 'ro', eyebrow, title, description, 
 
   return (
     <>
-      <SiteHeader />
+      <SiteHeader tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <article className="site-container flex max-w-4xl flex-col gap-12 py-12 md:py-20">
-          <header className="flex flex-col gap-5">
-            <Breadcrumbs items={crumbs} />
-            <p className="type-kicker">{eyebrow}</p>
-            <h1 className="type-h1 text-balance">{title}</h1>
-            <p className="type-body !text-[var(--ink-2)]">{copy.updated}: {updated}</p>
-          </header>
-          {children}
+        <article>
+          <PageHero crumbs={crumbs} kicker={eyebrow} title={title}>
+            <p className="mono-label text-[var(--fg-3)]">
+              {copy.updated}: {updated}
+            </p>
+          </PageHero>
+          <div className="site-container flex max-w-4xl flex-col gap-12 py-20 md:py-28">{children}</div>
         </article>
       </main>
       <Footer />

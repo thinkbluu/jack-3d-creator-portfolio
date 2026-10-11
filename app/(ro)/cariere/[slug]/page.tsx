@@ -1,10 +1,10 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import Breadcrumbs from '@/components/Breadcrumbs'
 import CareerForm from '@/components/CareerForm'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
+import PageHero from '@/components/studio/PageHero'
 import { CV_RETENTION_MONTHS, JOB_OPENINGS, careerContract, careerLocation, careerSchedule, getJobOpening, salaryLabel, type JobOpening } from '@/lib/careers'
 import { localizePath } from '@/lib/i18n/paths'
 import type { Locale } from '@/lib/i18n/locale'
@@ -132,18 +132,11 @@ export function JobView({ locale, slug }: { locale: Locale; slug: string }) {
 
   return (
     <>
-      <SiteHeader current="cariere" />
+      <SiteHeader current="cariere" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <div className="site-container py-12 md:py-20">
-          <Breadcrumbs items={crumbs} />
-
-          <header className="mt-6 max-w-3xl">
-            <p className="kicker">{copy.open} · {careerLocation(locale)}</p>
-            <h1 className="type-h2 mt-4 text-balance">{job.title}</h1>
-            <p className="type-body mt-6 max-w-2xl">{job.summary}</p>
-          </header>
-
-          <dl className="porthole mt-10 grid max-w-3xl gap-5 p-7 sm:grid-cols-2 md:p-9">
+        <PageHero crumbs={crumbs} kicker={`${copy.open} · ${careerLocation(locale)}`} title={job.title} intro={job.summary} />
+        <div className="site-container py-20 md:py-28">
+          <dl className="porthole grid max-w-3xl gap-5 p-7 sm:grid-cols-2 md:p-9">
             {facts.map(([term, detail]) => (
               <div key={term}>
                 <dt className="kicker">{term}</dt>

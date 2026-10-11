@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import Breadcrumbs from '@/components/Breadcrumbs'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
+import PageHero from '@/components/studio/PageHero'
 import TrackedLink from '@/components/TrackedLink'
 import { localizePath } from '@/lib/i18n/paths'
 import type { Locale } from '@/lib/i18n/locale'
@@ -101,17 +101,11 @@ export function ContactView({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <SiteHeader current="contact" />
+      <SiteHeader current="contact" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <div className="site-container py-12 md:py-20">
-          <Breadcrumbs items={crumbs} />
-          <header className="mt-6 max-w-3xl">
-            <p className="kicker">{copy.kicker}</p>
-            <h1 className="type-h2 mt-4 text-balance">{copy.name}</h1>
-            <p className="type-body mt-6 max-w-2xl">{copy.intro}</p>
-          </header>
-
-          <section aria-labelledby="canale" className="mt-12">
+        <PageHero crumbs={crumbs} kicker={copy.kicker} title={copy.name} intro={copy.intro} />
+        <div className="site-container py-20 md:py-28">
+          <section aria-labelledby="canale">
             <h2 id="canale" className="sr-only">
               {copy.channels}
             </h2>

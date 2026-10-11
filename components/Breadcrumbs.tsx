@@ -9,7 +9,7 @@ type BreadcrumbsProps = {
 /** Visible breadcrumb trail. Pair it with `breadcrumbNode(items)` in the page's JSON-LD. */
 export default function Breadcrumbs({ items, className = '' }: BreadcrumbsProps) {
   return (
-    <nav aria-label="Breadcrumb" className={`font-sans text-xs text-[var(--ink-2)] ${className}`}>
+    <nav aria-label="Breadcrumb" className={`mono-label text-[var(--ink-3)] ${className}`}>
       <ol className="flex flex-wrap items-center gap-x-2">
         {items.map((item, index) => {
           const isLast = index === items.length - 1

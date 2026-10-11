@@ -16,17 +16,17 @@ export default function BlogCard({ post, locale = 'ro', headingLevel = 'h2' }: B
   return (
     <Link
       href={localizePath(`/blog/${post.slug}`, locale)}
-      className="porthole group flex min-h-[260px] flex-col gap-5 p-6 transition-[transform,border-color] duration-200 hover:-translate-y-[3px] hover:border-[var(--brass)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
+      className="group flex min-h-[260px] flex-col items-stretch justify-start gap-5 border-t border-[var(--ink)] pt-6 pb-8 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
     >
-      <span className="flex items-center justify-between gap-3">
-        <span className="kicker rounded-full border border-[var(--glass-edge)] px-3 py-1 text-[10px] text-[var(--ink-2)]">
-          {post.categoryLabel}
+      <span className="mono-label flex items-center justify-between gap-3 text-[var(--ink-3)]">
+        <span className="text-[var(--brass-ink)]">{post.categoryLabel}</span>
+        <span>
+          {post.readMin} {ui[locale].blog.readMin}
         </span>
-        <span className="font-sans text-xs text-[var(--ink-2)]">{post.readMin} {ui[locale].blog.readMin}</span>
       </span>
-      <Heading className="type-h3 text-pretty">{post.title}</Heading>
-      <span className="type-body line-clamp-3 text-[14px] text-[var(--ink-2)]">{post.excerpt}</span>
-      <time dateTime={post.publishedAt} className="mt-auto font-sans text-xs text-[var(--ink-2)]">
+      <Heading className="type-h3 text-pretty transition-colors duration-300 group-hover:text-[var(--brass-ink)]">{post.title}</Heading>
+      <span className="line-clamp-3 text-[15px] leading-relaxed text-[var(--ink-2)]">{post.excerpt}</span>
+      <time dateTime={post.publishedAt} className="mono-label mt-auto text-[var(--ink-3)]">
         {formatBlogDate(post.publishedAt, locale)}
       </time>
     </Link>

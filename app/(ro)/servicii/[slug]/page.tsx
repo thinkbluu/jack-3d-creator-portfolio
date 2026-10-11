@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import BlogCard from '@/components/BlogCard'
-import Breadcrumbs from '@/components/Breadcrumbs'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import ProjectCard from '@/components/ProjectCard'
 import SiteHeader from '@/components/SiteHeader'
 import TrackedLink from '@/components/TrackedLink'
+import PageHero from '@/components/studio/PageHero'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { getPostBySlug, type BlogPost } from '@/lib/blog'
 import type { Locale } from '@/lib/i18n/locale'
@@ -184,46 +184,35 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
 
   return (
     <>
-      <SiteHeader current="servicii" />
+      <SiteHeader current="servicii" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <article className="site-container py-12 md:py-20">
-          <Breadcrumbs items={crumbs} className="mx-auto max-w-2xl" />
-
-          <header className="mx-auto mt-6 max-w-2xl">
-            <p className="kicker">{copy.kicker}</p>
-            <h1 className="type-h2 mt-4 text-balance">{service.h1}</h1>
-            <p className="type-body mt-4">{service.intro}</p>
-          </header>
-
-          <div className="mx-auto mt-8 max-w-2xl">
-            <p className="kicker">{copy.inShort}</p>
-            <div
-              className="type-body mt-3 text-[17px] font-medium text-[var(--ink)]"
-              style={{
-                background: 'var(--shell-warm)',
-                borderLeft: '3px solid var(--brass)',
-                borderRadius: 'var(--radius-card)',
-                padding: '20px 24px',
-                marginBottom: '32px',
-              }}
-            >
-              {service.answerCapsule}
-            </div>
-          </div>
-
-          <dl className="mx-auto flex max-w-2xl flex-wrap items-center gap-x-8 gap-y-3 border-y border-[var(--hairline)] py-6">
-            <div>
-              <dt className="kicker">{copy.price}</dt>
-              <dd className="mt-1 font-sans text-2xl font-bold text-[var(--brass-ink)]">{service.priceLabel}</dd>
-            </div>
-            <div>
-              <dt className="kicker">{service.deliveryLabel}</dt>
-              <dd className="mt-1 font-sans text-2xl font-bold text-[var(--ink)]">{service.deliveryTime}</dd>
-            </div>
-          </dl>
-
-          <div className="mx-auto max-w-2xl">
-            <section className="mt-12">
+        <article>
+          <PageHero
+            crumbs={crumbs}
+            kicker={copy.kicker}
+            title={service.h1}
+            intro={service.intro}
+            aside={
+              <dl className="grid grid-cols-2 gap-8 border-t border-[var(--line)] pt-6 lg:ml-auto lg:max-w-sm">
+                <div>
+                  <dt className="mono-label text-[var(--fg-3)]">{copy.price}</dt>
+                  <dd className="display-xl mt-3 text-[clamp(1.6rem,2.2vw,2.2rem)] leading-[1.05] text-[var(--accent)]">{service.priceLabel}</dd>
+                </div>
+                <div>
+                  <dt className="mono-label text-[var(--fg-3)]">{service.deliveryLabel}</dt>
+                  <dd className="display-xl mt-3 text-[clamp(1.6rem,2.2vw,2.2rem)] leading-[1.05]">{service.deliveryTime}</dd>
+                </div>
+              </dl>
+            }
+          />
+          <div className="studio-container py-20 md:py-28">
+          <div className="grid gap-16 lg:grid-cols-[1fr_1.5fr]">
+            <aside className="lg:sticky lg:top-28 lg:self-start">
+              <p className="kicker">{copy.inShort}</p>
+              <p className="display-xl mt-5 text-[clamp(1.5rem,2.1vw,2rem)] leading-[1.22] tracking-[-0.015em] text-[var(--ink)]">{service.answerCapsule}</p>
+            </aside>
+          <div>
+            <section>
               <h2 className="type-h3">{service.priceUnit ? copy.includesSubscription : copy.includesPrice}</h2>
               <CheckList items={service.includes} />
             </section>
@@ -282,7 +271,9 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
             </section>
           </div>
 
-          <section className="porthole mx-auto mt-16 flex max-w-2xl flex-col items-start gap-5 border-[var(--glass-edge)] p-7">
+          </div>
+
+          <section className="porthole mt-24 flex flex-col items-start gap-5 p-8 md:p-12">
             <h2 className="type-h3">{copy.offerFor(name)}</h2>
             <SegmentProvider>
               <ContactButton hero label={ui[locale].whatsapp.defaultCta} />
@@ -307,9 +298,9 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
           </section>
 
           {projects.length > 0 ? (
-            <section className="mx-auto mt-16 max-w-5xl">
-              <h2 className="type-h3">{copy.projects}</h2>
-              <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <section className="mt-24">
+              <h2 className="type-h2">{copy.projects}</h2>
+              <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-2">
                 {projects.map((project) => (
                   <ProjectCard key={project.slug} project={project} headingLevel="h3" />
                 ))}
@@ -318,8 +309,8 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
           ) : null}
 
           {posts.length > 0 ? (
-            <section className="mx-auto mt-16 max-w-5xl">
-              <h2 className="type-h3">{copy.guides}</h2>
+            <section className="mt-24">
+              <h2 className="type-h2">{copy.guides}</h2>
               <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                 {posts.map((post) => (
                   <BlogCard key={post.slug} post={post} headingLevel="h3" locale={locale} />
@@ -329,17 +320,17 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
           ) : null}
 
           {related.length > 0 ? (
-            <section className="mx-auto mt-16 max-w-2xl border-t border-[var(--hairline)] pt-12">
-              <h2 className="type-h3">{copy.other}</h2>
+            <section className="mt-24 border-t border-[var(--hairline)] pt-12">
+              <h2 className="type-h2">{copy.other}</h2>
               <div className="mt-6 flex flex-col gap-3">
                 {related.map((item) => (
                   <Link
                     key={item.slug}
                     href={localizePath(`/servicii/${item.slug}`, locale)}
-                    className="type-body flex items-center justify-between gap-4 rounded-[var(--radius-card)] border border-[var(--hairline)] px-5 py-4 transition-colors hover:border-[var(--brass)]"
+                    className="group flex items-center justify-between gap-4 border-b border-[var(--hairline)] py-6"
                   >
-                    <span className="font-semibold text-[var(--ink)]">{item.name}</span>
-                    <span className="font-sans text-xs uppercase tracking-[0.14em] text-[var(--brass-ink)]">{item.priceLabel} →</span>
+                    <span className="display-xl text-[clamp(1.8rem,3vw,3rem)] text-[var(--ink)] transition-transform duration-500 group-hover:translate-x-3">{item.name}</span>
+                    <span className="mono-label text-[var(--brass-ink)]">{item.priceLabel} →</span>
                   </Link>
                 ))}
                 <Link href={localizePath('/servicii', locale)} className="font-sans text-sm font-semibold text-[var(--ink)] underline underline-offset-4">
@@ -348,6 +339,7 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
               </div>
             </section>
           ) : null}
+          </div>
         </article>
       </main>
       <Footer />

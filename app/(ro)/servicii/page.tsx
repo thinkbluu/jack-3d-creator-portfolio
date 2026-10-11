@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import Breadcrumbs from '@/components/Breadcrumbs'
-import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
-import { SegmentProvider } from '@/components/SegmentContext'
+import CtaBand from '@/components/studio/CtaBand'
+import PageHero from '@/components/studio/PageHero'
+import { Reveal } from '@/components/studio/Reveal'
 import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
@@ -136,85 +136,66 @@ export function ServicesView({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <SiteHeader current="servicii" />
+      <SiteHeader current="servicii" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <div className="site-container py-12 md:py-20">
-          <Breadcrumbs items={crumbs} />
+        <PageHero crumbs={crumbs} kicker={copy.kicker} title={copy.title} intro={copy.intro} />
 
-          <header className="mt-6 max-w-3xl">
-            <p className="kicker">{copy.kicker}</p>
-            <h1 className="type-h2 mt-4 text-balance">{copy.title}</h1>
-            <p className="type-body mt-6 max-w-2xl">{copy.intro}</p>
-          </header>
-
-          <section aria-labelledby="preturi-pe-scurt" className="mt-12 max-w-3xl">
-            <h2 id="preturi-pe-scurt" className="type-h3">{copy.prices}</h2>
-            <div className="prose mt-4">
-              <table>
-                <thead>
-                  <tr>
-                    <th scope="col">{copy.columns.service}</th>
-                    <th scope="col">{copy.columns.price}</th>
-                    <th scope="col">{copy.columns.time}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {services.map((service) => (
-                    <tr key={service.slug}>
-                      <th scope="row">
-                        <Link href={localizePath(`/servicii/${service.slug}`, locale)}>{service.name}</Link>
-                      </th>
-                      <td>{service.priceLabel}</td>
-                      <td>{service.deliveryTime}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </section>
-
-          <section aria-label={copy.servicesLabel} className="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
-            {services.map((service) => (
-              <article key={service.slug} className="porthole flex flex-col gap-4 p-7">
-                <h2 className="type-h3">
-                  <Link href={localizePath(`/servicii/${service.slug}`, locale)} className="hover:text-[var(--brass-ink)]">
-                    {service.h1}
-                  </Link>
-                </h2>
-                <p className="type-body text-[15px]">{service.answerCapsule}</p>
-                <p className="font-sans text-sm font-bold text-[var(--brass-ink)]">
-                  {service.priceLabel} · {service.deliveryTime}
-                </p>
-                <Link
-                  href={localizePath(`/servicii/${service.slug}`, locale)}
-                  className="mt-auto w-fit font-sans text-sm font-semibold text-[var(--ink)] underline underline-offset-4 hover:text-[var(--brass-ink)]"
-                >
-                  {copy.includes} {phraseName(service.shortName, locale)} →
-                </Link>
-              </article>
+        <section aria-labelledby="preturi-pe-scurt" className="studio-container py-20 md:py-28">
+          <h2 id="preturi-pe-scurt" className="kicker">
+            {copy.prices}
+          </h2>
+          <ol className="mt-8 border-t border-[var(--hairline)]">
+            {services.map((service, index) => (
+              <li key={service.slug} className="border-b border-[var(--hairline)]">
+                <Reveal>
+                  <article className="grid gap-6 py-10 md:grid-cols-[4rem_1.3fr_1fr_auto] md:items-baseline md:gap-8 md:py-14">
+                    <span className="mono-label text-[var(--brass-ink)]">{String(index + 1).padStart(2, '0')}</span>
+                    <div>
+                      <h2 className="display-xl text-[clamp(2rem,4vw,3.8rem)]">
+                        <Link href={localizePath(`/servicii/${service.slug}`, locale)} className="inline min-h-0 transition-colors hover:text-[var(--brass-ink)]">
+                          {service.name}
+                        </Link>
+                      </h2>
+                      <p className="mt-4 max-w-xl leading-relaxed text-[var(--ink-2)]">{service.answerCapsule}</p>
+                    </div>
+                    <dl className="grid grid-cols-2 gap-6 md:grid-cols-1">
+                      <div>
+                        <dt className="mono-label text-[var(--ink-3)]">{copy.columns.price}</dt>
+                        <dd className="mt-1 text-lg text-[var(--ink)]">{service.priceLabel}</dd>
+                      </div>
+                      <div>
+                        <dt className="mono-label text-[var(--ink-3)]">{copy.columns.time}</dt>
+                        <dd className="mt-1 text-lg text-[var(--ink)]">{service.deliveryTime}</dd>
+                      </div>
+                    </dl>
+                    <Link
+                      href={localizePath(`/servicii/${service.slug}`, locale)}
+                      className="mono-label items-center self-start rounded-[var(--radius-pill)] border border-[var(--ink)] px-5 transition-colors hover:bg-[var(--ink)] hover:text-[var(--shell)]"
+                    >
+                      {copy.includes} {phraseName(service.shortName, locale)} →
+                    </Link>
+                  </article>
+                </Reveal>
+              </li>
             ))}
-          </section>
+          </ol>
+        </section>
 
-          <section className="mt-16 max-w-3xl border-t border-[var(--hairline)] pt-12">
-            <h2 className="type-h3">{copy.how}</h2>
-            <ol className="mt-6 flex flex-col gap-6">
+        <section className="tone-warm py-20 md:py-28">
+          <div className="studio-container">
+            <h2 className="type-h2 max-w-3xl text-balance">{copy.how}</h2>
+            <ol className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
               {copy.steps.map((step, index) => (
-                <li key={step.title} className="flex gap-4">
-                  <span
-                    aria-hidden="true"
-                    className="flex size-8 shrink-0 items-center justify-center rounded-full font-sans text-[13px] font-semibold"
-                    style={{ background: 'var(--shell-warm)', color: 'var(--brass-ink)', border: '1px solid var(--hairline)' }}
-                  >
-                    {index + 1}
-                  </span>
-                  <div>
-                    <h3 className="font-sans text-[15px] font-semibold text-[var(--ink)]">{step.title}</h3>
-                    <p className="type-body mt-1 text-[15px]">{step.text}</p>
-                  </div>
+                <li key={step.title} className="border-t border-[var(--ink)] pt-6">
+                  <Reveal delay={index * 0.1}>
+                    <span className="mono-label text-[var(--brass-ink)]">{String(index + 1).padStart(2, '0')}</span>
+                    <h3 className="type-h3 mt-6">{step.title}</h3>
+                    <p className="mt-3 leading-relaxed text-[var(--ink-2)]">{step.text}</p>
+                  </Reveal>
                 </li>
               ))}
             </ol>
-            <p className="type-body mt-8">
+            <p className="mt-16 max-w-3xl text-lg text-[var(--ink-2)]">
               {copy.unsureBefore}{' '}
               <Link href="/blog/site-prezentare-sau-magazin-online" className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
                 {copy.unsureBlog}
@@ -225,20 +206,16 @@ export function ServicesView({ locale }: { locale: Locale }) {
               </Link>
               .
             </p>
-          </section>
+          </div>
+        </section>
 
-          <section className="porthole mt-16 flex max-w-3xl flex-col items-start gap-5 p-8">
-            <h2 className="type-h3">{copy.cta}</h2>
-            <SegmentProvider>
-              <ContactButton hero label={ui[locale].whatsapp.defaultCta} />
-            </SegmentProvider>
-            <Link href={localizePath('/cerere-oferta', locale)} className="font-sans text-sm font-semibold text-[var(--ink)] underline underline-offset-4">
-              {copy.form}
-            </Link>
-          </section>
-        </div>
+        <CtaBand title={copy.cta} placement="services_cta">
+          <Link href={localizePath('/cerere-oferta', locale)} className="mono-label text-[var(--fg-2)] underline-offset-4 hover:text-[var(--fg)] hover:underline">
+            {copy.form} →
+          </Link>
+        </CtaBand>
       </main>
-      <Footer />
+      <Footer cta={false} />
       <JsonLd data={jsonLd} />
     </>
   )

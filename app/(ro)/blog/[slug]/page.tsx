@@ -2,12 +2,12 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import BlogCard from '@/components/BlogCard'
-import Breadcrumbs from '@/components/Breadcrumbs'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import MdxContent from '@/components/MdxContent'
 import SiteHeader from '@/components/SiteHeader'
+import PageHero from '@/components/studio/PageHero'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { formatBlogDate, getAllPosts, getPostBySlug, getRelatedPosts, type BlogPost } from '@/lib/blog'
 import type { Locale } from '@/lib/i18n/locale'
@@ -112,18 +112,14 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
 
   return (
     <>
-      <SiteHeader current="blog" />
+      <SiteHeader current="blog" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <article className="site-container py-12 md:py-20">
-          <header className="mx-auto max-w-2xl">
-            <Breadcrumbs items={crumbs} />
-            <span className="kicker mt-6 inline-block rounded-full border border-[var(--glass-edge)] px-3 py-1 text-[10px]">{post.categoryLabel}</span>
-            <h1 className="type-h2 mt-6 text-balance">{post.title}</h1>
-            <p className="type-body mt-6 text-[var(--ink-2)]">{post.excerpt}</p>
-            <div className="mt-6 flex flex-col gap-1 font-sans text-xs text-[var(--ink-2)] sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
+        <article>
+          <PageHero crumbs={crumbs} kicker={post.categoryLabel} title={post.title} intro={post.excerpt}>
+            <div className="mono-label flex flex-col gap-1 text-[var(--fg-3)] sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
               <span>
                 {copy.by}{' '}
-                <Link href={localizePath('/despre', locale)} rel="author" className="underline-offset-4 hover:text-[var(--ink)] hover:underline">
+                <Link href={localizePath('/despre', locale)} rel="author" className="inline min-h-0 text-[var(--fg)] underline-offset-4 hover:underline">
                   {copy.team}
                 </Link>
               </span>
@@ -144,8 +140,8 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
                 {post.readMin} {copy.readMin}
               </span>
             </div>
-            <div className="mt-8 border-t border-[var(--hairline)]" />
-          </header>
+          </PageHero>
+          <div className="site-container py-16 md:py-24">
 
           <div className="mx-auto mt-10 max-w-2xl">
             <p className="kicker">{copy.inShort}</p>
@@ -211,6 +207,7 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
               </div>
             </section>
           ) : null}
+          </div>
         </article>
       </main>
       <Footer />
