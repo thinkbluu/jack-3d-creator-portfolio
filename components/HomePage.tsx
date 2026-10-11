@@ -5,16 +5,16 @@ import MobileWhatsAppBar from '@/components/MobileWhatsAppBar'
 import { SegmentProvider } from '@/components/SegmentContext'
 import SiteHeader from '@/components/SiteHeader'
 import HomeFaq from '@/components/studio/HomeFaq'
-import HomeStory from '@/components/studio/HomeStory'
+import InkHero from '@/components/studio/InkHero'
 import IntroLoader from '@/components/studio/IntroLoader'
 import Manifest from '@/components/studio/Manifest'
 import NameCta from '@/components/studio/NameCta'
 import ServicesIndex from '@/components/studio/ServicesIndex'
 import StudioProcess from '@/components/studio/StudioProcess'
-import WorkRail from '@/components/studio/WorkRail'
+import WorkShow from '@/components/studio/WorkShow'
 
 /**
- * The homepage, told as one story: a pinned WebGL opening, the work, what we
+ * The homepage, told as one story: an opening of ink moving through water, the work, what we
  * build, what we stand for, how we work, proof, questions, and a closing
  * scene where the visitor's own business name takes shape. The server page
  * around it adds metadata and structured data; the footer is passed in.
@@ -25,8 +25,8 @@ export default function HomePage({ afterScenes, footer }: { afterScenes?: React.
       <IntroLoader />
       <SiteHeader tone="dark" overlay />
       <main className="relative bg-[var(--night)]" style={{ overflowX: 'clip' }}>
-        <HomeStory />
-        <WorkRail />
+        <InkHero />
+        <WorkShow />
         <ServicesIndex />
         <Manifest />
         <StudioProcess />

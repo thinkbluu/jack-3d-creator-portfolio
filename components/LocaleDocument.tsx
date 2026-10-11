@@ -62,7 +62,7 @@ export function localeMetadata(locale: Locale): Metadata {
 
 export default function LocaleDocument({ locale, children }: { locale: Locale; children: React.ReactNode }) {
   return (
-    <html lang={htmlLang(locale)} className={`${fontClassName} bg-[var(--shell)]`}>
+    <html lang={htmlLang(locale)} className={`${fontClassName} bg-[var(--shell)]`} suppressHydrationWarning>
       <head>
         {TRACKING_ACTIVE ? (
           <Script id="gtag-consent-default" strategy="beforeInteractive">
