@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import BlogCard from '@/components/BlogCard'
-import Breadcrumbs from '@/components/Breadcrumbs'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
+import PageHero from '@/components/studio/PageHero'
 import TrackedLink from '@/components/TrackedLink'
 import { getAllPosts } from '@/lib/blog'
 import type { Locale } from '@/lib/i18n/locale'
@@ -56,25 +56,26 @@ export function BlogView({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <SiteHeader current="blog" />
+      <SiteHeader current="blog" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <div className="site-container py-12 md:py-20">
-          <Breadcrumbs items={crumbs} />
-          <div className="mt-6 max-w-3xl">
-            <p className="kicker">{copy.indexKicker}</p>
-            <h1 className="type-h2 mt-4 text-balance">{copy.indexTitle}</h1>
-            <p className="type-body mt-6 max-w-2xl text-[var(--ink-2)]">
+        <PageHero
+          crumbs={crumbs}
+          kicker={copy.indexKicker}
+          title={copy.indexTitle}
+          intro={
+            <>
               {copy.indexIntro}{' '}
-              <Link href={localizePath('/servicii', locale)} className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
+              <Link href={localizePath('/servicii', locale)} className="inline min-h-0 text-[var(--fg)] underline underline-offset-4">
                 {copy.servicesLink}
               </Link>
               .
-            </p>
-          </div>
-
-          <section aria-label={copy.articles} className="mt-14">
+            </>
+          }
+        />
+        <div className="site-container py-20 md:py-28">
+          <section aria-label={copy.articles}>
             {posts.length > 0 ? (
-              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-2 lg:grid-cols-3">
                 {posts.map((post) => (
                   <BlogCard key={post.slug} post={post} locale={locale} />
                 ))}

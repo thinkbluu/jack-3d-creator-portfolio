@@ -55,12 +55,11 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
               type="button"
               onClick={() => selectFilter(filter.id)}
               aria-pressed={isActive}
-              className="kicker flex min-h-11 items-center rounded-full px-4 text-[11px] transition-colors duration-200"
-              style={
+              className={`mono-label flex min-h-11 items-center rounded-full border px-5 transition-colors duration-300 ${
                 isActive
-                  ? { background: 'var(--brass)', color: 'var(--ink)', border: '1px solid var(--brass)' }
-                  : { border: '1px solid var(--hairline)', color: 'var(--ink-2)' }
-              }
+                  ? 'border-[var(--ink)] bg-[var(--ink)] text-[var(--shell)]'
+                  : 'border-[var(--hairline)] text-[var(--ink-2)] hover:border-[var(--ink)] hover:text-[var(--ink)]'
+              }`}
             >
               {filter.label}
             </button>
@@ -70,26 +69,32 @@ export default function PortfolioGrid({ projects }: { projects: Project[] }) {
 
       {clientProjects.length > 0 ? (
         <section aria-labelledby="proiecte-clienti" className="mt-12">
-          <h2 id="proiecte-clienti" className="type-h3">
+          <h2 id="proiecte-clienti" className="kicker">
             {copy.clients}
           </h2>
-          <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+          {/* Editorial rhythm: wide and narrow cards alternate, the right column drops. */}
+          <div className="mt-8 grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-12">
             {clientProjects.map((project, index) => (
-              <ProjectCard key={project.slug} project={project} headingLevel="h3" priority={index < 2} />
+              <div
+                key={project.slug}
+                className={`${index % 4 === 0 || index % 4 === 3 ? 'md:col-span-7' : 'md:col-span-5'} ${index % 2 === 1 ? 'md:mt-32' : ''}`}
+              >
+                <ProjectCard project={project} headingLevel="h3" priority={index < 2} />
+              </div>
             ))}
           </div>
         </section>
       ) : null}
 
       {conceptProjects.length > 0 ? (
-        <section aria-labelledby="concepte-design" className="mt-[72px] border-t border-[var(--hairline)] pt-[56px]">
-          <h2 id="concepte-design" className="type-h3">
+        <section aria-labelledby="concepte-design" className="mt-32 border-t border-[var(--hairline)] pt-16">
+          <h2 id="concepte-design" className="type-h2">
             {copy.concepts}
           </h2>
-          <p className="type-body mt-2 text-[14px] text-[var(--ink-2)]">
+          <p className="mt-4 max-w-xl text-[var(--ink-2)]">
             {copy.conceptsNote}
           </p>
-          <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-3">
             {conceptProjects.map((project) => (
               <ProjectCard key={project.slug} project={project} headingLevel="h3" />
             ))}

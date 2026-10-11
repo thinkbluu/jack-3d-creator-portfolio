@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import Breadcrumbs from '@/components/Breadcrumbs'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
+import PageHero from '@/components/studio/PageHero'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { localizePath } from '@/lib/i18n/paths'
 import type { Locale } from '@/lib/i18n/locale'
@@ -205,14 +205,10 @@ export function AboutView({ locale }: { locale: Locale }) {
 
   return (
     <>
-      <SiteHeader current="despre" />
+      <SiteHeader current="despre" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-      <article className="site-container py-12 md:py-20">
-        <header className="mx-auto max-w-2xl">
-          <Breadcrumbs items={crumbs} />
-          <p className="kicker mt-6">{copy.kicker}</p>
-          <h1 className="type-h2 mt-4 text-balance">{copy.name}</h1>
-        </header>
+      <PageHero crumbs={crumbs} kicker={copy.kicker} title={copy.name} />
+      <article className="site-container py-20 md:py-28">
 
         <div className="mx-auto mt-8 max-w-2xl">
           <p className="kicker">{copy.inShort}</p>

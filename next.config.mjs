@@ -42,11 +42,13 @@ const nextConfig = {
       "form-action 'self'",
       "frame-ancestors 'none'",
       "object-src 'none'",
-      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://*.googletagmanager.com`,
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob: https://placehold.co https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com",
-      "font-src 'self' data:",
-      "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com",
+      `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://va.vercel-scripts.com https://*.googletagmanager.com https://embedsocial.com https://*.embedsocial.com`,
+      "style-src 'self' 'unsafe-inline' https://embedsocial.com https://*.embedsocial.com",
+      "img-src 'self' data: blob: https://placehold.co https://*.google-analytics.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com https://embedsocial.com https://*.embedsocial.com https://*.googleusercontent.com",
+      "font-src 'self' data: https://embedsocial.com https://*.embedsocial.com",
+      // Google reviews widget (EmbedSocial) renders in its own frame.
+      "frame-src 'self' https://embedsocial.com https://*.embedsocial.com",
+      "connect-src 'self' https://vitals.vercel-insights.com https://*.vercel-insights.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.g.doubleclick.net https://*.google.com https://embedsocial.com https://*.embedsocial.com",
       "upgrade-insecure-requests",
     ].join('; ')
 

@@ -10,7 +10,7 @@ const REVIEW_URL = process.env.NEXT_PUBLIC_GOOGLE_REVIEW_URL
  * so the loader is appended from an effect. Re-adding it on every mount makes
  * the widget render again after client-side navigation (e.g. /mockup → /).
  */
-export default function GoogleReviews({ className = '' }: { className?: string }) {
+export default function GoogleReviews({ className = '', bare = false }: { className?: string; bare?: boolean }) {
   useEffect(() => {
     document.getElementById('EmbedSocialHashtagScript')?.remove()
     const script = document.createElement('script')
@@ -21,14 +21,25 @@ export default function GoogleReviews({ className = '' }: { className?: string }
 
   return (
     <section aria-labelledby="google-reviews" className={className}>
-      <div className="porthole p-6 md:p-10">
-        <h2 id="google-reviews" className="type-h3 text-balance">
-          Ce spun clienții noștri
-        </h2>
-        <p className="type-body mt-2">Recenzii reale de pe Google.</p>
+      <div className={bare ? '' : 'porthole p-6 md:p-10'}>
+        {bare ? (
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <h2 id="google-reviews" className="display-xl text-balance text-[clamp(2.4rem,4.6vw,4.6rem)]">
+              Ce spun clienții noștri
+            </h2>
+            <p className="mono-label text-[var(--ink-3)]">Recenzii reale de pe Google</p>
+          </div>
+        ) : (
+          <>
+            <h2 id="google-reviews" className="type-h3 text-balance">
+              Ce spun clienții noștri
+            </h2>
+            <p className="type-body mt-2">Recenzii reale de pe Google.</p>
+          </>
+        )}
 
         {/* Reserved height so the page does not jump while the widget loads. */}
-        <div className="mt-8 min-h-[520px] md:min-h-[420px]">
+        <div className={`${bare ? 'mt-12' : 'mt-8'} min-h-[520px] md:min-h-[420px]`}>
           <div className="embedsocial-hashtag" data-ref="29424628dec99d349c656d7622c3e31b341a1864" data-lazyload="yes">
             <a
               className="feed-powered-by-es feed-powered-by-es-feed-img es-widget-branding"
