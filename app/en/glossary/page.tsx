@@ -1,4 +1,4 @@
-import { glossaryMetadata, GlossaryView } from '@/app/(ro)/glosar/page'
+import { glossaryMetadata, GlossaryView } from '@/app/(ro)/glosar/view'
 
 export const metadata = glossaryMetadata('en')
 

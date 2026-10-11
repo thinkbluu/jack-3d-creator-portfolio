@@ -1,4 +1,4 @@
-import { blogMetadata, BlogView } from '@/app/(ro)/blog/page'
+import { blogMetadata, BlogView } from '@/app/(ro)/blog/view'
 
 export const metadata = blogMetadata('en')
 

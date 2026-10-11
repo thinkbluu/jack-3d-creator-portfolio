@@ -1,4 +1,4 @@
-import { CookiesView, cookiesMetadata } from '@/app/(ro)/cookies/page'
+import { CookiesView, cookiesMetadata } from '@/app/(ro)/cookies/view'
 
 export const metadata = cookiesMetadata('en')
 

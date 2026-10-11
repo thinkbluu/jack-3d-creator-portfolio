@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { ServiceDetail, serviceMetadata } from '@/app/(ro)/servicii/[slug]/page'
+import { ServiceDetail, serviceMetadata } from '@/app/(ro)/servicii/[slug]/view'
 import { publicServiceSlug } from '@/lib/i18n/paths'
 import { getAllServicePages } from '@/lib/services'
 

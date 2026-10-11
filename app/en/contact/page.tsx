@@ -1,4 +1,4 @@
-import { contactMetadata, ContactView } from '@/app/(ro)/contact/page'
+import { contactMetadata, ContactView } from '@/app/(ro)/contact/view'
 
 export const metadata = contactMetadata('en')
 

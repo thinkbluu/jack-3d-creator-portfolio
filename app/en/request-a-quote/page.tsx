@@ -1,4 +1,4 @@
-import { quoteMetadata, QuoteView } from '@/app/(ro)/cerere-oferta/page'
+import { quoteMetadata, QuoteView } from '@/app/(ro)/cerere-oferta/view'
 
 export const metadata = quoteMetadata('en')
 

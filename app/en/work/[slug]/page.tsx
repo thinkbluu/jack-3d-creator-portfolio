@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { projectMetadata, ProjectView } from '@/app/(ro)/portofoliu/[slug]/page'
+import { projectMetadata, ProjectView } from '@/app/(ro)/portofoliu/[slug]/view'
 import { getAllProjects } from '@/lib/projects'
 
 type ProjectPageProps = {

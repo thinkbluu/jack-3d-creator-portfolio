@@ -1,4 +1,4 @@
-import { comparisonMetadata, ComparisonView } from '@/app/(ro)/comparatie/page'
+import { comparisonMetadata, ComparisonView } from '@/app/(ro)/comparatie/view'
 
 export const metadata = comparisonMetadata('en')
 
