@@ -16,6 +16,7 @@ export default function ParallaxCover({ src, alt, priority = false }: { src: str
   return (
     <motion.div
       ref={ref}
+      data-expand-target=""
       style={reduced ? { borderRadius: 8 } : { borderRadius: radius }}
       className="relative aspect-[16/9] w-full overflow-hidden bg-[var(--navy)] md:aspect-[2/1]"
     >

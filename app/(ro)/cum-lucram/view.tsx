@@ -10,6 +10,7 @@ import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
+import { PAGE_WORDS } from '@/lib/page-words'
 
 type Step = { title: string; text: string; gives: string }
 
@@ -40,7 +41,7 @@ const approach: Record<
     title: 'Cum lucrăm: procesul MAST Studio, pas cu pas',
     description:
       'Cum construiește MAST Studio un site: analiză, structură, texte, design, testare și lansare, cu link live înainte de plată și predare completă la final.',
-    word: 'Cum lucrăm.',
+    word: PAGE_WORDS['/cum-lucram'].ro,
     lead: 'Puțini oameni, un proces scris și predare completă. Fără surprize la final.',
     principlesLabel: 'Principii',
     principlesTitle: 'Ce nu negociem.',
@@ -113,7 +114,7 @@ const approach: Record<
     title: 'Approach: how MAST Studio works, step by step',
     description:
       'How MAST Studio builds a website: analysis, structure, copy, design, testing and launch, with a live link before payment and a full handover at the end.',
-    word: 'Approach.',
+    word: PAGE_WORDS['/cum-lucram'].en,
     lead: 'Few people, a written process and a full handover. No surprises at the end.',
     principlesLabel: 'Principles',
     principlesTitle: 'What we don’t negotiate.',

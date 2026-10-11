@@ -12,6 +12,7 @@ import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { EMAIL, EMAIL_HREF } from '@/lib/site'
+import { PAGE_WORDS } from '@/lib/page-words'
 
 const careers = {
   ro: {
@@ -20,7 +21,7 @@ const careers = {
       'MAST Studio angajează un front-end developer (React, Next.js) și un mobile app developer (React Native). Lucru la distanță, din România. Trimite CV-ul aici.',
     name: 'Cariere la MAST Studio',
     kicker: 'Cariere',
-    word: 'Cariere.',
+    word: PAGE_WORDS['/cariere'].ro,
     lead: 'O echipă mică, la distanță, care ține la detalii.',
     otherLabel: 'Și altfel',
     otherHead: 'Alte roluri.',
@@ -51,7 +52,7 @@ const careers = {
       'MAST Studio is hiring a front-end developer (React, Next.js) and a mobile app developer (React Native). Remote work, from Romania. Send your CV here.',
     name: 'Careers at MAST Studio',
     kicker: 'Careers',
-    word: 'Careers.',
+    word: PAGE_WORDS['/cariere'].en,
     lead: 'A small, remote team that cares about the details.',
     otherLabel: 'Otherwise',
     otherHead: 'Other roles.',

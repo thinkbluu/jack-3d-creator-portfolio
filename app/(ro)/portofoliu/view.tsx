@@ -10,6 +10,7 @@ import { getAllProjects } from '@/lib/projects'
 import { breadcrumbNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { absoluteUrl } from '@/lib/site'
+import { PAGE_WORDS } from '@/lib/page-words'
 
 const portfolioPageCopy = {
   ro: {
@@ -17,7 +18,7 @@ const portfolioPageCopy = {
     description:
       'Site-uri de prezentare, site-uri instituționale și platforme construite de MAST Studio pentru afaceri și instituții din Timișoara și din toată România.',
     schemaName: 'Portofoliu web design MAST Studio',
-    word: 'Lucrări.',
+    word: PAGE_WORDS['/portofoliu'].ro,
     intro:
       'Site-uri, platforme și concepte construite integral de noi, pentru afaceri și instituții din Timișoara și din toată România.',
   },
@@ -26,7 +27,7 @@ const portfolioPageCopy = {
     description:
       'Presentation websites, institutional websites, and platforms built by MAST Studio for businesses and institutions in Timișoara and across Romania.',
     schemaName: 'MAST Studio web design portfolio',
-    word: 'Work.',
+    word: PAGE_WORDS['/portofoliu'].en,
     intro:
       'Websites, platforms and concepts we built in full, for businesses and institutions in Timișoara and across Romania.',
   },

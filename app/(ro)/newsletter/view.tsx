@@ -8,13 +8,14 @@ import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
+import { PAGE_WORDS } from '@/lib/page-words'
 
 const letter = {
   ro: {
     title: 'Newsletter MAST Studio: scrisori lunare despre web design',
     description: 'O scrisoare pe lună de la MAST Studio: ce am construit, ce am învățat și ce ne-a plăcut pe web. Fără reclame, te dezabonezi cu un singur răspuns.',
     name: 'Newsletter MAST Studio',
-    word: 'Scrisori.',
+    word: PAGE_WORDS['/newsletter'].ro,
     lead: 'O dată pe lună, de la studio, direct în inbox.',
     insideLabel: 'Ce găsești în ea',
     inside: [
@@ -30,7 +31,7 @@ const letter = {
     title: 'MAST Studio newsletter: monthly letters on web design',
     description: 'One letter a month from MAST Studio: what we built, what we learned and what we liked on the web. No ads; unsubscribe with a single reply.',
     name: 'MAST Studio newsletter',
-    word: 'Letters.',
+    word: PAGE_WORDS['/newsletter'].en,
     lead: 'Once a month, from the studio, straight to your inbox.',
     insideLabel: 'What’s inside',
     inside: [

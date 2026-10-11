@@ -13,6 +13,7 @@ import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, businessRef, faqNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { EMAIL, EMAIL_HREF, LEGAL_NAME, PHONE_DISPLAY, PHONE_HREF, TRADE_REGISTER_NUMBER, VAT_ID } from '@/lib/site'
+import { PAGE_WORDS } from '@/lib/page-words'
 
 const about = {
   ro: {
@@ -21,7 +22,7 @@ const about = {
       'MAST Studio e un studio de web design din Timișoara, parte din MAST Consult S.R.L. Construim site-uri, magazine online și platforme pentru firme din România.',
     name: 'Despre MAST Studio',
     kicker: 'Despre studio',
-    word: 'Studio.',
+    word: PAGE_WORDS['/despre'].ro,
     lead: 'Un studio mic de web design din Timișoara. Credem că un site bun se simte, nu doar se vede.',
     valuesLabel: 'Ce ne ghidează',
     statement: 'Ascultăm cum funcționează afacerea ta și construim ce o vinde.',
@@ -124,7 +125,7 @@ const about = {
       'MAST Studio is a web design studio in Timișoara, part of MAST Consult S.R.L. We build websites, online stores and platforms for companies in Romania.',
     name: 'About MAST Studio',
     kicker: 'About the studio',
-    word: 'Studio.',
+    word: PAGE_WORDS['/despre'].en,
     lead: 'A small web design studio in Timișoara. We believe a good website is felt, not only seen.',
     valuesLabel: 'What guides us',
     statement: 'We listen to how your business works and build what sells it.',

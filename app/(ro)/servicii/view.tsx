@@ -12,6 +12,7 @@ import { breadcrumbNode, graph, serviceNode, webPageNode, type BreadcrumbItem } 
 import { pageMetadata } from '@/lib/seo'
 import { getAllServicePages } from '@/lib/services'
 import { absoluteUrl } from '@/lib/site'
+import { PAGE_WORDS } from '@/lib/page-words'
 
 type ServicesCopy = {
   word: string
@@ -41,7 +42,7 @@ type ServicesCopy = {
 
 const servicesCopy: Record<Locale, ServicesCopy> = {
   ro: {
-    word: 'Servicii.',
+    word: PAGE_WORDS['/servicii'].ro,
     lead: 'Ce construim, cât costă și în cât timp. Scris dinainte.',
     howLabel: 'Procesul',
     howLink: 'Tot procesul, pas cu pas',
@@ -72,7 +73,7 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     freeAfter: 'unei afaceri din România, prin concursul nostru lunar.',
   },
   en: {
-    word: 'Services.',
+    word: PAGE_WORDS['/servicii'].en,
     lead: 'What we build, what it costs and how long it takes. Written down up front.',
     howLabel: 'Process',
     howLink: 'The whole process, step by step',

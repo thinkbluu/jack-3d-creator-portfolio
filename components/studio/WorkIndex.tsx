@@ -82,14 +82,15 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
       <ul ref={listRef} className="work-grid">
         {visible.map((project, index) => (
           <li key={project.slug} data-work="" className="work-item" style={{ '--shape': SHAPES[index % 4] } as CSSProperties}>
-            <Link href={href(`/portofoliu/${project.slug}`)} data-cursor={copy.view} className="work-card link-block">
-              <span className="work-card-media">
+            <Link href={href(`/portofoliu/${project.slug}`)} data-cursor={copy.view} data-expand="" className="work-card link-block">
+              <span className="work-card-media" data-expand-frame="">
                 <Image
                   src={project.cover}
                   alt=""
                   fill
                   sizes="(min-width: 768px) 46vw, 100vw"
                   priority={index < 2}
+                  data-expand-media=""
                   className="object-cover object-top"
                 />
               </span>

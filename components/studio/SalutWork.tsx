@@ -92,6 +92,8 @@ export default function SalutWork() {
               key={project.slug}
               href={href(`/portofoliu/${project.slug}`)}
               data-card=""
+              data-expand=""
+              data-expand-frame=""
               data-cursor={redesign.cursor.view}
               className="salut-card link-block group snap-start"
             >
@@ -100,6 +102,7 @@ export default function SalutWork() {
                 alt=""
                 fill
                 sizes="(min-width: 768px) 70vw, 88vw"
+                data-expand-media=""
                 className="object-cover object-top transition-transform duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.03]"
               />
               <span className="salut-card-shade" aria-hidden="true" />

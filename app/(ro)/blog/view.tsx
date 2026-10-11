@@ -10,6 +10,7 @@ import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
+import { PAGE_WORDS } from '@/lib/page-words'
 import { pageMetadata } from '@/lib/seo'
 import { absoluteUrl, whatsappUrl } from '@/lib/site'
 
@@ -72,7 +73,7 @@ export function BlogView({ locale }: { locale: Locale }) {
     <>
       <SiteHeader current="blog" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <PageOpen crumbs={crumbs} index="05" title={copy.indexTitle} word={copy.word} lead={copy.lead} short>
+        <PageOpen crumbs={crumbs} index="05" title={copy.indexTitle} word={PAGE_WORDS['/blog'][locale]} lead={copy.lead} short>
           <p className="max-w-sm leading-relaxed text-[var(--fg-2)]">
             {copy.indexIntro}{' '}
             <Link href={localizePath('/servicii', locale)} className="inline min-h-0 text-[var(--fg)] underline underline-offset-4">

@@ -21,6 +21,7 @@ import {
   VAT_ID,
   whatsappUrl,
 } from '@/lib/site'
+import { PAGE_WORDS } from '@/lib/page-words'
 
 const formCopy: Record<Locale, ContactFormCopy> = {
   ro: {
@@ -59,7 +60,7 @@ const formCopy: Record<Locale, ContactFormCopy> = {
 
 const contact = {
   ro: {
-    word: 'Scrie-ne.',
+    word: PAGE_WORDS['/contact'].ro,
     lead: 'Răspundem în aceeași zi.',
     formHead: 'Un mesaj.',
     formLead: 'Pentru detalii, documente sau o cerere mai lungă. Ajunge direct la contact@maststudio.ro.',
@@ -90,7 +91,7 @@ const contact = {
     formCta: 'Trimite o cerere de ofertă',
   },
   en: {
-    word: 'Write.',
+    word: PAGE_WORDS['/contact'].en,
     lead: 'We reply the same day.',
     formHead: 'A message.',
     formLead: 'For details, documents or a longer request. It goes straight to contact@maststudio.ro.',
