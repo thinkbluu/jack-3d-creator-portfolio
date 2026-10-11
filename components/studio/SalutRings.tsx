@@ -21,6 +21,7 @@ export function ProjectOrbit() {
         key: project.slug,
         href: href(`/portofoliu/${project.slug}`),
         image: project.cover,
+        alt: project.coverAlt,
         eyebrow: project.type === 'concept' ? `${copy.concept} · ${project.year}` : `${project.categoryLabel} · ${project.year}`,
         title: project.name,
         text: project.summary,

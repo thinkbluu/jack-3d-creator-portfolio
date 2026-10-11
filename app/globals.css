@@ -1268,36 +1268,62 @@ html[data-daypart]:not([data-daypart='day']) .salut-hello[data-part='day'] {
 .salut-card {
   --d: 0;
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   flex-shrink: 0;
   width: 86vw;
-  aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: 24px;
-  background: var(--navy);
+  background: #0b0f17;
+}
+/* Preview window: the artwork is 2:1 with the subject on the right. */
+.salut-card-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  background: #0b0f17;
 }
 @media (min-width: 768px) {
   .salut-card {
     width: min(68vw, 118svh);
-    height: min(62svh, 40rem);
-    aspect-ratio: auto;
+    aspect-ratio: 2 / 1;
     border-radius: 28px;
     transform: scale(calc(1 - var(--d) * 0.07));
   }
+  .salut-card-media {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
 }
 .salut-card-shade {
+  display: none;
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(11, 15, 22, 0.88), rgba(11, 15, 22, 0.25) 52%, transparent 75%);
+  background: linear-gradient(to right, rgba(11, 15, 22, 0.92), rgba(11, 15, 22, 0.4) 42%, transparent 68%);
 }
 .salut-card-text {
-  position: absolute;
-  inset-inline: clamp(1.25rem, 2.4vw, 2.5rem);
-  bottom: clamp(1.25rem, 2.4vw, 2.25rem);
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  padding: 1.1rem 1.25rem 1.4rem;
   color: var(--on-dark);
+}
+@media (min-width: 768px) {
+  .salut-card-shade {
+    display: block;
+  }
+  /* Text sits in the artwork's empty left area, never over the subject. */
+  .salut-card-text {
+    position: absolute;
+    left: clamp(1.25rem, 2.4vw, 2.5rem);
+    bottom: clamp(1.25rem, 2.4vw, 2.25rem);
+    width: min(52%, 34rem);
+    padding: 0;
+  }
 }
 .salut-card-name {
   font-size: clamp(2.2rem, 4.8vw, 5.4rem);

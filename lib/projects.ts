@@ -20,6 +20,8 @@ export type Project = {
   stack: string[]
   liveUrl?: string
   cover: string
+  /** Alt text describing the cover artwork. */
+  coverAlt: string
   gallery?: string[]
   testimonial?: { quote: string; author: string; role: string }
   featured: boolean
@@ -47,7 +49,8 @@ export const projects: Project[] = [
       'La câteva luni de la lansare, cabinetul a raportat o creștere de aproximativ 80% a numărului de clienți noi, majoritatea ajungând prin căutări locale pe Google.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'SEO local'],
     liveUrl: 'https://veterinartim.ro',
-    cover: '/images/proj-veterinartim.webp',
+    cover: '/work/01-veterinaria-timisoara.webp',
+    coverAlt: 'Leather collar with a gold heart tag on dark velvet, Veterinaria Timișoara',
     featured: true,
   },
   {
@@ -71,7 +74,8 @@ export const projects: Project[] = [
       'Firma are o prezență digitală care susține poziționarea de consultanță de nivel înalt, în ambele limbi de lucru.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Bilingv RO/EN'],
     liveUrl: 'https://agdmanagement.ro',
-    cover: '/images/proj-agd.webp',
+    cover: '/work/02-agd-innerpath-consulting.webp',
+    coverAlt: 'Gold and black fountain pens on a wax-sealed envelope, AGD Innerpath Consulting',
     featured: true,
   },
   {
@@ -95,7 +99,8 @@ export const projects: Project[] = [
       'Site-ul funcționează ca punct oficial de comunicare al proiectului, atât pentru evaluatorii finanțatorului, cât și pentru comunitatea științifică și partenerii instituționali.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Conformitate PoCIDIF'],
     liveUrl: 'https://decodex.ro',
-    cover: '/images/proj-decodex.webp',
+    cover: '/work/03-decodex.webp',
+    coverAlt: 'Layered glass panels on a gold axis, DECODEX',
     featured: true,
   },
   {
@@ -119,7 +124,8 @@ export const projects: Project[] = [
       'Centrul are acum o prezență digitală pe măsura activității sale de cercetare, folosită activ în relația cu partenerii internaționali.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Arhitectură de conținut'],
     liveUrl: 'https://oncogen.ro',
-    cover: '/images/proj-oncogen.webp',
+    cover: '/work/05-oncogen.webp',
+    coverAlt: 'Glowing petri dish culture, OncoGen',
     featured: false,
   },
   {
@@ -143,7 +149,8 @@ export const projects: Project[] = [
       'Distribuitorul are acum un canal propriu prin care cumpărătorii ajung direct la catalog și la contact, fără să depindă exclusiv de relații și recomandări.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Catalog produse'],
     liveUrl: 'https://paineacasei.ro',
-    cover: '/images/proj-paineacasei.webp',
+    cover: '/work/06-painea-casei.webp',
+    coverAlt: 'Fresh sourdough loaf on a peel by a wood-fired oven, Pâinea Casei',
     featured: false,
   },
   {
@@ -165,7 +172,8 @@ export const projects: Project[] = [
       'Construim o platformă care centralizează exact ce are nevoie un salon mic și mediu, fără funcții inutile: calendar de programări, fișe de client cu istoric, gestiune de echipă, urmărire de stocuri și raportare de venituri. Interfața e gândită pentru a fi folosită de la telefon, între doi clienți, nu de la birou.',
     stack: ['Next.js', 'React', 'PostgreSQL', 'Tailwind CSS'],
     liveUrl: 'https://asesor.ro',
-    cover: '/images/proj-asesor.webp',
+    cover: '/work/04-asesor.webp',
+    coverAlt: 'Gold scissors and comb on black marble, ASESOR',
     featured: true,
   },
   {
@@ -189,7 +197,8 @@ export const projects: Project[] = [
       'Concept demonstrativ, nu un produs real. Construit pentru a testa lizibilitatea tipografiei mari peste imagine la scară completă.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
     liveUrl: 'https://demo1.maststudio.ro',
-    cover: '/images/concept-lumora.webp',
+    cover: '/work/07-lumora.webp',
+    coverAlt: 'Frosted glass bottle with gold cap on dark stone in mist, Lumora',
     featured: false,
   },
   {
@@ -213,7 +222,8 @@ export const projects: Project[] = [
       'Concept demonstrativ, nu o pagină oficială. Construit pentru a testa narațiunea vizuală controlată prin scroll.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Scroll-driven animation'],
     liveUrl: 'https://demo2.maststudio.ro',
-    cover: '/images/concept-mostar.webp',
+    cover: '/work/08-mostar.webp',
+    coverAlt: 'Stone arch bridge reflected in still water at dusk, Mostar',
     featured: false,
   },
   {
@@ -237,7 +247,8 @@ export const projects: Project[] = [
       'Concept demonstrativ, nu o platformă reală. Construit pentru a testa interacțiunile bazate pe cursor și mască.',
     stack: ['React', 'TypeScript', 'Tailwind CSS', 'Canvas API'],
     liveUrl: 'https://demo3.maststudio.ro',
-    cover: '/images/concept-lithos.webp',
+    cover: '/work/09-lithos.webp',
+    coverAlt: 'Split geode with crystal interior, Lithos',
     featured: false,
   },
 ]

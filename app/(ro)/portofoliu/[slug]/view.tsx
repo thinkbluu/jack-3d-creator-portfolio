@@ -139,10 +139,7 @@ export async function ProjectView({ locale, slug }: { locale: Locale; slug: stri
     { name: ui[locale].nav.portfolio, path: localizePath('/portofoliu', locale) },
     { name: project.name, path },
   ]
-  const coverAlt =
-    project.type === 'concept'
-      ? `${projectsUi.altConcept} ${project.name}`
-      : `${projectsUi.altClient} ${project.name}${projectsUi.altClientBy}`
+  const coverAlt = project.coverAlt
 
   const jsonLd = graph(
     webPageNode({ path, name: projectTitle(project), description: project.metaDescription, breadcrumb: true, locale }),
@@ -332,7 +329,7 @@ export async function ProjectView({ locale, slug }: { locale: Locale; slug: stri
                 alt=""
                 fill
                 sizes="100vw"
-                className="object-cover object-top opacity-25 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.03] group-hover:opacity-45"
+                className="object-cover object-[right_center] opacity-25 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.03] group-hover:opacity-45"
               />
             ) : null}
             <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-[var(--night)] via-[rgba(11,15,22,0.6)] to-[rgba(11,15,22,0.3)]" />
