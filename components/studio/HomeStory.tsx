@@ -24,7 +24,7 @@ function Words({ text, state, base }: { text: string; state: -1 | 0 | 1; base: n
   return (
     <>
       {text.split(' ').map((word, index) => (
-        <span key={`${word}-${index}`} className="inline-block overflow-hidden pb-[0.12em] align-top">
+        <span key={`${word}-${index}`} className="inline-block max-w-full overflow-hidden pb-[0.12em] align-top">
           <span
             className="inline-block"
             style={{

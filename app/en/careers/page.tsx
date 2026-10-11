@@ -1,4 +1,4 @@
-import { careersMetadata, CareersView } from '@/app/(ro)/cariere/page'
+import { careersMetadata, CareersView } from '@/app/(ro)/cariere/view'
 
 export const metadata = careersMetadata('en')
 

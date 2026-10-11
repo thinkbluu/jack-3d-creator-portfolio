@@ -31,7 +31,7 @@ export default function PageHero({
 }) {
   const dark = tone !== 'cream'
   return (
-    <section className={`tone-${tone} ${dark ? 'grain' : ''} relative overflow-hidden pt-36 pb-20 md:pt-44 md:pb-28`}>
+    <section className={`tone-${tone} ${dark ? 'grain' : ''} relative overflow-x-clip overflow-y-hidden pt-36 pb-20 md:pt-44 md:pb-28`}>
       {dark ? (
         <span
           aria-hidden="true"

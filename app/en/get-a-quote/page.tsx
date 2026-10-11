@@ -1,4 +1,4 @@
-import { offerMetadata, OfferView } from '@/app/(ro)/cere-oferta/page'
+import { offerMetadata, OfferView } from '@/app/(ro)/cere-oferta/view'
 
 export const metadata = offerMetadata('en')
 

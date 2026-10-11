@@ -45,11 +45,11 @@ export default function ServicesIndex() {
                     aria-expanded={isOpen}
                     aria-controls={`serviciu-${service.id}`}
                     onClick={() => setOpen(isOpen ? null : service.id)}
-                    className="group grid w-full cursor-pointer grid-cols-[2.5rem_1fr_auto] items-baseline gap-4 py-7 text-left md:grid-cols-[5rem_1fr_auto] md:py-9"
+                    className="group grid w-full cursor-pointer grid-cols-[2.5rem_minmax(0,1fr)_auto] items-baseline gap-4 py-7 text-left md:grid-cols-[5rem_minmax(0,1fr)_auto] md:py-9"
                   >
                     <span className="mono-label text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</span>
                     <span
-                      className={`display-xl text-[clamp(2rem,5.4vw,5rem)] transition-[transform,color] duration-500 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:translate-x-3 ${
+                      className={`display-xl min-w-0 text-[clamp(1.75rem,5.4vw,5rem)] transition-[transform,color] duration-500 ease-[cubic-bezier(.2,.7,.2,1)] group-hover:translate-x-3 ${
                         isOpen ? 'display-italic text-[var(--brass-ink)]' : ''
                       }`}
                     >

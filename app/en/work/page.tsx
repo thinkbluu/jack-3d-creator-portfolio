@@ -1,4 +1,4 @@
-import { portfolioMetadata, PortfolioView } from '@/app/(ro)/portofoliu/page'
+import { portfolioMetadata, PortfolioView } from '@/app/(ro)/portofoliu/view'
 
 export const metadata = portfolioMetadata('en')
 

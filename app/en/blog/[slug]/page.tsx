@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { articleMetadata, ArticleView } from '@/app/(ro)/blog/[slug]/page'
+import { articleMetadata, ArticleView } from '@/app/(ro)/blog/[slug]/view'
 import { getAllPosts } from '@/lib/blog'
 
 type ArticlePageProps = {

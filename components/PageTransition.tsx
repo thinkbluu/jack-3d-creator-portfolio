@@ -69,6 +69,20 @@ export default function PageTransition() {
     return () => cancelAnimationFrame(frame)
   }, [pathname])
 
+  // Browser back/forward never goes through the click capture above. If a
+  // curtain was mid-cover, clear it so history navigation cannot leave the
+  // night plane stuck over the page.
+  useEffect(() => {
+    const onPop = () => {
+      pending.current = null
+      window.clearTimeout(timer.current)
+      setPhase((current) => (current === 'idle' ? current : 'reveal'))
+      timer.current = window.setTimeout(() => setPhase('idle'), REVEAL_MS)
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [])
+
   useEffect(() => () => window.clearTimeout(timer.current), [])
 
   return (

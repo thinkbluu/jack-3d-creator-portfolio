@@ -1,4 +1,4 @@
-import { aboutMetadata, AboutView } from '@/app/(ro)/despre/page'
+import { aboutMetadata, AboutView } from '@/app/(ro)/despre/view'
 
 export const metadata = aboutMetadata('en')
 

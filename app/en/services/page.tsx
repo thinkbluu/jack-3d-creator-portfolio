@@ -1,4 +1,4 @@
-import { servicesMetadata, ServicesView } from '@/app/(ro)/servicii/page'
+import { servicesMetadata, ServicesView } from '@/app/(ro)/servicii/view'
 
 export const metadata = servicesMetadata('en')
 

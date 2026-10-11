@@ -1,4 +1,4 @@
-import { PrivacyView, privacyMetadata } from '@/app/(ro)/confidentialitate/page'
+import { PrivacyView, privacyMetadata } from '@/app/(ro)/confidentialitate/view'
 
 export const metadata = privacyMetadata('en')
 

@@ -1,4 +1,4 @@
-import { jobMetadata, JobView } from '@/app/(ro)/cariere/[slug]/page'
+import { jobMetadata, JobView } from '@/app/(ro)/cariere/[slug]/view'
 import { JOB_OPENINGS } from '@/lib/careers'
 
 type Props = { params: Promise<{ slug: string }> }

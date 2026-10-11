@@ -54,7 +54,8 @@ export default function SiteHeader({
     // whatever section sits under it.
     const readTone = () => {
       frame = 0
-      setScrolled(window.scrollY > 24)
+      const y = window.__lenis?.scroll ?? window.scrollY
+      setScrolled(y > 24)
       if (!overlay) return
       const stack = document.elementsFromPoint(window.innerWidth / 2, 40)
       let next: 'light' | 'dark' = 'light'
@@ -75,10 +76,13 @@ export default function SiteHeader({
     readTone()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onScroll)
+    const lenis = window.__lenis
+    lenis?.on('scroll', onScroll)
     return () => {
       cancelAnimationFrame(frame)
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onScroll)
+      lenis?.off('scroll', onScroll)
     }
   }, [overlay])
 

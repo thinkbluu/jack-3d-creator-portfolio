@@ -52,9 +52,9 @@ export function SplitHeading({
   const words = text.split(' ')
   const accentWords = accent ? accent.split(' ') : []
   const word = (value: string, index: number, extra = '') => (
-    <span key={`${value}-${index}`} className="inline-block overflow-hidden pb-[0.12em] align-top">
+    <span key={`${value}-${index}`} className="inline-block max-w-full overflow-hidden pb-[0.12em] align-top">
       <motion.span
-        className={`inline-block ${extra}`}
+        className={`inline-block max-w-full ${extra}`}
         variants={{ hidden: { y: reduced ? 0 : '110%' }, shown: { y: 0 } }}
         transition={{ duration: reduced ? 0 : 0.9, delay: reduced ? 0 : index * 0.05, ease: EASE }}
       >

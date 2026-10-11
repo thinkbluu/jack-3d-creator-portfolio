@@ -1,4 +1,4 @@
-import { TermsView, termsMetadata } from '@/app/(ro)/termeni/page'
+import { TermsView, termsMetadata } from '@/app/(ro)/termeni/view'
 
 export const metadata = termsMetadata('en')
 
