@@ -1,4 +1,3 @@
-import ContestTeaser from '@/components/ContestTeaser'
 import Footer from '@/components/Footer'
 import HomePage from '@/components/HomePage'
 import JsonLd from '@/components/JsonLd'
@@ -63,7 +62,7 @@ export function HomeView({ locale }: { locale: Locale }) {
   return (
     <>
       <JsonLd data={homeJsonLd} />
-      <HomePage footer={<Footer />} />
+      <HomePage footer={<Footer cta={false} />} />
     </>
   )
 }

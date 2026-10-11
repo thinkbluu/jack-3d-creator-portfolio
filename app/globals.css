@@ -6,6 +6,7 @@
 @theme inline {
   --font-sans: var(--font-dm-sans), 'DM Sans', sans-serif;
   --font-display: var(--font-fraunces), 'Fraunces', serif;
+  --font-mono: var(--font-dm-mono), 'DM Mono', ui-monospace, monospace;
 }
 
 @custom-variant dark (&:is(.dark *));
@@ -173,6 +174,16 @@
     --brass-ink: #80672e;
     --brass-lite: #d4b267;
     --harbor: #2e5266;
+    /* Studio redesign: the dark half of the brand. Navy deepened from --harbor,
+       warm near-black from --ink, cream and brass carried over unchanged. */
+    --night: #0b0f16;
+    --navy: #0f1b2b;
+    --navy-2: #172a41;
+    --on-dark: #faf7f2;
+    /* Both meet WCAG AA (4.5:1) on --night and --navy. */
+    --on-dark-2: rgba(250, 247, 242, 0.74);
+    --on-dark-3: rgba(250, 247, 242, 0.6);
+    --hairline-dark: rgba(250, 247, 242, 0.12);
     --glass: rgba(250, 247, 242, 0.86);
     --glass-edge: rgba(176, 141, 63, 0.42);
     --radius-panel: 28px;
@@ -811,5 +822,194 @@ footer a {
   #contact,
   footer {
     padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  }
+}
+
+/* ───────────────────────── Studio redesign (2026) ───────────────────────── */
+
+/* Lenis drives scrolling; native smooth scrolling would fight it. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+html.lenis {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+
+.studio-container {
+  width: 100%;
+  max-width: 86rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.tone-dark {
+  background: var(--night);
+  color: var(--on-dark);
+}
+
+.tone-navy {
+  background: var(--navy);
+  color: var(--on-dark);
+}
+
+.tone-cream,
+.tone-warm {
+  background: var(--shell);
+  color: var(--ink);
+}
+
+.tone-warm {
+  background: var(--shell-warm);
+}
+
+/* Tone-agnostic tokens, so one component reads well on any surface. */
+.tone-dark,
+.tone-navy {
+  --accent: var(--brass-lite);
+  --fg: var(--on-dark);
+  --fg-2: var(--on-dark-2);
+  --fg-3: var(--on-dark-3);
+  --line: var(--hairline-dark);
+}
+
+.tone-cream,
+.tone-warm {
+  --accent: var(--brass-ink);
+  --fg: var(--ink);
+  --fg-2: var(--ink-2);
+  --fg-3: var(--ink-3);
+  --line: var(--hairline);
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.display-xl {
+  font-family: var(--font-display);
+  font-variation-settings: 'opsz' 144, 'SOFT' 50;
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 0.9;
+}
+
+.display-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-variation-settings: 'opsz' 144, 'SOFT' 100;
+  font-weight: 300;
+}
+
+/* Film grain over dark surfaces: a static SVG noise tile, no animation cost. */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Links styled as blocks inside cards and menus opt out of the global
+   inline-flex link rule while keeping the 44px target. */
+.link-block {
+  display: block;
+}
+
+.studio-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 200;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border-radius: 999px;
+  background: #faf7f2;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  opacity: 0;
+  transition: width 0.3s ease, height 0.3s ease, margin 0.3s ease, opacity 0.3s ease;
+}
+
+.studio-cursor[data-active='true'] {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .studio-cursor {
+    display: none;
+  }
+}
+
+@keyframes studio-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.studio-marquee {
+  display: flex;
+  width: max-content;
+  animation: studio-marquee 38s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-marquee {
+    animation: none;
+  }
+}
+
+/* Intro curtain: lifted by CSS alone, skipped on repeat visits and for reduced motion. */
+.studio-loader {
+  clip-path: inset(0 0 0 0);
+  animation: studio-loader-out 0.9s cubic-bezier(0.7, 0, 0.2, 1) 1.25s forwards;
+}
+
+.studio-loader-bar {
+  transform: scaleX(0);
+  animation: studio-loader-bar 1.15s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+
+@keyframes studio-loader-out {
+  to {
+    clip-path: inset(0 0 100% 0);
+    visibility: hidden;
+  }
+}
+
+@keyframes studio-loader-bar {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+[data-intro-seen] .studio-loader {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .studio-loader {
+    display: none;
   }
 }
