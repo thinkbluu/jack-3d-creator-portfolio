@@ -8,7 +8,7 @@ import IntroLoader from '@/components/studio/IntroLoader'
 import SalutBye from '@/components/studio/SalutBye'
 import SalutHero from '@/components/studio/SalutHero'
 import SalutPip from '@/components/studio/SalutPip'
-import { ProjectOrbit, ReviewsBlock } from '@/components/studio/SalutRings'
+import { ReviewsBlock } from '@/components/studio/SalutRings'
 import SalutServices from '@/components/studio/SalutServices'
 import SalutStatement from '@/components/studio/SalutStatement'
 import SalutWork from '@/components/studio/SalutWork'
@@ -28,9 +28,8 @@ export default function HomePage({ afterScenes, footer }: { afterScenes?: React.
         <SalutHero />
         <SalutStatement />
         <SalutWork />
-        <ProjectOrbit />
-        <SalutServices />
         <ReviewsBlock />
+        <SalutServices />
         <HomeFaq />
         <SalutBye />
         {afterScenes}
