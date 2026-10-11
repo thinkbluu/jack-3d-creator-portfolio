@@ -6,7 +6,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher'
 import MenuOverlay, { type MenuItem } from '@/components/MenuOverlay'
 import { useHref, useUi } from '@/lib/i18n/context'
 
-export type SiteSection = 'servicii' | 'portofoliu' | 'blog' | 'site-gratuit' | 'despre' | 'cariere' | 'contact'
+export type SiteSection = 'servicii' | 'portofoliu' | 'cum-lucram' | 'blog' | 'site-gratuit' | 'despre' | 'cariere' | 'contact'
 
 const DARK_VARS = {
   '--ink': '#faf7f2',
@@ -38,15 +38,16 @@ export default function SiteHeader({
   const wasOpen = useRef(false)
 
   const navItems: MenuItem[] = [
-    { id: 'servicii', href: href('/servicii'), label: nav.services },
     { id: 'portofoliu', href: href('/portofoliu'), label: nav.portfolio },
-    { id: 'blog', href: href('/blog'), label: nav.guide },
+    { id: 'servicii', href: href('/servicii'), label: nav.services },
+    { id: 'cum-lucram', href: href('/cum-lucram'), label: nav.approach },
     { id: 'despre', href: href('/despre'), label: nav.about },
+    { id: 'blog', href: href('/blog'), label: nav.guide },
     { id: 'cariere', href: href('/cariere'), label: nav.careers },
     { id: 'contact', href: href('/contact'), label: nav.contact },
   ]
   const quote: MenuItem = { id: 'cerere-oferta', href: href('/cerere-oferta'), label: nav.quote }
-  const inline = navItems.filter((item) => ['servicii', 'portofoliu', 'blog', 'contact'].includes(item.id))
+  const inline = navItems.filter((item) => ['portofoliu', 'servicii', 'despre', 'blog', 'contact'].includes(item.id))
 
   useEffect(() => {
     let frame = 0

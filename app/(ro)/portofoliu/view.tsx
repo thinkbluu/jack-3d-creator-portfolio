@@ -1,9 +1,8 @@
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
-import PortfolioGrid from '@/components/PortfolioGrid'
 import SiteHeader from '@/components/SiteHeader'
-import CtaBand from '@/components/studio/CtaBand'
-import PageHero from '@/components/studio/PageHero'
+import PageOpen from '@/components/studio/PageOpen'
+import WorkIndex from '@/components/studio/WorkIndex'
 import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
@@ -18,18 +17,18 @@ const portfolioPageCopy = {
     description:
       'Site-uri de prezentare, site-uri instituționale și platforme construite de MAST Studio pentru afaceri și instituții din Timișoara și din toată România.',
     schemaName: 'Portofoliu web design MAST Studio',
+    word: 'Lucrări.',
     intro:
-      'Site-uri, platforme și proiecte digitale construite integral de noi, pentru afaceri și instituții din Timișoara și din toată România.',
-    next: 'Vrei ca proiectul tău să fie următorul?',
+      'Site-uri, platforme și concepte construite integral de noi, pentru afaceri și instituții din Timișoara și din toată România.',
   },
   en: {
     title: 'Web design portfolio: delivered projects',
     description:
       'Presentation websites, institutional websites, and platforms built by MAST Studio for businesses and institutions in Timișoara and across Romania.',
     schemaName: 'MAST Studio web design portfolio',
+    word: 'Work.',
     intro:
-      'Websites, platforms, and digital projects we built in full, for businesses and institutions in Timișoara and across Romania.',
-    next: 'Want your project to be next?',
+      'Websites, platforms and concepts we built in full, for businesses and institutions in Timișoara and across Romania.',
   },
 } as const
 
@@ -76,32 +75,19 @@ export function PortfolioView({ locale }: { locale: Locale }) {
     },
   )
 
-  const clientCount = projects.filter((project) => project.type === 'client').length
-
   return (
     <>
       <SiteHeader current="portofoliu" tone="dark" overlay />
-      <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <PageHero
-          crumbs={crumbs}
-          kicker={ui[locale].nav.portfolio}
-          title={copy.title}
-          intro={copy.intro}
-          aside={
-            <p className="flex items-end gap-4 lg:justify-end">
-              <span className="display-xl text-[clamp(5rem,10vw,9rem)] leading-[0.8] text-[var(--brass-lite)]">
-                {String(clientCount).padStart(2, '0')}
-              </span>
-              <span className="mono-label max-w-[10rem] pb-2 text-[var(--fg-3)]">{ui[locale].projects.clients}</span>
-            </p>
-          }
-        />
-        <div className="studio-container py-20 md:py-28">
-          <PortfolioGrid projects={projects} />
-        </div>
-        <CtaBand title={copy.next} placement="portfolio_cta" />
+      <main className="min-h-screen bg-[var(--night)]">
+        <PageOpen crumbs={crumbs} index="01" title={copy.title} word={copy.word} lead={copy.intro} short />
+        <section className="tone-dark pb-[clamp(5rem,10vw,9rem)]">
+          <div className="studio-container">
+            <WorkIndex projects={projects} />
+            <p className="mono-label mt-24 max-w-xl text-[var(--fg-3)]">{ui[locale].projects.conceptsNote}</p>
+          </div>
+        </section>
       </main>
-      <Footer cta={false} />
+      <Footer />
       <JsonLd data={jsonLd} />
     </>
   )
