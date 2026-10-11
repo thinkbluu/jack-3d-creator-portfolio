@@ -18,6 +18,9 @@ const TOP: Pair[] = [
   { ro: 'contact', en: 'contact' },
   { ro: 'cookies', en: 'cookies' },
   { ro: 'blog', en: 'blog' },
+  { ro: 'cum-lucram', en: 'approach' },
+  { ro: 'newsletter', en: 'newsletter' },
+  { ro: 'echipa', en: 'team' },
 ]
 
 const FREE_SITE: Pair[] = [

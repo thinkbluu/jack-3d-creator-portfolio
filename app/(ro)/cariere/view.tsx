@@ -3,7 +3,8 @@ import CareerForm from '@/components/CareerForm'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
-import PageHero from '@/components/studio/PageHero'
+import PageOpen from '@/components/studio/PageOpen'
+import SectionHead from '@/components/studio/SectionHead'
 import { CV_RETENTION_MONTHS, careerLocation, careerSchedule, getJobOpenings, salaryLabel } from '@/lib/careers'
 import { localizePath } from '@/lib/i18n/paths'
 import type { Locale } from '@/lib/i18n/locale'
@@ -19,6 +20,10 @@ const careers = {
       'MAST Studio angajează un front-end developer (React, Next.js) și un mobile app developer (React Native). Lucru la distanță, din România. Trimite CV-ul aici.',
     name: 'Cariere la MAST Studio',
     kicker: 'Cariere',
+    word: 'Cariere.',
+    lead: 'O echipă mică, la distanță, care ține la detalii.',
+    otherLabel: 'Și altfel',
+    otherHead: 'Alte roluri.',
     intro:
       'Căutăm un front-end developer și un mobile app developer. Lucrăm la distanță, cu afaceri mici din toată România. Dacă vrei să lucrezi cu noi pe alt rol, trimite-ne oricum CV-ul: când apare un post potrivit, te contactăm noi.',
     openTitle: 'Posturi deschise',
@@ -46,6 +51,10 @@ const careers = {
       'MAST Studio is hiring a front-end developer (React, Next.js) and a mobile app developer (React Native). Remote work, from Romania. Send your CV here.',
     name: 'Careers at MAST Studio',
     kicker: 'Careers',
+    word: 'Careers.',
+    lead: 'A small, remote team that cares about the details.',
+    otherLabel: 'Otherwise',
+    otherHead: 'Other roles.',
     intro:
       'We’re hiring a front-end developer and a mobile app developer. We work remotely, with small businesses across Romania. If you want to work with us in another role, send your CV anyway: when a fitting role opens, we’ll contact you.',
     openTitle: 'Open roles',
@@ -93,81 +102,90 @@ export function CareersView({ locale }: { locale: Locale }) {
     <>
       <SiteHeader current="cariere" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <PageHero crumbs={crumbs} kicker={copy.kicker} title={copy.name} intro={copy.intro} />
-        <div className="site-container py-20 md:py-28">
-          <section aria-labelledby="posturi-deschise" className="max-w-4xl">
-            <h2 id="posturi-deschise" className="type-h3">
-              {copy.openTitle}
-            </h2>
-            <div className="mt-6 flex flex-col gap-6">
-              {jobs.map((job) => (
-                <article key={job.id} aria-labelledby={`${job.id}-titlu`} className="porthole p-7 md:p-9">
-                  <p className="kicker">
-                    {careerLocation(locale)} · {careerSchedule(locale).toLowerCase()}
-                  </p>
-                  <h3 id={`${job.id}-titlu`} className="type-h3 mt-3">
-                    <Link href={localizePath(`/cariere/${job.id}`, locale)} className="hover:text-[var(--brass-ink)]">
-                      {job.title}
-                    </Link>
-                  </h3>
-                  <p className="type-body mt-4">{job.summary}</p>
-                  <p className="mt-4 font-sans text-sm font-bold text-[var(--brass-ink)]">{salaryLabel(job, locale)}</p>
-                  <Link href={localizePath(`/cariere/${job.id}`, locale)} className="mt-5 w-fit font-sans text-sm font-semibold text-[var(--ink)] underline underline-offset-4 hover:text-[var(--brass-ink)]">
-                    {copy.details.split('{title}').join(job.title.toLowerCase())}
-                  </Link>
-                </article>
-              ))}
-            </div>
-          </section>
+        <PageOpen crumbs={crumbs} index="07" title={copy.name} word={copy.word} lead={copy.lead} short>
+          <p className="max-w-sm leading-relaxed text-[var(--fg-2)]">{copy.intro}</p>
+        </PageOpen>
 
-          <section aria-labelledby="pe-cine-cautam" className="mt-14 max-w-3xl border-t border-[var(--hairline)] pt-12">
-            <h2 id="pe-cine-cautam" className="type-h3">
-              {copy.otherTitle}
+        <section aria-labelledby="posturi-deschise" className="tone-dark pb-[clamp(5rem,10vw,9rem)]">
+          <div className="studio-container">
+            <h2 id="posturi-deschise" className="mono-label text-[var(--fg-3)]">
+              {copy.openTitle} <sup className="text-[var(--accent)]">{jobs.length}</sup>
             </h2>
-            <ul className="mt-6 grid gap-4 sm:grid-cols-2">
-              {copy.roles.map((role) => (
-                <li key={role.title} className="porthole p-6">
-                  <h3 className="font-sans text-[15px] font-semibold text-[var(--ink)]">{role.title}</h3>
-                  <p className="type-body mt-2 text-[15px]">{role.text}</p>
+            <ul className="big-rows mt-6">
+              {jobs.map((job) => (
+                <li key={job.id}>
+                  <Link href={localizePath(`/cariere/${job.id}`, locale)} className="big-row service-row" aria-label={copy.details.split('{title}').join(job.title.toLowerCase())}>
+                    <span className="mono-label text-[var(--accent)]">→</span>
+                    <span className="min-w-0">
+                      <span className="big-row-name block">{job.title}</span>
+                      <span className="service-row-text">{job.summary}</span>
+                    </span>
+                    <span className="service-row-facts">
+                      <span>
+                        <span className="mono-label text-[var(--fg-3)]">{careerLocation(locale)}</span>
+                        <span className="block">{careerSchedule(locale)}</span>
+                      </span>
+                      <span className="text-[var(--accent)]">{salaryLabel(job, locale)}</span>
+                    </span>
+                  </Link>
                 </li>
               ))}
             </ul>
-          </section>
+          </div>
+        </section>
 
-          <section aria-labelledby="cum-lucram" className="mt-14 max-w-3xl border-t border-[var(--hairline)] pt-12">
-            <h2 id="cum-lucram" className="type-h3">
-              {copy.howTitle}
-            </h2>
-            <p className="type-body mt-4">{copy.how}</p>
-          </section>
-
-          <section aria-labelledby="ce-se-intampla" className="mt-14 max-w-3xl border-t border-[var(--hairline)] pt-12">
-            <h2 id="ce-se-intampla" className="type-h3">
-              {copy.cvTitle}
-            </h2>
-            <ul className="type-body mt-4 flex list-disc flex-col gap-2 pl-6">
-              {copy.cv.map((item) => (
-                <li key={item}>{item}</li>
+        <section className="page-section">
+          <div className="studio-container">
+            <SectionHead index="01" label={copy.otherLabel} title={copy.otherHead} intro={copy.otherTitle} />
+            <ul className="mt-14 grid gap-10 md:grid-cols-3">
+              {copy.roles.map((role, index) => (
+                <li key={role.title} className="border-t border-[var(--ink)] pt-6">
+                  <span className="mono-label text-[var(--brass-ink)]">{String(index + 1).padStart(2, '0')}</span>
+                  <h3 className="display-xl mt-5 text-[clamp(1.8rem,2.8vw,2.6rem)] leading-none">{role.title}</h3>
+                  <p className="mt-3 leading-relaxed text-[var(--ink-2)]">{role.text}</p>
+                </li>
               ))}
-              <li>
-                {copy.deleteBefore}{' '}
-                <a href={EMAIL_HREF} className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
-                  {EMAIL}
-                </a>
-                .
-              </li>
             </ul>
-          </section>
+          </div>
+        </section>
 
-          <section aria-labelledby="trimite-cv" className="mt-14 max-w-3xl">
-            <h2 id="trimite-cv" className="type-h3">
-              {copy.formTitle}
-            </h2>
-            <div className="mt-6">
-              <CareerForm />
+        <section className="tone-warm page-section">
+          <div className="studio-container grid gap-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)]">
+            <div className="flex flex-col gap-12">
+              <div>
+                <h2 id="cum-lucram" className="mono-label text-[var(--fg-3)]">
+                  {copy.howTitle}
+                </h2>
+                <p className="mt-4 text-lg leading-relaxed text-[var(--ink-2)]">{copy.how}</p>
+              </div>
+              <div>
+                <h2 id="ce-se-intampla" className="mono-label text-[var(--fg-3)]">
+                  {copy.cvTitle}
+                </h2>
+                <ul className="mt-4 flex list-disc flex-col gap-2 pl-6 leading-relaxed text-[var(--ink-2)]">
+                  {copy.cv.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                  <li>
+                    {copy.deleteBefore}{' '}
+                    <a href={EMAIL_HREF} className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
+                      {EMAIL}
+                    </a>
+                    .
+                  </li>
+                </ul>
+              </div>
             </div>
-          </section>
-        </div>
+            <section aria-labelledby="trimite-cv">
+              <h2 id="trimite-cv" className="section-title section-title-sm display-xl">
+                {copy.formTitle}
+              </h2>
+              <div className="mt-10">
+                <CareerForm />
+              </div>
+            </section>
+          </div>
+        </section>
       </main>
       <Footer />
       <JsonLd data={graph(webPageNode({ path, name: copy.name, description: copy.description, breadcrumb: true, locale }), breadcrumbNode(crumbs))} />

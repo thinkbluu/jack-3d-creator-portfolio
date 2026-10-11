@@ -2,6 +2,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
+/* Inner pages: work, case studies, services, approach, studio, ideas, contact. */
+@import './pages.css';
 
 @theme inline {
   --font-sans: var(--font-dm-sans), 'DM Sans', sans-serif;

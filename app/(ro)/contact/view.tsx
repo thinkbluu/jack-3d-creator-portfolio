@@ -2,7 +2,8 @@ import Link from 'next/link'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
-import PageHero from '@/components/studio/PageHero'
+import ContactForm, { type ContactFormCopy } from '@/components/ContactForm'
+import PageOpen from '@/components/studio/PageOpen'
 import TrackedLink from '@/components/TrackedLink'
 import { localizePath } from '@/lib/i18n/paths'
 import type { Locale } from '@/lib/i18n/locale'
@@ -21,8 +22,47 @@ import {
   whatsappUrl,
 } from '@/lib/site'
 
+const formCopy: Record<Locale, ContactFormCopy> = {
+  ro: {
+    name: 'Nume',
+    email: 'E-mail',
+    company: 'Firmă',
+    optional: '(opțional)',
+    topic: 'Despre ce e vorba',
+    topics: { project: 'Un proiect nou', question: 'O întrebare', press: 'Presă sau colaborare', other: 'Altceva' },
+    message: 'Mesaj',
+    messageHint: 'Ce faci, ce ai nevoie și, dacă știi deja, până când.',
+    submit: 'Trimite mesajul',
+    sending: 'Se trimite',
+    doneTitle: 'Mulțumim. Am primit.',
+    doneText: 'Îți răspundem pe e-mail în cel mult o zi lucrătoare, de obicei chiar azi. Ți-am trimis și o confirmare.',
+    error: 'Mesajul nu a plecat. Scrie-ne direct la contact@maststudio.ro.',
+    privacy: 'Folosim datele doar ca să-ți răspundem. Detalii în politica de confidențialitate.',
+  },
+  en: {
+    name: 'Name',
+    email: 'Email',
+    company: 'Company',
+    optional: '(optional)',
+    topic: 'What it’s about',
+    topics: { project: 'A new project', question: 'A question', press: 'Press or partnership', other: 'Something else' },
+    message: 'Message',
+    messageHint: 'What you do, what you need and, if you know already, by when.',
+    submit: 'Send the message',
+    sending: 'Sending',
+    doneTitle: 'Thank you. It’s here.',
+    doneText: 'We reply by email within one working day, usually today. We’ve sent you a confirmation too.',
+    error: 'The message didn’t go through. Write to us at contact@maststudio.ro.',
+    privacy: 'We use your details only to reply. More in the privacy policy.',
+  },
+}
+
 const contact = {
   ro: {
+    word: 'Scrie-ne.',
+    lead: 'Răspundem în aceeași zi.',
+    formHead: 'Un mesaj.',
+    formLead: 'Pentru detalii, documente sau o cerere mai lungă. Ajunge direct la contact@maststudio.ro.',
     title: 'Contact: WhatsApp, telefon și e-mail',
     description:
       'Contactează MAST Studio, studio de web design din Timișoara: WhatsApp și telefon +40 746 382 204, e-mail contact@maststudio.ro. Răspundem în aceeași zi.',
@@ -50,6 +90,10 @@ const contact = {
     formCta: 'Trimite o cerere de ofertă',
   },
   en: {
+    word: 'Write.',
+    lead: 'We reply the same day.',
+    formHead: 'A message.',
+    formLead: 'For details, documents or a longer request. It goes straight to contact@maststudio.ro.',
     title: 'Contact: WhatsApp, phone and email',
     description:
       'Contact MAST Studio, a web design studio in Timișoara: WhatsApp and phone +40 746 382 204, email contact@maststudio.ro. We reply the same day.',
@@ -78,9 +122,6 @@ const contact = {
   },
 }
 
-const channelClass =
-  'porthole flex flex-col items-start gap-2 p-6 transition-[transform,border-color] duration-200 hover:-translate-y-[3px] hover:border-[var(--brass)]'
-
 export function contactMetadata(locale: Locale = 'ro') {
   const copy = contact[locale]
   return pageMetadata({
@@ -92,7 +133,7 @@ export function contactMetadata(locale: Locale = 'ro') {
 }
 
 export function ContactView({ locale }: { locale: Locale }) {
-  const copy = contact[locale]
+  const copy = { ...contact[locale], form: formCopy[locale] }
   const path = localizePath('/contact', locale)
   const crumbs: BreadcrumbItem[] = [
     { name: ui[locale].common.home, path: localizePath('/', locale) },
@@ -103,49 +144,62 @@ export function ContactView({ locale }: { locale: Locale }) {
     <>
       <SiteHeader current="contact" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <PageHero crumbs={crumbs} kicker={copy.kicker} title={copy.name} intro={copy.intro} />
-        <div className="site-container py-20 md:py-28">
-          <section aria-labelledby="canale">
-            <h2 id="canale" className="sr-only">
-              {copy.channels}
+        <PageOpen crumbs={crumbs} index="06" title={copy.name} word={copy.word} lead={copy.lead} short>
+          <p className="max-w-sm leading-relaxed text-[var(--fg-2)]">{copy.intro}</p>
+        </PageOpen>
+
+        <div className="studio-container page-section grid gap-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-24">
+          <section aria-labelledby="formular">
+            <h2 id="formular" className="section-title section-title-sm display-xl">
+              {copy.formHead}
             </h2>
-            <ul className="grid grid-cols-1 gap-5 md:grid-cols-3">
-              <li>
-                <TrackedLink
-                  href={whatsappUrl(ui[locale].whatsapp.general)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  eventName="whatsapp_click"
-                  eventProperties={{ placement: 'contact_page' }}
-                  className={channelClass}
-                >
-                  <span className="kicker">WhatsApp</span>
-                  <span className="type-h3">{PHONE_DISPLAY}</span>
-                  <span className="type-body text-[15px]">{copy.whatsappNote}</span>
-                </TrackedLink>
-              </li>
-              <li>
-                <TrackedLink href={PHONE_HREF} eventProperties={{ placement: 'contact_page' }} className={channelClass}>
-                  <span className="kicker">{copy.phone}</span>
-                  <span className="type-h3">{PHONE_DISPLAY}</span>
-                  <span className="type-body text-[15px]">{copy.phoneNote}</span>
-                </TrackedLink>
-              </li>
-              <li>
-                <a href={EMAIL_HREF} className={channelClass}>
-                  <span className="kicker">{copy.email}</span>
-                  <span className="type-h3">{EMAIL}</span>
-                  <span className="type-body text-[15px]">{copy.emailNote}</span>
-                </a>
-              </li>
-            </ul>
+            <p className="mt-5 max-w-md text-lg leading-relaxed text-[var(--ink-2)]">{copy.formLead}</p>
+            <div className="mt-12">
+              <ContactForm copy={copy.form} locale={locale} />
+            </div>
           </section>
 
-          <div className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-2">
+          <aside className="flex flex-col gap-16">
+            <section aria-labelledby="canale">
+              <h2 id="canale" className="mono-label text-[var(--ink-3)]">
+                {copy.channels}
+              </h2>
+              <ul className="big-rows mt-6">
+                <li>
+                  <TrackedLink
+                    href={whatsappUrl(ui[locale].whatsapp.general)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    eventName="whatsapp_click"
+                    eventProperties={{ placement: 'contact_page' }}
+                    className="contact-line"
+                  >
+                    <span className="mono-label">WhatsApp</span>
+                    <span className="contact-line-value">{PHONE_DISPLAY}</span>
+                    <span className="contact-line-note">{copy.whatsappNote}</span>
+                  </TrackedLink>
+                </li>
+                <li>
+                  <TrackedLink href={PHONE_HREF} eventProperties={{ placement: 'contact_page' }} className="contact-line">
+                    <span className="mono-label">{copy.phone}</span>
+                    <span className="contact-line-value">{PHONE_DISPLAY}</span>
+                    <span className="contact-line-note">{copy.phoneNote}</span>
+                  </TrackedLink>
+                </li>
+                <li>
+                  <a href={EMAIL_HREF} className="contact-line">
+                    <span className="mono-label">{copy.email}</span>
+                    <span className="contact-line-value">{EMAIL}</span>
+                    <span className="contact-line-note">{copy.emailNote}</span>
+                  </a>
+                </li>
+              </ul>
+            </section>
+
             <section>
-              <h2 className="type-h3">{copy.whereTitle}</h2>
-              <p className="type-body mt-4">{copy.where}</p>
-              <p className="type-body mt-4">
+              <h2 className="mono-label text-[var(--ink-3)]">{copy.whereTitle}</h2>
+              <p className="mt-4 leading-relaxed text-[var(--ink-2)]">{copy.where}</p>
+              <p className="mt-4 text-[var(--ink-2)]">
                 {copy.socialLead}{' '}
                 {SOCIAL_LINKS.map((link, index) => (
                   <span key={link.url}>
@@ -160,8 +214,8 @@ export function ContactView({ locale }: { locale: Locale }) {
             </section>
 
             <section>
-              <h2 className="type-h3">{copy.idTitle}</h2>
-              <dl className="type-body mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2">
+              <h2 className="mono-label text-[var(--ink-3)]">{copy.idTitle}</h2>
+              <dl className="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-[var(--ink-2)]">
                 <dt className="font-semibold text-[var(--ink)]">{copy.company}</dt>
                 <dd>{LEGAL_NAME}</dd>
                 <dt className="font-semibold text-[var(--ink)]">{copy.cui}</dt>
@@ -170,21 +224,19 @@ export function ContactView({ locale }: { locale: Locale }) {
                 <dd>{TRADE_REGISTER_NUMBER}</dd>
               </dl>
             </section>
-          </div>
 
-          <section className="porthole mt-16 flex max-w-3xl flex-col items-start gap-4 p-8">
-            <h2 className="type-h3">{copy.formTitle}</h2>
-            <p className="type-body">{copy.formBody}</p>
-            <Link
-              href={localizePath('/cerere-oferta', locale)}
-              className="rounded-[var(--radius-pill)] bg-[var(--ink)] px-6 font-sans text-sm font-bold text-[var(--shell)] transition-colors hover:bg-[#2E2822]"
-            >
-              {copy.formCta}
+            <Link href={localizePath('/cerere-oferta', locale)} className="big-row">
+              <span className="mono-label text-[var(--fg-3)]">→</span>
+              <span>
+                <span className="big-row-name block text-[clamp(1.6rem,2.6vw,2.4rem)]">{copy.formCta}</span>
+                <span className="mt-2 block text-[var(--ink-2)]">{copy.formBody}</span>
+              </span>
+              <span aria-hidden="true" className="big-row-arrow">→</span>
             </Link>
-          </section>
+          </aside>
         </div>
       </main>
-      <Footer />
+      <Footer cta={false} />
       <JsonLd
         data={graph(
           webPageNode({ path, name: copy.name, description: copy.description, type: 'ContactPage', breadcrumb: true, mainEntity: businessRef, locale }),

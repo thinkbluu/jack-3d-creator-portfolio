@@ -2,8 +2,8 @@ import Link from 'next/link'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
-import CtaBand from '@/components/studio/CtaBand'
-import PageHero from '@/components/studio/PageHero'
+import PageOpen from '@/components/studio/PageOpen'
+import SectionHead from '@/components/studio/SectionHead'
 import { Reveal } from '@/components/studio/Reveal'
 import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
@@ -14,6 +14,10 @@ import { getAllServicePages } from '@/lib/services'
 import { absoluteUrl } from '@/lib/site'
 
 type ServicesCopy = {
+  word: string
+  lead: string
+  howLabel: string
+  howLink: string
   title: string
   description: string
   kicker: string
@@ -37,6 +41,10 @@ type ServicesCopy = {
 
 const servicesCopy: Record<Locale, ServicesCopy> = {
   ro: {
+    word: 'Servicii.',
+    lead: 'Ce construim, cât costă și în cât timp. Scris dinainte.',
+    howLabel: 'Procesul',
+    howLink: 'Tot procesul, pas cu pas',
     title: 'Servicii web design și prețuri',
     description:
       'Servicii web design din Timișoara cu prețuri la vedere: site de prezentare de la 300 EUR, magazin online de la 900 EUR, aplicații, mentenanță și WhatsApp.',
@@ -47,7 +55,7 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     columns: { service: 'Serviciu', price: 'Preț', time: 'Termen' },
     servicesLabel: 'Servicii',
     includes: 'Ce include:',
-    how: 'Cum lucrăm, indiferent de serviciu',
+    how: 'Același drum, la orice proiect.',
     steps: [
       { title: 'Ne scrii', text: 'În două fraze ne spui ce faci. În aceeași zi primești oferta și lista scurtă cu ce ne trebuie de la tine.' },
       { title: 'Trimiți materialele', text: 'Texte de bază, poze, siglă. Din momentul în care le avem, pornește termenul scris în ofertă.' },
@@ -64,6 +72,10 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     freeAfter: 'unei afaceri din România, prin concursul nostru lunar.',
   },
   en: {
+    word: 'Services.',
+    lead: 'What we build, what it costs and how long it takes. Written down up front.',
+    howLabel: 'Process',
+    howLink: 'The whole process, step by step',
     title: 'Web design services and prices',
     description:
       'Web design services from Timișoara with prices in the open: a presentation website from 300 EUR, an online store from 900 EUR, apps, maintenance, and WhatsApp.',
@@ -74,7 +86,7 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     columns: { service: 'Service', price: 'Price', time: 'Timeline' },
     servicesLabel: 'Services',
     includes: 'What’s included:',
-    how: 'How we work, whichever service you need',
+    how: 'The same road, for every project.',
     steps: [
       { title: 'You write to us', text: 'In two sentences you tell us what you do. The same day you get the quote and a short list of what we need from you.' },
       { title: 'You send the materials', text: 'Basic text, photos, a logo. The timeline written in the quote starts the moment we have them.' },
@@ -90,14 +102,6 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     freeLink: 'a free presentation website',
     freeAfter: 'to a business in Romania, through our monthly contest.',
   },
-}
-
-/** Lowercase a leading word, but keep internal capitals such as WhatsApp and SaaS. Romanian stays fully lowercased, as before. */
-function phraseName(name: string, locale: Locale) {
-  if (locale === 'ro') return name.toLowerCase()
-  const [first, ...rest] = name.split(' ')
-  if (first.slice(1) !== first.slice(1).toLowerCase()) return name
-  return [first.charAt(0).toLowerCase() + first.slice(1), ...rest].join(' ')
 }
 
 export function servicesMetadata(locale: Locale) {
@@ -138,53 +142,53 @@ export function ServicesView({ locale }: { locale: Locale }) {
     <>
       <SiteHeader current="servicii" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <PageHero crumbs={crumbs} kicker={copy.kicker} title={copy.title} intro={copy.intro} />
+        <PageOpen crumbs={crumbs} index="02" title={copy.title} word={copy.word} lead={copy.lead} short>
+          <p className="max-w-sm leading-relaxed text-[var(--fg-2)]">{copy.intro}</p>
+        </PageOpen>
 
-        <section aria-labelledby="preturi-pe-scurt" className="studio-container py-20 md:py-28">
-          <h2 id="preturi-pe-scurt" className="kicker">
-            {copy.prices}
-          </h2>
-          <ol className="mt-8 border-t border-[var(--hairline)]">
-            {services.map((service, index) => (
-              <li key={service.slug} className="border-b border-[var(--hairline)]">
-                <Reveal>
-                  <article className="grid gap-6 py-10 md:grid-cols-[4rem_minmax(0,1.3fr)_minmax(0,1fr)_auto] md:items-baseline md:gap-8 md:py-14">
-                    <span className="mono-label text-[var(--brass-ink)]">{String(index + 1).padStart(2, '0')}</span>
-                    <div className="min-w-0">
-                      <h2 className="display-xl text-[clamp(1.85rem,4vw,3.8rem)]">
-                        <Link href={localizePath(`/servicii/${service.slug}`, locale)} className="inline min-h-0 transition-colors hover:text-[var(--brass-ink)]">
-                          {service.name}
-                        </Link>
-                      </h2>
-                      <p className="mt-4 max-w-xl leading-relaxed text-[var(--ink-2)]">{service.answerCapsule}</p>
-                    </div>
-                    <dl className="grid grid-cols-2 gap-6 md:grid-cols-1">
-                      <div>
-                        <dt className="mono-label text-[var(--ink-3)]">{copy.columns.price}</dt>
-                        <dd className="mt-1 text-lg text-[var(--ink)]">{service.priceLabel}</dd>
-                      </div>
-                      <div>
-                        <dt className="mono-label text-[var(--ink-3)]">{copy.columns.time}</dt>
-                        <dd className="mt-1 text-lg text-[var(--ink)]">{service.deliveryTime}</dd>
-                      </div>
-                    </dl>
-                    <Link
-                      href={localizePath(`/servicii/${service.slug}`, locale)}
-                      className="mono-label max-w-full items-center self-start whitespace-normal rounded-[var(--radius-pill)] border border-[var(--ink)] px-5 text-left transition-colors hover:bg-[var(--ink)] hover:text-[var(--shell)] md:whitespace-nowrap"
-                    >
-                      {copy.includes} {phraseName(service.shortName, locale)} →
-                    </Link>
-                  </article>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
+        <section aria-labelledby="preturi-pe-scurt" className="tone-dark pb-[clamp(5rem,10vw,9rem)]">
+          <div className="studio-container">
+            <h2 id="preturi-pe-scurt" className="sr-only">
+              {copy.prices}
+            </h2>
+            <ol className="big-rows">
+              {services.map((service, index) => (
+                <li key={service.slug}>
+                  <Link href={localizePath(`/servicii/${service.slug}`, locale)} className="big-row service-row">
+                    <span className="mono-label text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</span>
+                    <span className="min-w-0">
+                      <span className="big-row-name block">{service.name}</span>
+                      <span className="service-row-text">{service.answerCapsule}</span>
+                    </span>
+                    <span className="service-row-facts">
+                      <span>
+                        <span className="mono-label text-[var(--fg-3)]">{copy.columns.price}</span>
+                        <span className="block">{service.priceLabel}</span>
+                      </span>
+                      <span>
+                        <span className="mono-label text-[var(--fg-3)]">{copy.columns.time}</span>
+                        <span className="block">{service.deliveryTime}</span>
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ol>
+          </div>
         </section>
 
-        <section className="tone-warm py-20 md:py-28">
+        <section className="page-section">
           <div className="studio-container">
-            <h2 className="type-h2 max-w-3xl text-balance">{copy.how}</h2>
-            <ol className="mt-14 grid gap-12 md:grid-cols-3 md:gap-10">
+            <SectionHead
+              label={copy.howLabel}
+              title={copy.how}
+              intro={
+                <Link href={localizePath('/cum-lucram', locale)} className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
+                  {copy.howLink} →
+                </Link>
+              }
+            />
+            <ol className="mt-16 grid gap-12 md:grid-cols-3 md:gap-10">
               {copy.steps.map((step, index) => (
                 <li key={step.title} className="border-t border-[var(--ink)] pt-6">
                   <Reveal delay={index * 0.1}>
@@ -208,14 +212,8 @@ export function ServicesView({ locale }: { locale: Locale }) {
             </p>
           </div>
         </section>
-
-        <CtaBand title={copy.cta} placement="services_cta">
-          <Link href={localizePath('/cerere-oferta', locale)} className="mono-label text-[var(--fg-2)] underline-offset-4 hover:text-[var(--fg)] hover:underline">
-            {copy.form} →
-          </Link>
-        </CtaBand>
       </main>
-      <Footer cta={false} />
+      <Footer />
       <JsonLd data={jsonLd} />
     </>
   )
