@@ -31,6 +31,10 @@ export type BlogPost = {
   seoDescription?: string
   faqItems?: BlogFaqItem[]
   howToSteps?: HowToStep[]
+  /** Cover image under /public, e.g. /blog/cat-costa-un-site/cover.webp (1600 x 900). */
+  cover?: string
+  /** Describes the cover for screen readers and search. Required when there is a cover. */
+  coverAlt?: string
 }
 
 type BlogFrontmatter = Omit<BlogPost, 'body'>
@@ -89,6 +93,22 @@ function parseHowToSteps(value: unknown, fileName: string): HowToStep[] | undefi
   })
 }
 
+/**
+ * Covers are optional, so a post written before its image exists still
+ * builds: a missing file is reported and the post shows without a cover.
+ */
+function parseCover(data: Record<string, unknown>, fileName: string) {
+  const cover = optionalString(data.cover, 'cover', fileName)
+  if (!cover) return {}
+  if (!cover.startsWith('/')) throw new Error(`Frontmatter field "cover" must start with / (a file under public/) in ${fileName}`)
+  const coverAlt = requiredString(data.coverAlt, 'coverAlt', fileName)
+  if (!fs.existsSync(path.join(process.cwd(), 'public', cover))) {
+    console.warn(`[blog] Cover ${cover} for ${fileName} is missing; the post shows without it.`)
+    return {}
+  }
+  return { cover, coverAlt }
+}
+
 function parseFrontmatter(data: Record<string, unknown>, fileName: string): BlogFrontmatter {
   const fileSlug = fileName.replace(/\.mdx$/, '')
   const slug = requiredString(data.slug ?? fileSlug, 'slug', fileName)
@@ -129,6 +149,7 @@ function parseFrontmatter(data: Record<string, unknown>, fileName: string): Blog
     seoDescription: optionalString(data.seoDescription, 'seoDescription', fileName),
     faqItems: parseFaqItems(data.faqItems, fileName),
     howToSteps: parseHowToSteps(data.howToSteps, fileName),
+    ...parseCover(data, fileName),
   }
 }
 

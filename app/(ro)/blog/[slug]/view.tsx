@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import BlogCard from '@/components/BlogCard'
@@ -71,7 +72,7 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
       '@id': `${url}#article`,
       headline: post.title,
       description: post.excerpt,
-      image: [absoluteUrl(ogImage(post, locale).url)],
+      image: [...(post.cover ? [absoluteUrl(post.cover)] : []), absoluteUrl(ogImage(post, locale).url)],
       datePublished: isoDate(post.publishedAt),
       dateModified: isoDate(dateModified),
       inLanguage: schemaLanguage(locale),
@@ -136,6 +137,11 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
             </div>
           </PageHero>
           <div className="site-container py-16 md:py-24">
+          {post.cover ? (
+            <figure className="relative mx-auto aspect-[16/9] max-w-5xl overflow-hidden rounded-[22px] bg-[var(--shell-warm)]">
+              <Image src={post.cover} alt={post.coverAlt ?? ''} fill priority sizes="(min-width: 1024px) 64rem, 92vw" className="object-cover" />
+            </figure>
+          ) : null}
 
           <div className="mx-auto mt-10 max-w-2xl">
             <p className="kicker">{copy.inShort}</p>

@@ -22,6 +22,11 @@ seoDescription: Descriere SEO concisă pentru rezultatele de căutare, cu răspu
 faqItems:
   - question: Care este întrebarea?
     answer: Răspuns complet, fără HTML.
+# Imagine de copertă opțională: 1600 x 900 px (16:9), WebP, sub 250 KB,
+# salvată în public/blog/<slug>/cover.webp. Fără text în imagine.
+# Dacă fișierul lipsește, articolul apare fără copertă (build-ul nu pică).
+cover: /blog/numele-slugului/cover.webp
+coverAlt: Ce se vede în imagine, într-o propoziție.
 # Pași HowTo opționali. Elimină cheia dacă articolul nu descrie un proces.
 howToSteps:
   - name: Numele pasului
@@ -35,6 +40,10 @@ Introducerea articolului, scrisă în Markdown obișnuit.
 ## Primul subtitlu
 
 Un paragraf explicativ cu un [link intern](/servicii/site-de-prezentare).
+
+O imagine în text (opțional, 1600 px lățime, în public/blog/<slug>/):
+
+![Ce se vede în imagine](/blog/numele-slugului/1.webp "Legendă opțională")
 
 - Primul punct
 - Al doilea punct
