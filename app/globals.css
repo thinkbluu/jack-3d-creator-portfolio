@@ -1101,3 +1101,299 @@ html.lenis {
   transform: rotate(0deg) scale(1);
   transition-delay: 0.2s;
 }
+
+/* ------------------------------------------------------------------------ */
+/* Lumina: the homepage opens in the dark, lit by the visitor's lamp.       */
+/* ------------------------------------------------------------------------ */
+.lumina {
+  height: 230svh;
+  background: #07090d;
+}
+.lumina-stage {
+  --lx: 30%;
+  --ly: 45%;
+  --dawn: 0;
+  --day: 0;
+  background: #07090d;
+  transition: background-color 0.8s ease;
+}
+.lumina-stage[data-day] {
+  background: var(--shell);
+}
+.lumina-canvas {
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.lumina-stage[data-gl] .lumina-canvas {
+  opacity: 1;
+}
+/* The CSS lamp: what weak devices and reduced motion see. */
+.lumina-css-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at var(--lx) var(--ly), rgba(255, 204, 143, 0.18), rgba(255, 204, 143, 0.06) 22vmax, transparent 46vmax),
+    linear-gradient(to top, rgba(242, 160, 92, calc(var(--dawn) * 0.3)), transparent 65%);
+  transition: opacity 1s ease;
+}
+.lumina-stage[data-gl] .lumina-css-light,
+.lumina-stage[data-day] .lumina-css-light {
+  opacity: 0;
+}
+.lumina-lit {
+  --amb: calc(0.5 + var(--dawn) * 0.6);
+  -webkit-mask-image: radial-gradient(circle at var(--lx) var(--ly), #000 0, #000 10vmax, rgba(0, 0, 0, var(--amb)) 44vmax);
+  mask-image: radial-gradient(circle at var(--lx) var(--ly), #000 0, #000 10vmax, rgba(0, 0, 0, var(--amb)) 44vmax);
+}
+.lumina-stage[data-day] .lumina-lit {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.lumina-title {
+  max-width: 15ch;
+  font-size: clamp(2.6rem, min(7.6vw, 12.5svh), 8.6rem);
+  line-height: 0.95;
+  color: var(--on-dark);
+}
+.lumina-accent {
+  color: var(--brass-lite);
+}
+.lumina-stage[data-day] .lumina-title {
+  color: var(--ink);
+}
+.lumina-stage[data-day] .lumina-accent {
+  color: var(--brass-ink);
+}
+.lumina-stage[data-gl] .lumina-title,
+.lumina-stage[data-gl] .lumina-title .lumina-accent {
+  color: transparent;
+}
+.lumina-primary {
+  background: var(--on-dark);
+  color: var(--night);
+}
+.lumina-primary:hover {
+  background: var(--brass-lite);
+}
+.lumina-stage[data-day] .lumina-primary {
+  background: var(--ink);
+  color: var(--shell);
+}
+.lumina-secondary {
+  border-color: var(--line);
+  color: var(--fg);
+}
+.lumina-secondary:hover {
+  border-color: var(--fg);
+}
+.lumina-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--fg-2);
+  cursor: pointer;
+  transition: border-color 0.3s, color 0.3s;
+}
+.lumina-switch:hover {
+  border-color: var(--fg);
+  color: var(--fg);
+}
+.lumina-switch-dot,
+.lumina-hint-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--brass-lite);
+  box-shadow: 0 0 12px 2px rgba(255, 196, 120, 0.55);
+}
+.lumina-stage[data-day] .lumina-switch-dot {
+  background: transparent;
+  border: 1px solid var(--fg-2);
+  box-shadow: none;
+}
+.lumina-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--fg-2);
+  opacity: calc(1 - var(--p, 0) * 3);
+}
+.lumina-hint-dot {
+  animation: lumina-breathe 2.4s ease-in-out infinite;
+}
+@keyframes lumina-breathe {
+  50% {
+    box-shadow: 0 0 22px 6px rgba(255, 196, 120, 0.35);
+  }
+}
+.lumina-stage[data-day] .lumina-hint {
+  visibility: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lumina-hint-dot {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------------ */
+/* Work book: a monograph on a dark desk, pages turned by scroll.           */
+/* ------------------------------------------------------------------------ */
+.book {
+  background: #05070a;
+}
+.book.tone-cream {
+  background: #efe9df;
+}
+.book-canvas {
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 1.2s ease;
+}
+.book-stage[data-gl] .book-canvas {
+  opacity: 1;
+}
+.book-poster {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.8s ease;
+}
+.book-stage[data-gl] .book-poster {
+  opacity: 0;
+}
+.book-poster-cover {
+  display: grid;
+  place-items: center;
+  width: min(30vw, 46svh);
+  aspect-ratio: 0.78;
+  border-radius: 4px;
+  background: #13213a;
+  color: #c9a457;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.8);
+}
+.book-top,
+.book-caption {
+  position: absolute;
+  inset-inline: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  color: var(--fg-2);
+  pointer-events: none;
+}
+.book-top {
+  top: clamp(5.75rem, 12svh, 7.5rem);
+}
+.book-caption {
+  bottom: clamp(1.25rem, 4svh, 2.25rem);
+}
+.book-top button,
+.book-caption a {
+  pointer-events: auto;
+}
+.book-dots {
+  display: none;
+  gap: 6px;
+}
+@media (min-width: 768px) {
+  .book-dots {
+    display: inline-flex;
+  }
+}
+.book-dots > span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.3;
+  transition: opacity 0.3s, background-color 0.3s;
+}
+.book-dots > span[data-on] {
+  opacity: 1;
+  background: var(--brass-lite);
+}
+.book-veil {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background: var(--night);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease 0.75s;
+}
+.book-stage[data-leaving] .book-veil {
+  opacity: 1;
+}
+.book-stage[data-leaving] .book-top,
+.book-stage[data-leaving] .book-caption {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* ------------------------------------------------------------------------ */
+/* Dawn: night turns to day between the dark and the light halves.          */
+/* ------------------------------------------------------------------------ */
+.dawn {
+  --d: 0;
+  height: 200svh;
+  background: var(--shell);
+}
+.dawn-stage {
+  background: #07090d;
+}
+.dawn-sky,
+.dawn-sun,
+.dawn-day {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.dawn-sky {
+  background: linear-gradient(to top, #2a2b3a 0%, #0f1b2b 45%, #07090d 100%);
+  opacity: clamp(0, calc(var(--d) * 2.5), 1);
+}
+.dawn-sun {
+  background: radial-gradient(
+    circle at 50% calc(125% - var(--d) * 55%),
+    rgba(255, 236, 200, 1) 0,
+    rgba(255, 205, 140, 0.95) calc(6% + var(--d) * 14%),
+    rgba(224, 150, 90, 0.6) calc(16% + var(--d) * 26%),
+    rgba(150, 90, 80, 0.25) calc(30% + var(--d) * 30%),
+    transparent calc(48% + var(--d) * 40%)
+  );
+  opacity: clamp(0, calc((var(--d) - 0.08) * 3), 1);
+}
+.dawn-day {
+  background: var(--shell);
+  opacity: clamp(0, calc((var(--d) - 0.55) * 2.6), 1);
+}
+.dawn-line {
+  position: relative;
+  font-size: clamp(3rem, min(9vw, 15svh), 10rem);
+  line-height: 0.92;
+  color: color-mix(in srgb, var(--ink) calc(clamp(0, (var(--d) - 0.5) * 2.4, 1) * 100%), #faf7f2);
+  opacity: clamp(0, calc(var(--d) * 4), 1);
+  transform: translateY(calc((1 - var(--d)) * 6svh));
+}
+.dawn-accent {
+  color: color-mix(in srgb, var(--brass-ink) calc(clamp(0, (var(--d) - 0.5) * 2.4, 1) * 100%), #ffd9a0);
+}
+.dawn-sub {
+  position: relative;
+  color: rgba(26, 23, 20, 0.72);
+  opacity: clamp(0, calc((var(--d) - 0.62) * 4), 1);
+}
+@media (max-width: 767px) {
+  .lumina-title {
+    font-size: clamp(2.6rem, 11.5vw, 3.8rem);
+  }
+}
