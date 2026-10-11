@@ -184,6 +184,7 @@
     --on-dark-2: rgba(250, 247, 242, 0.74);
     --on-dark-3: rgba(250, 247, 242, 0.6);
     --hairline-dark: rgba(250, 247, 242, 0.12);
+    --glow: #ffb65c;
     --glass: rgba(250, 247, 242, 0.86);
     --glass-edge: rgba(176, 141, 63, 0.42);
     --radius-panel: 28px;
@@ -1100,4 +1101,64 @@ html.lenis {
   opacity: 1;
   transform: rotate(0deg) scale(1);
   transition-delay: 0.2s;
+}
+
+/* "Lights on": while the homepage story runs, <html data-build="0..5"> tracks
+   the shop being built and the chrome builds with it. Styling only: every word
+   stays in the page for readers, screen readers and search engines. */
+.bld-type,
+.bld-ink,
+.bld-fill,
+.bld-box {
+  transition: color 0.5s ease, background-color 0.5s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+}
+
+html[data-build='0'] .bld-type,
+html[data-build='1'] .bld-type {
+  font-family: var(--font-mono) !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.03em !important;
+}
+
+html[data-build='0'] .bld-ink,
+html[data-build='1'] .bld-ink,
+html[data-build='2'] .bld-ink {
+  color: rgba(250, 247, 242, 0.5) !important;
+}
+
+html[data-build='0'] .bld-fill,
+html[data-build='1'] .bld-fill,
+html[data-build='2'] .bld-fill {
+  background-color: transparent !important;
+  color: rgba(250, 247, 242, 0.7) !important;
+  box-shadow: inset 0 0 0 1px rgba(250, 247, 242, 0.28);
+}
+
+html[data-build='0'] .bld-box,
+html[data-build='1'] .bld-box {
+  color: transparent !important;
+  background-color: rgba(250, 247, 242, 0.09);
+  border-radius: 3px;
+}
+
+.bld-grid {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+html[data-build='1'] .bld-grid,
+html[data-build='2'] .bld-grid {
+  opacity: 1;
+}
+
+.lights-counter {
+  opacity: 0;
+  translate: 0 12px;
+  transition: opacity 0.8s ease, translate 0.8s ease;
+}
+
+.lights-counter[data-on='true'] {
+  opacity: 1;
+  translate: 0 0;
 }

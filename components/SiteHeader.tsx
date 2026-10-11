@@ -121,8 +121,8 @@ export default function SiteHeader({
               }}
             />
             <span className="flex items-baseline gap-2">
-              <span className="font-serif text-xl font-semibold">MAST</span>
-              <span className="font-sans text-[10px] font-medium tracking-[.28em]">STUDIO</span>
+              <span className="bld-type font-serif text-xl font-semibold">MAST</span>
+              <span className="bld-ink font-sans text-[10px] font-medium tracking-[.28em]">STUDIO</span>
               <span className="sr-only">, {nav.home}</span>
             </span>
           </Link>
@@ -133,7 +133,7 @@ export default function SiteHeader({
                 <Link
                   href={item.href}
                   aria-current={current === item.id ? 'page' : undefined}
-                  className="mono-label whitespace-nowrap text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] aria-[current=page]:text-[var(--ink)]"
+                  className="mono-label bld-box whitespace-nowrap text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] aria-[current=page]:text-[var(--ink)]"
                 >
                   {item.label}
                 </Link>
@@ -146,7 +146,7 @@ export default function SiteHeader({
             <Link
               href={quote.href}
               data-magnetic
-              className={`mono-label hidden whitespace-nowrap rounded-[var(--radius-pill)] px-5 transition-colors sm:inline-flex ${
+              className={`mono-label bld-fill hidden whitespace-nowrap rounded-[var(--radius-pill)] px-5 transition-colors sm:inline-flex ${
                 dark
                   ? 'bg-[var(--brass-lite)] text-[var(--night)] hover:bg-[var(--on-dark)]'
                   : 'bg-[var(--ink)] text-[var(--shell)] hover:bg-[var(--navy-2)]'
@@ -160,7 +160,7 @@ export default function SiteHeader({
               onClick={() => setOpen(true)}
               aria-expanded={open}
               aria-controls="studio-menu"
-              className={`mono-label flex items-center gap-3 rounded-[var(--radius-pill)] border px-5 transition-colors ${
+              className={`mono-label bld-ink flex items-center gap-3 rounded-[var(--radius-pill)] border px-5 transition-colors ${
                 dark
                   ? 'border-[var(--hairline-dark)] text-[var(--on-dark)] hover:border-[var(--on-dark)]'
                   : 'border-[var(--hairline)] text-[var(--ink)] hover:border-[var(--ink)]'

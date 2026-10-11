@@ -16,8 +16,9 @@ export type Shape =
   | { kind: 'chaos' }
   | { kind: 'waves' }
   | { kind: 'sphere' }
+  | { kind: 'street' }
 
-const KIND: Record<Shape['kind'], number> = { points: 0, chaos: 1, waves: 2, sphere: 3 }
+const KIND: Record<Shape['kind'], number> = { points: 0, chaos: 1, waves: 2, sphere: 3, street: 4 }
 const WAVE_ROWS = 22
 
 export type EngineOptions = {
@@ -57,12 +58,50 @@ const vertexShader = /* glsl */ `
   uniform vec2 uMouse;
   uniform vec2 uShockPos;
   uniform vec2 uTilt;
+  uniform float uPull;
+  uniform vec2 uDoor;
+  uniform float uGround;
+  uniform vec2 uStreet;
+  uniform float uAccentMix;
 
   varying float vAlpha;
+
+  varying float vPerson;
+
+  // Set by the street shape: people fade out as they step through the door,
+  // and nearer people (lower on the screen) are drawn larger.
+  float gFade;
+  float gNear;
   varying float vAccent;
 
   vec3 shapePos(int kind, vec3 stat) {
     if (kind == 0) return stat;
+    if (kind == 4) {
+      // People walking along the street in front of the shop. uStreet.x is
+      // half the street's width, uStreet.y the depth of the pavement band.
+      float dir = aRand.z > 0.0 ? 1.0 : -1.0;
+      float speed = 14.0 + aSeed.y * 40.0;
+      float span = uStreet.x * 2.0 + 160.0;
+      float depth = fract(aSeed.z * 7.13 + aRand.y + 0.5);
+      float x = mod(aRand.x * span + dir * uTime * speed + span * 0.5, span) - span * 0.5;
+      float y = uGround - 6.0 - depth * uStreet.y + abs(sin(uTime * 3.0 + aSeed.y * 40.0)) * 2.0;
+      vec3 walk = vec3(x, y, (depth - 0.5) * 160.0);
+      gNear = depth;
+      vPerson = 1.0;
+      // A growing share of the crowd turns toward the door, walks in and is
+      // replaced by someone new at the edge of the street.
+      float pulled = smoothstep(aSeed.z - 0.08, aSeed.z, uPull * 0.38);
+      float t = fract(uTime * (0.03 + aSeed.y * 0.035) + aRand.x * 3.0);
+      vec3 start = vec3(dir * -(uStreet.x + 60.0), y, walk.z);
+      vec3 door = vec3(uDoor.x + aRand.y * 34.0, uDoor.y, 0.0);
+      vec3 toDoor = vec3(
+        mix(start.x, door.x, smoothstep(0.0, 0.92, t)),
+        mix(start.y, door.y, smoothstep(0.35, 1.0, t)),
+        mix(start.z, 0.0, smoothstep(0.35, 1.0, t))
+      );
+      gFade = mix(1.0, smoothstep(0.0, 0.06, t) * (1.0 - smoothstep(0.8, 0.97, t)), pulled);
+      return mix(walk, toDoor, pulled);
+    }
     if (kind == 1) {
       vec3 p = aRand * vec3(uRes.x * 1.05, uRes.y * 1.05, 500.0);
       p.x += sin(uTime * 0.45 + aSeed.z * 40.0) * 26.0;
@@ -92,6 +131,9 @@ const vertexShader = /* glsl */ `
   }
 
   void main() {
+    gFade = 1.0;
+    gNear = 0.5;
+    vPerson = 0.0;
     vec3 a = shapePos(uFromKind, aFrom);
     vec3 b = shapePos(uToKind, aTo);
     float m = smoothstep(0.0, 1.0, clamp((uMix - aSeed.z * 0.22) / 0.78, 0.0, 1.0));
@@ -137,8 +179,9 @@ const vertexShader = /* glsl */ `
     gl_Position = projectionMatrix * modelViewMatrix * vec4(p.xy, 0.0, 1.0);
     float depth = clamp(p.z / max(uScale * 0.34, 1.0) * 0.5 + 0.5, 0.0, 1.0);
     gl_PointSize = uSize * uPR * persp * (0.55 + depth * 0.95) * (aSeed.w > 0.5 ? 1.6 : 1.0);
-    vAlpha = (0.32 + depth * 0.68) * (0.4 + intro * 0.6);
-    vAccent = aSeed.w;
+    if (vPerson > 0.5) gl_PointSize = uSize * uPR * persp * (1.5 + gNear * 2.6);
+    vAlpha = (0.32 + depth * 0.68) * (0.4 + intro * 0.6) * gFade;
+    vAccent = aSeed.w * uAccentMix;
   }
 `
 
@@ -147,12 +190,23 @@ const fragmentShader = /* glsl */ `
   uniform vec3 uAccent;
   varying float vAlpha;
   varying float vAccent;
+  varying float vPerson;
 
   void main() {
     vec2 c = gl_PointCoord - 0.5;
-    float r = length(c);
-    if (r > 0.5) discard;
-    float a = smoothstep(0.5, 0.0, r);
+    float a;
+    if (vPerson > 0.5) {
+      // A walking figure: a slim upright capsule.
+      // A walking figure: a small head over a short body.
+      float head = 1.0 - smoothstep(0.1, 0.16, length(c - vec2(0.0, -0.3)));
+      float body = (1.0 - smoothstep(0.12, 0.16, abs(c.x))) * step(-0.18, c.y) * (1.0 - smoothstep(0.38, 0.46, c.y));
+      a = max(head, body) * 0.7;
+      if (a < 0.01) discard;
+    } else {
+      float r = length(c);
+      if (r > 0.5) discard;
+      a = smoothstep(0.5, 0.0, r);
+    }
     gl_FragColor = vec4(mix(uInk, uAccent, vAccent), a * vAlpha);
   }
 `
@@ -249,6 +303,11 @@ export class ParticleEngine {
         uMouse: { value: new THREE.Vector2(-99999, -99999) },
         uShockPos: { value: new THREE.Vector2(-99999, -99999) },
         uTilt: { value: new THREE.Vector2(0, 0) },
+        uPull: { value: 0 },
+        uDoor: { value: new THREE.Vector2(0, 0) },
+        uGround: { value: 0 },
+        uStreet: { value: new THREE.Vector2(600, 120) },
+        uAccentMix: { value: 1 },
         uInk: { value: new THREE.Color(opts.ink) },
         uAccent: { value: new THREE.Color(opts.accent) },
       },
@@ -339,6 +398,48 @@ export class ParticleEngine {
     if (this.opts.reduced) return
     this.material.uniforms.uShockPos.value.set(x - this.width / 2, this.height / 2 - y)
     this.material.uniforms.uShockT.value = 0
+  }
+
+  /** The street the crowd walks along, in centred pixels (y up). */
+  setStreet({ door, ground, halfWidth, depth }: { door: { x: number; y: number }; ground: number; halfWidth: number; depth: number }) {
+    const u = this.material.uniforms
+    u.uDoor.value.set(door.x, door.y)
+    u.uGround.value = ground
+    u.uStreet.value.set(halfWidth, depth)
+  }
+
+  /** 0..1: how much of the crowd heads for the door. */
+  setPull(value: number) {
+    this.material.uniforms.uPull.value = Math.min(1, Math.max(0, value))
+  }
+
+  /** 0..1: how many of the accent particles show their brass colour. */
+  setAccentMix(value: number) {
+    this.material.uniforms.uAccentMix.value = Math.min(1, Math.max(0, value))
+  }
+
+  /** Draw only the first `n` particles (a cheap quality tier). */
+  setDrawCount(n: number) {
+    this.geometry.setDrawRange(0, Math.max(0, Math.min(this.count, Math.floor(n))))
+  }
+
+  /** The current, eased pointer tilt in radians (x: yaw, y: pitch). */
+  get tilt() {
+    return this.material.uniforms.uTilt.value as THREE.Vector2
+  }
+
+  /** Extra objects drawn in the same scene; give them a negative renderOrder to sit behind the particles. */
+  add(object: THREE.Object3D) {
+    this.scene.add(object)
+  }
+
+  remove(object: THREE.Object3D) {
+    this.scene.remove(object)
+  }
+
+  /** The renderer, for building textures (video, canvas) with the right settings. */
+  get gl() {
+    return this.renderer
   }
 
   onFrame(callback: (time: number) => void) {
