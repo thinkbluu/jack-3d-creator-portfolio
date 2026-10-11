@@ -8,6 +8,7 @@ export type OrbitCard = {
   key: string
   href?: string
   image?: string
+  alt?: string
   eyebrow?: string
   title: string
   text?: string
@@ -99,7 +100,7 @@ export default function SalutOrbit({
                 <>
                   {card.image ? (
                     <span className="salut-orbit-img">
-                      <Image src={card.image} alt="" fill loading="eager" sizes="340px" className="object-cover object-top" />
+                      <Image src={card.image} alt={card.alt ?? ''} fill loading="eager" sizes="340px" className="object-cover object-[right_center]" />
                     </span>
                   ) : null}
                   <span className="salut-orbit-text">

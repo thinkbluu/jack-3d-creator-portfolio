@@ -95,13 +95,16 @@ export default function SalutWork() {
               data-cursor={redesign.cursor.view}
               className="salut-card link-block group snap-start"
             >
-              <Image
-                src={project.cover}
-                alt=""
-                fill
-                sizes="(min-width: 768px) 70vw, 88vw"
-                className="object-cover object-top transition-transform duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.03]"
-              />
+              <span className="salut-card-media">
+                <Image
+                  src={project.cover}
+                  alt={project.coverAlt}
+                  width={2048}
+                  height={1024}
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 80vw, 1200px"
+                  className="h-full w-full object-cover object-[right_center] transition-transform duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.03]"
+                />
+              </span>
               <span className="salut-card-shade" aria-hidden="true" />
               <span className="salut-card-text">
                 <span className="mono-label text-[var(--brass-lite)]">

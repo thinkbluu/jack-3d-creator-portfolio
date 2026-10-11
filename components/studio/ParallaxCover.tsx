@@ -17,7 +17,7 @@ export default function ParallaxCover({ src, alt, priority = false }: { src: str
     <motion.div
       ref={ref}
       style={reduced ? { borderRadius: 8 } : { borderRadius: radius }}
-      className="relative aspect-[16/9] w-full overflow-hidden bg-[var(--navy)] md:aspect-[2/1]"
+      className="relative aspect-[2/1] w-full overflow-hidden bg-[#0b0f17]"
     >
       <motion.div style={reduced ? undefined : { scale, y }} className="absolute inset-0">
         <Image
@@ -27,7 +27,7 @@ export default function ParallaxCover({ src, alt, priority = false }: { src: str
           loading={priority ? 'eager' : 'lazy'}
           fetchPriority={priority ? 'high' : 'auto'}
           sizes="100vw"
-          className="object-cover object-top"
+          className="object-cover object-[right_center]"
         />
       </motion.div>
     </motion.div>
