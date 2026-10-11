@@ -112,13 +112,6 @@ export default function Footer({ cta = true }: { cta?: boolean } = {}) {
           <FooterColumn title={footer.studio} links={studioLinks} />
         </div>
 
-        <p
-          aria-hidden="true"
-          className="display-xl select-none whitespace-nowrap text-center text-[clamp(4rem,17.5vw,17rem)] leading-[0.8] text-[var(--navy-2)]"
-        >
-          MAST Studio
-        </p>
-
         <div className="flex flex-col gap-4 border-t border-[var(--hairline-dark)] pt-6 text-[var(--on-dark-3)] lg:flex-row lg:items-center lg:justify-between">
           <p>
             © {year} {SITE_NAME} · {LEGAL_NAME} · CUI {VAT_ID} · {footer.register} {TRADE_REGISTER_NUMBER}
