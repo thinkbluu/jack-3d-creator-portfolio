@@ -17,6 +17,9 @@ export type OrbitCard = {
   meta?: ReactNode
 }
 
+/** Quote size bucket by length: short quotes read large, long ones stay legible. */
+const quoteSize = (quote: string) => (quote.length < 60 ? 's' : quote.length <= 140 ? 'm' : 'l')
+
 /**
  * A ring of cards that turns as you scroll past, like a carousel seen from
  * the front: the cards facing you are bright, the ones going round the back
@@ -26,12 +29,14 @@ export default function SalutOrbit({
   id,
   title,
   intro,
+  cta,
   cards,
   tone = 'dark',
 }: {
   id?: string
   title: string
   intro?: string
+  cta?: ReactNode
   cards: OrbitCard[]
   tone?: 'dark' | 'cream'
 }) {
@@ -91,27 +96,46 @@ export default function SalutOrbit({
         <div className="studio-container relative z-10 pt-[clamp(6rem,14svh,8.5rem)]">
           <h2 className="salut-orbit-title display-xl">{title}</h2>
           {intro ? <p className="mt-5 max-w-md text-lg text-[var(--fg-2)]">{intro}</p> : null}
+          {cta}
         </div>
         <div className="salut-orbit-view" aria-hidden="false">
           <div ref={ringRef} className="salut-orbit-ring">
             {cards.map((card, index) => {
               const style = { '--a': `${index * step}deg`, '--tilt': `${index % 2 ? 3 : -3}deg` } as CSSProperties
-              const body = (
-                <>
-                  {card.image ? (
-                    <span className="salut-orbit-img">
-                      <Image src={card.image} alt={card.alt ?? ''} fill loading="eager" sizes="340px" className="object-cover object-[right_center]" />
+              const body =
+                card.quote && !card.image ? (
+                  <span className="salut-orbit-review">
+                    <span className="salut-orbit-review-top">
+                      <span className="salut-orbit-stars">{card.eyebrow}</span>
+                      <span className="salut-orbit-source">Google</span>
                     </span>
-                  ) : null}
-                  <span className="salut-orbit-text">
-                    {card.eyebrow ? <span className="mono-label salut-orbit-eyebrow">{card.eyebrow}</span> : null}
-                    {card.quote ? <span className="salut-orbit-quote display-xl">“{card.quote}”</span> : null}
-                    <span className="salut-orbit-name display-xl">{card.title}</span>
-                    {card.text ? <span className="salut-orbit-line">{card.text}</span> : null}
-                    {card.meta}
+                    <span className="salut-orbit-mark" aria-hidden="true">
+                      “
+                    </span>
+                    <span className="salut-orbit-quote" data-size={quoteSize(card.quote)}>
+                      {card.quote}
+                    </span>
+                    <span className="salut-orbit-foot">
+                      <span className="salut-orbit-reviewer">{card.title}</span>
+                      <span className="salut-orbit-sub">Recenzie Google</span>
+                    </span>
                   </span>
-                </>
-              )
+                ) : (
+                  <>
+                    {card.image ? (
+                      <span className="salut-orbit-img">
+                        <Image src={card.image} alt={card.alt ?? ''} fill loading="eager" sizes="340px" className="object-cover object-[right_center]" />
+                      </span>
+                    ) : null}
+                    <span className="salut-orbit-text">
+                      {card.eyebrow ? <span className="mono-label salut-orbit-eyebrow">{card.eyebrow}</span> : null}
+                      {card.quote ? <span className="salut-orbit-quote display-xl">“{card.quote}”</span> : null}
+                      <span className="salut-orbit-name display-xl">{card.title}</span>
+                      {card.text ? <span className="salut-orbit-line">{card.text}</span> : null}
+                      {card.meta}
+                    </span>
+                  </>
+                )
               return card.href ? (
                 <Link key={card.key} href={card.href} data-orbit="" className="salut-orbit-card link-block" style={style}>
                   {body}

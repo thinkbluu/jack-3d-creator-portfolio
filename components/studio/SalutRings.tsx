@@ -1,6 +1,5 @@
 'use client'
 
-import GoogleReviews from '@/components/GoogleReviews'
 import { useHref, useLocale, useUi } from '@/lib/i18n/context'
 import { getAllProjects } from '@/lib/projects'
 import { reviewCards } from '@/lib/reviews'
@@ -31,34 +30,34 @@ export function ProjectOrbit() {
 }
 
 /**
- * Client reviews: the orbit once there are enough real review cards in
- * lib/reviews.ts, the Google widget until then.
+ * Client reviews: the orbit of real review cards from lib/reviews.ts. With
+ * fewer than five cards the section renders nothing at all.
  */
 export function ReviewsBlock() {
   const { redesign } = useUi()
   const copy = redesign.salut
-  if (reviewCards.length >= 5) {
-    return (
-      <SalutOrbit
-        tone="cream"
-        title={copy.reviewsTitle}
-        intro={copy.reviewsIntro}
-        cards={reviewCards.map((review, index) => ({
-          key: `${review.author}-${index}`,
-          image: review.image,
-          eyebrow: review.rating ? '★'.repeat(review.rating) : undefined,
-          quote: review.quote,
-          title: review.author,
-          text: review.business,
-        }))}
-      />
-    )
-  }
+  const reviewsUrl = process.env.NEXT_PUBLIC_GOOGLE_REVIEW_URL
+  if (reviewCards.length < 5) return null
   return (
-    <div className="tone-cream relative py-24 md:py-32">
-      <div className="studio-container">
-        <GoogleReviews bare />
-      </div>
-    </div>
+    <SalutOrbit
+      tone="cream"
+      title={copy.reviewsTitle}
+      intro={copy.reviewsIntro}
+      cta={
+        reviewsUrl ? (
+          <a className="salut-orbit-cta-link" href={reviewsUrl} target="_blank" rel="noopener noreferrer">
+            Toate recenziile pe Google ↗
+          </a>
+        ) : undefined
+      }
+      cards={reviewCards.map((review, index) => ({
+        key: `${review.author}-${index}`,
+        image: review.image,
+        eyebrow: review.rating ? '★'.repeat(review.rating) : undefined,
+        quote: review.quote,
+        title: review.author,
+        text: review.business,
+      }))}
+    />
   )
 }
