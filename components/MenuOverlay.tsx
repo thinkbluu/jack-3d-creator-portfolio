@@ -37,7 +37,7 @@ export default function MenuOverlay({
 }) {
   const locale = useLocale()
   const href = useHref()
-  const { redesign } = useUi()
+  const { redesign, common } = useUi()
   const closeRef = useRef<HTMLButtonElement>(null)
   const projects = getFeaturedProjects(4, locale)
 
@@ -84,9 +84,9 @@ export default function MenuOverlay({
                 WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat",
               }}
             />
-            <span className="flex items-baseline gap-2">
-              <span className="font-serif text-xl font-semibold">MAST</span>
-              <span className="font-sans text-[10px] font-medium tracking-[.28em]">STUDIO</span>
+            <span className="wordmark">
+              <span>MAST</span> <em>Studio</em>
+              <span className="sr-only">, {common.home}</span>
             </span>
           </Link>
           <button
