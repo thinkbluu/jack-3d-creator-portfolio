@@ -8,15 +8,14 @@ import HomeFaq from '@/components/studio/HomeFaq'
 import HomeStory from '@/components/studio/HomeStory'
 import IntroLoader from '@/components/studio/IntroLoader'
 import Manifest from '@/components/studio/Manifest'
-import NameCta from '@/components/studio/NameCta'
 import ServicesIndex from '@/components/studio/ServicesIndex'
 import StudioProcess from '@/components/studio/StudioProcess'
-import WorkRail from '@/components/studio/WorkRail'
+import Street from '@/components/studio/Street'
 
 /**
- * The homepage, told as one story: a pinned WebGL opening, the work, what we
- * build, what we stand for, how we work, proof, questions, and a closing
- * scene where the visitor's own business name takes shape. The server page
+ * The homepage, told as one story: the "Lights on" opening, a street of client
+ * shops ending in the visitor's own (named and lit by them), what we build,
+ * what we stand for, how we work, proof and questions. The server page
  * around it adds metadata and structured data; the footer is passed in.
  */
 export default function HomePage({ afterScenes, footer }: { afterScenes?: React.ReactNode; footer: React.ReactNode }) {
@@ -26,7 +25,7 @@ export default function HomePage({ afterScenes, footer }: { afterScenes?: React.
       <SiteHeader tone="dark" overlay />
       <main className="relative bg-[var(--night)]" style={{ overflowX: 'clip' }}>
         <HomeStory />
-        <WorkRail />
+        <Street />
         <ServicesIndex />
         <Manifest />
         <StudioProcess />
@@ -36,7 +35,6 @@ export default function HomePage({ afterScenes, footer }: { afterScenes?: React.
           </div>
         </div>
         <HomeFaq />
-        <NameCta />
         {afterScenes}
       </main>
       {footer}

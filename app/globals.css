@@ -1162,3 +1162,123 @@ html[data-build='2'] .bld-grid {
   opacity: 1;
   translate: 0 0;
 }
+
+/* "Strada": the work section as a night street of client shops. */
+.street {
+  --street-h: 100vw;
+  --caption-h: 0px;
+}
+
+@media (min-width: 768px) {
+  .street {
+    --street-h: 54svh;
+    --caption-h: 9.5rem;
+  }
+
+  .street-caption {
+    height: var(--caption-h);
+  }
+}
+
+.street-backdrop {
+  top: 6svh;
+  height: 62svh;
+}
+
+.street-ground {
+  bottom: var(--caption-h);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(163, 130, 58, 0.55) 6%, rgba(163, 130, 58, 0.55) 94%, transparent);
+}
+
+.street-facade-img {
+  filter: brightness(0.6) saturate(0.5);
+  transition: filter 1.2s ease 0.25s;
+}
+
+.street-facade[data-lit='true'] .street-facade-img {
+  filter: brightness(1.04) saturate(1);
+}
+
+.street-window {
+  opacity: 0;
+  transition: opacity 1s ease 0.5s;
+}
+
+.street-facade[data-lit='true'] .street-window {
+  opacity: 1;
+}
+
+.street-window-media {
+  animation: street-scroll 16s ease-in-out infinite alternate;
+}
+
+.street-window-light {
+  background: rgba(255, 182, 92, 0.12);
+  mix-blend-mode: screen;
+}
+
+@keyframes street-scroll {
+  to {
+    transform: translateY(-37.5%);
+  }
+}
+
+.street-sign-light {
+  background: radial-gradient(ellipse at center, rgba(255, 220, 160, 0.6), rgba(255, 182, 92, 0.18));
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 1s ease 0.6s;
+}
+
+.street-facade[data-lit='true'] .street-sign-light {
+  opacity: 1;
+}
+
+.street-sign-text {
+  opacity: 0;
+  transform: translateY(10%);
+  transition: opacity 0.6s ease 0.45s, transform 0.6s ease 0.45s;
+}
+
+.street-facade[data-peeled='true'] .street-sign-text {
+  opacity: 1;
+  transform: none;
+}
+
+.street-strip {
+  transform-origin: 50% 0;
+  transition: transform 0.7s cubic-bezier(0.5, 0, 0.2, 1), opacity 0.7s ease;
+  backface-visibility: hidden;
+}
+
+.street-facade[data-peeled='true'] .street-strip {
+  transform: rotateX(-100deg) translateY(25%);
+  opacity: 0;
+}
+
+.street-spill {
+  background: radial-gradient(ellipse at center, rgba(255, 182, 92, 0.32), transparent 70%);
+  opacity: 0;
+  transition: opacity 1.2s ease 0.6s;
+}
+
+.street-facade[data-lit='true'] .street-spill {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .street-facade *,
+  .street-facade-img {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+.street-window,
+.street-sign-light {
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  -webkit-mask-repeat: no-repeat;
+}

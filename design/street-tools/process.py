@@ -49,6 +49,11 @@ def cutout(name, kind):
         sign = (dist(crop, SIGN) < 14) & silc
         win = (dist(crop, WIN) < 12) & silc
         sign = ndi.binary_opening(sign, iterations=2)
+        # Only the sign board itself: drop any other cream patch of the drawing.
+        lab, n = ndi.label(sign)
+        if n > 1:
+            sizes = ndi.sum(sign, lab, range(1, n + 1))
+            sign = lab == (int(np.argmax(sizes)) + 1)
         win = ndi.binary_opening(win, iterations=2)
         Image.fromarray((sign * 255).astype(np.uint8)).save(f'{base}/mask-sign.png', optimize=True)
         Image.fromarray((win * 255).astype(np.uint8)).save(f'{base}/mask-window.png', optimize=True)
@@ -72,3 +77,11 @@ for i in (1, 2, 3):
     Image.open(f'png/backdrop-{i}.png').convert('RGB').save(f'out/backdrop/backdrop-{i}.webp', quality=86, method=6)
     manifest['backdrops'].append(f'backdrop/backdrop-{i}.webp')
 json.dump(manifest, open('out/manifest.json', 'w'), indent=2)
+
+# CSS masks read the alpha channel, so each mask also gets an alpha version (mask-*-a.png).
+import glob as _glob
+for _f in _glob.glob('out/shops/*/mask-*.png'):
+    if _f.endswith('-a.png'):
+        continue
+    _m = Image.open(_f).convert('L')
+    Image.merge('LA', (Image.new('L', _m.size, 255), _m)).save(_f.replace('.png', '-a.png'), optimize=True)

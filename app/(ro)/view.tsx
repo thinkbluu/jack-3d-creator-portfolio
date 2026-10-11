@@ -62,7 +62,7 @@ export function HomeView({ locale }: { locale: Locale }) {
   return (
     <>
       <JsonLd data={homeJsonLd} />
-      <HomePage footer={<Footer cta={false} />} />
+      <HomePage footer={<Footer />} />
     </>
   )
 }
