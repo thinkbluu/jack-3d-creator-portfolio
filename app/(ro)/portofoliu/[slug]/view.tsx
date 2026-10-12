@@ -2,18 +2,18 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import Breadcrumbs from '@/components/Breadcrumbs'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import MdxContent from '@/components/MdxContent'
 import SiteHeader from '@/components/SiteHeader'
-import CtaBand from '@/components/studio/CtaBand'
+import PageOpen from '@/components/studio/PageOpen'
 import ParallaxCover from '@/components/studio/ParallaxCover'
-import { Reveal, SplitHeading } from '@/components/studio/Reveal'
+import { Reveal } from '@/components/studio/Reveal'
 import type { Locale } from '@/lib/i18n/locale'
 import { schemaLanguage } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
+import { getProjectDesign } from '@/lib/project-design'
 import { getProjectStory } from '@/lib/project-stories'
 import { getAllProjects, getProjectBySlug, type Project } from '@/lib/projects'
 import { breadcrumbNode, businessRef, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
@@ -25,9 +25,12 @@ type ProjectPageProps = {
 }
 
 type ProjectChrome = {
-  challenge: string
-  solution: string
-  result: string
+  brief: string
+  choicesLabel: string
+  choices: string
+  palette: string
+  type: string
+  story: string
   builtWith: string
   seeConcept: string
   seeSite: (name: string) => string
@@ -46,9 +49,12 @@ type ProjectChrome = {
 
 const projectChrome: Record<Locale, ProjectChrome> = {
   ro: {
-    challenge: 'Provocarea',
-    solution: 'Soluția',
-    result: 'Rezultatul',
+    brief: 'Brief',
+    choicesLabel: 'Alegeri de design',
+    choices: 'Cum am gândit-o.',
+    palette: 'Paleta',
+    type: 'Litere',
+    story: 'Povestea completă',
     builtWith: 'Construit cu',
     seeConcept: 'Vezi conceptul live ↗',
     seeSite: (name) => `Vezi site-ul ${name} ↗`,
@@ -65,9 +71,12 @@ const projectChrome: Record<Locale, ProjectChrome> = {
     cursor: 'Următorul',
   },
   en: {
-    challenge: 'The challenge',
-    solution: 'The solution',
-    result: 'The result',
+    brief: 'Brief',
+    choicesLabel: 'Design choices',
+    choices: 'How we thought it through.',
+    palette: 'Palette',
+    type: 'Type',
+    story: 'The full story',
     builtWith: 'Built with',
     seeConcept: 'See the live concept ↗',
     seeSite: (name) => `See the ${name} website ↗`,
@@ -163,11 +172,7 @@ export async function ProjectView({ locale, slug }: { locale: Locale; slug: stri
     },
   )
 
-  const sections = [
-    { label: chrome.challenge, text: project.challenge },
-    { label: chrome.solution, text: project.solution },
-    ...(project.result ? [{ label: chrome.result, text: project.result, highlight: true }] : []),
-  ]
+  const design = getProjectDesign(project.slug, locale)
   const tags = [
     project.categoryLabel,
     String(project.year),
@@ -180,114 +185,155 @@ export async function ProjectView({ locale, slug }: { locale: Locale; slug: stri
       <SiteHeader current="portofoliu" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
         <article>
-          <header className="tone-dark grain relative overflow-hidden pt-36 md:pt-44">
-            <div className="studio-container relative">
-              <Breadcrumbs items={crumbs} />
-              <p className="mono-label mt-10 flex flex-wrap gap-x-3 text-[var(--fg-3)]">
-                {tags.map((tag, index) => (
-                  <span key={tag} className={index === 0 ? 'text-[var(--accent)]' : ''}>
-                    {index > 0 ? <span aria-hidden="true">· </span> : null}
-                    {tag}
-                  </span>
-                ))}
-              </p>
-              <SplitHeading as="h1" text={project.name} className="display-xl mt-6 text-balance text-[clamp(3.2rem,10vw,10rem)]" />
-              <div className="mt-12 grid gap-10 pb-16 md:grid-cols-[1.4fr_1fr] md:items-start md:pb-20">
-                <Reveal delay={0.2}>
-                  <p className="max-w-2xl text-xl leading-relaxed text-[var(--fg-2)] md:text-2xl">{project.summary}</p>
-                  {project.type === 'concept' && project.conceptNote ? (
-                    <p className="mt-6 max-w-xl border-l border-[var(--line)] pl-5 text-[var(--fg-3)]">{project.conceptNote}</p>
-                  ) : null}
-                </Reveal>
-                <Reveal delay={0.3}>
-                  <dl className="grid grid-cols-2 gap-x-8 gap-y-6 border-t border-[var(--line)] pt-6">
-                    <div>
-                      <dt className="mono-label text-[var(--fg-3)]">{chrome.facts.client}</dt>
-                      <dd className="mt-2">{project.client}</dd>
-                    </div>
-                    <div>
-                      <dt className="mono-label text-[var(--fg-3)]">{chrome.facts.year}</dt>
-                      <dd className="mt-2">{project.year}</dd>
-                    </div>
-                    {project.stack.length > 0 ? (
-                      <div className="col-span-2">
-                        <dt className="mono-label text-[var(--fg-3)]">{chrome.builtWith}</dt>
-                        <dd className="mt-2">{project.stack.join(' · ')}</dd>
-                      </div>
-                    ) : null}
-                  </dl>
-                  {project.liveUrl && project.status === 'live' ? (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-magnetic
-                      className="mono-label mt-8 items-center rounded-[var(--radius-pill)] bg-[var(--brass-lite)] px-6 text-[var(--night)] transition-colors hover:bg-[var(--on-dark)]"
-                    >
-                      {project.type === 'concept' ? chrome.seeConcept : chrome.seeSite(project.name)}
-                    </a>
-                  ) : null}
-                </Reveal>
-              </div>
-            </div>
-            {project.cover ? (
-              <div className="relative px-[clamp(0.75rem,2vw,1.5rem)] pb-[clamp(0.75rem,2vw,1.5rem)]">
-                <ParallaxCover src={project.cover} alt={coverAlt} priority />
-              </div>
-            ) : null}
-          </header>
-
-          <div className="studio-container py-24 md:py-36">
-            {sections.map((section, index) => (
-              <section key={section.label} className="grid gap-6 border-t border-[var(--hairline)] py-14 md:grid-cols-[1fr_2fr] md:gap-16 md:py-20">
-                <h2 className="mono-label flex gap-3 text-[var(--ink-3)] md:sticky md:top-28 md:self-start">
-                  <span className="text-[var(--brass-ink)]">{String(index + 1).padStart(2, '0')}</span>
-                  {section.label}
-                </h2>
-                <Reveal>
-                  <p
-                    className={
-                      'highlight' in section && section.highlight
-                        ? 'display-xl text-balance text-[clamp(2rem,3.6vw,3.4rem)] leading-[1.05] text-[var(--ink)]'
-                        : 'max-w-3xl text-xl leading-relaxed text-[var(--ink-2)] md:text-2xl md:leading-relaxed'
-                    }
-                  >
-                    {section.text}
+          <PageOpen
+            crumbs={crumbs}
+            title={projectTitle(project)}
+            word={`${project.name}.`}
+            lead={
+              <>
+                <p>{project.summary}</p>
+                {project.type === 'concept' && project.conceptNote ? (
+                  <p className="mt-5 max-w-md border-l border-[var(--line)] pl-4 text-base font-normal leading-relaxed text-[var(--fg-3)]">
+                    {project.conceptNote}
                   </p>
-                </Reveal>
-              </section>
-            ))}
-
-            {story ? (
-              <div className="prose mx-auto mt-16 max-w-3xl border-t border-[var(--hairline)] pt-20">
-                <MdxContent source={story} />
+                ) : null}
+              </>
+            }
+            short
+          >
+            <dl className="case-facts">
+              <div>
+                <dt>{chrome.facts.client}</dt>
+                <dd>{project.client}</dd>
               </div>
-            ) : originalStory ? (
-              <p className="mx-auto mt-16 max-w-3xl border-t border-[var(--hairline)] pt-12 text-[var(--ink-2)]">
-                The long-form case study is published in Romanian. You can read the essay in the original.{' '}
-                <Link href={`/portofoliu/${project.slug}`} className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
-                  Read the case study in Romanian →
-                </Link>
+              <div>
+                <dt>{chrome.facts.year}</dt>
+                <dd>{tags.slice(1).join(' · ')}</dd>
+              </div>
+              <div>
+                <dt>{chrome.facts.type}</dt>
+                <dd>{project.categoryLabel}</dd>
+              </div>
+            </dl>
+          </PageOpen>
+
+          {project.cover ? (
+            <div className="tone-dark px-[clamp(0.75rem,2vw,1.5rem)] pb-[clamp(0.75rem,2vw,1.5rem)]">
+              <ParallaxCover src={project.cover} alt={coverAlt} priority />
+            </div>
+          ) : null}
+
+          <section className="studio-container page-section grid gap-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:gap-16">
+            <h2 className="mono-label flex gap-3 text-[var(--ink-3)] md:sticky md:top-28 md:self-start">
+              <span className="text-[var(--brass-ink)]">01</span>
+              {chrome.brief}
+            </h2>
+            <Reveal>
+              <p className="display-xl text-balance text-[clamp(1.8rem,3.4vw,3.2rem)] leading-[1.08]">{project.challenge}</p>
+            </Reveal>
+          </section>
+
+          <section aria-labelledby="alegeri" className="tone-dark page-section">
+            <div className="studio-container">
+              <p className="mono-label flex gap-3 text-[var(--fg-3)]">
+                <span className="text-[var(--accent)]">02</span>
+                {chrome.choicesLabel}
               </p>
-            ) : null}
+              <h2 id="alegeri" className="section-title display-xl mt-6 max-w-[12ch]">
+                {chrome.choices}
+              </h2>
+              {design ? (
+                <ol className="case-notes">
+                  {design.notes.map((note, index) => (
+                    <li key={note.label} className="case-note">
+                      <span className="mono-label text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</span>
+                      <h3 className="case-note-label display-xl">{note.label}</h3>
+                      <p className="case-note-text">{note.text}</p>
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="mt-12 max-w-3xl text-xl leading-relaxed text-[var(--fg-2)]">{project.solution}</p>
+              )}
+              {design?.palette?.length || design?.type || project.stack.length ? (
+                <dl className="case-kit">
+                  {design?.palette?.length ? (
+                    <div>
+                      <dt className="mono-label">{chrome.palette}</dt>
+                      <dd className="mt-4 flex flex-wrap gap-3">
+                        {design.palette.map((swatch) => (
+                          <span key={swatch.hex} className="case-swatch">
+                            <span className="case-swatch-chip" style={{ background: swatch.hex }} />
+                            <span className="mono-label">{swatch.name}</span>
+                          </span>
+                        ))}
+                      </dd>
+                    </div>
+                  ) : null}
+                  {design?.type ? (
+                    <div>
+                      <dt className="mono-label">{chrome.type}</dt>
+                      <dd className="mt-4 text-lg">{design.type}</dd>
+                    </div>
+                  ) : null}
+                  {project.stack.length ? (
+                    <div>
+                      <dt className="mono-label">{chrome.builtWith}</dt>
+                      <dd className="mt-4 text-lg">{project.stack.join(' · ')}</dd>
+                    </div>
+                  ) : null}
+                </dl>
+              ) : null}
+            </div>
+          </section>
 
-            {project.gallery?.length ? (
-              <div className="mt-24 grid grid-cols-1 gap-6 md:grid-cols-2">
-                {project.gallery.map((image, index) => (
-                  <Reveal key={image} delay={(index % 2) * 0.1} className={index % 3 === 0 ? 'md:col-span-2' : ''}>
-                    <Image
-                      src={image}
-                      alt={chrome.shot(project.name, index + 2)}
-                      width={1600}
-                      height={1000}
-                      sizes="(min-width: 768px) 50vw, 100vw"
-                      className="h-auto w-full rounded-[6px] object-cover"
-                    />
-                  </Reveal>
-                ))}
-              </div>
-            ) : null}
-          </div>
+          {project.gallery?.length ? (
+            <div className="studio-container page-section grid grid-cols-1 gap-6 md:grid-cols-2">
+              {project.gallery.map((image, index) => (
+                <Reveal key={image} delay={(index % 2) * 0.1} className={index % 3 === 0 ? 'md:col-span-2' : ''}>
+                  <Image
+                    src={image}
+                    alt={chrome.shot(project.name, index + 2)}
+                    width={1600}
+                    height={1000}
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="h-auto w-full rounded-[10px] object-cover"
+                  />
+                </Reveal>
+              ))}
+            </div>
+          ) : null}
+
+          {story || originalStory ? (
+            <section className="studio-container page-section border-t border-[var(--hairline)]">
+              <p className="mono-label flex gap-3 text-[var(--ink-3)]">
+                <span className="text-[var(--brass-ink)]">03</span>
+                {chrome.story}
+              </p>
+              {story ? (
+                <div className="prose mx-auto mt-12 max-w-3xl">
+                  <MdxContent source={story} />
+                </div>
+              ) : (
+                <p className="mx-auto mt-12 max-w-3xl text-[var(--ink-2)]">
+                  The long-form case study is published in Romanian.{' '}
+                  <Link href={`/portofoliu/${project.slug}`} className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
+                    Read the case study in Romanian →
+                  </Link>
+                </p>
+              )}
+            </section>
+          ) : null}
+
+          {project.liveUrl && project.status === 'live' ? (
+            <div className="studio-container pb-[clamp(4rem,8vw,7rem)]">
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="big-row">
+                <span className="mono-label text-[var(--ink-3)]">↗</span>
+                <span className="big-row-name">{project.type === 'concept' ? chrome.seeConcept : chrome.seeSite(project.name)}</span>
+                <span aria-hidden="true" className="big-row-arrow">→</span>
+              </a>
+            </div>
+          ) : null}
 
           {project.testimonial ? (
             <figure className="tone-navy grain relative overflow-hidden py-28 md:py-40">
@@ -305,6 +351,7 @@ export async function ProjectView({ locale, slug }: { locale: Locale; slug: stri
             </figure>
           ) : null}
         </article>
+
 
         {next ? (
           <Link
@@ -336,21 +383,8 @@ export async function ProjectView({ locale, slug }: { locale: Locale; slug: stri
           </Link>
         ) : null}
 
-        <CtaBand title={chrome.next} placement="case_study_cta">
-          <p className="text-[var(--fg-2)] lg:text-right">
-            {chrome.see}{' '}
-            <Link href={localizePath('/servicii', locale)} className="inline min-h-0 text-[var(--fg)] underline underline-offset-4">
-              {chrome.services}
-            </Link>{' '}
-            {chrome.or}{' '}
-            <Link href={localizePath('/portofoliu', locale)} className="inline min-h-0 text-[var(--fg)] underline underline-offset-4">
-              {chrome.all}
-            </Link>
-            .
-          </p>
-        </CtaBand>
       </main>
-      <Footer cta={false} />
+      <Footer />
       <JsonLd data={jsonLd} />
     </>
   )

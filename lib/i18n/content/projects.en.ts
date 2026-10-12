@@ -8,16 +8,14 @@ type ProjectText = Pick<
 export const projectTextEn: Record<string, ProjectText> = {
   'veterinaria-timisoara': {
     metaDescription:
-      'Case study: a mobile-first presentation website for a veterinary practice in Timișoara. The practice reported 80% more new clients after launch.',
+      'Case study: a mobile-first presentation website for a veterinary practice in Timișoara, with hours, emergencies and a direct call on the first screen.',
     client: 'Veterinary practice',
     categoryLabel: 'Presentation website',
-    summary: '80% more new clients in the first months after launch.',
+    summary: 'A mobile-first website for a veterinary practice, with everything a worried owner looks for on the first screen.',
     challenge:
       'The practice had run for years on referrals and walk-ins alone, with no online presence. Potential clients searching for “veterinar Timișoara” on their phone could not find it, and people who had heard of it had nowhere to check the hours, the address, or the services before they called.',
     solution:
       'We built the whole website around the three things a pet owner looks for in a crisis: which services are offered, where the practice is, and how to reach a vet quickly. The hours, the round-the-clock emergencies, and the location are visible on the first screen, and the booking button and the direct-call button stay present the whole length of the page. Everything is mobile-first, because most searches of this kind happen on a phone, often in an emergency.',
-    result:
-      'A few months after launch, the practice reported an increase of about 80% in the number of new clients, most of them arriving through local searches on Google.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Local SEO'],
   },
   'agd-innerpath-consulting': {

@@ -2,6 +2,8 @@
 
 import Link from 'next/link'
 import AnpcSalBadge from '@/components/AnpcSalBadge'
+import NewsletterForm from '@/components/NewsletterForm'
+import TrackedLink from '@/components/TrackedLink'
 import { openConsentSettings } from '@/lib/consent'
 import { useHref, useLocale, useUi } from '@/lib/i18n/context'
 import { getAllServicePages } from '@/lib/services'
@@ -45,8 +47,12 @@ function FooterColumn({ title, links }: { title: string; links: Array<{ href: st
   )
 }
 
-/** `cta={false}` drops the closing headline on pages that end with their own call to action. */
-export default function Footer({ cta = true }: { cta?: boolean } = {}) {
+/**
+ * Site footer. `cta` opens it with "Hai să vorbim." and the three ways to
+ * reach us; pages that end with their own call to action pass `cta={false}`.
+ * The studio letter sign-up shows unless `letter={false}`.
+ */
+export default function Footer({ cta = true, letter = true }: { cta?: boolean; letter?: boolean } = {}) {
   const locale = useLocale()
   const href = useHref()
   const { footer, whatsapp, consent, redesign } = useUi()
@@ -58,30 +64,67 @@ export default function Footer({ cta = true }: { cta?: boolean } = {}) {
 
   return (
     <footer
-      className={`tone-dark grain relative z-10 overflow-hidden font-sans text-sm ${cta ? '' : 'border-t border-[var(--hairline-dark)]'}`}
+      className={`site-foot tone-dark grain relative z-10 overflow-hidden font-sans text-sm ${cta ? '' : 'border-t border-[var(--hairline-dark)]'}`}
       style={DARK_VARS}
     >
       <div className="studio-container relative flex flex-col gap-16 pt-24 pb-10">
         {cta ? (
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <p className="display-xl max-w-4xl text-[clamp(3rem,8vw,7.5rem)] text-[var(--on-dark)]">
-              {redesign.footer.headline}
-              <br />
-              <span className="display-italic text-[var(--brass-lite)]">{redesign.footer.headlineAccent}</span>
+          <div className="foot-talk">
+            <p className="mono-label flex items-center gap-3 text-[var(--on-dark-3)]">
+              <span aria-hidden="true" className="h-px w-8 bg-current opacity-40" />
+              {redesign.footer.kicker}
             </p>
-            <a
-              href={whatsappUrl(whatsapp.general)}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-magnetic
-              className="shrink-0 self-start rounded-[var(--radius-pill)] bg-[var(--brass-lite)] px-7 text-base font-semibold text-[var(--night)] transition-colors hover:bg-[var(--on-dark)] lg:self-auto"
-            >
-              {redesign.footer.cta}
-            </a>
+            <p className="foot-talk-title display-xl">{redesign.footer.talk}</p>
+            <ul className="foot-talk-links">
+              <li>
+                <TrackedLink
+                  href={whatsappUrl(whatsapp.general)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  eventName="whatsapp_click"
+                  eventProperties={{ placement: 'footer_talk' }}
+                  className="foot-talk-link"
+                >
+                  <span className="mono-label">{redesign.footer.whatsapp}</span>
+                  <span className="foot-talk-value">{PHONE_DISPLAY}</span>
+                  <span aria-hidden="true" className="foot-talk-arrow">
+                    ↗
+                  </span>
+                </TrackedLink>
+              </li>
+              <li>
+                <a href={EMAIL_HREF} className="foot-talk-link">
+                  <span className="mono-label">{redesign.footer.email}</span>
+                  <span className="foot-talk-value">{EMAIL}</span>
+                  <span aria-hidden="true" className="foot-talk-arrow">
+                    →
+                  </span>
+                </a>
+              </li>
+              <li>
+                <Link href={href('/contact')} className="foot-talk-link">
+                  <span className="mono-label">{redesign.footer.form}</span>
+                  <span className="foot-talk-value">{redesign.footer.headlineAccent}</span>
+                  <span aria-hidden="true" className="foot-talk-arrow">
+                    →
+                  </span>
+                </Link>
+              </li>
+            </ul>
           </div>
         ) : null}
 
-        <div className={`grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr] ${cta ? 'border-t border-[var(--hairline-dark)] pt-12' : ''}`}>
+        {letter ? (
+          <div className={`foot-letter grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-end ${cta ? 'border-t border-[var(--hairline-dark)] pt-12' : ''}`}>
+            <div>
+              <p className="display-xl text-[clamp(2.2rem,4.4vw,4rem)] leading-[0.95] text-[var(--on-dark)]">{redesign.footer.letterTitle}</p>
+              <p className="mt-4 max-w-md leading-relaxed text-[var(--on-dark-2)]">{redesign.footer.letterText}</p>
+            </div>
+            <NewsletterForm placement="footer" />
+          </div>
+        ) : null}
+
+        <div className="grid gap-10 border-t border-[var(--hairline-dark)] pt-12 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
           <div className="flex flex-col gap-4">
             <p className="max-w-xs leading-relaxed text-[var(--on-dark-2)]">{footer.blurb}</p>
             <address className="flex flex-col items-start not-italic leading-relaxed text-[var(--on-dark-2)]">
@@ -119,10 +162,14 @@ export default function Footer({ cta = true }: { cta?: boolean } = {}) {
           <nav aria-label={footer.legal} className="shrink-0">
             <ul className="flex flex-wrap gap-x-5">
               <li>
-                <Link href={href('/confidentialitate')} className={linkClass}>{footer.privacy}</Link>
+                <Link href={href('/confidentialitate')} className={linkClass}>
+                  {footer.privacy}
+                </Link>
               </li>
               <li>
-                <Link href={href('/cookies')} className={linkClass}>{footer.cookies}</Link>
+                <Link href={href('/cookies')} className={linkClass}>
+                  {footer.cookies}
+                </Link>
               </li>
               <li>
                 <button type="button" onClick={openConsentSettings} className={linkClass}>
@@ -130,7 +177,9 @@ export default function Footer({ cta = true }: { cta?: boolean } = {}) {
                 </button>
               </li>
               <li>
-                <Link href={href('/termeni')} className={linkClass}>{footer.terms}</Link>
+                <Link href={href('/termeni')} className={linkClass}>
+                  {footer.terms}
+                </Link>
               </li>
             </ul>
           </nav>

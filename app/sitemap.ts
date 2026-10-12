@@ -5,6 +5,7 @@ import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { getAllProjects } from '@/lib/projects'
 import { getAllServicePages } from '@/lib/services'
+import { getTeam } from '@/lib/team'
 import { absoluteUrl } from '@/lib/site'
 
 type Entry = MetadataRoute.Sitemap[number]
@@ -15,8 +16,10 @@ const staticPages: Array<{ path: string; lastModified: string; changeFrequency: 
   { path: '/', lastModified: '2026-10-04', changeFrequency: 'monthly', priority: 1 },
   { path: '/servicii', lastModified: '2026-10-04', changeFrequency: 'monthly', priority: 0.9 },
   { path: '/portofoliu', lastModified: '2026-10-04', changeFrequency: 'monthly', priority: 0.7 },
-  { path: '/despre', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
-  { path: '/contact', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
+  { path: '/despre', lastModified: '2026-10-12', changeFrequency: 'yearly', priority: 0.6 },
+  { path: '/cum-lucram', lastModified: '2026-10-12', changeFrequency: 'yearly', priority: 0.6 },
+  { path: '/newsletter', lastModified: '2026-10-12', changeFrequency: 'yearly', priority: 0.3 },
+  { path: '/contact', lastModified: '2026-10-12', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/cerere-oferta', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/comparatie', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/glosar', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.5 },
@@ -27,7 +30,7 @@ const staticPages: Array<{ path: string; lastModified: string; changeFrequency: 
   { path: '/termeni', lastModified: '2026-07-14', changeFrequency: 'yearly', priority: 0.2 },
 ]
 
-const PORTFOLIO_UPDATED = '2026-10-04'
+const PORTFOLIO_UPDATED = '2026-10-12'
 
 function languagesFor(canonicalPath: string, locales: Locale[] = ['ro', 'en']) {
   const languages: Record<string, string> = {}
@@ -70,6 +73,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...getAllProjects('ro')
       .filter((project) => project.type === 'client')
       .map((project) => entry(`/portofoliu/${project.slug}`, PORTFOLIO_UPDATED, 'yearly', 0.6)),
+    ...getTeam().map((member) => entry(`/echipa/${member.slug}`, '2026-10-12', 'yearly', 0.4)),
   ]
 
   // English URLs are listed as their own sitemap rows as well as hreflang alternates.

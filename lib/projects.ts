@@ -31,7 +31,7 @@ export const projects: Project[] = [
   {
     slug: 'veterinaria-timisoara',
     metaDescription:
-      'Studiu de caz: site de prezentare mobile-first pentru un cabinet veterinar din Timișoara. Cabinetul a raportat cu 80% mai mulți clienți noi după lansare.',
+      'Studiu de caz: site de prezentare mobile-first pentru un cabinet veterinar din Timișoara, cu programul, urgențele și apelul direct din primul ecran.',
     name: 'Veterinaria Timișoara',
     client: 'Cabinet veterinar',
     type: 'client',
@@ -40,13 +40,11 @@ export const projects: Project[] = [
     categoryLabel: 'Site de prezentare',
     year: 2026,
     summary:
-      'Cu 80% mai mulți clienți noi în primele luni de la lansare.',
+      'Site mobile-first pentru un cabinet veterinar, cu tot ce caută un stăpân grăbit în primul ecran.',
     challenge:
       'Cabinetul funcționa de ani buni exclusiv pe recomandări și pe trecători, fără nicio prezență online. Clienții potențiali care căutau „veterinar Timișoara" pe telefon nu îl găseau, iar cei care auzeau de el nu aveau unde să verifice programul, adresa sau serviciile înainte să sune.',
     solution:
       'Am construit site-ul integral, centrat pe cele trei informații pe care le caută un stăpân de animal în criză: ce servicii se oferă, unde e cabinetul și cum se ajunge rapid la un medic. Programul, urgențele non-stop și locația sunt vizibile din primul ecran, iar butonul de programare și cel de apel direct sunt prezente pe toată lungimea paginii. Totul construit mobile-first, pentru că majoritatea căutărilor de acest tip se fac de pe telefon, adesea în situații urgente.',
-    result:
-      'La câteva luni de la lansare, cabinetul a raportat o creștere de aproximativ 80% a numărului de clienți noi, majoritatea ajungând prin căutări locale pe Google.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'SEO local'],
     liveUrl: 'https://veterinartim.ro',
     cover: '/work/01-veterinaria-timisoara.webp',

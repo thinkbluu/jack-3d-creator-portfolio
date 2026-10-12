@@ -1,16 +1,19 @@
 import Link from 'next/link'
-import ContactButton from '@/components/ContactButton'
+import Image from 'next/image'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
-import PageHero from '@/components/studio/PageHero'
-import { SegmentProvider } from '@/components/SegmentContext'
+import PageOpen from '@/components/studio/PageOpen'
+import SectionHead from '@/components/studio/SectionHead'
+import ValuesDrop from '@/components/studio/ValuesDrop'
+import { getTeam } from '@/lib/team'
 import { localizePath } from '@/lib/i18n/paths'
 import type { Locale } from '@/lib/i18n/locale'
 import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, businessRef, faqNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { EMAIL, EMAIL_HREF, LEGAL_NAME, PHONE_DISPLAY, PHONE_HREF, TRADE_REGISTER_NUMBER, VAT_ID } from '@/lib/site'
+import { PAGE_WORDS } from '@/lib/page-words'
 
 const about = {
   ro: {
@@ -19,6 +22,24 @@ const about = {
       'MAST Studio e un studio de web design din Timișoara, parte din MAST Consult S.R.L. Construim site-uri, magazine online și platforme pentru firme din România.',
     name: 'Despre MAST Studio',
     kicker: 'Despre studio',
+    word: PAGE_WORDS['/despre'].ro,
+    lead: 'Un studio mic de web design din Timișoara. Credem că un site bun se simte, nu doar se vede.',
+    valuesLabel: 'Ce ne ghidează',
+    statement: 'Ascultăm cum funcționează afacerea ta și construim ce o vinde.',
+    values: [
+      { title: 'Fără șabloane.', text: 'Site-ul e construit în jurul a ce vinde afacerea ta, nu invers.' },
+      { title: 'Fără jargon.', text: 'Îți explicăm fiecare alegere în cuvinte pe care le folosești și tu.' },
+      { title: 'Un singur om de contact.', text: 'Vorbești direct cu cei care construiesc, fără intermediari.' },
+      { title: 'Al tău din prima zi.', text: 'Accesele, codul și documentația rămân la tine.' },
+    ],
+    whatLabel: 'Ce facem',
+    whatHead: 'Site-uri, magazine și platforme.',
+    whoLabel: 'Cine suntem',
+    whoHead: 'Timișoara, la distanță.',
+    clientsLabel: 'Cu cine lucrăm',
+    clientsHead: 'Afaceri care vor să fie găsite.',
+    faqLabel: 'Pe scurt',
+    faqHead: 'Întrebări.',
     inShort: 'Pe scurt',
     capsule:
       'MAST Studio este un studio de web design din Timișoara, România, parte din MAST Consult S.R.L. Construiește site-uri de prezentare, magazine online, aplicații web și platforme pentru afaceri mici și mijlocii din România și internațional. Site de prezentare de la 300 EUR, livrat în 48 de ore.',
@@ -104,6 +125,24 @@ const about = {
       'MAST Studio is a web design studio in Timișoara, part of MAST Consult S.R.L. We build websites, online stores and platforms for companies in Romania.',
     name: 'About MAST Studio',
     kicker: 'About the studio',
+    word: PAGE_WORDS['/despre'].en,
+    lead: 'A small web design studio in Timișoara. We believe a good website is felt, not only seen.',
+    valuesLabel: 'What guides us',
+    statement: 'We listen to how your business works and build what sells it.',
+    values: [
+      { title: 'No templates.', text: 'The site is built around what your business sells, not the other way round.' },
+      { title: 'No jargon.', text: 'We explain every choice in words you use yourself.' },
+      { title: 'One point of contact.', text: 'You talk directly to the people who build it, with no one in between.' },
+      { title: 'Yours from day one.', text: 'The access, the code and the documentation stay with you.' },
+    ],
+    whatLabel: 'What we do',
+    whatHead: 'Websites, stores and platforms.',
+    whoLabel: 'Who we are',
+    whoHead: 'Timișoara, working remotely.',
+    clientsLabel: 'Who we work with',
+    clientsHead: 'Businesses that want to be found.',
+    faqLabel: 'In short',
+    faqHead: 'Questions.',
     inShort: 'In short',
     capsule:
       'MAST Studio is a web design studio in Timișoara, Romania, part of MAST Consult S.R.L. It builds presentation websites, online stores, web apps and platforms for small and medium-sized businesses in Romania and abroad. Presentation websites from 300 EUR, delivered in 48 hours.',
@@ -203,140 +242,111 @@ export function AboutView({ locale }: { locale: Locale }) {
     { name: ui[locale].nav.about, path },
   ]
 
+  const team = getTeam()
+
   return (
     <>
       <SiteHeader current="despre" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-      <PageHero crumbs={crumbs} kicker={copy.kicker} title={copy.name} />
-      <article className="site-container py-20 md:py-28">
-
-        <div className="mx-auto mt-8 max-w-2xl">
-          <p className="kicker">{copy.inShort}</p>
-          <div
-            className="type-body mt-3 text-[17px] font-medium text-[var(--ink)]"
-            style={{
-              background: 'var(--shell-warm)',
-              borderLeft: '3px solid var(--brass)',
-              borderRadius: 'var(--radius-card)',
-              padding: '20px 24px',
-              marginBottom: '32px',
-            }}
-          >
-            {copy.capsule}
+        <PageOpen crumbs={crumbs} index="04" title={copy.name} word={copy.word} lead={copy.lead}>
+          <div className="max-w-sm">
+            <p className="mono-label text-[var(--fg-3)]">{copy.inShort}</p>
+            <p className="mt-3 leading-relaxed text-[var(--fg-2)]">{copy.capsule}</p>
           </div>
-        </div>
+        </PageOpen>
 
-        <div className="mx-auto max-w-2xl">
-          <section className="mt-12">
-            <h2 className="type-h3">{copy.whatTitle}</h2>
-            {copy.what.map((paragraph) => (
-              <p key={paragraph} className="type-body mt-4">
-                {paragraph}
-              </p>
-            ))}
-          </section>
+        <ValuesDrop label={copy.valuesLabel} statement={copy.statement} cards={copy.values} />
 
-          <section className="mt-12 border-t border-[var(--hairline)] pt-12">
-            <h2 className="type-h3">{copy.whereTitle}</h2>
-            <p className="type-body mt-4">{copy.where}</p>
-          </section>
-
-          <section className="mt-12 border-t border-[var(--hairline)] pt-12">
-            <h2 className="type-h3">{copy.howTitle}</h2>
-            <ol className="mt-6 flex flex-col gap-6">
-              {copy.steps.map((step, index) => (
-                <li key={step.title} className="flex gap-4">
-                  <span
-                    aria-hidden="true"
-                    className="flex size-8 shrink-0 items-center justify-center rounded-full font-sans text-[13px] font-semibold"
-                    style={{ background: 'var(--shell-warm)', color: 'var(--brass-ink)', border: '1px solid var(--hairline)' }}
-                  >
-                    {index + 1}
-                  </span>
-                  <div>
-                    <h3 className="font-sans text-[15px] font-semibold text-[var(--ink)]">{step.title}</h3>
-                    <p className="type-body mt-1 text-[15px]">{step.text}</p>
-                  </div>
-                </li>
+        <section className="tone-dark page-section">
+          <div className="studio-container">
+            <SectionHead index="01" label={copy.whatLabel} title={copy.whatHead} />
+            <div className="mt-14 grid gap-8 text-lg leading-relaxed text-[var(--fg-2)] md:grid-cols-2 md:gap-14">
+              {copy.what.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
               ))}
-            </ol>
-          </section>
+            </div>
+          </div>
+        </section>
 
-          <section className="mt-12 border-t border-[var(--hairline)] pt-12">
-            <h2 className="type-h3">{copy.whoTitle}</h2>
-            <p className="type-body mt-4">{copy.who}</p>
-          </section>
+        <section className="page-section">
+          <div className="studio-container">
+            <SectionHead index="02" label={copy.whoLabel} title={copy.whoHead} />
+            <div className="mt-14 grid gap-8 text-lg leading-relaxed text-[var(--ink-2)] md:grid-cols-2 md:gap-14">
+              <p>{copy.who}</p>
+              <p>{copy.where}</p>
+            </div>
+            {team.length ? (
+              <ul className="team-grid">
+                {team.map((member) => (
+                  <li key={member.slug}>
+                    <Link href={localizePath(`/echipa/${member.slug}`, locale)} className="team-card link-block">
+                      <span className="team-card-photo">
+                        {member.photo ? <Image src={member.photo} alt="" fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover" /> : null}
+                      </span>
+                      <span className="team-card-name display-xl">{member.name}</span>
+                      <span className="mono-label text-[var(--ink-3)]">{member.role[locale]}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+          </div>
+        </section>
 
-          <section className="mt-12 border-t border-[var(--hairline)] pt-12">
-            <h2 className="type-h3">{copy.idTitle}</h2>
-            <dl className="type-body mt-4 grid grid-cols-1 gap-x-6 gap-y-2 sm:grid-cols-[auto_1fr]">
-              <dt className="font-semibold text-[var(--ink)]">{copy.company}</dt>
-              <dd>{LEGAL_NAME}</dd>
-              <dt className="font-semibold text-[var(--ink)]">{copy.cui}</dt>
-              <dd>{VAT_ID}</dd>
-              <dt className="font-semibold text-[var(--ink)]">{copy.register}</dt>
-              <dd>{TRADE_REGISTER_NUMBER}</dd>
-              <dt className="font-semibold text-[var(--ink)]">{copy.phone}</dt>
-              <dd>
-                <a href={PHONE_HREF} className="underline-offset-4 hover:underline">{PHONE_DISPLAY}</a>
-              </dd>
-              <dt className="font-semibold text-[var(--ink)]">{copy.email}</dt>
-              <dd>
-                <a href={EMAIL_HREF} className="underline-offset-4 hover:underline">{EMAIL}</a>
-              </dd>
-            </dl>
-            <p className="type-body mt-4">
-              {copy.channelsBefore}{' '}
-              <Link href={localizePath('/contact', locale)} className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
-                {copy.channelsLink}
-              </Link>
-              {copy.channelsAfter}
-            </p>
-          </section>
-
-          <section className="mt-12 border-t border-[var(--hairline)] pt-12">
-            <h2 className="type-h3">{copy.clientsTitle}</h2>
-            <ul className="mt-4 flex flex-col gap-2">
-              {copy.clients.map((item) => (
-                <li key={item} className="type-body flex items-start gap-3">
-                  <span aria-hidden="true" className="mt-[10px] size-1.5 shrink-0 rounded-full" style={{ background: 'var(--brass)' }} />
-                  {item}
+        <section className="tone-warm page-section">
+          <div className="studio-container">
+            <SectionHead index="03" label={copy.clientsLabel} title={copy.clientsHead} />
+            <ul className="big-rows mt-14">
+              {copy.clients.map((item, index) => (
+                <li key={item} className="big-row">
+                  <span className="mono-label text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="big-row-name">{item}</span>
+                  <span />
                 </li>
               ))}
             </ul>
-          </section>
+          </div>
+        </section>
 
-          <section className="mt-12 border-t border-[var(--hairline)] pt-12">
-            <h2 className="type-h3">{copy.faqTitle}</h2>
-            <div className="mt-6 divide-y divide-[var(--hairline)] border-y border-[var(--hairline)]">
+        <section className="page-section">
+          <div className="studio-container grid gap-14 md:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+            <div>
+              <SectionHead index="04" label={copy.faqLabel} title={copy.faqHead} compact />
+              <dl className="mt-12 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-[var(--ink-2)]">
+                <dt className="mono-label pt-1 text-[var(--ink-3)]">{copy.company}</dt>
+                <dd>{LEGAL_NAME}</dd>
+                <dt className="mono-label pt-1 text-[var(--ink-3)]">{copy.cui}</dt>
+                <dd>{VAT_ID}</dd>
+                <dt className="mono-label pt-1 text-[var(--ink-3)]">{copy.register}</dt>
+                <dd>{TRADE_REGISTER_NUMBER}</dd>
+                <dt className="mono-label pt-1 text-[var(--ink-3)]">{copy.phone}</dt>
+                <dd>
+                  <a href={PHONE_HREF} className="underline-offset-4 hover:underline">{PHONE_DISPLAY}</a>
+                </dd>
+                <dt className="mono-label pt-1 text-[var(--ink-3)]">{copy.email}</dt>
+                <dd>
+                  <a href={EMAIL_HREF} className="underline-offset-4 hover:underline">{EMAIL}</a>
+                </dd>
+              </dl>
+            </div>
+            <div className="divide-y divide-[var(--hairline)] self-end border-y border-[var(--hairline)]">
+              <h2 className="sr-only">{copy.faqTitle}</h2>
               {copy.faq.map((item) => (
                 <details key={item.question} className="faq-item group py-5">
-                  <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-4 font-sans font-semibold [&::-webkit-details-marker]:hidden">
+                  <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-4 font-sans text-lg font-semibold [&::-webkit-details-marker]:hidden">
                     <span>{item.question}</span>
-                    <span
-                      className="faq-icon flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full border border-[var(--hairline)] text-[var(--ink)]"
-                      aria-hidden="true"
-                    >
+                    <span className="faq-icon flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full border border-[var(--hairline)] text-[var(--ink)]" aria-hidden="true">
                       <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
                         <path d="M5.5 0V11M0 5.5H11" stroke="currentColor" strokeWidth="1.4" />
                       </svg>
                     </span>
                   </summary>
-                  <p className="mt-3 font-sans text-sm leading-relaxed text-[var(--ink-2)]">{item.answer}</p>
+                  <p className="mt-3 leading-relaxed text-[var(--ink-2)]">{item.answer}</p>
                 </details>
               ))}
             </div>
-          </section>
-        </div>
-
-        <section className="porthole mx-auto mt-16 flex max-w-2xl flex-col items-start gap-5 border-[var(--glass-edge)] p-7">
-          <h2 className="type-h3">{copy.cta}</h2>
-          <SegmentProvider>
-            <ContactButton hero label={ui[locale].whatsapp.defaultCta} />
-          </SegmentProvider>
+          </div>
         </section>
-      </article>
-
       </main>
       <Footer />
       <JsonLd

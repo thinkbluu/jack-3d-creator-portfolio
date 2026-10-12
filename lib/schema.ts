@@ -155,7 +155,7 @@ export function webPageNode({
   path: string
   name: string
   description: string
-  type?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage'
+  type?: 'WebPage' | 'AboutPage' | 'ContactPage' | 'CollectionPage' | 'ProfilePage'
   breadcrumb?: boolean
   mainEntity?: JsonObject
   locale?: Locale

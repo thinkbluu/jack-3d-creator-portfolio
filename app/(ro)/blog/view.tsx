@@ -1,15 +1,16 @@
 import Link from 'next/link'
-import BlogCard from '@/components/BlogCard'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
-import PageHero from '@/components/studio/PageHero'
+import IdeasIndex, { type IdeaCard } from '@/components/studio/IdeasIndex'
+import PageOpen from '@/components/studio/PageOpen'
 import TrackedLink from '@/components/TrackedLink'
-import { getAllPosts } from '@/lib/blog'
+import { formatBlogDate, getAllPosts } from '@/lib/blog'
 import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
+import { PAGE_WORDS } from '@/lib/page-words'
 import { pageMetadata } from '@/lib/seo'
 import { absoluteUrl, whatsappUrl } from '@/lib/site'
 
@@ -54,57 +55,64 @@ export function BlogView({ locale }: { locale: Locale }) {
     },
   )
 
+  const ideas: IdeaCard[] = posts.map((post) => ({
+    slug: post.slug,
+    href: localizePath(`/blog/${post.slug}`, locale),
+    title: post.title,
+    excerpt: post.excerpt,
+    category: post.category,
+    categoryLabel: post.categoryLabel,
+    readMin: post.readMin,
+    date: post.publishedAt,
+    dateLabel: formatBlogDate(post.publishedAt, locale),
+    cover: post.cover,
+    coverAlt: post.coverAlt,
+  }))
+
   return (
     <>
       <SiteHeader current="blog" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
-        <PageHero
-          crumbs={crumbs}
-          kicker={copy.indexKicker}
-          title={copy.indexTitle}
-          intro={
-            <>
-              {copy.indexIntro}{' '}
-              <Link href={localizePath('/servicii', locale)} className="inline min-h-0 text-[var(--fg)] underline underline-offset-4">
-                {copy.servicesLink}
-              </Link>
-              .
-            </>
-          }
-        />
-        <div className="site-container py-20 md:py-28">
-          <section aria-label={copy.articles}>
-            {posts.length > 0 ? (
-              <div className="grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-2 lg:grid-cols-3">
-                {posts.map((post) => (
-                  <BlogCard key={post.slug} post={post} locale={locale} />
-                ))}
-              </div>
+        <PageOpen crumbs={crumbs} index="05" title={copy.indexTitle} word={PAGE_WORDS['/blog'][locale]} lead={copy.lead} short>
+          <p className="max-w-sm leading-relaxed text-[var(--fg-2)]">
+            {copy.indexIntro}{' '}
+            <Link href={localizePath('/servicii', locale)} className="inline min-h-0 text-[var(--fg)] underline underline-offset-4">
+              {copy.servicesLink}
+            </Link>
+            .
+          </p>
+        </PageOpen>
+        <section aria-label={copy.articles} className="tone-cream page-section">
+          <div className="studio-container">
+            {ideas.length > 0 ? (
+              <IdeasIndex posts={ideas} allLabel={copy.all} readLabel={copy.readMin} filtersLabel={copy.filters} />
             ) : locale === 'en' ? (
               <div className="border-t border-[var(--hairline)] pt-6">
-                <p className="font-sans text-sm text-[var(--ink-2)]">{copy.emptyEn}</p>
-                <Link href="/blog" className="mt-3 inline-block font-semibold text-[var(--brass-ink)] underline-offset-4 hover:underline">
-                  {copy.readRomanian}
+                <p className="text-lg text-[var(--ink-2)]">{copy.emptyEn}</p>
+                <Link href="/blog" className="big-row mt-8">
+                  <span className="mono-label text-[var(--fg-3)]">RO</span>
+                  <span className="big-row-name">{copy.readRomanian.replace(' →', '')}</span>
+                  <span aria-hidden="true" className="big-row-arrow">→</span>
                 </Link>
               </div>
             ) : (
-              <p className="border-t border-[var(--hairline)] pt-6 font-sans text-sm text-[var(--ink-2)]">{copy.empty}</p>
+              <p className="border-t border-[var(--hairline)] pt-6 text-lg text-[var(--ink-2)]">{copy.empty}</p>
             )}
-          </section>
 
-          <section className="mt-20 border-t border-[var(--hairline)] pt-8">
-            <p className="type-body text-[var(--ink-2)]">{copy.question}</p>
-            <TrackedLink
-              href={whatsappUrl(locale === 'en' ? copy.askMessageEn : copy.askMessage)}
-              target="_blank"
-              rel="noopener noreferrer"
-              eventProperties={{ placement: 'blog_index' }}
-              className="mt-3 font-semibold text-[var(--brass-ink)] underline-offset-4 hover:underline"
-            >
-              {copy.ask}
-            </TrackedLink>
-          </section>
-        </div>
+            <div className="mt-24 grid gap-6 border-t border-[var(--hairline)] pt-10 md:grid-cols-2 md:items-end">
+              <p className="display-xl text-[clamp(2rem,3.6vw,3.4rem)] leading-[1]">{copy.question}</p>
+              <TrackedLink
+                href={whatsappUrl(locale === 'en' ? copy.askMessageEn : copy.askMessage)}
+                target="_blank"
+                rel="noopener noreferrer"
+                eventProperties={{ placement: 'blog_index' }}
+                className="mono-label justify-self-start text-[var(--brass-ink)] underline-offset-4 hover:underline md:justify-self-end"
+              >
+                {copy.ask}
+              </TrackedLink>
+            </div>
+          </div>
+        </section>
       </main>
       <Footer />
       <JsonLd data={jsonLd} />
