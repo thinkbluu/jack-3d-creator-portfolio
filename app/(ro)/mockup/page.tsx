@@ -1,11 +1,11 @@
 import Image from 'next/image'
 import Footer from '@/components/Footer'
-import GoogleReviews from '@/components/GoogleReviews'
 import JsonLd from '@/components/JsonLd'
 import MockupForm from '@/components/MockupForm'
 import PreselectLink from '@/components/PreselectLink'
 import SiteHeader from '@/components/SiteHeader'
 import { primaryButtonClass, textLinkClass } from '@/components/form-styles'
+import { ReviewsBlock } from '@/components/studio/SalutRings'
 import { faqNode, graph, webPageNode } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 
@@ -213,8 +213,8 @@ export default function MockupPage() {
           </div>
         </section>
 
-        {/* 5. Google reviews */}
-        <GoogleReviews className="site-container pb-14 md:pb-20" />
+        {/* 5. Client reviews */}
+        <ReviewsBlock />
 
         {/* 6. FAQ */}
         <section aria-labelledby="intrebari" className="site-container pb-14 pt-14 md:pb-20 md:pt-20">

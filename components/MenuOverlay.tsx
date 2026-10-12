@@ -37,7 +37,7 @@ export default function MenuOverlay({
 }) {
   const locale = useLocale()
   const href = useHref()
-  const { redesign, projects: projectsUi } = useUi()
+  const { redesign, common } = useUi()
   const closeRef = useRef<HTMLButtonElement>(null)
   const projects = getFeaturedProjects(4, locale)
 
@@ -84,9 +84,9 @@ export default function MenuOverlay({
                 WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat",
               }}
             />
-            <span className="flex items-baseline gap-2">
-              <span className="font-serif text-xl font-semibold">MAST</span>
-              <span className="font-sans text-[10px] font-medium tracking-[.28em]">STUDIO</span>
+            <span className="wordmark">
+              <span>MAST</span> <em>Studio</em>
+              <span className="sr-only">, {common.home}</span>
             </span>
           </Link>
           <button
@@ -145,13 +145,13 @@ export default function MenuOverlay({
                   }}
                 >
                   <Link href={href(`/portofoliu/${project.slug}`)} onClick={onClose} className="link-block group">
-                    <span className="relative block aspect-[4/3] overflow-hidden rounded-[14px] bg-[var(--navy)]">
+                    <span className="relative block aspect-[4/3] overflow-hidden rounded-[14px] bg-[#0b0f17]">
                       <Image
                         src={project.cover}
-                        alt={`${projectsUi.altClient} ${project.name}`}
+                        alt={project.coverAlt}
                         fill
                         sizes="(min-width: 1024px) 20vw, 45vw"
-                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                        className="object-cover object-[right_center] transition-transform duration-700 ease-out group-hover:scale-105"
                       />
                     </span>
                     <span className="mt-2 block text-sm text-[var(--on-dark-2)] transition-colors group-hover:text-[var(--on-dark)]">

@@ -174,7 +174,7 @@ export function OfferView({ locale }: { locale: Locale }) {
           {projects.map((project) => (
             <article key={project.slug} className="overflow-hidden rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--shell-warm)]">
               <div className="relative aspect-[4/3] overflow-hidden border-b border-[var(--hairline)]">
-                <Image src={project.cover} alt={copy.projectAlt.split('{name}').join(project.name)} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+                <Image src={project.cover} alt={project.coverAlt} fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover object-[right_center]" />
               </div>
               <div className="flex flex-col gap-2 p-5">
                 <p className="kicker">{project.categoryLabel}</p>

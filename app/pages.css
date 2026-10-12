@@ -301,7 +301,7 @@
   aspect-ratio: var(--shape, 4 / 3);
   overflow: hidden;
   border-radius: 10px;
-  background: var(--navy);
+  background: #0b0f17;
 }
 .work-card-media img {
   transition: transform 1.2s cubic-bezier(0.2, 0.7, 0.2, 1);

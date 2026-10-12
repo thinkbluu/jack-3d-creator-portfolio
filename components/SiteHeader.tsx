@@ -121,9 +121,8 @@ export default function SiteHeader({
                 WebkitMask: "url('/icons/mast-mark.svg') center / contain no-repeat",
               }}
             />
-            <span className="flex items-baseline gap-2">
-              <span className="font-serif text-xl font-semibold">MAST</span>
-              <span className="font-sans text-[10px] font-medium tracking-[.28em]">STUDIO</span>
+            <span className="wordmark">
+              <span>MAST</span> <em>Studio</em>
               <span className="sr-only">, {nav.home}</span>
             </span>
           </Link>

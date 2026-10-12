@@ -922,6 +922,27 @@ html.lenis {
     overflow-wrap: anywhere;
   }
 
+  .wordmark {
+    font-family: var(--font-display);
+    font-size: 1.375rem; /* 22px */
+    font-weight: 400;
+    font-variation-settings: 'opsz' 36, 'SOFT' 50;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .wordmark em {
+    font-style: italic;
+    font-weight: 400;
+    font-variation-settings: 'opsz' 36, 'SOFT' 100;
+    letter-spacing: -0.02em;
+  }
+  @media (max-width: 639px) {
+    .wordmark {
+      font-size: 1.25rem;
+    }
+  }
+
   /* Sticky mobile WhatsApp bar reserves space so closing CTAs stay above it. */
   html.has-mobile-wa-bar body {
     padding-bottom: var(--mobile-wa-bar, 0px);
@@ -1278,36 +1299,62 @@ html[data-daypart]:not([data-daypart='day']) .salut-hello[data-part='day'] {
 .salut-card {
   --d: 0;
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   flex-shrink: 0;
   width: 86vw;
-  aspect-ratio: 4 / 5;
   overflow: hidden;
   border-radius: 24px;
-  background: var(--navy);
+  background: #0b0f17;
+}
+/* Preview window: the artwork is 2:1 with the subject on the right. */
+.salut-card-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  background: #0b0f17;
 }
 @media (min-width: 768px) {
   .salut-card {
     width: min(68vw, 118svh);
-    height: min(62svh, 40rem);
-    aspect-ratio: auto;
+    aspect-ratio: 2 / 1;
     border-radius: 28px;
     transform: scale(calc(1 - var(--d) * 0.07));
   }
+  .salut-card-media {
+    position: absolute;
+    inset: 0;
+    aspect-ratio: auto;
+  }
 }
 .salut-card-shade {
+  display: none;
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(11, 15, 22, 0.88), rgba(11, 15, 22, 0.25) 52%, transparent 75%);
+  background: linear-gradient(to right, rgba(11, 15, 22, 0.92), rgba(11, 15, 22, 0.4) 42%, transparent 68%);
 }
 .salut-card-text {
-  position: absolute;
-  inset-inline: clamp(1.25rem, 2.4vw, 2.5rem);
-  bottom: clamp(1.25rem, 2.4vw, 2.25rem);
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
+  padding: 1.1rem 1.25rem 1.4rem;
   color: var(--on-dark);
+}
+@media (min-width: 768px) {
+  .salut-card-shade {
+    display: block;
+  }
+  /* Text sits in the artwork's empty left area, never over the subject. */
+  .salut-card-text {
+    position: absolute;
+    left: clamp(1.25rem, 2.4vw, 2.5rem);
+    bottom: clamp(1.25rem, 2.4vw, 2.25rem);
+    width: min(52%, 34rem);
+    padding: 0;
+  }
 }
 .salut-card-name {
   font-size: clamp(2.2rem, 4.8vw, 5.4rem);
@@ -1565,11 +1612,6 @@ html[data-visit='4'] .salut-back[data-visit='4'] {
   line-height: 0.95;
   letter-spacing: -0.03em;
 }
-.salut-orbit-quote {
-  font-size: clamp(1.15rem, 1.55vw, 1.6rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
 .salut-orbit-line {
   display: -webkit-box;
   overflow: hidden;
@@ -1578,6 +1620,97 @@ html[data-visit='4'] .salut-back[data-visit='4'] {
   color: rgba(26, 23, 20, 0.7);
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
+}
+/* Review cards: mono label row, brass quote mark, serif quote, pinned footer. */
+.salut-orbit-review {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  padding: 1.75rem;
+}
+.salut-orbit-review-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  font-family: var(--font-mono);
+}
+.salut-orbit-stars {
+  color: var(--brass);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+}
+.salut-orbit-source {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(26, 23, 20, 0.6);
+}
+.salut-orbit-mark {
+  margin-top: 1.25rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 4rem;
+  line-height: 0.6;
+  color: var(--brass);
+}
+.salut-orbit-quote {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 1rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 8;
+}
+.salut-orbit-quote[data-size='s'] {
+  font-size: clamp(1.6rem, 2.2vw, 2.1rem);
+}
+.salut-orbit-quote[data-size='m'] {
+  font-size: clamp(1.25rem, 1.7vw, 1.6rem);
+}
+.salut-orbit-quote[data-size='l'] {
+  font-size: clamp(1.05rem, 1.35vw, 1.3rem);
+}
+.salut-orbit-foot {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  /* Ink hairline: the card stays light even when the section is tone-dark,
+     where var(--hairline) flips to a light-on-dark value. */
+  border-top: 1px solid rgba(26,23,20,0.1);
+}
+.salut-orbit-reviewer {
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+.salut-orbit-sub {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: rgba(26, 23, 20, 0.6);
+}
+.salut-orbit-cta-link {
+  display: inline-block;
+  margin-top: 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--fg-2);
+  text-decoration: none;
+  text-underline-offset: 0.14em;
+  transition: color 0.3s;
+}
+.salut-orbit-cta-link:hover {
+  color: var(--fg);
+  text-decoration: underline;
 }
 @media (max-width: 767px) {
   .salut-orbit {
@@ -1588,6 +1721,17 @@ html[data-visit='4'] .salut-back[data-visit='4'] {
   }
   .salut-orbit-ring {
     --w: 46vw;
+  }
+  .salut-orbit-review {
+    padding: 1.1rem;
+  }
+  .salut-orbit-mark {
+    margin-top: 0.8rem;
+    font-size: 2.75rem;
+  }
+  .salut-orbit-quote {
+    margin-top: 0.7rem;
+    -webkit-line-clamp: 6;
   }
 }
 

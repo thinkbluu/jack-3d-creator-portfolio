@@ -13,8 +13,8 @@ function isFilterId(value: string | null): value is FilterId {
   return filterIds.some((id) => id === value)
 }
 
-/** Portrait and landscape covers alternate, so the two columns never line up. */
-const SHAPES = ['4 / 5', '4 / 3', '4 / 3', '4 / 5'] as const
+/** Taller and wider covers alternate, so the two columns never line up. The artwork sits right of centre, so crops keep the right side. */
+const SHAPES = ['4 / 3', '16 / 9', '16 / 9', '4 / 3'] as const
 
 /**
  * The work index: large covers in two staggered columns, each rising into
@@ -86,12 +86,12 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
               <span className="work-card-media" data-expand-frame="">
                 <Image
                   src={project.cover}
-                  alt=""
+                  alt={project.coverAlt}
                   fill
                   sizes="(min-width: 768px) 46vw, 100vw"
                   priority={index < 2}
                   data-expand-media=""
-                  className="object-cover object-top"
+                  className="object-cover object-[right_center]"
                 />
               </span>
               <span className="work-card-meta mono-label">

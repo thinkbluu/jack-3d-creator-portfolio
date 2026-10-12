@@ -20,10 +20,6 @@ export default function ProjectCard({ project, headingLevel = 'h2', priority = f
   const { projects: copy, redesign } = useUi()
   const cursor = redesign.cursor
   const Heading = headingLevel
-  const alt =
-    project.type === 'concept'
-      ? `${copy.altConcept} ${project.name}`
-      : `${copy.altClient} ${project.name}${copy.altClientBy}`
 
   return (
     <Link
@@ -31,21 +27,21 @@ export default function ProjectCard({ project, headingLevel = 'h2', priority = f
       data-cursor={cursor.view}
       className="link-block group flex flex-col focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
     >
-      <span className="relative block w-full overflow-hidden rounded-[6px] bg-[var(--shell-warm)]" style={{ aspectRatio: '16 / 10' }}>
+      <span className="relative block w-full overflow-hidden rounded-[6px] bg-[#0b0f17]" style={{ aspectRatio: '16 / 10' }}>
         {imageFailed || !project.cover ? (
           <span className="flex h-full w-full items-center justify-center px-6">
-            <span className="kicker text-center">{project.name}</span>
+            <span className="kicker text-center text-[#faf7f2]">{project.name}</span>
           </span>
         ) : (
           <Image
             src={project.cover}
-            alt={alt}
+            alt={project.coverAlt}
             fill
             loading={priority ? 'eager' : 'lazy'}
             fetchPriority={priority ? 'high' : 'auto'}
             sizes="(min-width: 1024px) 50vw, 100vw"
             onError={() => setImageFailed(true)}
-            className="object-cover object-top transition-transform duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+            className="object-cover object-[right_center] transition-transform duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
         )}
       </span>
