@@ -77,12 +77,20 @@ export async function POST(request: Request) {
     return Response.json({ ok: false })
   }
 
+  const byEmail = data.canal === 'email'
+  const channelLabel = byEmail ? 'Email' : 'WhatsApp'
   const waDigits = data.telefon.replace(/\D/g, '')
   const waMessage =
     `Salut, ${data.nume}! Am primit cererea pentru ${data.firma}. ` +
     'Lucrez la mockup și ți-l trimit aici până mâine. ' +
     'Dacă ai un logo sau culori preferate, trimite-le acum.'
-  const waLink = `https://wa.me/${waDigits}?text=${encodeURIComponent(waMessage)}`
+  const waLink = waDigits ? `https://wa.me/${waDigits}?text=${encodeURIComponent(waMessage)}` : ''
+  const mailSubject = `Mockup pentru ${data.firma}`
+  const mailLink = data.email ? `mailto:${data.email}?subject=${encodeURIComponent(mailSubject)}` : ''
+  // The reply button follows the visitor's choice: they asked for it there.
+  const replyButton = byEmail
+    ? `<a href="${escapeHtml(mailLink)}" style="display:inline-block;background:#1f1b16;color:#ffffff;text-decoration:none;font-size:18px;font-weight:bold;padding:14px 28px;border-radius:10px;">Răspunde pe email</a>`
+    : `<a href="${waLink}" style="display:inline-block;background:#25d366;color:#ffffff;text-decoration:none;font-size:18px;font-weight:bold;padding:14px 28px;border-radius:10px;">Răspunde pe WhatsApp</a>`
 
   const trackingRows = [
     data.gclid ? row('gclid', data.gclid) : '',
@@ -95,14 +103,16 @@ export async function POST(request: Request) {
     .join('')
 
   const internalHtml = `<div style="font-family:Arial,sans-serif;color:#1f1b16;">
+  <p style="margin:0 0 8px;font-size:15px;">Vrea mockup-ul pe <strong>${channelLabel}</strong>.</p>
   <p style="margin:0 0 24px;">
-    <a href="${waLink}" style="display:inline-block;background:#25d366;color:#ffffff;text-decoration:none;font-size:18px;font-weight:bold;padding:14px 28px;border-radius:10px;">Răspunde pe WhatsApp</a>
+    ${replyButton}
   </p>
   <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;font-size:14px;">
     ${row('Cod cerere', id)}
     ${row('Nume', data.nume)}
     ${row('Firmă', data.firma)}
-    ${row('Telefon WhatsApp', data.telefon)}
+    ${row('Canal ales', channelLabel)}
+    ${row('Telefon', data.telefon || '—')}
     ${row('Email', data.email || '—')}
     ${row('Domeniu', data.domeniu)}
     ${row('Site actual', data.noSite ? 'Nu are site' : data.site)}
@@ -117,7 +127,8 @@ export async function POST(request: Request) {
     `Cod cerere: ${id}`,
     `Nume: ${data.nume}`,
     `Firmă: ${data.firma}`,
-    `Telefon WhatsApp: ${data.telefon}`,
+    `Canal ales: ${channelLabel}`,
+    `Telefon: ${data.telefon || '—'}`,
     `Email: ${data.email || '—'}`,
     `Domeniu: ${data.domeniu}`,
     `Site actual: ${data.noSite ? 'Nu are site' : data.site}`,
@@ -129,7 +140,7 @@ export async function POST(request: Request) {
     data.utm_campaign ? `utm_campaign: ${data.utm_campaign}` : '',
     data.utm_term ? `utm_term: ${data.utm_term}` : '',
     `Ora (Europe/Bucharest): ${bucharestNow()}`,
-    `WhatsApp: ${waLink}`,
+    waLink ? `WhatsApp: ${waLink}` : '',
   ]
     .filter(Boolean)
     .join('\n')
@@ -138,7 +149,7 @@ export async function POST(request: Request) {
     const { error: sendError } = await resend.emails.send({
       from: fromEmail(),
       to,
-      subject: `Mockup nou: ${data.firma} (${data.domeniu}, ${PROJECT_TYPE_LABELS[data.projectType]})`,
+      subject: `Mockup nou (${channelLabel}): ${data.firma} (${data.domeniu}, ${PROJECT_TYPE_LABELS[data.projectType]})`,
       html: internalHtml,
       text: internalText,
       ...(data.email ? { replyTo: data.email } : {}),
@@ -153,8 +164,16 @@ export async function POST(request: Request) {
   if (data.email) {
     const confirmationHtml = `<div style="background:#faf6ec;padding:32px;font-family:Georgia,serif;color:#1f1b16;font-size:15px;line-height:1.6;">
   <p style="margin:0 0 12px;">Salut, ${escapeHtml(data.nume)}!</p>
-  <p style="margin:0 0 12px;">Am primit datele pentru ${escapeHtml(data.firma)}. Îți trimitem mockup-ul paginii principale pe WhatsApp, la ${escapeHtml(data.telefon)}, în maximum 24 de ore lucrătoare.</p>
-  <p style="margin:0 0 12px;">Dacă vrei să-l facem cât mai fidel, trimite-ne logo-ul și câteva poze pe WhatsApp: <a href="https://wa.me/${SUPPORT_WHATSAPP_NUMBER}" style="color:#1f1b16;">https://wa.me/${SUPPORT_WHATSAPP_NUMBER}</a></p>
+  <p style="margin:0 0 12px;">Am primit datele pentru ${escapeHtml(data.firma)}. ${
+    byEmail
+      ? 'Îți trimitem mockup-ul paginii principale pe email, la această adresă, în maximum 24 de ore lucrătoare.'
+      : `Îți trimitem mockup-ul paginii principale pe WhatsApp, la ${escapeHtml(data.telefon)}, în maximum 24 de ore lucrătoare.`
+  }</p>
+  <p style="margin:0 0 12px;">${
+    byEmail
+      ? 'Dacă vrei să-l facem cât mai fidel, răspunde la acest email cu logo-ul și câteva poze.'
+      : `Dacă vrei să-l facem cât mai fidel, trimite-ne logo-ul și câteva poze pe WhatsApp: <a href="https://wa.me/${SUPPORT_WHATSAPP_NUMBER}" style="color:#1f1b16;">https://wa.me/${SUPPORT_WHATSAPP_NUMBER}</a>`
+  }</p>
   <p style="margin:0;">Echipa MAST Studio</p>
 </div>`
 
@@ -164,6 +183,8 @@ export async function POST(request: Request) {
         to: [data.email],
         subject: `Am primit cererea pentru mockup, ${data.firma}`,
         html: confirmationHtml,
+        // Replies (logo, photos) land in the team inbox, not the sender address.
+        replyTo: to[0],
       })
       if (confirmError) throw confirmError
     } catch (confirmError) {

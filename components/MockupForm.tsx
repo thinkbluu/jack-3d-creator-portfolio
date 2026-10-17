@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { readAttribution } from '@/lib/ads'
 import { DOMAINS, mockupSchema, type MockupFormInput, type MockupFormOutput } from '@/lib/mockup'
 import { useHref } from '@/lib/i18n/context'
+import ChannelSwitch, { type Channel } from './ChannelSwitch'
 import { checkboxClass, checkboxLabelClass, errorClass, inputClass, labelClass, primaryButtonClass, textLinkClass } from './form-styles'
 
 const UTM_FIELDS = ['gclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term'] as const
@@ -19,12 +20,14 @@ export default function MockupForm() {
     handleSubmit,
     watch,
     setValue,
+    clearErrors,
     formState: { errors, isSubmitting },
   } = useForm<MockupFormInput, unknown, MockupFormOutput>({
     resolver: zodResolver(mockupSchema),
     defaultValues: {
       nume: '',
       firma: '',
+      canal: 'whatsapp',
       telefon: '',
       email: '',
       domeniu: '',
@@ -44,6 +47,7 @@ export default function MockupForm() {
 
   const noSite = watch('noSite')
   const projectType = watch('projectType')
+  const canal: Channel = watch('canal') ?? 'whatsapp'
 
   // Read tracking params and the ?tip= preselect from the URL on mount, and
   // listen for PreselectLink clicks (Black Friday band → "Magazin online").
@@ -79,7 +83,10 @@ export default function MockupForm() {
         return
       }
       try {
-        sessionStorage.setItem('ms_lead', JSON.stringify({ id: body.id, phone: data.telefon, email: data.email }))
+        sessionStorage.setItem(
+          'ms_lead',
+          JSON.stringify({ id: body.id, phone: data.telefon, email: data.email, channel: data.canal }),
+        )
       } catch {
         // Private mode or storage disabled — the thank-you page just hides the id.
       }
@@ -113,6 +120,50 @@ export default function MockupForm() {
         {projectType === value ? <span aria-hidden="true" className="absolute right-2.5 top-2.5 size-[7px] rounded-full bg-[var(--brass)]" /> : null}
       </span>
     </label>
+  )
+
+  const optional = <span className="font-normal text-[var(--ink-3)]">(opțional)</span>
+
+  const phoneField = (
+    <div>
+      <label htmlFor="mockup-telefon" className={labelClass}>
+        {canal === 'whatsapp' ? 'Telefon WhatsApp' : <>Telefon {optional}</>}
+      </label>
+      <input
+        id="mockup-telefon"
+        type="tel"
+        inputMode="tel"
+        autoComplete="tel-national"
+        placeholder="07xx xxx xxx"
+        maxLength={20}
+        className={inputClass}
+        aria-invalid={Boolean(errors.telefon)}
+        aria-describedby={describedBy('telefon', 'mockup-telefon-error')}
+        disabled={isSubmitting}
+        {...register('telefon')}
+      />
+      {errorSlot('telefon', 'mockup-telefon-error')}
+    </div>
+  )
+
+  const emailField = (
+    <div>
+      <label htmlFor="mockup-email" className={labelClass}>
+        {canal === 'email' ? 'Email' : <>Email {optional}</>}
+      </label>
+      <input
+        id="mockup-email"
+        type="email"
+        autoComplete="email"
+        maxLength={254}
+        className={inputClass}
+        aria-invalid={Boolean(errors.email)}
+        aria-describedby={describedBy('email', 'mockup-email-error')}
+        disabled={isSubmitting}
+        {...register('email')}
+      />
+      {errorSlot('email', 'mockup-email-error')}
+    </div>
   )
 
   return (
@@ -153,43 +204,33 @@ export default function MockupForm() {
           </div>
         </div>
 
-        <div>
-          <label htmlFor="mockup-telefon" className={labelClass}>
-            Telefon WhatsApp
-          </label>
-          <input
-            id="mockup-telefon"
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel-national"
-            placeholder="07xx xxx xxx"
-            maxLength={20}
-            className={inputClass}
-            aria-invalid={Boolean(errors.telefon)}
-            aria-describedby={describedBy('telefon', 'mockup-telefon-error')}
-            disabled={isSubmitting}
-            {...register('telefon')}
-          />
-          {errorSlot('telefon', 'mockup-telefon-error')}
-        </div>
+        <ChannelSwitch
+          value={canal}
+          onChange={(next) => {
+            setValue('canal', next)
+            clearErrors(['telefon', 'email'])
+          }}
+          legend="Unde vrei să primești mockup-ul?"
+          labels={{ whatsapp: 'WhatsApp', email: 'Email' }}
+          hint={
+            canal === 'whatsapp'
+              ? 'Îți trimitem mockup-ul pe WhatsApp, la numărul de mai jos.'
+              : 'Îți trimitem mockup-ul pe email, la adresa de mai jos.'
+          }
+          disabled={isSubmitting}
+        />
 
-        <div>
-          <label htmlFor="mockup-email" className={labelClass}>
-            Email <span className="font-normal text-[var(--ink-3)]">(opțional)</span>
-          </label>
-          <input
-            id="mockup-email"
-            type="email"
-            autoComplete="email"
-            maxLength={254}
-            className={inputClass}
-            aria-invalid={Boolean(errors.email)}
-            aria-describedby={describedBy('email', 'mockup-email-error')}
-            disabled={isSubmitting}
-            {...register('email')}
-          />
-          {errorSlot('email', 'mockup-email-error')}
-        </div>
+        {canal === 'whatsapp' ? (
+          <>
+            {phoneField}
+            {emailField}
+          </>
+        ) : (
+          <>
+            {emailField}
+            {phoneField}
+          </>
+        )}
 
         <div>
           <label htmlFor="mockup-domeniu" className={labelClass}>
@@ -280,7 +321,7 @@ export default function MockupForm() {
             />
             <span>
               Sunt de acord ca MAST Consult S.R.L. să folosească aceste date pentru a-mi trimite mockup-ul și a mă
-              contacta pe WhatsApp.{' '}
+              contacta pe canalul ales.{' '}
               <Link href={href('/confidentialitate')} className={textLinkClass}>
                 Politica de confidențialitate
               </Link>
@@ -298,6 +339,7 @@ export default function MockupForm() {
         {UTM_FIELDS.map((field) => (
           <input key={field} type="hidden" {...register(field)} />
         ))}
+        <input type="hidden" {...register('canal')} />
 
         {process.env.NEXT_PUBLIC_MOCKUP_FULL === 'true' ? (
           <p className="rounded-[var(--radius-card)] border border-[var(--hairline)] bg-[var(--shell-warm)] px-4 py-3 font-sans text-sm font-semibold text-[var(--ink)]">
@@ -327,7 +369,9 @@ export default function MockupForm() {
             {isSubmitting ? 'Se trimite…' : 'Vreau mockup-ul gratuit'}
           </button>
           <p className="font-sans text-sm text-[var(--ink-2)]">
-            Îți răspundem pe WhatsApp în maximum 24 de ore lucrătoare.
+            {canal === 'whatsapp'
+              ? 'Îți răspundem pe WhatsApp în maximum 24 de ore lucrătoare.'
+              : 'Îți răspundem pe email în maximum 24 de ore lucrătoare.'}
           </p>
         </div>
       </div>

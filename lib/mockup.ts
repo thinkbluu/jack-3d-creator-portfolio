@@ -14,6 +14,7 @@ export const DOMAINS = [
 
 /** Accepts 07XXXXXXXX, +407XXXXXXXX or 00407XXXXXXXX, ignoring spaces. */
 const RO_MOBILE = /^(?:(?:\+40|0040)7|07)\d{8}$/
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
 /**
  * Shared by the client form and the /api/mockup route, so the server
@@ -23,15 +24,18 @@ export const mockupSchema = z
   .object({
     nume: z.string().trim().min(2, 'Scrie numele tău.'),
     firma: z.string().trim().min(2, 'Scrie numele firmei.'),
+    // Where the visitor wants the mockup. It decides which of telefon/email is
+    // required; the other stays optional but is still checked when filled.
+    canal: z.enum(['whatsapp', 'email']).default('whatsapp'),
     telefon: z
       .string()
       .transform((v) => v.replace(/[\s.\-()]/g, ''))
-      .refine((v) => RO_MOBILE.test(v), { message: 'Introdu un număr de mobil valid.' })
-      .transform((v) => `+40${v.replace(/^(?:\+40|0040|0)/, '')}`),
+      .refine((v) => v === '' || RO_MOBILE.test(v), { message: 'Introdu un număr de mobil valid.' })
+      .transform((v) => (v === '' ? '' : `+40${v.replace(/^(?:\+40|0040|0)/, '')}`)),
     email: z
       .string()
       .trim()
-      .refine((v) => v === '' || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v), { message: 'Introdu o adresă de e-mail validă.' }),
+      .refine((v) => v === '' || EMAIL.test(v), { message: 'Introdu o adresă de e-mail validă.' }),
     domeniu: z
       .string()
       .refine((v) => (DOMAINS as readonly string[]).includes(v), { message: 'Alege domeniul de activitate.' }),
@@ -53,6 +57,12 @@ export const mockupSchema = z
     utm_term: z.string().default(''),
   })
   .superRefine((data, ctx) => {
+    if (data.canal === 'whatsapp' && !data.telefon) {
+      ctx.addIssue({ code: 'custom', path: ['telefon'], message: 'Scrie numărul de mobil pe care folosești WhatsApp.' })
+    }
+    if (data.canal === 'email' && !data.email) {
+      ctx.addIssue({ code: 'custom', path: ['email'], message: 'Scrie adresa de e-mail la care vrei mockup-ul.' })
+    }
     if (data.noSite) return
     if (!data.site) {
       ctx.addIssue({ code: 'custom', path: ['site'], message: 'Scrie adresa site-ului actual sau bifează „Nu am site”.' })
