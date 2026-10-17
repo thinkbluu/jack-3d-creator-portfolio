@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto'
-import { escapeHtml, fromAddress, resendClient } from '@/lib/email'
+import { escapeHtml, fromAddress, isValidEmail, resendClient } from '@/lib/email'
 import type { Locale } from '@/lib/i18n/locale'
 import { clientIp, isRateLimited } from '@/lib/request'
 import { EMAIL } from '@/lib/site'
@@ -15,13 +15,38 @@ type ProjectTypeId = keyof typeof projectTypeLabels
 
 const legacyLabels = new Set<string>(Object.values(projectTypeLabels))
 
+const englishTypes: Record<string, string> = {
+  'Site de prezentare': 'a presentation website',
+  'Magazin online': 'an online store',
+  'Aplicație sau platformă': 'an app or platform',
+  'Nu știu încă': 'a project you are still defining',
+}
+
 type LeadPayload = {
   projectType?: unknown
   currentSite?: unknown
+  /** Legacy single field: phone or email. */
   contact?: unknown
+  name?: unknown
+  email?: unknown
+  phone?: unknown
+  channel?: unknown
   website?: unknown
   locale?: unknown
 }
+
+const confirmation = {
+  ro: {
+    subject: 'Am primit cererea de ofertă · MAST Studio',
+    body: (name: string, type: string) =>
+      `Bună, ${name},\n\nMulțumim! Am primit cererea ta de ofertă pentru: ${type}.\nRevenim cu oferta pe email în aceeași zi lucrătoare.\n\nDacă vrei să grăbim lucrurile, ne găsești și pe WhatsApp la +40 746 382 204.\n\nO zi bună,\nMAST Studio`,
+  },
+  en: {
+    subject: 'We got your quote request · MAST Studio',
+    body: (name: string, type: string) =>
+      `Hi ${name},\n\nThank you! We got your quote request for: ${type}.\nWe'll send the quote by email the same working day.\n\nIf you'd like to move faster, you can also reach us on WhatsApp at +40 746 382 204.\n\nBest,\nMAST Studio`,
+  },
+} as const
 
 const RATE_LIMIT_WINDOW_MS = 60_000
 const RATE_LIMIT_MAX = 5
@@ -41,8 +66,10 @@ function errors(locale: Locale) {
       rate: 'Too many requests. Try again in a minute.',
       type: 'The project type isn’t valid.',
       contact: 'The phone number or email address isn’t valid.',
+      name: 'Tell us your name.',
+      email: 'That email address doesn’t look right.',
       site: 'The website address isn’t valid.',
-      send: 'The lead couldn’t be sent.',
+      send: 'The request couldn’t be sent.',
     }
   }
   return {
@@ -50,8 +77,10 @@ function errors(locale: Locale) {
     rate: 'Prea multe cereri. Încearcă din nou peste un minut.',
     type: 'Tipul proiectului nu este valid.',
     contact: 'Telefonul sau adresa de email nu este validă.',
+    name: 'Spune-ne cum te numești.',
+    email: 'Adresa de email nu pare corectă.',
     site: 'Adresa site-ului nu este validă.',
-    send: 'Lead-ul nu a putut fi trimis.',
+    send: 'Cererea nu a putut fi trimisă.',
   }
 }
 
@@ -117,11 +146,26 @@ export async function POST(request: Request) {
     return json({ ok: false, error: error.type }, 400)
   }
 
-  const contact = typeof payload.contact === 'string' ? payload.contact.trim() : ''
+  const str = (value: unknown, max: number) => (typeof value === 'string' ? value.trim().slice(0, max) : '')
+  const name = str(payload.name, 120)
+  const email = str(payload.email, 254).toLowerCase()
+  const phone = str(payload.phone, 30)
+  const channel = payload.channel === 'email' ? 'email' : 'whatsapp'
   const currentSite = typeof payload.currentSite === 'string' ? payload.currentSite.trim() : ''
 
-  if (!isValidContact(contact) || contact.length > 320) {
-    return json({ ok: false, error: error.contact }, 400)
+  // The email channel sends name + email (+ optional phone); older clients
+  // send a single "contact" field with a phone number or an email address.
+  let contact: string
+  if (email || name) {
+    if (name.length < 2) return json({ ok: false, error: error.name }, 400)
+    if (!isValidEmail(email)) return json({ ok: false, error: error.email }, 400)
+    if (phone && phone.replace(/\D/g, '').length < 9) return json({ ok: false, error: error.contact }, 400)
+    contact = [email, phone].filter(Boolean).join(' · ')
+  } else {
+    contact = typeof payload.contact === 'string' ? payload.contact.trim() : ''
+    if (!isValidContact(contact) || contact.length > 320) {
+      return json({ ok: false, error: error.contact }, 400)
+    }
   }
 
   if (currentSite.length > 2048 || !isValidSite(currentSite)) {
@@ -135,7 +179,9 @@ export async function POST(request: Request) {
     projectType,
     locale,
     currentSite: currentSite || 'Nu a fost furnizat',
+    name: name || undefined,
     contact,
+    channel,
     timestamp,
     ip,
     utm: Object.fromEntries(utmParameters),
@@ -143,8 +189,10 @@ export async function POST(request: Request) {
 
   const resend = resendClient()
   if (!resend) {
-    console.info('[lead] RESEND_API_KEY lipsește; lead primit:', lead)
-    return json({ ok: true })
+    // Without email delivery the request would be lost: say so, and the form
+    // offers WhatsApp instead.
+    console.error('[lead] RESEND_API_KEY lipsește; lead nelivrat:', lead)
+    return json({ ok: false, error: error.send }, 503)
   }
 
   const utmText = utmParameters.length
@@ -164,12 +212,15 @@ export async function POST(request: Request) {
       {
         from: fromAddress('lead'),
         to: [EMAIL],
-        subject: `Lead nou: ${projectType}`,
+        ...(email ? { replyTo: email } : {}),
+        subject: `Lead nou: ${projectType}${name ? `, ${name}` : ''}`,
         text: [
           ...(languageLine ? [languageLine, ''] : []),
           `Tip proiect: ${projectType}`,
           `Site actual: ${currentSite || 'Nu a fost furnizat'}`,
+          ...(name ? [`Nume: ${name}`] : []),
           `Contact: ${contact}`,
+          `Răspuns preferat: ${channel === 'email' ? 'email' : 'WhatsApp'}`,
           `Timestamp: ${timestamp}`,
           '',
           'Parametri UTM:',
@@ -180,7 +231,9 @@ export async function POST(request: Request) {
           <h1>Lead nou: ${escapeHtml(projectType)}</h1>
           <p><strong>Tip proiect:</strong> ${escapeHtml(projectType)}</p>
           <p><strong>Site actual:</strong> ${escapeHtml(currentSite || 'Nu a fost furnizat')}</p>
+          ${name ? `<p><strong>Nume:</strong> ${escapeHtml(name)}</p>` : ''}
           <p><strong>Contact:</strong> ${escapeHtml(contact)}</p>
+          <p><strong>Răspuns preferat:</strong> ${channel === 'email' ? 'email' : 'WhatsApp'}</p>
           <p><strong>Timestamp:</strong> ${escapeHtml(timestamp)}</p>
           <h2>Parametri UTM</h2>
           ${utmHtml}
@@ -192,6 +245,23 @@ export async function POST(request: Request) {
     if (sendError) {
       console.error('[lead] Resend nu a putut trimite emailul:', sendError.message)
       return json({ ok: false, error: error.send }, 502)
+    }
+
+    // Confirmation to the visitor is best-effort; the lead itself is already in.
+    if (email) {
+      const reply = confirmation[locale]
+      const typeForVisitor = locale === 'en' ? englishTypes[projectType] ?? projectType : projectType.toLowerCase()
+      const { error: replyError } = await resend.emails.send(
+        {
+          from: fromAddress('lead'),
+          to: [email],
+          replyTo: EMAIL,
+          subject: reply.subject,
+          text: reply.body(name.split(' ')[0] || name, typeForVisitor),
+        },
+        { idempotencyKey: `lead-reply/${idempotencyHash}` },
+      )
+      if (replyError) console.error('[lead] Confirmarea nu a plecat:', replyError.message)
     }
 
     return json({ ok: true })

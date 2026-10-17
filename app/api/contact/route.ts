@@ -93,8 +93,10 @@ export async function POST(request: Request) {
 
   const resend = resendClient()
   if (!resend) {
-    console.info('[contact] RESEND_API_KEY lipsește; mesaj primit:', { name, email, company, topic, locale })
-    return json({ ok: true })
+    // Without email delivery the message would be lost: report it so the form
+    // can point the visitor to WhatsApp.
+    console.error('[contact] RESEND_API_KEY lipsește; mesaj nelivrat:', { name, email, company, topic, locale })
+    return json({ ok: false, error: error.send }, 503)
   }
 
   const minute = Math.floor(Date.now() / 60_000)

@@ -53,7 +53,7 @@ const STEPS = [
   },
   {
     title: 'Primești mockup-ul',
-    body: 'În 24 de ore lucrătoare, pe WhatsApp, pe desktop și mobil, cu un mesaj vocal scurt.',
+    body: 'În 24 de ore lucrătoare, pe WhatsApp sau pe email, cum alegi tu. Pe desktop și pe mobil.',
   },
   {
     title: 'Decizi tu',
@@ -69,7 +69,7 @@ const FAQS = [
   {
     question: 'Ce primesc exact?',
     answer:
-      'Designul paginii principale, pe desktop și pe mobil, cu numele, culorile și serviciile firmei tale. Îl primești ca imagini pe WhatsApp, cu un mesaj vocal scurt în care îți explicăm alegerile.',
+      'Designul paginii principale, pe desktop și pe mobil, cu numele, culorile și serviciile firmei tale. Îl primești ca imagini pe WhatsApp, cu un mesaj vocal scurt în care îți explicăm alegerile, sau pe email, cu explicațiile în scris.',
   },
   {
     question: 'Ce se întâmplă după mockup?',
@@ -124,7 +124,7 @@ export default function MockupPage() {
                 Vezi site-ul firmei tale înainte să plătești ceva.
               </h1>
               <p className="mt-4 max-w-xl font-sans text-[15px] leading-relaxed text-[var(--ink-2)] sm:text-base">
-                Trimite 4 informații. În 24 de ore lucrătoare primești pe WhatsApp mockup-ul paginii principale, pe
+                Trimite 4 informații. În 24 de ore lucrătoare primești pe WhatsApp sau pe email mockup-ul paginii principale, pe
                 desktop și mobil. Gratuit, până pe 31 octombrie.
               </p>
               <ul className="mt-5 flex flex-col gap-2.5">
@@ -139,9 +139,9 @@ export default function MockupPage() {
             <div id="form" className="scroll-mt-6">
               <MockupForm />
               <p className="mt-4 text-center font-sans text-sm text-[var(--ink-2)]">
-                Preferi WhatsApp?{' '}
+                Ai o întrebare înainte?{' '}
                 <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className={textLinkClass}>
-                  Scrie-ne direct
+                  Scrie-ne pe WhatsApp
                 </a>
               </p>
             </div>
