@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react'
 import { trackConversion } from '@/lib/analytics'
 import { CONTACT_TOPICS, type ContactTopic } from '@/lib/contact'
+import { redirectToThankYou } from '@/lib/leads'
 import type { Locale } from '@/lib/i18n/locale'
 import { whatsappUrl } from '@/lib/site'
 import ChannelSwitch, { type Channel } from './ChannelSwitch'
@@ -29,13 +30,11 @@ export type ContactFormCopy = {
   messageError: string
   /** Shown after a failed email send: switches the form to WhatsApp, message kept. */
   errorSwitch: string
-  doneTitle: string
-  doneText: string
   error: string
   privacy: string
 }
 
-type State = 'idle' | 'sending' | 'done' | 'error'
+type State = 'idle' | 'sending' | 'error'
 
 /**
  * Contact form with a WhatsApp/Email switch. WhatsApp opens a chat with the
@@ -65,7 +64,11 @@ export default function ContactForm({ copy, locale }: { copy: ContactFormCopy; l
       trackConversion('contact_form_submit', { topic, locale, channel })
       trackConversion('whatsapp_click', { placement: 'contact_form' })
       const intro = copy.waIntro.replace('{topic}', copy.topics[topic])
+      // window.open with noopener returns null, so the redirect is not
+      // gated on its result: WhatsApp keeps the conversation, the tab
+      // behind it counts the lead.
       window.open(whatsappUrl(`${intro}\n${message}`), '_blank', 'noopener,noreferrer')
+      redirectToThankYou(locale, 'contact', String(data.get('name') ?? ''))
       return
     }
 
@@ -88,20 +91,11 @@ export default function ContactForm({ copy, locale }: { copy: ContactFormCopy; l
       const result = (await response.json().catch(() => null)) as { ok: boolean; error?: string } | null
       if (!response.ok || !result?.ok) throw new Error(result?.error || copy.error)
       trackConversion('contact_form_submit', { topic, locale, channel })
-      setState('done')
+      redirectToThankYou(locale, 'contact', String(data.get('name') ?? ''))
     } catch (failure) {
       setError(failure instanceof Error ? failure.message : copy.error)
       setState('error')
     }
-  }
-
-  if (state === 'done') {
-    return (
-      <div role="status" className="contact-done">
-        <p className="display-xl text-[clamp(2.4rem,4.6vw,4.4rem)] leading-[0.95]">{copy.doneTitle}</p>
-        <p className="mt-5 max-w-md text-lg leading-relaxed text-[var(--ink-2)]">{copy.doneText}</p>
-      </div>
-    )
   }
 
   return (

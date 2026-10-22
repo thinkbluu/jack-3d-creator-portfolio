@@ -23,7 +23,7 @@ const ro = {
     'Google Tag (Google Analytics 4) măsoară vizitele și conversiile, precum trimiterea unui formular, deschiderea WhatsApp sau un apel. Îl încărcăm doar după ce accepți banner-ul de consimțământ și nu îl încărcăm deloc pe paginile personale ale concursului, deschise din linkurile primite pe e-mail. Configurația noastră nu transmite către aceste servicii numele, adresa de e-mail, conținutul mesajelor WhatsApp sau alte date introduse de tine.',
   storageTitle: '3. Stocare tehnică',
   storageBody:
-    'Site-ul folosește doar stocare tehnică în browser. În localStorage reținem alegerea ta din banner-ul de consimțământ (cheia „mast-consent”), ca să nu te întrebăm la fiecare vizită. În sessionStorage, doar pe durata sesiunii, reținem tipul de afacere ales pe pagina principală și dacă ai sărit peste animația de început. Nu folosim aceste date pentru a construi profiluri.',
+    'Site-ul folosește doar stocare tehnică în browser. În localStorage reținem alegerea ta din banner-ul de consimțământ (cheia „mast-consent”), ca să nu te întrebăm la fiecare vizită. În sessionStorage, doar pe durata sesiunii, reținem tipul de afacere ales pe pagina principală, dacă ai sărit peste animația de început și, după trimiterea unui formular, faptul trimiterii, sursa și prenumele tău, ca pagina de mulțumire să numere conversia o singură dată. Nu folosim aceste date pentru a construi profiluri.',
   externalTitle: '4. Site-uri externe',
   externalBody:
     'Accesarea WhatsApp, Facebook, Instagram, ANPC sau a altor servicii externe te mută în mediul acelui furnizor, unde se aplică propria politică de cookie-uri și confidențialitate. MAST Studio nu controlează cookie-urile setate după ce părăsești domeniul nostru.',
@@ -51,7 +51,7 @@ const en: typeof ro = {
     'Google Tag (Google Analytics 4) measures visits and conversions, such as submitting a form, opening WhatsApp or a call. We load it only after you accept the consent banner, and we do not load it at all on the personal contest pages opened from links received by email. Our configuration does not send these services your name, email address, the content of WhatsApp messages or other data you enter.',
   storageTitle: '3. Technical storage',
   storageBody:
-    'The website uses only technical storage in the browser. In localStorage we keep your choice from the consent banner (the key “mast-consent”), so that we do not ask you on every visit. In sessionStorage, only for the length of the session, we keep the type of business chosen on the home page and whether you skipped the opening animation. We do not use this data to build profiles.',
+    'The website uses only technical storage in the browser. In localStorage we keep your choice from the consent banner (the key “mast-consent”), so that we do not ask you on every visit. In sessionStorage, only for the length of the session, we keep the type of business chosen on the home page, whether you skipped the opening animation and, after you submit a form, the fact of the submission, its source and your first name, so the thank-you page counts the conversion once. We do not use this data to build profiles.',
   externalTitle: '4. External websites',
   externalBody:
     'Opening WhatsApp, Facebook, Instagram, ANPC or other external services takes you into that provider’s environment, where its own cookie and privacy policy applies. MAST Studio does not control cookies set after you leave our domain.',

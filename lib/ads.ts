@@ -7,9 +7,9 @@
  * missing — gtag calls then queue into a dataLayer nobody ever reads.
  */
 
-export const ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? ''
-export const ADS_LEAD_SEND_TO = process.env.NEXT_PUBLIC_ADS_LEAD_LABEL ?? ''
-export const ADS_WHATSAPP_SEND_TO = process.env.NEXT_PUBLIC_ADS_WHATSAPP_LABEL ?? ''
+export const ADS_ID = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID ?? process.env.NEXT_PUBLIC_GADS_CONVERSION_ID ?? ''
+export const ADS_LEAD_SEND_TO = process.env.NEXT_PUBLIC_ADS_LEAD_LABEL ?? process.env.NEXT_PUBLIC_GADS_LEAD_LABEL ?? ''
+export const ADS_WHATSAPP_SEND_TO = process.env.NEXT_PUBLIC_ADS_WHATSAPP_LABEL ?? process.env.NEXT_PUBLIC_GADS_WHATSAPP_LABEL ?? ''
 
 // GA4 keeps the site's existing property as fallback so current reporting
 // continues even before NEXT_PUBLIC_GA4_ID is set.
@@ -73,8 +73,10 @@ export function readAttribution(): Attribution {
 /** Sends a Google Ads conversion. Safe no-op outside production or without a label. */
 export function fireAdsConversion(sendTo: string, params?: Record<string, unknown>) {
   if (!TRACKING_ACTIVE || !sendTo) return
+  // `send_to` is "ID/LABEL": compose it when only the label is configured.
+  const target = sendTo.includes('/') || !ADS_ID ? sendTo : `${ADS_ID}/${sendTo}`
   try {
-    window.gtag?.('event', 'conversion', { send_to: sendTo, ...params })
+    window.gtag?.('event', 'conversion', { send_to: target, ...params })
   } catch {
     // gtag blocked or unavailable — tracking must never break the action it measures.
   }

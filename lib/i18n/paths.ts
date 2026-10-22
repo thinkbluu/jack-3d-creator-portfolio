@@ -15,6 +15,7 @@ const TOP: Pair[] = [
   { ro: 'cariere', en: 'careers' },
   { ro: 'confidentialitate', en: 'privacy' },
   { ro: 'termeni', en: 'terms' },
+  { ro: 'multumim', en: 'thank-you' },
   { ro: 'contact', en: 'contact' },
   { ro: 'cookies', en: 'cookies' },
   { ro: 'blog', en: 'blog' },
