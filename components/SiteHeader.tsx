@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
 import MenuOverlay, { type MenuItem } from '@/components/MenuOverlay'
@@ -30,6 +31,10 @@ export default function SiteHeader({
 }) {
   const href = useHref()
   const { nav } = useUi()
+  const pathname = usePathname()
+  // The thank-you pages hide the quote call to action: the visitor just sent
+  // one, a second button would only invite duplicate submissions.
+  const onThankYou = pathname === '/multumim' || pathname === '/en/thank-you'
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [surfaceTone, setSurfaceTone] = useState(tone)
@@ -46,7 +51,7 @@ export default function SiteHeader({
     { id: 'cariere', href: href('/cariere'), label: nav.careers },
     { id: 'contact', href: href('/contact'), label: nav.contact },
   ]
-  const quote: MenuItem = { id: 'cerere-oferta', href: href('/cerere-oferta'), label: nav.quote }
+  const quote: MenuItem | null = onThankYou ? null : { id: 'cerere-oferta', href: href('/cerere-oferta'), label: nav.quote }
   const inline = navItems.filter((item) => ['portofoliu', 'servicii', 'despre', 'blog', 'contact'].includes(item.id))
 
   useEffect(() => {
@@ -143,17 +148,19 @@ export default function SiteHeader({
 
           <div className="flex items-center gap-3">
             <LanguageSwitcher className="hidden md:block" />
-            <Link
-              href={quote.href}
-              data-magnetic
-              className={`mono-label hidden whitespace-nowrap rounded-[var(--radius-pill)] px-5 transition-colors sm:inline-flex ${
-                dark
-                  ? 'bg-[var(--brass-lite)] text-[var(--night)] hover:bg-[var(--on-dark)]'
-                  : 'bg-[var(--ink)] text-[var(--shell)] hover:bg-[var(--navy-2)]'
-              }`}
-            >
-              {quote.label}
-            </Link>
+            {quote ? (
+              <Link
+                href={quote.href}
+                data-magnetic
+                className={`mono-label hidden whitespace-nowrap rounded-[var(--radius-pill)] px-5 transition-colors sm:inline-flex ${
+                  dark
+                    ? 'bg-[var(--brass-lite)] text-[var(--night)] hover:bg-[var(--on-dark)]'
+                    : 'bg-[var(--ink)] text-[var(--shell)] hover:bg-[var(--navy-2)]'
+                }`}
+              >
+                {quote.label}
+              </Link>
+            ) : null}
             <button
               ref={menuButtonRef}
               type="button"
@@ -175,7 +182,7 @@ export default function SiteHeader({
           </div>
         </nav>
       </header>
-      <MenuOverlay open={open} onClose={close} items={navItems} current={current} quote={quote} />
+      <MenuOverlay open={open} onClose={close} items={navItems} current={current} quote={quote ?? undefined} />
     </>
   )
 }

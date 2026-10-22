@@ -44,8 +44,7 @@ const formCopy: Record<Locale, ContactFormCopy> = {
     waIntro: 'Salut! {topic}:',
     messageError: 'Scrie-ne măcar o frază (minimum 10 caractere).',
     errorSwitch: 'Trimite-l pe WhatsApp',
-    doneTitle: 'Mulțumim. Am primit.',
-    doneText: 'Îți răspundem pe e-mail în cel mult o zi lucrătoare, de obicei chiar azi. Ți-am trimis și o confirmare.',
+
     error: 'Mesajul nu a plecat. Scrie-ne direct la contact@maststudio.ro.',
     privacy: 'Folosim datele doar ca să-ți răspundem. Detalii în politica de confidențialitate.',
   },
@@ -69,8 +68,7 @@ const formCopy: Record<Locale, ContactFormCopy> = {
     waIntro: 'Hi! {topic}:',
     messageError: 'Write at least a sentence (10 characters or more).',
     errorSwitch: 'Send it on WhatsApp',
-    doneTitle: 'Thank you. It’s here.',
-    doneText: 'We reply by email within one working day, usually today. We’ve sent you a confirmation too.',
+
     error: 'The message didn’t go through. Write to us at contact@maststudio.ro.',
     privacy: 'We use your details only to reply. More in the privacy policy.',
   },

@@ -3,6 +3,7 @@
 import { FormEvent, useState } from 'react'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { trackConversion } from '@/lib/analytics'
+import { redirectToThankYou } from '@/lib/leads'
 import { useLocale, useUi } from '@/lib/i18n/context'
 import { canonicalServiceSlug } from '@/lib/i18n/paths'
 import ChannelSwitch, { type Channel } from './ChannelSwitch'
@@ -79,7 +80,6 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
   const [website, setWebsite] = useState('')
   const [errors, setErrors] = useState<FormErrors>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccessful, setIsSuccessful] = useState(false)
   const [submitError, setSubmitError] = useState('')
 
   const typeLabel = lead.types.find((option) => option.id === projectType)?.label ?? ''
@@ -124,11 +124,19 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
       channel,
     })
 
+    // Quote forms report `cerere-oferta`; a form embedded on a service page
+    // reports the service slug.
+    const source = serviceSlug ? (canonicalServiceSlug(serviceSlug) ?? serviceSlug) : 'cerere-oferta'
+
     if (channel === 'whatsapp') {
       trackConversion('whatsapp_click', {
         placement: variant === 'page' ? 'lead_form_page' : 'lead_form_inline',
       })
+      // window.open with noopener returns null, so the redirect is not
+      // gated on its result: WhatsApp keeps the conversation, the tab
+      // behind it counts the lead.
       window.open(whatsAppUrl, '_blank', 'noopener,noreferrer')
+      redirectToThankYou(locale, source, name)
       return
     }
 
@@ -153,22 +161,12 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
         setSubmitError(message)
         return
       }
-      setIsSuccessful(true)
+      redirectToThankYou(locale, source, name)
     } catch {
       setSubmitError(lead.error)
     } finally {
       setIsSubmitting(false)
     }
-  }
-
-  if (isSuccessful) {
-    const [successTitle, ...successRest] = lead.success.split(/(?<=\.)\s+/)
-    return (
-      <div className={variant === 'page' ? 'porthole border-[var(--glass-edge)] p-7 md:p-9' : ''} role="status">
-        <p className="type-h3 text-balance">{successTitle}</p>
-        {successRest.length > 0 ? <p className="type-body mt-3">{successRest.join(' ')}</p> : null}
-      </div>
-    )
   }
 
   const inputClass =

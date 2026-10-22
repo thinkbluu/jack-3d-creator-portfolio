@@ -18,6 +18,16 @@ function configure() {
 
 const WHATSAPP_HREF = /^https?:\/\/(wa\.me|api\.whatsapp\.com)(\/|$)/i
 
+/** Coarse placement of a WhatsApp link, for the `link_location` event param. */
+function whatsappLocation(anchor: Element) {
+  if (anchor.closest('footer')) return 'footer'
+  const path = window.location.pathname
+  if (path === '/multumim' || path.startsWith('/en/thank-you')) return 'thank-you'
+  if (path.startsWith('/servicii') || path.startsWith('/en/services')) return 'service-page'
+  if (path === '/') return 'hero'
+  return 'site'
+}
+
 /**
  * Sitewide Google Ads tracking: loads gtag.js once (production only, Consent
  * Mode v2 defaults are already denied from the layout head), captures click
@@ -46,7 +56,8 @@ export default function AdsTracking() {
       const alreadyTracked = Boolean(anchor.closest('[data-tracked-link]'))
       if (WHATSAPP_HREF.test(href)) {
         fireAdsConversion(ADS_WHATSAPP_SEND_TO)
-        if (!alreadyTracked) trackConversion('whatsapp_click', { page_path: window.location.pathname })
+        if (!alreadyTracked)
+          trackConversion('whatsapp_click', { link_location: whatsappLocation(anchor), page_path: window.location.pathname })
       } else if (href.startsWith('tel:')) {
         if (!alreadyTracked) trackConversion('phone_click', { page_path: window.location.pathname })
       }

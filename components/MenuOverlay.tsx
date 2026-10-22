@@ -33,7 +33,7 @@ export default function MenuOverlay({
   onClose: () => void
   items: MenuItem[]
   current?: string
-  quote: MenuItem
+  quote?: MenuItem
 }) {
   const locale = useLocale()
   const href = useHref()
@@ -102,7 +102,7 @@ export default function MenuOverlay({
         <div className="mt-8 grid flex-1 gap-14 lg:mt-14 lg:grid-cols-[1.25fr_1fr]">
           <nav aria-label={redesign.menu.label}>
             <ul className="flex flex-col">
-              {[...items, quote].map((item, index) => (
+              {[...items, ...(quote ? [quote] : [])].map((item, index) => (
                 <li
                   key={item.id}
                   className="border-b border-[var(--hairline-dark)]"
@@ -121,7 +121,7 @@ export default function MenuOverlay({
                     <span className="mono-label w-8 shrink-0 text-[var(--on-dark-3)]">{String(index + 1).padStart(2, '0')}</span>
                     <span
                       className={`display-xl text-[clamp(2.4rem,6vw,5.25rem)] transition-[color,transform] duration-500 group-hover:translate-x-3 group-hover:text-[var(--brass-lite)] ${
-                        item.id === quote.id ? 'display-italic text-[var(--brass-lite)]' : ''
+                        item.id === quote?.id ? 'display-italic text-[var(--brass-lite)]' : ''
                       } ${current === item.id ? 'text-[var(--brass-lite)]' : ''}`}
                     >
                       {item.label}
