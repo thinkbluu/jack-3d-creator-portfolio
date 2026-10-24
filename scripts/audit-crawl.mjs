@@ -6,12 +6,12 @@ const roPaths = [
   '/portofoliu', '/portofoliu/veterinaria-timisoara', '/despre', '/contact', '/cere-oferta',
   '/cerere-oferta', '/comparatie', '/glosar', '/blog', '/blog/cat-costa-un-site-in-romania',
   '/blog/wordpress-vs-personalizat', '/cariere', '/confidentialitate', '/cookies', '/termeni',
-  '/site-gratuit', '/site-gratuit/regulament', '/site-gratuit/castig', '/nonexistent-page-404-check',
+  '/nonexistent-page-404-check',
 ]
 const enPaths = [
   '/en', '/en/services', '/en/work', '/en/about', '/en/contact', '/en/get-a-quote',
   '/en/request-a-quote', '/en/compare', '/en/glossary', '/en/blog', '/en/careers',
-  '/en/privacy', '/en/cookies', '/en/terms', '/en/free-website', '/en/nonexistent-page-404-check',
+  '/en/privacy', '/en/cookies', '/en/terms', '/en/nonexistent-page-404-check',
 ]
 
 function getMeta(html) {

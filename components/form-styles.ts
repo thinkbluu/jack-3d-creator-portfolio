@@ -1,4 +1,4 @@
-// Shared field and button styles for the careers and contest forms.
+// Shared field and button styles for the careers and quote forms.
 
 export const inputClass =
   'mt-3 min-h-11 w-full rounded-[var(--radius-card)] border-[1.5px] border-[var(--hairline)] bg-[rgba(255,255,255,0.5)] px-4 py-3.5 font-sans text-base text-[var(--ink)] outline-none transition-colors placeholder:text-[var(--ink-3)] focus:border-[var(--brass)] focus-visible:ring-2 focus-visible:ring-[var(--brass)] focus-visible:ring-offset-2'

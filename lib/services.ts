@@ -25,6 +25,8 @@ export type ServicePage = {
   notIncluded: string[]
   process: { step: string; description: string }[]
   forWho: string[]
+  /** Optional comparative package table, shown on the service page when present. */
+  packages?: { name: string; price: string; time: string; forWho: string }[]
   faq: { question: string; answer: string }[]
   relatedSlugs: string[]
   /** Blog posts that support this service, by slug. */
@@ -360,6 +362,93 @@ export const servicePages: ServicePage[] = [
     waMessage: 'Salut! Vreau să construim o platformă personalizată. Putem discuta?',
     serviceType: 'Dezvoltare platforme SaaS',
     updatedAt: '2026-10-02',
+  },
+  {
+    slug: 'design-ux-ui',
+    name: 'Design UX/UI',
+    shortName: 'Design UX/UI',
+    h1: 'Design UX/UI pentru aplicații și platforme',
+    seoTitle: 'Design UX/UI pentru aplicații, de la 250 EUR',
+    metaDescription:
+      'Design UX/UI pentru aplicații, platforme și SaaS. Audit de la 250 EUR, design de produs de la 1.200 EUR, prototip interactiv în Figma și predare către programator.',
+    answerCapsule:
+      'La MAST Studio, designul UX/UI pornește de la 250 EUR pentru auditul unui site sau al unei aplicații existente și de la 1.200 EUR pentru designul unui MVP (până la 12 ecrane cheie) în aproximativ 2 săptămâni. Primești fluxuri de utilizare, wireframe-uri, UI high-fidelity pentru desktop și mobil, prototip interactiv în Figma, un mini design system și predarea către programator.',
+    priceFrom: 250,
+    priceLabel: 'de la 250 EUR',
+    deliveryLabel: 'Termen de livrare',
+    deliveryTime: '3 zile (audit) · ~2 săptămâni (sprint)',
+    intro:
+      'Designul UX/UI e pentru aplicații, platforme și SaaS, pentru redesign-uri și pentru echipe care au deja programator și le lipsește designul. Pentru un site de prezentare simplu, designul e deja inclus în serviciul „Site de prezentare”. Aici lucrăm pe produs: fluxuri, ecrane, prototip și un design system pe care programatorul îl poate urma fără interpretări.',
+    includes: [
+      'apel de descoperire și brief',
+      'fluxuri de utilizare',
+      'wireframe-uri',
+      'UI high-fidelity pentru desktop și mobil',
+      'prototip interactiv în Figma',
+      'mini design system: culori, tipografie, componente cu stări',
+      'verificare de accesibilitate (WCAG AA)',
+      'predare către programator: Figma Dev Mode, asset-uri exportate, specificație',
+      '2 runde de modificări',
+      '30 de zile de suport pentru programator',
+    ],
+    notIncluded: [
+      'programarea (ofertată separat; dacă o construim noi, designul se scade din preț)',
+      'testarea cu utilizatori (+300 EUR)',
+      'logo și branding',
+      'ilustrații și 3D',
+    ],
+    packages: [
+      { name: 'Audit UX/UI', price: '250 EUR', time: '3 zile lucrătoare', forWho: 'Afli exact ce blochează utilizatorii înainte să investești în redesign' },
+      { name: 'Sprint de design de produs', price: 'de la 1.200 EUR', time: '~2 săptămâni', forWho: 'MVP-uri și produse noi care trebuie lansate repede' },
+      { name: 'Design complet de produs', price: 'de la 2.500 EUR', time: '3-6 săptămâni', forWho: 'Platforme și produse care cresc în timp' },
+      { name: 'Retainer de design', price: 'de la 600 EUR/lună', time: 'lunar', forWho: 'Echipe care iterează la produs în fiecare lună' },
+    ],
+    process: [
+      { step: 'Apel și brief', description: 'Discutăm produsul, utilizatorii și ce ecrane contează cel mai mult. Primești o ofertă cu preț fix.' },
+      { step: 'Fluxuri și wireframe-uri', description: 'Desenăm drumul utilizatorului și structura ecranelor, înainte de orice culoare și stil.' },
+      { step: 'UI și prototip, cu feedback', description: 'Design high-fidelity pentru desktop și mobil, legat într-un prototip interactiv în Figma. Ajustăm pe parcurs, în cele 2 runde incluse.' },
+      { step: 'Predarea către programator', description: 'Figma Dev Mode, asset-uri exportate, specificație și 30 de zile de suport pentru echipa care construiește.' },
+    ],
+    forWho: [
+      'startup-uri care construiesc un MVP',
+      'platforme SaaS și aplicații B2B',
+      'firme cu o aplicație sau un site care nu convertește',
+      'echipe de programatori fără designer',
+      'agenții care au nevoie de design în outsourcing',
+    ],
+    faq: [
+      {
+        question: 'Cât costă designul UX/UI?',
+        answer:
+          'Avem patru pachete: auditul UX/UI costă 250 EUR, sprintul de design de produs pornește de la 1.200 EUR, designul complet de produs de la 2.500 EUR, iar retainerul de design de la 600 EUR pe lună.',
+      },
+      {
+        question: 'Care e diferența dintre UX și UI?',
+        answer:
+          'UX e fluxul și structura: ce face utilizatorul, în ce ordine și de ce. UI e cum arată: culori, tipografie, componente. Le facem pe amândouă, în această ordine.',
+      },
+      {
+        question: 'Primesc fișierele Figma?',
+        answer:
+          'Da. La predare, fișierele Figma devin integral ale tale, împreună cu asset-urile exportate și specificația pentru programator.',
+      },
+      {
+        question: 'Îl puteți și construi?',
+        answer:
+          'Da, cu ofertă separată pentru programare. Dacă construim noi aplicația, designul se scade din prețul construcției.',
+      },
+      {
+        question: 'Cum plătesc?',
+        answer:
+          '50% avans și 50% la predare. Auditul se plătește în avans și se scade integral dintr-un proiect de design care urmează.',
+      },
+    ],
+    relatedSlugs: ['aplicatii-web', 'platforme-saas', 'site-de-prezentare'],
+    relatedPosts: [],
+    projectSlugs: ['asesor', 'lumora', 'mostar', 'lithos'],
+    waMessage: 'Salut! Mă interesează design UX/UI pentru un proiect. Putem vorbi?',
+    serviceType: 'Design UX/UI',
+    updatedAt: '2026-10-24',
   },
   {
     slug: 'mentenanta',

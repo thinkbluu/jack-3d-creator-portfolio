@@ -4,6 +4,7 @@ const ro = {
     label: 'Navigație principală',
     home: 'pagina principală',
     services: 'Servicii',
+    pricing: 'Prețuri',
     portfolio: 'Lucrări',
     guide: 'Idei',
     freeSite: 'Site gratuit',
@@ -105,6 +106,14 @@ const ro = {
         guarantee: 'Ofertă fixă, fără costuri surpriză',
         message: 'Salut! Vreau să construim o platformă personalizată. Putem discuta?',
       },
+      {
+        id: 'design-ux-ui',
+        name: 'Design UX/UI',
+        description: 'Aplicații și platforme care sunt ușor de folosit, nu doar frumoase. Fluxuri, prototip în Figma și predare către programator.',
+        price: 'de la 250 EUR',
+        guarantee: 'Auditul se scade din proiectul de design',
+        message: 'Salut! Mă interesează design UX/UI pentru un proiect. Putem vorbi?',
+      },
     ],
     continuing: [
       {
@@ -190,12 +199,6 @@ const ro = {
     body: 'Scrie-ne ce faci. Primești oferta azi.',
     orEmail: 'sau scrie-ne la',
   },
-  contestTeaser: {
-    kicker: 'Concurs lunar · Site gratuit',
-    title: 'Un site de prezentare gratuit, în fiecare lună',
-    body: 'În fiecare lună construim gratuit un site de prezentare, în valoare de {prize} EUR, pentru o afacere mică din România. Te înscrii, postezi pe Instagram sau pe pagina de Facebook a afacerii și ne etichetezi. Postarea cu cele mai multe aprecieri câștigă.',
-    cta: 'Vezi cum participi',
-  },
   footer: {
     blurb: 'Studio de web design din Timișoara. Site-uri de prezentare de la 300 EUR, live în 48 de ore, magazine online și aplicații pentru afaceri din toată România.',
     location: 'Timișoara · lucrăm la distanță în toată România',
@@ -209,7 +212,6 @@ const ro = {
     privacy: 'Confidențialitate',
     cookies: 'Cookies',
     terms: 'Termeni',
-    rules: 'Regulament concurs',
     register: 'Reg. Com.',
     guideLinks: [
       { href: '/blog/cat-costa-un-site-in-romania', label: 'Cât costă un site în România' },
@@ -222,6 +224,7 @@ const ro = {
       { href: '/despre', label: 'Despre MAST Studio' },
       { href: '/portofoliu', label: 'Lucrări' },
       { href: '/cum-lucram', label: 'Cum lucrăm' },
+      { href: '/preturi', label: 'Prețuri' },
       { href: '/newsletter', label: 'Newsletter' },
       { href: '/comparatie', label: 'Freelancer, studio sau agenție' },
       { href: '/glosar', label: 'Glosar web design' },
@@ -247,6 +250,7 @@ const ro = {
     useful: 'Pagini utile',
     links: [
       { href: '/servicii', label: 'Servicii și prețuri' },
+      { href: '/preturi', label: 'Prețuri' },
       { href: '/portofoliu', label: 'Portofoliu' },
       { href: '/blog', label: 'Ghid' },
       { href: '/contact', label: 'Contact' },
@@ -294,8 +298,6 @@ const ro = {
     apply: 'Vrei să aplicăm asta pentru afacerea ta?',
     seeAlso: 'Vezi și',
     prices: 'serviciile și prețurile MAST Studio',
-    orJoin: 'sau participă la',
-    contest: 'concursul lunar pentru un site gratuit',
     related: 'Citește și',
     indexKicker: 'Ghid',
     lead: 'Ce am învățat construind site-uri, scris pentru cei care urmează să-și facă unul.',
@@ -451,7 +453,7 @@ const ro = {
       },
       kicker: 'Studio de web design · Timișoara',
       statement: 'Construim site-uri care contează pentru',
-      words: ['oameni.', 'afaceri.', 'clienți.', 'Timișoara.'],
+      words: ['oameni.', 'afaceri.', 'clienți.', 'tine.'],
       fill: 'Oricine poate face un site. Să faci unul pe care oamenii îl țin minte, care aduce clienți și care arată ca tine, e partea grea. Pentru asta e nevoie de strategie, design, cod scris de mână și bun-simț.',
       links: [
         { label: 'Vezi lucrările', href: '#lucrari' },
@@ -541,6 +543,7 @@ const en: typeof ro = {
     label: 'Main navigation',
     home: 'home',
     services: 'Services',
+    pricing: 'Pricing',
     portfolio: 'Work',
     guide: 'Ideas',
     freeSite: 'Free website',
@@ -642,6 +645,14 @@ const en: typeof ro = {
         guarantee: 'A fixed quote, with no surprise costs',
         message: 'Hi! I want to build a custom platform. Can we talk?',
       },
+      {
+        id: 'design-ux-ui',
+        name: 'UX/UI design',
+        description: 'Apps and platforms that are easy to use, not just pretty. Flows, a Figma prototype, and developer handoff.',
+        price: 'from 250 EUR',
+        guarantee: 'The audit is deducted from a design project',
+        message: 'Hi! I’m interested in UX/UI design for a project. Can we talk?',
+      },
     ],
     continuing: [
       {
@@ -676,7 +687,7 @@ const en: typeof ro = {
     kicker: 'Manifesto',
     pairs: [
       { other: 'Others sell the same template to dozens of companies.', before: 'Yours ', highlight: 'looks like no one else’s', after: '.' },
-      { other: 'Others tell you “we’ll come back with a timeline”.', before: 'We tell you ', highlight: 'the day', after: '.' },
+      { other: 'Others tell you “we��ll come back with a timeline”.', before: 'We tell you ', highlight: 'the day', after: '.' },
       { other: 'Others ask for a 50% deposit.', before: 'We ask for ', highlight: '50 euro', after: '.' },
     ],
     closing: 'These are not marketing promises. They are clauses written into the contract.',
@@ -727,12 +738,6 @@ const en: typeof ro = {
     body: 'Tell us what you do. You get the quote today.',
     orEmail: 'or write to us at',
   },
-  contestTeaser: {
-    kicker: 'Monthly contest · Free website',
-    title: 'A free presentation website, every month',
-    body: 'Every month we build a presentation website for free, worth {prize} EUR, for a small business in Romania. You enter, post on Instagram or on the business Facebook page, and tag us. The post with the most likes wins.',
-    cta: 'See how to enter',
-  },
   footer: {
     blurb: 'A web design studio in Timișoara. Presentation websites from 300 EUR, live in 48 hours, online stores and apps for businesses across Romania.',
     location: 'Timișoara · we work remotely across Romania',
@@ -746,7 +751,6 @@ const en: typeof ro = {
     privacy: 'Privacy',
     cookies: 'Cookies',
     terms: 'Terms',
-    rules: 'Contest rules',
     register: 'Trade reg.',
     guideLinks: [
       { href: '/blog/cat-costa-un-site-in-romania', label: 'What a website costs in Romania' },
@@ -759,6 +763,7 @@ const en: typeof ro = {
       { href: '/despre', label: 'About MAST Studio' },
       { href: '/portofoliu', label: 'Work' },
       { href: '/cum-lucram', label: 'Approach' },
+      { href: '/preturi', label: 'Pricing' },
       { href: '/newsletter', label: 'Newsletter' },
       { href: '/comparatie', label: 'Freelancer, studio, or agency' },
       { href: '/glosar', label: 'Web design glossary' },
@@ -784,6 +789,7 @@ const en: typeof ro = {
     useful: 'Useful pages',
     links: [
       { href: '/servicii', label: 'Services and prices' },
+      { href: '/preturi', label: 'Pricing' },
       { href: '/portofoliu', label: 'Work' },
       { href: '/blog', label: 'Guide' },
       { href: '/contact', label: 'Contact' },
@@ -831,8 +837,6 @@ const en: typeof ro = {
     apply: 'Want us to apply this to your business?',
     seeAlso: 'See also',
     prices: 'MAST Studio services and prices',
-    orJoin: 'or enter',
-    contest: 'the monthly contest for a free website',
     related: 'Read next',
     indexKicker: 'Guide',
     lead: 'What we learned building websites, written for people about to make one.',
@@ -988,7 +992,7 @@ const en: typeof ro = {
       },
       kicker: 'Web design studio · Timișoara',
       statement: 'We build websites that matter to',
-      words: ['people.', 'businesses.', 'customers.', 'Timișoara.'],
+      words: ['people.', 'businesses.', 'customers.', 'you.'],
       fill: 'Anyone can make a website. Making one people remember, one that brings in customers and looks like you, is the hard part. It takes strategy, design, hand-written code and common sense.',
       links: [
         { label: 'See the work', href: '#lucrari' },

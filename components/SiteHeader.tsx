@@ -7,7 +7,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher'
 import MenuOverlay, { type MenuItem } from '@/components/MenuOverlay'
 import { useHref, useUi } from '@/lib/i18n/context'
 
-export type SiteSection = 'servicii' | 'portofoliu' | 'cum-lucram' | 'blog' | 'site-gratuit' | 'despre' | 'cariere' | 'contact'
+export type SiteSection = 'servicii' | 'portofoliu' | 'cum-lucram' | 'blog' | 'despre' | 'cariere' | 'contact'
 
 const DARK_VARS = {
   '--ink': '#faf7f2',
@@ -45,6 +45,7 @@ export default function SiteHeader({
   const navItems: MenuItem[] = [
     { id: 'portofoliu', href: href('/portofoliu'), label: nav.portfolio },
     { id: 'servicii', href: href('/servicii'), label: nav.services },
+    { id: 'preturi', href: href('/preturi'), label: nav.pricing },
     { id: 'cum-lucram', href: href('/cum-lucram'), label: nav.approach },
     { id: 'despre', href: href('/despre'), label: nav.about },
     { id: 'blog', href: href('/blog'), label: nav.guide },
@@ -52,7 +53,7 @@ export default function SiteHeader({
     { id: 'contact', href: href('/contact'), label: nav.contact },
   ]
   const quote: MenuItem | null = onThankYou ? null : { id: 'cerere-oferta', href: href('/cerere-oferta'), label: nav.quote }
-  const inline = navItems.filter((item) => ['portofoliu', 'servicii', 'despre', 'blog', 'contact'].includes(item.id))
+  const inline = navItems.filter((item) => ['portofoliu', 'servicii', 'preturi', 'despre', 'blog', 'contact'].includes(item.id))
 
   useEffect(() => {
     let frame = 0

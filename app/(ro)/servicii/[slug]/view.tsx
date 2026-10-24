@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import BlogCard from '@/components/BlogCard'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
-import ProjectCard from '@/components/ProjectCard'
 import SiteHeader from '@/components/SiteHeader'
 import TrackedLink from '@/components/TrackedLink'
 import PageHero from '@/components/studio/PageHero'
@@ -17,12 +17,8 @@ import { ui } from '@/lib/i18n/ui'
 import { getProjectBySlug, type Project } from '@/lib/projects'
 import { breadcrumbNode, faqNode, graph, serviceNode, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
-import { getAllServicePages, getServicePageBySlug } from '@/lib/services'
+import { getServicePageBySlug } from '@/lib/services'
 import { whatsappUrl } from '@/lib/site'
-
-type ServicePageProps = {
-  params: Promise<{ slug: string }>
-}
 
 type ServiceChrome = {
   kicker: string
@@ -33,12 +29,15 @@ type ServiceChrome = {
   paidSeparately: string
   forWho: string
   process: string
+  packages: string
+  packagesFor: string
   faqAbout: (name: string) => string
   offerFor: (name: string) => string
   writeDirect: (message: string) => string
+  quoteCta: string
+  whatsappCta: string
   preferForm: string
   quoteForm: string
-  projects: string
   guides: string
   other: string
   all: string
@@ -55,12 +54,15 @@ const serviceChrome: Record<Locale, ServiceChrome> = {
     paidSeparately: 'Ce se plătește separat',
     forWho: 'Pentru cine e potrivit',
     process: 'Cum decurge',
+    packages: 'Pachete și prețuri',
+    packagesFor: 'Pentru cine',
     faqAbout: (name) => `Întrebări frecvente despre ${name}`,
     offerFor: (name) => `Vrei o ofertă pentru ${name}?`,
     writeDirect: (message) => `Sau scrie-ne direct: „${message}”`,
+    quoteCta: 'Cere ofertă',
+    whatsappCta: 'Scrie-ne pe WhatsApp',
     preferForm: 'Preferi un formular?',
     quoteForm: 'Trimite o cerere de ofertă',
-    projects: 'Proiecte realizate',
     guides: 'Ghiduri utile',
     other: 'Alte servicii',
     all: 'Toate serviciile și prețurile',
@@ -75,12 +77,15 @@ const serviceChrome: Record<Locale, ServiceChrome> = {
     paidSeparately: 'What is paid separately',
     forWho: 'Who it’s for',
     process: 'How it works',
+    packages: 'Packages and prices',
+    packagesFor: 'Who it’s for',
     faqAbout: (name) => `Frequently asked questions about ${name}`,
     offerFor: (name) => `Want a quote for ${name}?`,
     writeDirect: (message) => `Or write to us directly: “${message}”`,
+    quoteCta: 'Get a quote',
+    whatsappCta: 'Message us on WhatsApp',
     preferForm: 'Prefer a form?',
     quoteForm: 'Send a quote request',
-    projects: 'Delivered projects',
     guides: 'Useful guides',
     other: 'Other services',
     all: 'All services and prices',
@@ -187,18 +192,68 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
             title={service.h1}
             intro={service.intro}
             aside={
-              <dl className="grid grid-cols-2 gap-8 border-t border-[var(--line)] pt-6 lg:ml-auto lg:max-w-sm">
-                <div>
-                  <dt className="mono-label text-[var(--fg-3)]">{copy.price}</dt>
-                  <dd className="display-xl mt-3 text-[clamp(1.6rem,2.2vw,2.2rem)] leading-[1.05] text-[var(--accent)]">{service.priceLabel}</dd>
+              <div>
+                <dl className="grid grid-cols-2 gap-8 border-t border-[var(--line)] pt-6 lg:ml-auto lg:max-w-sm">
+                  <div>
+                    <dt className="mono-label text-[var(--fg-3)]">{copy.price}</dt>
+                    <dd className="display-xl mt-3 text-[clamp(1.6rem,2.2vw,2.2rem)] leading-[1.05] text-[var(--accent)]">{service.priceLabel}</dd>
+                  </div>
+                  <div>
+                    <dt className="mono-label text-[var(--fg-3)]">{service.deliveryLabel}</dt>
+                    <dd className="display-xl mt-3 text-[clamp(1.6rem,2.2vw,2.2rem)] leading-[1.05]">{service.deliveryTime}</dd>
+                  </div>
+                </dl>
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
+                  <Link
+                    href={`${localizePath('/cerere-oferta', locale)}?sursa=${service.slug}`}
+                    className="mono-label inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-[var(--radius-pill)] bg-[var(--brass-lite)] px-6 text-[var(--night)] transition-colors hover:bg-[var(--on-dark)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass-lite)]"
+                  >
+                    {copy.quoteCta}
+                  </Link>
+                  <TrackedLink
+                    href={whatsappUrl(service.waMessage)}
+                    eventName="whatsapp_click"
+                    eventProperties={{ placement: 'service_hero', service: service.name }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mono-label inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-[var(--radius-pill)] border border-[var(--hairline-dark)] px-6 text-[var(--on-dark)] transition-colors hover:border-[var(--on-dark)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass-lite)]"
+                  >
+                    {copy.whatsappCta}
+                  </TrackedLink>
                 </div>
-                <div>
-                  <dt className="mono-label text-[var(--fg-3)]">{service.deliveryLabel}</dt>
-                  <dd className="display-xl mt-3 text-[clamp(1.6rem,2.2vw,2.2rem)] leading-[1.05]">{service.deliveryTime}</dd>
-                </div>
-              </dl>
+              </div>
             }
-          />
+          >
+            {projects.length > 0 ? (
+              <nav aria-label={ui[locale].footer.services}>
+                <ul className="grid grid-cols-3 gap-4 md:gap-6">
+                  {projects.slice(0, 3).map((project) => (
+                    <li key={project.slug}>
+                      <Link
+                        href={localizePath(`/portofoliu/${project.slug}`, locale)}
+                        className="group block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass-lite)]"
+                      >
+                        <span className="relative block w-full overflow-hidden rounded-[6px] bg-[#0b0f17]" style={{ aspectRatio: '16 / 10' }}>
+                          {project.cover ? (
+                            <Image
+                              src={project.cover}
+                              alt={project.coverAlt}
+                              fill
+                              sizes="(min-width: 768px) 33vw, 33vw"
+                              className="object-cover object-[right_center] transition-transform duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.04] motion-reduce:transition-none"
+                            />
+                          ) : null}
+                        </span>
+                        <span className="mono-label mt-3 block truncate text-[var(--fg-3)] transition-colors group-hover:text-[var(--ink)]">
+                          {project.name}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ) : null}
+          </PageHero>
           <div className="studio-container py-20 md:py-28">
           <div className="grid gap-16 lg:grid-cols-[1fr_1.5fr]">
             <aside className="lg:sticky lg:top-28 lg:self-start">
@@ -215,6 +270,25 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
               <h2 className="type-h3">{copy.paidSeparately}</h2>
               <DotList items={service.notIncluded} tone="muted" />
             </section>
+
+            {service.packages ? (
+              <section className="mt-12 border-t border-[var(--hairline)] pt-12">
+                <h2 className="type-h3">{copy.packages}</h2>
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  {service.packages.map((pack) => (
+                    <article key={pack.name} className="rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--shell-warm)] p-6">
+                      <h3 className="font-sans text-[15px] font-semibold text-[var(--ink)]">{pack.name}</h3>
+                      <p className="display-xl mt-3 text-[clamp(1.4rem,2vw,1.8rem)] leading-[1.05] text-[var(--brass-ink)]">{pack.price}</p>
+                      <p className="mono-label mt-3 text-[var(--fg-3)]">{pack.time}</p>
+                      <p className="mt-4 border-t border-[var(--hairline)] pt-4 text-[15px] leading-relaxed text-[var(--fg-2)]">
+                        <span className="font-semibold text-[var(--ink)]">{copy.packagesFor}: </span>
+                        {pack.forWho}
+                      </p>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ) : null}
 
             <section className="mt-12 border-t border-[var(--hairline)] pt-12">
               <h2 className="type-h3">{copy.forWho}</h2>
@@ -290,17 +364,6 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
               .
             </p>
           </section>
-
-          {projects.length > 0 ? (
-            <section className="mt-24">
-              <h2 className="type-h2">{copy.projects}</h2>
-              <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-16 md:grid-cols-2">
-                {projects.map((project) => (
-                  <ProjectCard key={project.slug} project={project} headingLevel="h3" />
-                ))}
-              </div>
-            </section>
-          ) : null}
 
           {posts.length > 0 ? (
             <section className="mt-24">

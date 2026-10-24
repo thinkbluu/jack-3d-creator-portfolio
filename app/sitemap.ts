@@ -15,6 +15,7 @@ type Entry = MetadataRoute.Sitemap[number]
 const staticPages: Array<{ path: string; lastModified: string; changeFrequency: Entry['changeFrequency']; priority: number }> = [
   { path: '/', lastModified: '2026-10-04', changeFrequency: 'monthly', priority: 1 },
   { path: '/servicii', lastModified: '2026-10-04', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/preturi', lastModified: '2026-10-24', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/portofoliu', lastModified: '2026-10-04', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/despre', lastModified: '2026-10-12', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/cum-lucram', lastModified: '2026-10-12', changeFrequency: 'yearly', priority: 0.6 },

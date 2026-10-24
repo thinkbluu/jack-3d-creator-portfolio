@@ -5,10 +5,6 @@ const nextConfig = {
   env: {
     NEXT_PUBLIC_TRACKING_ENV: process.env.VERCEL_ENV ?? '',
   },
-  // The contest's daily job lists the newest posts in the newsletter draft.
-  outputFileTracingIncludes: {
-    '/api/cron/site-gratuit': ['./content/blog/**/*'],
-  },
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
@@ -19,6 +15,16 @@ const nextConfig = {
     return [
       // Apps and SaaS platforms now have separate service pages.
       { source: '/servicii/aplicatii-si-platforme', destination: '/servicii/aplicatii-web', permanent: true },
+      // Short vanity paths for the UX/UI design service.
+      { source: '/ux-ui', destination: '/servicii/design-ux-ui', permanent: true },
+      { source: '/design-ux', destination: '/servicii/design-ux-ui', permanent: true },
+      { source: '/ui-ux', destination: '/servicii/design-ux-ui', permanent: true },
+      { source: '/design', destination: '/servicii/design-ux-ui', permanent: true },
+      { source: '/en/ux-design', destination: '/en/services/ux-ui-design', permanent: true },
+      { source: '/en/ui-ux', destination: '/en/services/ux-ui-design', permanent: true },
+      // Short vanity paths for the pricing page.
+      { source: '/pret', destination: '/preturi', permanent: true },
+      { source: '/tarife', destination: '/preturi', permanent: true },
       // Posts merged into stronger pages on the same topic (one URL per search intent).
       { source: '/blog/agentie-vs-freelancer-vs-studio', destination: '/comparatie', permanent: true },
       { source: '/blog/web-design-timisoara', destination: '/blog/cum-alegi-firma-web-design', permanent: true },

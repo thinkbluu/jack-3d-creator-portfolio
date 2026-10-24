@@ -5,13 +5,13 @@ type Pair = { ro: string; en: string }
 /** First URL segment. Romanian values are the canonical ids. */
 const TOP: Pair[] = [
   { ro: 'servicii', en: 'services' },
+  { ro: 'preturi', en: 'pricing' },
   { ro: 'portofoliu', en: 'work' },
   { ro: 'despre', en: 'about' },
   { ro: 'cerere-oferta', en: 'request-a-quote' },
   { ro: 'cere-oferta', en: 'get-a-quote' },
   { ro: 'comparatie', en: 'compare' },
   { ro: 'glosar', en: 'glossary' },
-  { ro: 'site-gratuit', en: 'free-website' },
   { ro: 'cariere', en: 'careers' },
   { ro: 'confidentialitate', en: 'privacy' },
   { ro: 'termeni', en: 'terms' },
@@ -24,25 +24,13 @@ const TOP: Pair[] = [
   { ro: 'echipa', en: 'team' },
 ]
 
-const FREE_SITE: Pair[] = [
-  { ro: 'regulament', en: 'rules' },
-  { ro: 'participare', en: 'enter' },
-  { ro: 'confirmare', en: 'confirm' },
-  { ro: 'castig', en: 'win' },
-  { ro: 'admin', en: 'admin' },
-]
-
-const ADMIN: Pair[] = [
-  { ro: 'like-uri', en: 'likes' },
-  { ro: 'livrat', en: 'delivered' },
-]
-
 /** Canonical service id is the Romanian slug. English pages use the `en` slug. */
 export const SERVICE_SLUGS: Pair[] = [
   { ro: 'site-de-prezentare', en: 'presentation-website' },
   { ro: 'magazin-online', en: 'online-store' },
   { ro: 'aplicatii-web', en: 'web-and-mobile-apps' },
   { ro: 'platforme-saas', en: 'saas-platforms' },
+  { ro: 'design-ux-ui', en: 'ux-ui-design' },
   { ro: 'mentenanta', en: 'maintenance' },
   { ro: 'automatizari-whatsapp', en: 'whatsapp-automation' },
 ]
@@ -73,10 +61,6 @@ function mapParts(parts: string[], from: Locale, to: Locale) {
     if (index === 0) return pairValue(TOP, part, from, to)
     const top = pairValue(TOP, parts[0], from, 'ro')
     if (index === 1 && top === 'servicii') return pairValue(SERVICE_SLUGS, part, from, to)
-    if (index === 1 && top === 'site-gratuit') return pairValue(FREE_SITE, part, from, to)
-    if (index === 2 && top === 'site-gratuit' && pairValue(FREE_SITE, parts[1], from, 'ro') === 'admin') {
-      return pairValue(ADMIN, part, from, to)
-    }
     return part
   })
 }

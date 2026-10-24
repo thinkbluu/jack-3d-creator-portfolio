@@ -1,9 +1,8 @@
 'use client'
 
-import { usePathname } from 'next/navigation'
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
-import { isPrivatePath, trackConversion } from '@/lib/analytics'
+import { trackConversion } from '@/lib/analytics'
 import { ADS_ID, ADS_WHATSAPP_SEND_TO, GA4_ID, TRACKING_ACTIVE, fireAdsConversion, saveAttributionFromUrl } from '@/lib/ads'
 
 let configured = false
@@ -35,7 +34,6 @@ function whatsappLocation(anchor: Element) {
  * for WhatsApp and phone links so links rendered later are covered too.
  */
 export default function AdsTracking() {
-  const pathname = usePathname()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => setMounted(true), [])
@@ -66,9 +64,7 @@ export default function AdsTracking() {
     return () => document.removeEventListener('click', onClick)
   }, [])
 
-  // Personal contest links carry an access token in their address; Google Tag
-  // never loads there. `mounted` keeps the private-path check client-side.
-  if (!TRACKING_ACTIVE || !mounted || isPrivatePath(pathname ?? '')) return null
+  if (!TRACKING_ACTIVE || !mounted) return null
 
   return <Script src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(ADS_ID || GA4_ID)}`} strategy="afterInteractive" onLoad={configure} onReady={configure} />
 }
