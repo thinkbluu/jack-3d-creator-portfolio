@@ -22,6 +22,9 @@ const nextConfig = {
       { source: '/design', destination: '/servicii/design-ux-ui', permanent: true },
       { source: '/en/ux-design', destination: '/en/services/ux-ui-design', permanent: true },
       { source: '/en/ui-ux', destination: '/en/services/ux-ui-design', permanent: true },
+      // Short vanity paths for the pricing page.
+      { source: '/pret', destination: '/preturi', permanent: true },
+      { source: '/tarife', destination: '/preturi', permanent: true },
       // Posts merged into stronger pages on the same topic (one URL per search intent).
       { source: '/blog/agentie-vs-freelancer-vs-studio', destination: '/comparatie', permanent: true },
       { source: '/blog/web-design-timisoara', destination: '/blog/cum-alegi-firma-web-design', permanent: true },

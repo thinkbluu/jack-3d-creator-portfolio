@@ -118,12 +118,6 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
     event.preventDefault()
     if (isSubmitting || !validate() || !projectType) return
 
-    trackConversion('lead_form_submit', {
-      project_type: projectType,
-      has_website: Boolean(currentSite.trim()),
-      channel,
-    })
-
     // Quote forms report `cerere-oferta`; a form embedded on a service page
     // reports the service slug.
     const source = serviceSlug ? (canonicalServiceSlug(serviceSlug) ?? serviceSlug) : 'cerere-oferta'
@@ -136,6 +130,11 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
       // gated on its result: WhatsApp keeps the conversation, the tab
       // behind it counts the lead.
       window.open(whatsAppUrl, '_blank', 'noopener,noreferrer')
+      trackConversion('lead_form_submit', {
+        project_type: projectType,
+        has_website: Boolean(currentSite.trim()),
+        channel,
+      })
       redirectToThankYou(locale, source, name)
       return
     }
@@ -161,6 +160,11 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
         setSubmitError(message)
         return
       }
+      trackConversion('lead_form_submit', {
+        project_type: projectType,
+        has_website: Boolean(currentSite.trim()),
+        channel,
+      })
       redirectToThankYou(locale, source, name)
     } catch {
       setSubmitError(lead.error)

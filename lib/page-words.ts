@@ -10,6 +10,7 @@ import { getProjectBySlug } from './projects'
 export const PAGE_WORDS = {
   '/portofoliu': { ro: 'Lucrări.', en: 'Work.' },
   '/servicii': { ro: 'Servicii.', en: 'Services.' },
+  '/preturi': { ro: 'Prețuri.', en: 'Pricing.' },
   '/cum-lucram': { ro: 'Cum lucrăm.', en: 'Approach.' },
   '/despre': { ro: 'Studio.', en: 'Studio.' },
   '/blog': { ro: 'Idei.', en: 'Ideas.' },

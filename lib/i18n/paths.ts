@@ -5,6 +5,7 @@ type Pair = { ro: string; en: string }
 /** First URL segment. Romanian values are the canonical ids. */
 const TOP: Pair[] = [
   { ro: 'servicii', en: 'services' },
+  { ro: 'preturi', en: 'pricing' },
   { ro: 'portofoliu', en: 'work' },
   { ro: 'despre', en: 'about' },
   { ro: 'cerere-oferta', en: 'request-a-quote' },

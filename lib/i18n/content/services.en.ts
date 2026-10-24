@@ -172,8 +172,8 @@ export const serviceTextEn: Record<string, ServiceText> = {
   'aplicatii-web': {
     name: 'Web and mobile apps',
     shortName: 'Web and mobile apps',
-    h1: 'Web and mobile app development',
-    seoTitle: 'Web and mobile app development',
+    h1: 'Mobile app development and web apps',
+    seoTitle: 'Mobile app development, fixed-price quote',
     metaDescription:
       'Web and mobile apps for internal processes, client portals, and bookings. A fixed-price quote in 24 hours, built in stages, with a full handover.',
     answerCapsule:
@@ -182,7 +182,7 @@ export const serviceTextEn: Record<string, ServiceText> = {
     deliveryLabel: 'Delivery time',
     deliveryTime: 'estimated in the quote',
     intro:
-      'If a process in your business is still done by hand too often — quotes, bookings, records kept in Excel — we turn it into an app your team will actually use, from a computer or a phone.',
+      'If a process in your business is still done by hand too often — quotes, bookings, records kept in Excel — we turn it into a mobile app for iOS and Android, or a web app, that your team will actually use, from a computer or a phone.',
     includes: [
       'an analysis of the requirements and the workflow',
       'a custom interface design',

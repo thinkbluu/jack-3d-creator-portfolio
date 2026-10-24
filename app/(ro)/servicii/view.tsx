@@ -35,6 +35,7 @@ type ServicesCopy = {
   unsureCompare: string
   cta: string
   form: string
+  pricingPage: string
 }
 
 const servicesCopy: Record<Locale, ServicesCopy> = {
@@ -65,6 +66,7 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     unsureCompare: 'freelancer, studio și agenție',
     cta: 'Spune-ne ce ai nevoie și primești oferta azi',
     form: 'Sau completează cererea de ofertă',
+    pricingPage: 'Toate prețurile, pe o singură pagină',
   },
   en: {
     word: PAGE_WORDS['/servicii'].en,
@@ -93,6 +95,7 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     unsureCompare: 'freelancer, studio, and agency',
     cta: 'Tell us what you need and you get the quote today',
     form: 'Or fill in the quote request',
+    pricingPage: 'All prices, on a single page',
   },
 }
 
@@ -136,6 +139,12 @@ export function ServicesView({ locale }: { locale: Locale }) {
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
         <PageOpen crumbs={crumbs} index="02" title={copy.title} word={copy.word} lead={copy.lead} short>
           <p className="max-w-sm leading-relaxed text-[var(--fg-2)]">{copy.intro}</p>
+          <Link
+            href={localizePath('/preturi', locale)}
+            className="mt-4 inline-block font-sans text-sm font-semibold text-[var(--ink)] underline underline-offset-4 hover:text-[var(--brass-ink)]"
+          >
+            {copy.pricingPage} →
+          </Link>
         </PageOpen>
 
         <section aria-labelledby="preturi-pe-scurt" className="tone-dark pb-[clamp(5rem,10vw,9rem)]">
