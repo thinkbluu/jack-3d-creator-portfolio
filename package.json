@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node scripts/indexnow.mjs",
+    "indexnow:all": "node scripts/indexnow.mjs --all",
     "start": "next start",
     "lint": "eslint ."
   },

@@ -17,7 +17,8 @@ import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, faqNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata, stripBrandSuffix } from '@/lib/seo'
-import { LOGO_URL, SITE_NAME, WEBSITE_ID, absoluteUrl } from '@/lib/site'
+import { LOGO_URL, BUSINESS_ID, SITE_NAME, WEBSITE_ID, absoluteUrl } from '@/lib/site'
+import { getTeamMember } from '@/lib/team'
 
 type ArticlePageProps = {
   params: Promise<{ slug: string }>
@@ -57,6 +58,7 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
   const path = localizePath(`/blog/${post.slug}`, locale)
   const url = absoluteUrl(path)
   const related = getRelatedPosts(post, 3, locale)
+  const author = post.author ? getTeamMember(post.author) : undefined
   const dateModified = post.updatedAt ?? post.publishedAt
   const crumbs: BreadcrumbItem[] = [
     { name: ui[locale].common.home, path: localizePath('/', locale) },
@@ -81,7 +83,15 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
       timeRequired: `PT${post.readMin}M`,
       mainEntityOfPage: { '@id': `${url}#webpage` },
       isPartOf: { '@id': WEBSITE_ID },
-      author: { '@type': 'Organization', name: SITE_NAME, url: absoluteUrl(localizePath('/despre', locale)) },
+      author: author
+        ? {
+            '@type': 'Person',
+            name: author.name,
+            url: absoluteUrl(localizePath(`/echipa/${author.slug}`, locale)),
+            jobTitle: author.role[locale],
+            worksFor: { '@id': BUSINESS_ID },
+          }
+        : { '@type': 'Organization', name: SITE_NAME, url: absoluteUrl(localizePath('/despre', locale)) },
       publisher: {
         '@type': 'Organization',
         name: SITE_NAME,
@@ -114,9 +124,15 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
             <div className="mono-label flex flex-col gap-1 text-[var(--fg-3)] sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
               <span>
                 {copy.by}{' '}
-                <Link href={localizePath('/despre', locale)} rel="author" className="inline min-h-0 text-[var(--fg)] underline-offset-4 hover:underline">
-                  {copy.team}
-                </Link>
+                {author ? (
+                  <Link href={localizePath(`/echipa/${author.slug}`, locale)} rel="author" className="inline min-h-0 text-[var(--fg)] underline-offset-4 hover:underline">
+                    {author.name}
+                  </Link>
+                ) : (
+                  <Link href={localizePath('/despre', locale)} rel="author" className="inline min-h-0 text-[var(--fg)] underline-offset-4 hover:underline">
+                    {copy.team}
+                  </Link>
+                )}
               </span>
               <span aria-hidden="true" className="hidden sm:inline">·</span>
               <span>

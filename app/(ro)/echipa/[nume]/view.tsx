@@ -42,6 +42,7 @@ export function TeamMemberView({ locale, slug }: { locale: Locale; slug: string 
     { name: member.name, path },
   ]
   const others = getTeam().filter((person) => person.slug !== member.slug)
+  const sameAs = [member.linkedin, ...(member.links?.map((link) => link.url) ?? [])].filter(Boolean)
 
   return (
     <>
@@ -122,10 +123,11 @@ export function TeamMemberView({ locale, slug }: { locale: Locale; slug: string 
             '@type': 'Person',
             '@id': `${absoluteUrl(path)}#person`,
             name: member.name,
+            url: absoluteUrl(path),
             jobTitle: member.role[locale],
             worksFor: businessRef,
             ...(member.photo ? { image: absoluteUrl(member.photo) } : {}),
-            ...(member.links?.length ? { sameAs: member.links.map((link) => link.url) } : {}),
+            ...(sameAs.length ? { sameAs } : {}),
           },
         )}
       />

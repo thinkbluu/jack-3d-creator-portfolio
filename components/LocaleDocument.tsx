@@ -57,6 +57,10 @@ export function localeMetadata(locale: Locale): Metadata {
       follow: true,
       googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
     },
+    // Bing Webmaster Tools verification, rendered only when the variable is set.
+    ...(process.env.NEXT_PUBLIC_BING_VERIFICATION
+      ? { verification: { other: { 'msvalidate.01': process.env.NEXT_PUBLIC_BING_VERIFICATION } } }
+      : {}),
   }
 }
 

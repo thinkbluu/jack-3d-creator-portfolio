@@ -12,12 +12,14 @@ import {
   EMAIL_HREF,
   LEGAL_NAME,
   PHONE_DISPLAY,
+  LINKEDIN_URL,
   PHONE_HREF,
   SITE_NAME,
   SOCIAL_LINKS,
   TRADE_REGISTER_NUMBER,
   VAT_ID,
   whatsappUrl,
+  YOUTUBE_URL,
 } from '@/lib/site'
 
 const DARK_VARS = {
@@ -148,6 +150,26 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
                   </a>
                 </li>
               ))}
+              {LINKEDIN_URL ? (
+                <li>
+                  <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className={`${linkClass} text-[var(--on-dark)]`}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z" />
+                    </svg>
+                    <span className="sr-only">LinkedIn</span>
+                  </a>
+                </li>
+              ) : null}
+              {YOUTUBE_URL ? (
+                <li>
+                  <a href={YOUTUBE_URL} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className={`${linkClass} text-[var(--on-dark)]`}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.07 0 12 0 12s0 3.93.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.93 24 12 24 12s0-3.93-.5-5.81zM9.55 15.57V8.43L15.82 12l-6.27 3.57z" />
+                    </svg>
+                    <span className="sr-only">YouTube</span>
+                  </a>
+                </li>
+              ) : null}
             </ul>
           </div>
           <FooterColumn title={footer.services} links={serviceLinks} />
