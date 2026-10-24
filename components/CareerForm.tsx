@@ -106,14 +106,20 @@ export default function CareerForm({ defaultArea = '' }: { defaultArea?: string 
     ) : null
 
   return (
-    <form onSubmit={submit} className="porthole border-[var(--glass-edge)] p-7 md:p-9" noValidate>
+    <form
+      toolname="apply_for_job"
+      tooldescription="Apply for an open role at MAST Studio."
+      onSubmit={submit}
+      className="porthole border-[var(--glass-edge)] p-7 md:p-9"
+      noValidate
+    >
       <div className="flex flex-col gap-6">
         <input type="hidden" name="locale" value={locale} />
         <div>
           <label htmlFor="cariere-name" className={labelClass}>
             {copy.name}
           </label>
-          <input id="cariere-name" name="name" type="text" autoComplete="name" maxLength={120} className={inputClass} aria-invalid={Boolean(errors.name)} aria-describedby={describedBy('name')} disabled={isSubmitting} required />
+          <input id="cariere-name" name="name" type="text" toolparamdescription="Full name of the applicant, e.g. Ana Popescu." autoComplete="name" maxLength={120} className={inputClass} aria-invalid={Boolean(errors.name)} aria-describedby={describedBy('name')} disabled={isSubmitting} required />
           {errorText('name')}
         </div>
 
@@ -122,14 +128,14 @@ export default function CareerForm({ defaultArea = '' }: { defaultArea?: string 
             <label htmlFor="cariere-email" className={labelClass}>
               {copy.email}
             </label>
-            <input id="cariere-email" name="email" type="email" autoComplete="email" maxLength={254} className={inputClass} aria-invalid={Boolean(errors.email)} aria-describedby={describedBy('email')} disabled={isSubmitting} required />
+            <input id="cariere-email" name="email" type="email" toolparamdescription="Email address in the format name@example.com." autoComplete="email" maxLength={254} className={inputClass} aria-invalid={Boolean(errors.email)} aria-describedby={describedBy('email')} disabled={isSubmitting} required />
             {errorText('email')}
           </div>
           <div>
             <label htmlFor="cariere-phone" className={labelClass}>
               {copy.phone}
             </label>
-            <input id="cariere-phone" name="phone" type="tel" autoComplete="tel" maxLength={40} className={inputClass} aria-invalid={Boolean(errors.phone)} aria-describedby={describedBy('phone')} disabled={isSubmitting} />
+            <input id="cariere-phone" name="phone" type="tel" toolparamdescription="Romanian mobile number, e.g. 07xx xxx xxx or +40 7xx xxx xxx. Optional." autoComplete="tel" maxLength={40} className={inputClass} aria-invalid={Boolean(errors.phone)} aria-describedby={describedBy('phone')} disabled={isSubmitting} />
             {errorText('phone')}
           </div>
         </div>
@@ -138,7 +144,7 @@ export default function CareerForm({ defaultArea = '' }: { defaultArea?: string 
           <label htmlFor="cariere-area" className={labelClass}>
             {copy.area}
           </label>
-          <select id="cariere-area" name="area" defaultValue={defaultArea} className={inputClass} aria-invalid={Boolean(errors.area)} aria-describedby={describedBy('area')} disabled={isSubmitting} required>
+          <select id="cariere-area" name="area" toolparamdescription="Position the applicant is applying for. Allowed values: Web design, Texte și conținut, Marketing și vânzări, Altceva." defaultValue={defaultArea} className={inputClass} aria-invalid={Boolean(errors.area)} aria-describedby={describedBy('area')} disabled={isSubmitting} required>
             <option value="" disabled>
               {copy.areaPlaceholder}
             </option>
@@ -155,14 +161,14 @@ export default function CareerForm({ defaultArea = '' }: { defaultArea?: string 
           <label htmlFor="cariere-links" className={labelClass}>
             {copy.links}
           </label>
-          <input id="cariere-links" name="links" type="text" maxLength={500} placeholder={copy.linksPlaceholder} className={inputClass} disabled={isSubmitting} />
+          <input id="cariere-links" name="links" type="text" toolparamdescription="Links to the applicant's portfolio, LinkedIn or other relevant profiles, separated by spaces. Optional." maxLength={500} placeholder={copy.linksPlaceholder} className={inputClass} disabled={isSubmitting} />
         </div>
 
         <div>
           <label htmlFor="cariere-message" className={labelClass}>
             {copy.message}
           </label>
-          <textarea id="cariere-message" name="message" rows={4} maxLength={1500} className={`${inputClass} resize-y`} disabled={isSubmitting} />
+          <textarea id="cariere-message" name="message" toolparamdescription="Short message from the applicant, e.g. motivation or availability. Optional, up to 1500 characters." rows={4} maxLength={1500} className={`${inputClass} resize-y`} disabled={isSubmitting} />
         </div>
 
         <div>
@@ -173,6 +179,7 @@ export default function CareerForm({ defaultArea = '' }: { defaultArea?: string 
             id="cariere-cv"
             name="cv"
             type="file"
+            toolparamdescription="CV file of the applicant. Accepted formats: PDF, DOC or DOCX. Required."
             accept={CV_ACCEPT}
             className={`${inputClass} cursor-pointer file:mr-4 file:rounded-full file:border-0 file:bg-[var(--ink)] file:px-4 file:py-2 file:font-sans file:text-sm file:font-semibold file:text-[var(--shell)]`}
             aria-invalid={Boolean(errors.cv)}
@@ -185,7 +192,7 @@ export default function CareerForm({ defaultArea = '' }: { defaultArea?: string 
 
         <div>
           <label className={checkboxLabelClass}>
-            <input name="consent" type="checkbox" value="da" className={checkboxClass} aria-invalid={Boolean(errors.consent)} aria-describedby={describedBy('consent')} disabled={isSubmitting} required />
+            <input name="consent" type="checkbox" value="da" toolparamdescription="Must be checked only with the user's explicit agreement. Do not check on the user's behalf without asking." className={checkboxClass} aria-invalid={Boolean(errors.consent)} aria-describedby={describedBy('consent')} disabled={isSubmitting} required />
             <span>
               {consentBefore}
               <Link href={href('/confidentialitate')} className={textLinkClass}>

@@ -99,7 +99,13 @@ export default function ContactForm({ copy, locale }: { copy: ContactFormCopy; l
   }
 
   return (
-    <form onSubmit={submit} className="contact-form" noValidate={channel === 'whatsapp'}>
+    <form
+      toolname="contact_mast_studio"
+      tooldescription="Send a message to MAST Studio, a web design studio in Timișoara, Romania."
+      onSubmit={submit}
+      className="contact-form"
+      noValidate={channel === 'whatsapp'}
+    >
       <ChannelSwitch
         value={channel}
         onChange={(next) => {
@@ -119,7 +125,12 @@ export default function ContactForm({ copy, locale }: { copy: ContactFormCopy; l
         <div className="mt-4 flex flex-wrap gap-2">
           {CONTACT_TOPICS.map((id) => (
             <label key={id} className="contact-chip">
-              <input type="radio" name="topic" value={id} checked={topic === id} onChange={() => setTopic(id)} className="sr-only" />
+              <input
+                type="radio"
+                name="topic"
+                value={id}
+                toolparamdescription="Subject of the message: 'project' (new project), 'question' (general question), 'press' (press inquiry) or 'other'. Ask the user to choose."
+                checked={topic === id} onChange={() => setTopic(id)} className="sr-only" />
               <span>{copy.topics[id]}</span>
             </label>
           ))}
@@ -128,23 +139,26 @@ export default function ContactForm({ copy, locale }: { copy: ContactFormCopy; l
 
       <label className="contact-field">
         <span className="mono-label">{copy.message}</span>
-        <textarea name="message" required minLength={10} maxLength={4000} rows={5} placeholder={copy.messageHint} />
+        <textarea
+          name="message"
+          toolparamdescription="The message to send, at least 10 characters, up to 4000."
+          required minLength={10} maxLength={4000} rows={5} placeholder={copy.messageHint} />
       </label>
       {channel === 'email' ? (
         <>
           <label className="contact-field">
             <span className="mono-label">{copy.name}</span>
-            <input name="name" required minLength={2} maxLength={120} autoComplete="name" />
+            <input name="name" toolparamdescription="Full name of the sender, e.g. Ana Popescu." required minLength={2} maxLength={120} autoComplete="name" />
           </label>
           <label className="contact-field">
             <span className="mono-label">{copy.email}</span>
-            <input name="email" type="email" required maxLength={254} autoComplete="email" inputMode="email" />
+            <input name="email" type="email" toolparamdescription="Email address in the format name@example.com." required maxLength={254} autoComplete="email" inputMode="email" />
           </label>
           <label className="contact-field">
             <span className="mono-label">
               {copy.company} <em>{copy.optional}</em>
             </span>
-            <input name="company" maxLength={160} autoComplete="organization" />
+            <input name="company" toolparamdescription="Company or organization of the sender. Optional." maxLength={160} autoComplete="organization" />
           </label>
         </>
       ) : null}
