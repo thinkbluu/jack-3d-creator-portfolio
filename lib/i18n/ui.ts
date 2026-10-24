@@ -453,7 +453,7 @@ const ro = {
       },
       kicker: 'Studio de web design · Timișoara',
       statement: 'Construim site-uri care contează pentru',
-      words: ['oameni.', 'afaceri.', 'clienți.', 'Timișoara.'],
+      words: ['oameni.', 'afaceri.', 'clienți.', 'tine.'],
       fill: 'Oricine poate face un site. Să faci unul pe care oamenii îl țin minte, care aduce clienți și care arată ca tine, e partea grea. Pentru asta e nevoie de strategie, design, cod scris de mână și bun-simț.',
       links: [
         { label: 'Vezi lucrările', href: '#lucrari' },
@@ -687,7 +687,7 @@ const en: typeof ro = {
     kicker: 'Manifesto',
     pairs: [
       { other: 'Others sell the same template to dozens of companies.', before: 'Yours ', highlight: 'looks like no one else’s', after: '.' },
-      { other: 'Others tell you “we’ll come back with a timeline”.', before: 'We tell you ', highlight: 'the day', after: '.' },
+      { other: 'Others tell you “we��ll come back with a timeline”.', before: 'We tell you ', highlight: 'the day', after: '.' },
       { other: 'Others ask for a 50% deposit.', before: 'We ask for ', highlight: '50 euro', after: '.' },
     ],
     closing: 'These are not marketing promises. They are clauses written into the contract.',
@@ -992,7 +992,7 @@ const en: typeof ro = {
       },
       kicker: 'Web design studio · Timișoara',
       statement: 'We build websites that matter to',
-      words: ['people.', 'businesses.', 'customers.', 'Timișoara.'],
+      words: ['people.', 'businesses.', 'customers.', 'you.'],
       fill: 'Anyone can make a website. Making one people remember, one that brings in customers and looks like you, is the hard part. It takes strategy, design, hand-written code and common sense.',
       links: [
         { label: 'See the work', href: '#lucrari' },
