@@ -185,7 +185,13 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
     ) : null
 
   return (
-    <form onSubmit={submit} className={variant === 'page' ? 'porthole border-[var(--glass-edge)] p-7 md:p-9' : ''} noValidate>
+    <form
+      toolname="request_website_quote"
+      tooldescription="Request a fixed-price quote from MAST Studio for a presentation website, online store, web or mobile app, SaaS platform, UX/UI design, maintenance or WhatsApp automation."
+      onSubmit={submit}
+      className={variant === 'page' ? 'porthole border-[var(--glass-edge)] p-7 md:p-9' : ''}
+      noValidate
+    >
       <div className="flex flex-col gap-6">
         <ChannelSwitch
           value={channel}
@@ -211,6 +217,7 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
                     type="radio"
                     name="projectType"
                     value={option.id}
+                    toolparamdescription="Type of project the quote is for: 'presentation' (presentation website), 'store' (online store), 'app' (web or mobile app) or 'unsure' (not decided yet). Ask the user to choose."
                     checked={selected}
                     onChange={() => setProjectType(option.id as ProjectTypeId)}
                     className="peer sr-only"
@@ -233,7 +240,9 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
           </label>
           <input
             id="lead-current-site"
+            name="currentSite"
             type="url"
+            toolparamdescription="URL of the visitor's current website, e.g. www.firmata.ro. Optional — leave empty if there is no website."
             inputMode="url"
             value={currentSite}
             onChange={(event) => setCurrentSite(event.target.value)}
@@ -256,7 +265,9 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
                 </label>
                 <input
                   id="lead-name"
+                  name="name"
                   type="text"
+                  toolparamdescription="Full name of the person requesting the quote, e.g. Ana Popescu."
                   autoComplete="name"
                   value={name}
                   onChange={(event) => setName(event.target.value)}
@@ -275,7 +286,9 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
                 </label>
                 <input
                   id="lead-email"
+                  name="email"
                   type="email"
+                  toolparamdescription="Email address in the format name@example.com."
                   inputMode="email"
                   autoComplete="email"
                   value={email}
@@ -296,7 +309,9 @@ export default function LeadForm({ variant = 'inline', serviceSlug }: LeadFormPr
               </label>
               <input
                 id="lead-phone"
+                name="phone"
                 type="tel"
+                toolparamdescription="Romanian mobile number, e.g. 07xx xxx xxx or +40 7xx xxx xxx. Optional."
                 inputMode="tel"
                 autoComplete="tel"
                 value={phone}

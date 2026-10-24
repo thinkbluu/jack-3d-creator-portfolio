@@ -12,6 +12,8 @@ export type TeamMember = {
   /** What they look after at the studio, a few words each. */
   focus?: Record<Locale, string[]>
   links?: { label: string; url: string }[]
+  /** LinkedIn profile URL, fed into the Person schema (sameAs). */
+  linkedin?: string
 }
 
 /**

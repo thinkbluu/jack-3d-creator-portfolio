@@ -39,9 +39,22 @@ export const SOCIAL_LINKS = [
   { label: 'Instagram', url: INSTAGRAM_URL },
 ] as const
 
-// Feed `sameAs` in the business structured data. Add the Google Business
-// Profile and LinkedIn URLs here once they exist.
-export const SOCIAL_PROFILES: string[] = SOCIAL_LINKS.map((link) => link.url)
+// Profiles filled in as they go live; empty values are skipped everywhere
+// (sameAs in the business schema and the footer icons).
+export const LINKEDIN_URL = ''
+export const GOOGLE_BUSINESS_PROFILE_URL = ''
+export const YOUTUBE_URL = ''
+export const CLUTCH_URL = ''
+
+// Feed `sameAs` in the business structured data.
+export const SOCIAL_PROFILES: string[] = [
+  FACEBOOK_URL,
+  INSTAGRAM_URL,
+  LINKEDIN_URL,
+  GOOGLE_BUSINESS_PROFILE_URL,
+  YOUTUBE_URL,
+  CLUTCH_URL,
+].filter(Boolean)
 
 // Alternative dispute resolution platform of ANPC (Ordinul ANPC 449/2022,
 // modified by Ordinul 270/2026). The EU ODR (SOL) platform closed in July 2025.

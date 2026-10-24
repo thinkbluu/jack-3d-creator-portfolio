@@ -111,6 +111,7 @@ export default function MockupForm() {
       <input
         type="radio"
         value={value}
+        toolparamdescription="Type of website the mockup is for: 'prezentare' (presentation website) or 'magazin' (online store). Ask the user to choose."
         {...register('projectType')}
         className="peer sr-only"
         disabled={isSubmitting}
@@ -132,6 +133,7 @@ export default function MockupForm() {
       <input
         id="mockup-telefon"
         type="tel"
+        toolparamdescription="Romanian mobile number, e.g. 07xx xxx xxx or +40 7xx xxx xxx."
         inputMode="tel"
         autoComplete="tel-national"
         placeholder="07xx xxx xxx"
@@ -154,6 +156,7 @@ export default function MockupForm() {
       <input
         id="mockup-email"
         type="email"
+        toolparamdescription="Email address in the format name@example.com."
         autoComplete="email"
         maxLength={254}
         className={inputClass}
@@ -167,7 +170,13 @@ export default function MockupForm() {
   )
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="porthole border-[var(--glass-edge)] p-6 md:p-8" noValidate>
+    <form
+      toolname="request_free_mockup"
+      tooldescription="Request a free homepage mockup (desktop and mobile) for a business website from MAST Studio, delivered within 24 working hours."
+      onSubmit={handleSubmit(onSubmit)}
+      className="porthole border-[var(--glass-edge)] p-6 md:p-8"
+      noValidate
+    >
       <div className="flex flex-col gap-5">
         <div className="grid gap-5 sm:grid-cols-2">
           <div>
@@ -176,6 +185,7 @@ export default function MockupForm() {
             </label>
             <input
               id="mockup-nume"
+              toolparamdescription="Full name of the person requesting the mockup, e.g. Ana Popescu."
               autoComplete="name"
               maxLength={120}
               className={inputClass}
@@ -192,6 +202,7 @@ export default function MockupForm() {
             </label>
             <input
               id="mockup-firma"
+              toolparamdescription="Name of the visitor's business or company, e.g. Clinica Dentară Dr. Ionescu. Leave empty for personal requests."
               autoComplete="organization"
               maxLength={120}
               className={inputClass}
@@ -238,6 +249,7 @@ export default function MockupForm() {
           </label>
           <select
             id="mockup-domeniu"
+            toolparamdescription="Business field of the company. Allowed values: Clinică / cabinet medical, Cabinet veterinar, Stomatologie, Salon / beauty, Meserii și construcții, Consultanță / servicii B2B, Restaurant / HoReCa, Magazin / retail, Altul."
             defaultValue=""
             className={inputClass}
             aria-invalid={Boolean(errors.domeniu)}
@@ -265,6 +277,7 @@ export default function MockupForm() {
             <input
               id="mockup-site"
               type="url"
+              toolparamdescription="URL of the company's current website, e.g. www.firmata.ro. Leave empty when the business has no website."
               inputMode="url"
               placeholder="www.firmata.ro"
               maxLength={200}
@@ -275,7 +288,11 @@ export default function MockupForm() {
               {...register('site')}
             />
             <label className={`${checkboxLabelClass} mt-0 shrink-0 sm:mt-3`}>
-              <input type="checkbox" className={checkboxClass} disabled={isSubmitting} {...register('noSite')} />
+              <input
+                type="checkbox"
+                className={checkboxClass}
+                toolparamdescription="Check only when the user confirms the business has no website; the current-website field then stays empty."
+                disabled={isSubmitting} {...register('noSite')} />
               <span>Nu am site</span>
             </label>
           </div>
@@ -297,6 +314,7 @@ export default function MockupForm() {
           </label>
           <textarea
             id="mockup-servicii"
+            toolparamdescription="Main services or products of the business, e.g. 'consultații, vaccinări, toaletaj'. Free text, up to 1000 characters."
             rows={2}
             maxLength={1000}
             placeholder="ex: consultații, vaccinări, toaletaj"
@@ -314,6 +332,7 @@ export default function MockupForm() {
             <input
               type="checkbox"
               className={checkboxClass}
+              toolparamdescription="Must be checked only with the user's explicit agreement. Do not check on the user's behalf without asking."
               aria-invalid={Boolean(errors.consent)}
               aria-describedby={describedBy('consent', 'mockup-consent-error')}
               disabled={isSubmitting}

@@ -35,6 +35,8 @@ export type BlogPost = {
   cover?: string
   /** Describes the cover for screen readers and search. Required when there is a cover. */
   coverAlt?: string
+  /** Team member slug (lib/team.ts) for the byline and authorship schema. */
+  author?: string
 }
 
 type BlogFrontmatter = Omit<BlogPost, 'body'>
@@ -149,6 +151,7 @@ function parseFrontmatter(data: Record<string, unknown>, fileName: string): Blog
     seoDescription: optionalString(data.seoDescription, 'seoDescription', fileName),
     faqItems: parseFaqItems(data.faqItems, fileName),
     howToSteps: parseHowToSteps(data.howToSteps, fileName),
+    author: optionalString(data.author, 'author', fileName),
     ...parseCover(data, fileName),
   }
 }

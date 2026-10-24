@@ -49,6 +49,7 @@ export default function ChannelSwitch({
                 type="radio"
                 name={name}
                 value={id}
+                toolparamdescription="Preferred contact channel: 'whatsapp' or 'email'. Ask the user which they prefer."
                 checked={selected}
                 onChange={() => onChange(id)}
                 disabled={disabled}
