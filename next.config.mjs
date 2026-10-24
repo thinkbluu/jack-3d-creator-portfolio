@@ -11,6 +11,15 @@ const nextConfig = {
       { protocol: 'https', hostname: 'placehold.co' },
     ],
   },
+  async rewrites() {
+    return {
+      // robots.txt is served by a route handler (app/robots-txt) so the
+      // Agentmap line can be emitted; the metadata robots convention cannot.
+      beforeFiles: [{ source: '/robots.txt', destination: '/robots-txt' }],
+      afterFiles: [],
+      fallback: [],
+    }
+  },
   async redirects() {
     return [
       // Apps and SaaS platforms now have separate service pages.
