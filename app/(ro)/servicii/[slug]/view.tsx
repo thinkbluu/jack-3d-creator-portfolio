@@ -33,6 +33,8 @@ type ServiceChrome = {
   paidSeparately: string
   forWho: string
   process: string
+  packages: string
+  packagesFor: string
   faqAbout: (name: string) => string
   offerFor: (name: string) => string
   writeDirect: (message: string) => string
@@ -55,6 +57,8 @@ const serviceChrome: Record<Locale, ServiceChrome> = {
     paidSeparately: 'Ce se plătește separat',
     forWho: 'Pentru cine e potrivit',
     process: 'Cum decurge',
+    packages: 'Pachete și prețuri',
+    packagesFor: 'Pentru cine',
     faqAbout: (name) => `Întrebări frecvente despre ${name}`,
     offerFor: (name) => `Vrei o ofertă pentru ${name}?`,
     writeDirect: (message) => `Sau scrie-ne direct: „${message}”`,
@@ -75,6 +79,8 @@ const serviceChrome: Record<Locale, ServiceChrome> = {
     paidSeparately: 'What is paid separately',
     forWho: 'Who it’s for',
     process: 'How it works',
+    packages: 'Packages and prices',
+    packagesFor: 'Who it’s for',
     faqAbout: (name) => `Frequently asked questions about ${name}`,
     offerFor: (name) => `Want a quote for ${name}?`,
     writeDirect: (message) => `Or write to us directly: “${message}”`,
@@ -215,6 +221,25 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
               <h2 className="type-h3">{copy.paidSeparately}</h2>
               <DotList items={service.notIncluded} tone="muted" />
             </section>
+
+            {service.packages ? (
+              <section className="mt-12 border-t border-[var(--hairline)] pt-12">
+                <h2 className="type-h3">{copy.packages}</h2>
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  {service.packages.map((pack) => (
+                    <article key={pack.name} className="rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--shell-warm)] p-6">
+                      <h3 className="font-sans text-[15px] font-semibold text-[var(--ink)]">{pack.name}</h3>
+                      <p className="display-xl mt-3 text-[clamp(1.4rem,2vw,1.8rem)] leading-[1.05] text-[var(--brass-ink)]">{pack.price}</p>
+                      <p className="mono-label mt-3 text-[var(--fg-3)]">{pack.time}</p>
+                      <p className="mt-4 border-t border-[var(--hairline)] pt-4 text-[15px] leading-relaxed text-[var(--fg-2)]">
+                        <span className="font-semibold text-[var(--ink)]">{copy.packagesFor}: </span>
+                        {pack.forWho}
+                      </p>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            ) : null}
 
             <section className="mt-12 border-t border-[var(--hairline)] pt-12">
               <h2 className="type-h3">{copy.forWho}</h2>

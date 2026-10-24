@@ -29,6 +29,7 @@ export const SERVICE_SLUGS: Pair[] = [
   { ro: 'magazin-online', en: 'online-store' },
   { ro: 'aplicatii-web', en: 'web-and-mobile-apps' },
   { ro: 'platforme-saas', en: 'saas-platforms' },
+  { ro: 'design-ux-ui', en: 'ux-ui-design' },
   { ro: 'mentenanta', en: 'maintenance' },
   { ro: 'automatizari-whatsapp', en: 'whatsapp-automation' },
 ]

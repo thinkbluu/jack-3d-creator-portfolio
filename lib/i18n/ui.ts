@@ -105,6 +105,14 @@ const ro = {
         guarantee: 'Ofertă fixă, fără costuri surpriză',
         message: 'Salut! Vreau să construim o platformă personalizată. Putem discuta?',
       },
+      {
+        id: 'design-ux-ui',
+        name: 'Design UX/UI',
+        description: 'Aplicații și platforme care sunt ușor de folosit, nu doar frumoase. Fluxuri, prototip în Figma și predare către programator.',
+        price: 'de la 250 EUR',
+        guarantee: 'Auditul se scade din proiectul de design',
+        message: 'Salut! Mă interesează design UX/UI pentru un proiect. Putem vorbi?',
+      },
     ],
     continuing: [
       {
@@ -632,6 +640,14 @@ const en: typeof ro = {
         price: 'custom quote',
         guarantee: 'A fixed quote, with no surprise costs',
         message: 'Hi! I want to build a custom platform. Can we talk?',
+      },
+      {
+        id: 'design-ux-ui',
+        name: 'UX/UI design',
+        description: 'Apps and platforms that are easy to use, not just pretty. Flows, a Figma prototype, and developer handoff.',
+        price: 'from 250 EUR',
+        guarantee: 'The audit is deducted from a design project',
+        message: 'Hi! I’m interested in UX/UI design for a project. Can we talk?',
       },
     ],
     continuing: [

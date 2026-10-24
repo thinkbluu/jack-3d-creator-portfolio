@@ -16,6 +16,7 @@ export type ServiceText = Pick<
   | 'notIncluded'
   | 'process'
   | 'forWho'
+  | 'packages'
   | 'faq'
   | 'waMessage'
   | 'serviceType'
@@ -310,6 +311,87 @@ export const serviceTextEn: Record<string, ServiceText> = {
     ],
     waMessage: 'Hi! I want to build a custom platform. Can we talk?',
     serviceType: 'SaaS platform development',
+  },
+  'design-ux-ui': {
+    name: 'UX/UI design',
+    shortName: 'UX/UI design',
+    h1: 'UX/UI design for apps and platforms',
+    seoTitle: 'UX/UI design for apps, from 250 EUR',
+    metaDescription:
+      'UX/UI design for apps, platforms, and SaaS. Audit from 250 EUR, product design from 1,200 EUR, an interactive Figma prototype, and developer handoff.',
+    answerCapsule:
+      'At MAST Studio, UX/UI design starts at 250 EUR for an audit of an existing site or app, and at 1,200 EUR for the design of an MVP (up to 12 key screens) in about 2 weeks. You get user flows, wireframes, high-fidelity UI for desktop and mobile, an interactive Figma prototype, a mini design system, and the handoff to your developer.',
+    priceLabel: 'from 250 EUR',
+    deliveryLabel: 'Delivery time',
+    deliveryTime: '3 days (audit) · ~2 weeks (sprint)',
+    intro:
+      'UX/UI design is for apps, platforms, and SaaS, for redesigns, and for teams that already have a developer but no designer. For a simple presentation website, the design is already included in our “Presentation website” service. Here we work on the product: flows, screens, a prototype, and a design system your developer can follow without guesswork.',
+    includes: [
+      'a discovery call and a brief',
+      'user flows',
+      'wireframes',
+      'high-fidelity UI for desktop and mobile',
+      'an interactive Figma prototype',
+      'a mini design system: colours, typography, components with states',
+      'an accessibility check (WCAG AA)',
+      'developer handoff: Figma Dev Mode, exported assets, a specification',
+      '2 rounds of changes',
+      '30 days of developer support',
+    ],
+    notIncluded: [
+      'development (quoted separately; if we build it, the design is deducted from the price)',
+      'user testing (+300 EUR)',
+      'logo and branding',
+      'illustrations and 3D',
+    ],
+    packages: [
+      { name: 'UX/UI audit', price: '250 EUR', time: '3 business days', forWho: 'Find out exactly what blocks your users before you invest in a redesign' },
+      { name: 'Product design sprint', price: 'from 1,200 EUR', time: '~2 weeks', forWho: 'MVPs and new products that need to launch fast' },
+      { name: 'Full product design', price: 'from 2,500 EUR', time: '3–6 weeks', forWho: 'Platforms and products that grow over time' },
+      { name: 'Design retainer', price: 'from 600 EUR/month', time: 'monthly', forWho: 'Teams iterating on the product every month' },
+    ],
+    process: [
+      { step: 'Call and brief', description: 'We discuss the product, the users, and which screens matter most. You get a fixed-price quote.' },
+      { step: 'Flows and wireframes', description: 'We draw the user journey and the screen structure, before any colour or styling.' },
+      { step: 'UI and prototype, with feedback', description: 'High-fidelity design for desktop and mobile, linked into an interactive Figma prototype. We adjust along the way, within the 2 included rounds.' },
+      { step: 'Developer handoff', description: 'Figma Dev Mode, exported assets, a specification, and 30 days of support for the team that builds it.' },
+    ],
+    forWho: [
+      'startups building an MVP',
+      'SaaS platforms and B2B apps',
+      'firms with an app or a website that does not convert',
+      'developer teams without a designer',
+      'agencies that need design as outsourcing',
+    ],
+    faq: [
+      {
+        question: 'How much does UX/UI design cost?',
+        answer:
+          'We have four packages: the UX/UI audit costs 250 EUR, the product design sprint starts at 1,200 EUR, full product design at 2,500 EUR, and the design retainer at 600 EUR a month.',
+      },
+      {
+        question: 'What is the difference between UX and UI?',
+        answer:
+          'UX is the flow and the structure: what the user does, in which order, and why. UI is how it looks: colours, typography, components. We do both, in that order.',
+      },
+      {
+        question: 'Do I get the Figma files?',
+        answer:
+          'Yes. At handover, the Figma files become entirely yours, together with the exported assets and the specification for the developer.',
+      },
+      {
+        question: 'Can you also build it?',
+        answer:
+          'Yes, with a separate quote for development. If we build the app, the design is deducted from the build price.',
+      },
+      {
+        question: 'How do I pay?',
+        answer:
+          '50% deposit and 50% at handover. The audit is paid up front and is fully deducted from a design project that follows.',
+      },
+    ],
+    waMessage: 'Hi! I’m interested in UX/UI design for a project. Can we talk?',
+    serviceType: 'UX/UI design',
   },
   mentenanta: {
     name: 'Maintenance and growth',
