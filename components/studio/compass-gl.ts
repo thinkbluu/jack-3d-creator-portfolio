@@ -17,8 +17,8 @@ export class CompassGL {
   private env: THREE.Texture
   private rotation = { x: 0, y: 0 }
 
-  constructor(canvas: HTMLCanvasElement, dpr: number) {
-    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' })
+  constructor(canvas: HTMLCanvasElement, dpr: number, antialias = true) {
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias, alpha: true, powerPreference: 'high-performance' })
     this.renderer.setPixelRatio(dpr)
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
     this.renderer.toneMappingExposure = 1.05
@@ -48,7 +48,7 @@ export class CompassGL {
             bevelThickness: 22,
             bevelSize: 7,
             bevelSegments: 10,
-            curveSegments: 28,
+            curveSegments: 18,
           }),
         )
       }
