@@ -190,12 +190,6 @@ const ro = {
     body: 'Scrie-ne ce faci. Primești oferta azi.',
     orEmail: 'sau scrie-ne la',
   },
-  contestTeaser: {
-    kicker: 'Concurs lunar · Site gratuit',
-    title: 'Un site de prezentare gratuit, în fiecare lună',
-    body: 'În fiecare lună construim gratuit un site de prezentare, în valoare de {prize} EUR, pentru o afacere mică din România. Te înscrii, postezi pe Instagram sau pe pagina de Facebook a afacerii și ne etichetezi. Postarea cu cele mai multe aprecieri câștigă.',
-    cta: 'Vezi cum participi',
-  },
   footer: {
     blurb: 'Studio de web design din Timișoara. Site-uri de prezentare de la 300 EUR, live în 48 de ore, magazine online și aplicații pentru afaceri din toată România.',
     location: 'Timișoara · lucrăm la distanță în toată România',
@@ -209,7 +203,6 @@ const ro = {
     privacy: 'Confidențialitate',
     cookies: 'Cookies',
     terms: 'Termeni',
-    rules: 'Regulament concurs',
     register: 'Reg. Com.',
     guideLinks: [
       { href: '/blog/cat-costa-un-site-in-romania', label: 'Cât costă un site în România' },
@@ -294,8 +287,6 @@ const ro = {
     apply: 'Vrei să aplicăm asta pentru afacerea ta?',
     seeAlso: 'Vezi și',
     prices: 'serviciile și prețurile MAST Studio',
-    orJoin: 'sau participă la',
-    contest: 'concursul lunar pentru un site gratuit',
     related: 'Citește și',
     indexKicker: 'Ghid',
     lead: 'Ce am învățat construind site-uri, scris pentru cei care urmează să-și facă unul.',
@@ -727,12 +718,6 @@ const en: typeof ro = {
     body: 'Tell us what you do. You get the quote today.',
     orEmail: 'or write to us at',
   },
-  contestTeaser: {
-    kicker: 'Monthly contest · Free website',
-    title: 'A free presentation website, every month',
-    body: 'Every month we build a presentation website for free, worth {prize} EUR, for a small business in Romania. You enter, post on Instagram or on the business Facebook page, and tag us. The post with the most likes wins.',
-    cta: 'See how to enter',
-  },
   footer: {
     blurb: 'A web design studio in Timișoara. Presentation websites from 300 EUR, live in 48 hours, online stores and apps for businesses across Romania.',
     location: 'Timișoara · we work remotely across Romania',
@@ -746,7 +731,6 @@ const en: typeof ro = {
     privacy: 'Privacy',
     cookies: 'Cookies',
     terms: 'Terms',
-    rules: 'Contest rules',
     register: 'Trade reg.',
     guideLinks: [
       { href: '/blog/cat-costa-un-site-in-romania', label: 'What a website costs in Romania' },
@@ -831,8 +815,6 @@ const en: typeof ro = {
     apply: 'Want us to apply this to your business?',
     seeAlso: 'See also',
     prices: 'MAST Studio services and prices',
-    orJoin: 'or enter',
-    contest: 'the monthly contest for a free website',
     related: 'Read next',
     indexKicker: 'Guide',
     lead: 'What we learned building websites, written for people about to make one.',

@@ -35,9 +35,6 @@ type ServicesCopy = {
   unsureCompare: string
   cta: string
   form: string
-  freeBefore: string
-  freeLink: string
-  freeAfter: string
 }
 
 const servicesCopy: Record<Locale, ServicesCopy> = {
@@ -68,9 +65,6 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     unsureCompare: 'freelancer, studio și agenție',
     cta: 'Spune-ne ce ai nevoie și primești oferta azi',
     form: 'Sau completează cererea de ofertă',
-    freeBefore: 'Ai o afacere mică și nu ai încă buget pentru site? În fiecare lună oferim',
-    freeLink: 'un site de prezentare gratuit',
-    freeAfter: 'unei afaceri din România, prin concursul nostru lunar.',
   },
   en: {
     word: PAGE_WORDS['/servicii'].en,
@@ -99,9 +93,6 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     unsureCompare: 'freelancer, studio, and agency',
     cta: 'Tell us what you need and you get the quote today',
     form: 'Or fill in the quote request',
-    freeBefore: 'Running a small business and you don’t have the budget for a website yet? Every month we offer',
-    freeLink: 'a free presentation website',
-    freeAfter: 'to a business in Romania, through our monthly contest.',
   },
 }
 

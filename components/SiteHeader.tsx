@@ -7,7 +7,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher'
 import MenuOverlay, { type MenuItem } from '@/components/MenuOverlay'
 import { useHref, useUi } from '@/lib/i18n/context'
 
-export type SiteSection = 'servicii' | 'portofoliu' | 'cum-lucram' | 'blog' | 'site-gratuit' | 'despre' | 'cariere' | 'contact'
+export type SiteSection = 'servicii' | 'portofoliu' | 'cum-lucram' | 'blog' | 'despre' | 'cariere' | 'contact'
 
 const DARK_VARS = {
   '--ink': '#faf7f2',

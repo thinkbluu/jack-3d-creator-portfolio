@@ -11,7 +11,6 @@ const TOP: Pair[] = [
   { ro: 'cere-oferta', en: 'get-a-quote' },
   { ro: 'comparatie', en: 'compare' },
   { ro: 'glosar', en: 'glossary' },
-  { ro: 'site-gratuit', en: 'free-website' },
   { ro: 'cariere', en: 'careers' },
   { ro: 'confidentialitate', en: 'privacy' },
   { ro: 'termeni', en: 'terms' },
@@ -22,19 +21,6 @@ const TOP: Pair[] = [
   { ro: 'cum-lucram', en: 'approach' },
   { ro: 'newsletter', en: 'newsletter' },
   { ro: 'echipa', en: 'team' },
-]
-
-const FREE_SITE: Pair[] = [
-  { ro: 'regulament', en: 'rules' },
-  { ro: 'participare', en: 'enter' },
-  { ro: 'confirmare', en: 'confirm' },
-  { ro: 'castig', en: 'win' },
-  { ro: 'admin', en: 'admin' },
-]
-
-const ADMIN: Pair[] = [
-  { ro: 'like-uri', en: 'likes' },
-  { ro: 'livrat', en: 'delivered' },
 ]
 
 /** Canonical service id is the Romanian slug. English pages use the `en` slug. */
@@ -73,10 +59,6 @@ function mapParts(parts: string[], from: Locale, to: Locale) {
     if (index === 0) return pairValue(TOP, part, from, to)
     const top = pairValue(TOP, parts[0], from, 'ro')
     if (index === 1 && top === 'servicii') return pairValue(SERVICE_SLUGS, part, from, to)
-    if (index === 1 && top === 'site-gratuit') return pairValue(FREE_SITE, part, from, to)
-    if (index === 2 && top === 'site-gratuit' && pairValue(FREE_SITE, parts[1], from, 'ro') === 'admin') {
-      return pairValue(ADMIN, part, from, to)
-    }
     return part
   })
 }

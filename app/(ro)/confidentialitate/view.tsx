@@ -21,10 +21,6 @@ const ro = {
   careersBefore: 'Dacă trimiți o candidatură pe pagina ',
   careersLink: 'Cariere',
   careersAfter: ', primim numele, e-mailul, telefonul (opțional), domeniul care te interesează, linkurile și mesajul tău, plus CV-ul atașat.',
-  contestBefore: 'Dacă te înscrii la concursul ',
-  contestLink: '„Site gratuit în fiecare lună”',
-  contestAfter:
-    ', primim numele, e-mailul, telefonul (opțional), datele afacerii (nume, formă de organizare, domeniu, oraș), linkul postării tale și răspunsurile la acordurile din formular. Pentru a limita înscrierile abuzive păstrăm o amprentă criptată (hash) a adresei IP, nu adresa în sine.',
   dataQuote:
     'Când trimiți formularul de ofertă, adresa IP este folosită temporar pentru a limita trimiterile abuzive, iar împreună cu cererea primim și parametrii de campanie (UTM) ai paginii de pe care ai venit, dacă există.',
   dataVercel:
@@ -36,15 +32,15 @@ const ro = {
   purposesBody:
     'Prelucrăm date pentru a răspunde solicitărilor, a pregăti și executa contracte, a comunica despre proiecte, a proteja serviciul și a înțelege performanța agregată a site-ului. Temeiurile pot fi demersurile precontractuale, executarea contractului, obligația legală și interesul legitim.',
   purposesConsent:
-    'CV-urile le folosim doar pentru recrutare, pe baza consimțământului tău. Datele din concurs le folosim pentru organizarea lui, contactarea participanților și a câștigătorului și pentru obligațiile fiscale, conform regulamentului pe care îl accepți la înscriere. Newsletterul lunar îl trimitem doar dacă ai bifat acordul separat; te poți dezabona oricând din linkul din fiecare e-mail.',
+    'CV-urile le folosim doar pentru recrutare, pe baza consimțământului tău. Newsletterul lunar îl trimitem doar dacă ai bifat acordul separat; te poți dezabona oricând din linkul din fiecare e-mail.',
   recipientsTitle: '4. Destinatari și transferuri',
   recipientsBody:
-    'Datele pot fi accesate strict când este necesar de furnizorii noștri de infrastructură, măsurare și comunicare: Vercel (găzduire și statistici agregate), Resend (livrarea e-mailurilor: cererile din formulare, candidaturile, mesajele concursului și newsletterul), furnizorul bazei de date a concursului (Neon, prin Vercel), Google (Google Tag și Google Analytics, conform alegerii tale din banner) și WhatsApp/Meta atunci când alegi legătura WhatsApp. Postările de concurs sunt publice pe Instagram sau Facebook, conform setărilor tale. Acești furnizori operează conform propriilor politici și pot prelucra date în afara Spațiului Economic European folosind mecanisme legale aplicabile.',
+    'Datele pot fi accesate strict când este necesar de furnizorii noștri de infrastructură, măsurare și comunicare: Vercel (găzduire și statistici agregate), Resend (livrarea e-mailurilor: cererile din formulare, candidaturile și newsletterul), Google (Google Tag și Google Analytics, conform alegerii tale din banner) și WhatsApp/Meta atunci când alegi legătura WhatsApp. Acești furnizori operează conform propriilor politici și pot prelucra date în afara Spațiului Economic European folosind mecanisme legale aplicabile.',
   retentionTitle: '5. Durata păstrării',
   retentionBody:
     'Păstrăm conversațiile și documentele comerciale doar cât este necesar pentru solicitare, relația contractuală, apărarea drepturilor și obligațiile contabile sau legale. Datele tehnice agregate urmează perioadele configurate de furnizorii utilizați.',
-  retentionContest:
-    'CV-urile le păstrăm cel mult 12 luni de la primire. La concurs, înscrierile neconfirmate se șterg după 7 zile, datele participanților la 12 luni după ultima rundă la care au participat, iar datele câștigătorilor cât cer obligațiile fiscale și contabile. Adresa de e-mail rămâne în lista newsletterului până te dezabonezi.',
+  retentionCvs:
+    'CV-urile le păstrăm cel mult 12 luni de la primire. Adresa de e-mail rămâne în lista newsletterului până te dezabonezi.',
   rightsTitle: '6. Drepturile tale',
   rightsBody:
     'Poți solicita accesul, rectificarea, ștergerea, restricționarea, portabilitatea sau opoziția, după caz. Poți depune o plângere la Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal. Pentru exercitarea drepturilor, scrie-ne la adresa de contact.',
@@ -68,10 +64,6 @@ const en: typeof ro = {
   careersBefore: 'If you send an application on the ',
   careersLink: 'Careers',
   careersAfter: ' page, we receive your name, email, phone (optional), the field you are interested in, your links and message, plus the attached CV.',
-  contestBefore: 'If you enter the ',
-  contestLink: '“A free website every month”',
-  contestAfter:
-    ' contest, we receive your name, email, phone (optional), the business details (name, legal form, field, city), the link to your post and your answers to the consents in the form. To limit abusive entries we keep an encrypted fingerprint (hash) of the IP address, not the address itself.',
   dataQuote:
     'When you submit the quote form, the IP address is used temporarily to limit abusive submissions, and together with the request we also receive the campaign parameters (UTM) of the page you came from, if any.',
   dataVercel:
@@ -83,15 +75,15 @@ const en: typeof ro = {
   purposesBody:
     'We process data in order to reply to requests, to prepare and perform contracts, to communicate about projects, to protect the service and to understand the aggregate performance of the website. The legal bases may be pre-contractual steps, performance of a contract, a legal obligation and legitimate interest.',
   purposesConsent:
-    'We use CVs only for recruitment, on the basis of your consent. We use contest data to organise the contest, to contact participants and the winner, and for tax obligations, under the rules you accept when you enter. We send the monthly newsletter only if you tick the separate consent; you can unsubscribe at any time from the link in each email.',
+    'We use CVs only for recruitment, on the basis of your consent. We send the monthly newsletter only if you tick the separate consent; you can unsubscribe at any time from the link in each email.',
   recipientsTitle: '4. Recipients and transfers',
   recipientsBody:
-    'Data may be accessed, strictly when necessary, by our infrastructure, measurement and communication providers: Vercel (hosting and aggregate statistics), Resend (delivery of emails: form requests, applications, contest messages and the newsletter), the contest database provider (Neon, through Vercel), Google (Google Tag and Google Analytics, according to your choice in the banner) and WhatsApp/Meta when you choose the WhatsApp link. Contest posts are public on Instagram or Facebook, according to your settings. These providers operate under their own policies and may process data outside the European Economic Area using applicable legal mechanisms.',
+    'Data may be accessed, strictly when necessary, by our infrastructure, measurement and communication providers: Vercel (hosting and aggregate statistics), Resend (delivery of emails: form requests, applications and the newsletter), Google (Google Tag and Google Analytics, according to your choice in the banner) and WhatsApp/Meta when you choose the WhatsApp link. These providers operate under their own policies and may process data outside the European Economic Area using applicable legal mechanisms.',
   retentionTitle: '5. How long we keep data',
   retentionBody:
     'We keep conversations and commercial documents only for as long as needed for the request, the contractual relationship, the defence of rights and accounting or legal obligations. Aggregate technical data follows the periods configured by the providers we use.',
-  retentionContest:
-    'We keep CVs for at most 12 months from receipt. For the contest, unconfirmed entries are deleted after 7 days, participants’ data 12 months after the last round they entered, and winners’ data for as long as tax and accounting obligations require. The email address stays on the newsletter list until you unsubscribe.',
+  retentionCvs:
+    'We keep CVs for at most 12 months from receipt. The email address stays on the newsletter list until you unsubscribe.',
   rightsTitle: '6. Your rights',
   rightsBody:
     'You may request access, rectification, erasure, restriction, portability or objection, as applicable. You may lodge a complaint with the National Supervisory Authority for Personal Data Processing (Autoritatea Națională de Supraveghere a Prelucrării Datelor cu Caracter Personal). To exercise your rights, write to us at the contact address.',
@@ -160,7 +152,7 @@ export function PrivacyView({ locale }: { locale: Locale }) {
       </LegalSection>
       <LegalSection title={t.retentionTitle}>
         <p>{t.retentionBody}</p>
-        <p>{t.retentionContest}</p>
+        <p>{t.retentionCvs}</p>
       </LegalSection>
       <LegalSection title={t.rightsTitle}>
         <p>{t.rightsBody}</p>
