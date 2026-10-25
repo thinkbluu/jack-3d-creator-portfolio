@@ -23,7 +23,7 @@ function Cover({ post, sizes, priority }: { post: IdeaCard; sizes: string; prior
   return (
     <span className="idea-cover">
       {post.cover ? (
-        <Image src={post.cover} alt={post.coverAlt ?? ''} fill sizes={sizes} priority={priority} className="object-cover" />
+        <Image src={post.cover} alt={post.coverAlt ?? post.title} fill sizes={sizes} priority={priority} className="object-cover" />
       ) : (
         <span className="idea-cover-blank" aria-hidden="true">
           <span className="idea-cover-mark" />

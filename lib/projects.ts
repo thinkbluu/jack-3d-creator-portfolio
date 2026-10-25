@@ -48,7 +48,7 @@ export const projects: Project[] = [
     stack: ['Next.js', 'React', 'Tailwind CSS', 'SEO local'],
     liveUrl: 'https://veterinartim.ro',
     cover: '/work/01-veterinaria-timisoara.webp',
-    coverAlt: 'Leather collar with a gold heart tag on dark velvet, Veterinaria Timișoara',
+    coverAlt: 'Zgardă de piele cu medalion auriu pe catifea închisă, Veterinaria Timișoara',
     featured: true,
   },
   {
@@ -73,7 +73,7 @@ export const projects: Project[] = [
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Bilingv RO/EN'],
     liveUrl: 'https://agdmanagement.ro',
     cover: '/work/02-agd-innerpath-consulting.webp',
-    coverAlt: 'Gold and black fountain pens on a wax-sealed envelope, AGD Innerpath Consulting',
+    coverAlt: 'Stilouri aurii și negre pe un plic sigilat cu ceară, AGD Innerpath Consulting',
     featured: true,
   },
   {
@@ -98,7 +98,7 @@ export const projects: Project[] = [
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Conformitate PoCIDIF'],
     liveUrl: 'https://decodex.ro',
     cover: '/work/03-decodex.webp',
-    coverAlt: 'Layered glass panels on a gold axis, DECODEX',
+    coverAlt: 'Panouri de sticlă suprapuse pe o axă aurie, DECODEX',
     featured: true,
   },
   {
@@ -123,7 +123,7 @@ export const projects: Project[] = [
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Arhitectură de conținut'],
     liveUrl: 'https://oncogen.ro',
     cover: '/work/05-oncogen.webp',
-    coverAlt: 'Glowing petri dish culture, OncoGen',
+    coverAlt: 'Cultură celulară strălucitoare într-o cutie Petri, OncoGen',
     featured: false,
   },
   {
@@ -148,7 +148,7 @@ export const projects: Project[] = [
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Catalog produse'],
     liveUrl: 'https://paineacasei.ro',
     cover: '/work/06-painea-casei.webp',
-    coverAlt: 'Fresh sourdough loaf on a peel by a wood-fired oven, Pâinea Casei',
+    coverAlt: 'Pâine cu maia proaspătă pe lopată, lângă cuptorul pe lemne, Pâinea Casei',
     featured: false,
   },
   {
@@ -171,7 +171,7 @@ export const projects: Project[] = [
     stack: ['Next.js', 'React', 'PostgreSQL', 'Tailwind CSS'],
     liveUrl: 'https://asesor.ro',
     cover: '/work/04-asesor.webp',
-    coverAlt: 'Gold scissors and comb on black marble, ASESOR',
+    coverAlt: 'Foarfecă și pieptene aurii pe marmură neagră, ASESOR',
     featured: true,
   },
   {
@@ -196,7 +196,7 @@ export const projects: Project[] = [
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
     liveUrl: 'https://demo1.maststudio.ro',
     cover: '/work/07-lumora.webp',
-    coverAlt: 'Frosted glass bottle with gold cap on dark stone in mist, Lumora',
+    coverAlt: 'Flacon din sticlă mată cu capac auriu, pe piatră întunecată, în ceață, Lumora',
     featured: false,
   },
   {
@@ -221,7 +221,7 @@ export const projects: Project[] = [
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Scroll-driven animation'],
     liveUrl: 'https://demo2.maststudio.ro',
     cover: '/work/08-mostar.webp',
-    coverAlt: 'Stone arch bridge reflected in still water at dusk, Mostar',
+    coverAlt: 'Pod de piatră în arcadă reflectat în apa liniștită, la amurg, Mostar',
     featured: false,
   },
   {
@@ -246,7 +246,7 @@ export const projects: Project[] = [
     stack: ['React', 'TypeScript', 'Tailwind CSS', 'Canvas API'],
     liveUrl: 'https://demo3.maststudio.ro',
     cover: '/work/09-lithos.webp',
-    coverAlt: 'Split geode with crystal interior, Lithos',
+    coverAlt: 'Geodă despărțită cu interior cristalin, Lithos',
     featured: false,
   },
 ]

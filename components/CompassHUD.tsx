@@ -26,14 +26,16 @@ export default function CompassHUD() {
       onClick={() => window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' })}
       className="fixed bottom-8 right-8 z-40 flex h-16 w-16 items-center justify-center opacity-70 transition-opacity duration-200 hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
     >
-      <motion.img
-        src="/images/mast-rose.png"
-        alt=""
+      <motion.div
         aria-hidden="true"
-        width={56}
-        height={56}
         className="h-14 w-14 opacity-60 drop-shadow-[0_8px_14px_rgba(0,0,0,0.3)]"
-        style={reduceMotion ? undefined : { rotate: rotation }}
+        style={{
+          backgroundImage: 'url(/images/mast-rose.png)',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          ...(reduceMotion ? {} : { rotate: rotation }),
+        }}
       />
     </button>
   )

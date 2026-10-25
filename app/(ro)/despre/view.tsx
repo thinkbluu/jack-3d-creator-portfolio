@@ -314,7 +314,7 @@ export function AboutView({ locale }: { locale: Locale }) {
                   <li key={member.slug}>
                     <Link href={localizePath(`/echipa/${member.slug}`, locale)} className="team-card link-block">
                       <span className="team-card-photo">
-                        {member.photo ? <Image src={member.photo} alt="" fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover" /> : null}
+                        {member.photo ? <Image src={member.photo} alt={`${member.name}, ${member.role[locale]}`} fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover" /> : null}
                       </span>
                       <span className="team-card-name display-xl">{member.name}</span>
                       <span className="mono-label text-[var(--ink-3)]">{member.role[locale]}</span>

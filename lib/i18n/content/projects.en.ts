@@ -2,7 +2,7 @@ import type { Project } from '@/lib/projects'
 
 type ProjectText = Pick<
   Project,
-  'metaDescription' | 'client' | 'categoryLabel' | 'summary' | 'challenge' | 'solution' | 'result' | 'conceptNote' | 'stack'
+  'metaDescription' | 'client' | 'categoryLabel' | 'summary' | 'challenge' | 'solution' | 'result' | 'conceptNote' | 'stack' | 'coverAlt'
 >
 
 export const projectTextEn: Record<string, ProjectText> = {
@@ -17,6 +17,7 @@ export const projectTextEn: Record<string, ProjectText> = {
     solution:
       'We built the whole website around the three things a pet owner looks for in a crisis: which services are offered, where the practice is, and how to reach a vet quickly. The hours, the round-the-clock emergencies, and the location are visible on the first screen, and the booking button and the direct-call button stay present the whole length of the page. Everything is mobile-first, because most searches of this kind happen on a phone, often in an emergency.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Local SEO'],
+    coverAlt: 'Leather collar with a gold heart tag on dark velvet, Veterinaria Timișoara',
   },
   'agd-innerpath-consulting': {
     metaDescription:
@@ -30,6 +31,7 @@ export const projectTextEn: Record<string, ProjectText> = {
       'We built the website from scratch, with a restrained visual direction: deep navy, gold accents, serif type for the headings, and a portrait photograph as an anchor of trust. The structure follows the logic of a business conversation: who we are, what values guide us, which fields we work in, who the team is. The key figures — years of experience, completed contracts, markets covered — appear immediately under the title, as proof before the argument. The whole site works identically in Romanian and English.',
     result: 'The firm has a digital presence that supports a high-level consultancy positioning, in both working languages.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Bilingual RO/EN'],
+    coverAlt: 'Gold and black fountain pens on a wax-sealed envelope, AGD Innerpath Consulting',
   },
   decodex: {
     metaDescription:
@@ -44,6 +46,7 @@ export const projectTextEn: Record<string, ProjectText> = {
     result:
       'The website works as the project’s official point of communication, both for the funder’s evaluators and for the scientific community and the institutional partners.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'PoCIDIF compliance'],
+    coverAlt: 'Layered glass panels on a gold axis, DECODEX',
   },
   oncogen: {
     metaDescription:
@@ -57,6 +60,7 @@ export const projectTextEn: Record<string, ProjectText> = {
       'We designed and built the website from scratch. The information architecture has several entrances — research, projects, collaborations, a biotechnology hub, news — so each audience reaches what it needs in two clicks. The news bar at the top keeps the site alive and signals the centre’s current activity. Accreditations and certifications are reachable from the first screen, because they are the main argument in the relationship with institutional partners and European consortia.',
     result: 'The centre now has a digital presence equal to its research activity, used actively in its relationship with international partners.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Content architecture'],
+    coverAlt: 'Glowing petri dish culture, OncoGen',
   },
   'painea-casei': {
     metaDescription:
@@ -71,6 +75,7 @@ export const projectTextEn: Record<string, ProjectText> = {
     result:
       'The distributor now has its own channel through which buyers reach the catalogue and the contact details directly, without depending only on relationships and referrals.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Product catalogue'],
+    coverAlt: 'Fresh sourdough loaf on a peel by a wood-fired oven, Pâinea Casei',
   },
   asesor: {
     metaDescription:
@@ -83,6 +88,7 @@ export const projectTextEn: Record<string, ProjectText> = {
     solution:
       'We are building a platform that centralises exactly what a small or mid-sized salon needs, without useless features: a booking calendar, client records with history, team management, stock tracking, and revenue reporting. The interface is designed to be used from a phone, between two clients, not from a desk.',
     stack: ['Next.js', 'React', 'PostgreSQL', 'Tailwind CSS'],
+    coverAlt: 'Gold scissors and comb on black marble, ASESOR',
   },
   lumora: {
     metaDescription:
@@ -96,6 +102,7 @@ export const projectTextEn: Record<string, ProjectText> = {
       'We built the page around a single full-scale atmospheric image, with large, open type laid over it. The sign-up form sits directly in the hero, with a single field, and the mood variants change from four options without reloading the page. Everything stays readable over the background thanks to a calculated contrast layer, not an opaque panel.',
     conceptNote: 'A demonstration concept, not a real product. Built to test how large type reads over a full-scale image.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Framer Motion'],
+    coverAlt: 'Frosted glass bottle with gold cap on dark stone in mist, Lumora',
   },
   mostar: {
     metaDescription:
@@ -109,6 +116,7 @@ export const projectTextEn: Record<string, ProjectText> = {
       'We built a sequence in which the image layers move independently as you scroll, creating real depth instead of decorative parallax. The content appears in the rhythm of the movement, and moving between sections keeps the visual continuity. The page works in two languages, with an instant switch.',
     conceptNote: 'A demonstration concept, not an official page. Built to test a visual narrative controlled by scrolling.',
     stack: ['Next.js', 'React', 'Tailwind CSS', 'Scroll-driven animation'],
+    coverAlt: 'Stone arch bridge reflected in still water at dusk, Mostar',
   },
   lithos: {
     metaDescription:
@@ -122,5 +130,6 @@ export const projectTextEn: Record<string, ProjectText> = {
       'We built a hero with a cursor-controlled reveal, in which a second image is uncovered through a circular mask that follows the movement, with smoothing so it does not feel jerky. Navigation is concentrated in a single central pill, and the whole interaction switches off cleanly on devices without a cursor.',
     conceptNote: 'A demonstration concept, not a real platform. Built to test cursor-based interactions and a mask.',
     stack: ['React', 'TypeScript', 'Tailwind CSS', 'Canvas API'],
+    coverAlt: 'Split geode with crystal interior, Lithos',
   },
 }
