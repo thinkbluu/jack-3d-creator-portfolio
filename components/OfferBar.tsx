@@ -17,7 +17,7 @@ export default function OfferBar({ locale }: { locale: Locale }) {
   return (
     <aside
       data-offer-bar
-      className="relative z-40 border-b border-[rgba(250,247,242,0.14)]"
+      className="sticky top-0 z-[60] border-b border-[rgba(250,247,242,0.14)]"
       style={{ background: '#0b0f16', color: '#faf7f2' }}
     >
       <div className="site-container flex min-h-9 items-center justify-center gap-3 py-1.5">

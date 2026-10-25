@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-head-element, @next/next/no-before-interactive-script-outside-document -- this component is the <html> shell for both root layouts */
 import type { Metadata, Viewport } from 'next'
+import type { CSSProperties } from 'react'
 import Script from 'next/script'
 import AdsTracking from '@/components/AdsTracking'
 import ConsentBanner from '@/components/ConsentBanner'
@@ -68,7 +69,13 @@ export function localeMetadata(locale: Locale): Metadata {
 
 export default function LocaleDocument({ locale, children }: { locale: Locale; children: React.ReactNode }) {
   return (
-    <html lang={htmlLang(locale)} className={`${fontClassName} bg-[var(--shell)]`} suppressHydrationWarning>
+    <html
+      lang={htmlLang(locale)}
+      className={`${fontClassName} bg-[var(--shell)]`}
+      // Reserve room for the offer announcement bar before hydration measures it.
+      style={isNoDepositActive() ? ({ '--offer-bar-h': '37px' } as CSSProperties) : undefined}
+      suppressHydrationWarning
+    >
       <head>
         {TRACKING_ACTIVE ? (
           <Script id="gtag-consent-default" strategy="beforeInteractive">

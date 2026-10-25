@@ -16,17 +16,33 @@ export default function OfferBarDismiss() {
   const ref = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
-    const bar = ref.current?.closest('[data-offer-bar]')
+    const bar = ref.current?.closest<HTMLElement>('[data-offer-bar]')
+    const root = document.documentElement
+    // The sticky header offsets by --offer-bar-h; keep it at the bar's real
+    // height (the server default is an estimate that can wrap on mobile).
+    const sync = () => root.style.setProperty('--offer-bar-h', `${bar?.offsetHeight ?? 0}px`)
     if (!bar) return
     try {
       if (window.sessionStorage.getItem(DISMISS_KEY) === '1') {
         bar.remove()
+        sync()
         return
       }
     } catch {
       // Storage unavailable; the bar simply stays visible.
     }
-    if (!isNoDepositActive()) bar.remove()
+    if (!isNoDepositActive()) {
+      bar.remove()
+      sync()
+      return
+    }
+    sync()
+    const observer = new ResizeObserver(sync)
+    observer.observe(bar)
+    return () => {
+      observer.disconnect()
+      sync()
+    }
   }, [])
 
   return (
@@ -35,8 +51,9 @@ export default function OfferBarDismiss() {
       type="button"
       aria-label="Închide anunțul"
       onClick={() => {
-        const bar = ref.current?.closest('[data-offer-bar]')
+        const bar = ref.current?.closest<HTMLElement>('[data-offer-bar]')
         if (bar) bar.remove()
+        document.documentElement.style.setProperty('--offer-bar-h', '0px')
         try {
           window.sessionStorage.setItem(DISMISS_KEY, '1')
         } catch {
