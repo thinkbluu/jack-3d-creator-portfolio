@@ -20,6 +20,9 @@ export default function MockupThankYouPage() {
             Am primit. Îți trimitem mockup-ul în maximum 24 de ore lucrătoare.
           </h1>
           <ThankYouBody />
+          <p className="mt-4 text-sm italic text-[var(--ink-3)]" style={{ fontFamily: 'var(--font-display)' }}>
+            Încă un pas spre mai puține site-uri urâte pe internet.
+          </p>
           <div className="mt-8">
             <LeadId />
           </div>
