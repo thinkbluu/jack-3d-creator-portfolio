@@ -102,6 +102,7 @@ export default function LocaleDocument({ locale, children }: { locale: Locale; c
         ) : null}
         <link rel="alternate" type="application/rss+xml" title={ui[locale].meta.rss} href={`${SITE_URL}/feed.xml`} />
         <link rel="ard" href="/.well-known/ard.json" />
+        <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
         <noscript>
           <style>{'[data-fade]{opacity:1!important;transform:none!important}'}</style>
         </noscript>

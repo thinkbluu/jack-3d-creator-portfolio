@@ -61,6 +61,13 @@ export function skillMarkdown(): string {
 }
 
 export function ardCatalog(): {
+  specVersion: string
+  host: {
+    displayName: string
+    identifier: string
+    documentationUrl: string
+    logoUrl: string
+  }
   entries: {
     identifier: string
     displayName: string
@@ -68,22 +75,31 @@ export function ardCatalog(): {
     url: string
     description: string
     tags: string[]
-    version: string
     updatedAt: string
     representativeQueries: string[]
+    publisher: {
+      identifier: string
+      displayName: string
+    }
   }[]
 } {
   return {
+    specVersion: '1.0',
+    host: {
+      displayName: 'MAST Studio',
+      identifier: SITE_URL,
+      documentationUrl: `${SITE_URL}${SKILL_PATH}`,
+      logoUrl: `${SITE_URL}/logo.png`,
+    },
     entries: [
       {
         identifier: ARD_IDENTIFIER,
         displayName: 'MAST Studio: request a website quote or free mockup',
-        type: 'application/agent-skills+md',
+        type: 'text/markdown; profile="urn:air:agent-skills"',
         url: `${SITE_URL}${SKILL_PATH}`,
         description:
           "How an AI agent can request a website quote, a free homepage mockup or contact MAST Studio on a user's behalf, with current services and prices.",
         tags: ['web design', 'website quote', 'Romania', 'Timișoara'],
-        version: '1.0.0',
         updatedAt: new Date().toISOString(),
         representativeQueries: [
           'Get me a quote for a business website from MAST Studio',
@@ -91,6 +107,10 @@ export function ardCatalog(): {
           'How much does a presentation website cost at MAST Studio?',
           'Find a web design studio in Timișoara and ask for an offer',
         ],
+        publisher: {
+          identifier: SITE_URL,
+          displayName: 'MAST Studio',
+        },
       },
     ],
   }
