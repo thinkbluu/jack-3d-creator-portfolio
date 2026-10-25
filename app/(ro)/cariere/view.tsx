@@ -27,6 +27,7 @@ const careers = {
     otherHead: 'Alte roluri.',
     intro:
       'Căutăm un front-end developer și un mobile app developer. Lucrăm la distanță, cu afaceri mici din toată România. Dacă vrei să lucrezi cu noi pe alt rol, trimite-ne oricum CV-ul: când apare un post potrivit, te contactăm noi.',
+    introVoice: 'Căutăm oameni care se enervează când văd un site urât.',
     openTitle: 'Posturi deschise',
     details: 'Detalii și aplicare: {title} →',
     otherTitle: 'Alte roluri pentru care ne poți scrie',
@@ -58,6 +59,7 @@ const careers = {
     otherHead: 'Other roles.',
     intro:
       'We’re hiring a front-end developer and a mobile app developer. We work remotely, with small businesses across Romania. If you want to work with us in another role, send your CV anyway: when a fitting role opens, we’ll contact you.',
+    introVoice: 'We’re looking for people who get annoyed when they see an ugly website.',
     openTitle: 'Open roles',
     details: 'Details and how to apply: {title} →',
     otherTitle: 'Other roles you can write to us about',
@@ -105,6 +107,7 @@ export function CareersView({ locale }: { locale: Locale }) {
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
         <PageOpen crumbs={crumbs} index="07" title={copy.name} word={copy.word} lead={copy.lead} short>
           <p className="max-w-sm leading-relaxed text-[var(--fg-2)]">{copy.intro}</p>
+          <p className="mt-4 max-w-sm text-[var(--fg-2)] italic" style={{ fontFamily: 'var(--font-display)' }}>{copy.introVoice}</p>
         </PageOpen>
 
         <section aria-labelledby="posturi-deschise" className="tone-dark pb-[clamp(5rem,10vw,9rem)]">

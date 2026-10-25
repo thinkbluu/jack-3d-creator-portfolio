@@ -1756,3 +1756,49 @@ html[data-visit='4'] .salut-back[data-visit='4'] {
   text-transform: uppercase;
   color: var(--ink-3);
 }
+
+/* Brand brass behind selected text; night text on it passes WCAG AA
+   (≈5.3:1) and works over both light and dark sections. */
+::selection {
+  background: var(--brass);
+  color: var(--night);
+}
+
+/* Print: chrome off, ink on paper, and one last word. */
+@media print {
+  header,
+  [role="dialog"],
+  .whatsapp-bar {
+    display: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  body::after {
+    display: block;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #000;
+    font-family: var(--font-mono), monospace;
+    font-size: 11px;
+  }
+
+  html[lang="ro"] body::after {
+    content: "Ai printat un site. Respect. maststudio.ro";
+  }
+
+  html[lang="en"] body::after {
+    content: "You printed a website. Respect. maststudio.ro";
+  }
+}

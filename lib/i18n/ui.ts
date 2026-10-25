@@ -213,6 +213,7 @@ const ro = {
     cookies: 'Cookies',
     terms: 'Termeni',
     register: 'Reg. Com.',
+    signature: 'Mai puține site-uri urâte pe internet, din 2026.',
     guideLinks: [
       { href: '/blog/cat-costa-un-site-in-romania', label: 'Cât costă un site în România' },
       { href: '/blog/cat-dureaza-constructia-unui-site', label: 'Cât durează un site' },
@@ -244,8 +245,8 @@ const ro = {
   },
   notFound: {
     kicker: 'BRG 404 · În afara hărții',
-    title: 'Portul acesta nu există.',
-    body: 'Coordonatele nu duc la o pagină activă. Întoarce-te la bord și continuă ruta.',
+    title: 'Pagina asta nu există.',
+    body: 'Sincer, nici Google n-o găsește.',
     back: 'Înapoi la MAST Studio',
     useful: 'Pagini utile',
     links: [
@@ -257,6 +258,10 @@ const ro = {
     ],
     metaTitle: 'Pagina nu a fost găsită',
     metaDescription: 'Pagina căutată nu există sau a fost mutată. Vezi serviciile și prețurile, portofoliul, ghidurile despre site-uri sau scrie-ne direct pe WhatsApp.',
+  },
+  voice: {
+    awayTitle: 'Te așteptăm aici. · MAST Studio',
+    console: 'Te uiți în consolă? Angajăm. → https://maststudio.ro/cariere',
   },
   projects: {
     view: 'Vezi',
@@ -270,7 +275,7 @@ const ro = {
     clients: 'Proiecte pentru clienți',
     concepts: 'Concepte de design',
     conceptsNote: 'Exerciții de design și interacțiune, construite pentru a testa idei. Nu reprezintă afaceri reale.',
-    empty: 'Nu avem încă proiecte în această categorie.',
+    empty: 'Nu avem încă proiecte aici. Poate al tău e primul?',
   },
   comparison: {
     kicker: 'Dovada',
@@ -307,7 +312,7 @@ const ro = {
     indexIntro: 'Articole practice despre ce merită știut înainte, în timpul și după ce îți faci un site: prețuri reale, termene, ce include oferta și cum alegi furnizorul. Fără termeni tehnici. Pentru prețurile noastre, vezi',
     servicesLink: 'serviciile MAST Studio',
     articles: 'Articole',
-    empty: 'Primele articole apar în curând.',
+    empty: 'Primele articole apar în curând. Le scriem cu grijă, nu cu kilogramul.',
     emptyEn: 'Ghidurile sunt publicate deocamdată în română. Poți citi colecția în limba originală, iar articolele în engleză vor apărea aici când sunt gata.',
     readRomanian: 'Citește ghidul în română →',
     question: 'Ai o întrebare la care nu am răspuns încă?',
@@ -344,8 +349,8 @@ const ro = {
     sending: 'Se trimite...',
     openWhatsapp: 'Continuă pe WhatsApp',
     sendEmail: 'Trimite pe email',
-    error: 'Ceva nu a mers.',
-    errorLink: 'Scrie-ne direct pe WhatsApp.',
+    error: 'Ceva nu a mers. Nu e vina ta. Încearcă din nou sau',
+    errorLink: 'scrie-ne pe WhatsApp.',
     chooseType: 'Alege tipul proiectului.',
     badName: 'Spune-ne cum te numești.',
     badEmail: 'Introdu o adresă de email validă.',
@@ -433,7 +438,7 @@ const ro = {
       error: 'Nu am putut salva adresa. Mai încearcă o dată.',
       note: 'Te poți dezabona oricând, cu un singur răspuns.',
     },
-    loader: { label: 'Se încarcă', line: 'Construim o lume pentru tine' },
+    loader: { label: 'Se încarcă', line: 'Mai puține site-uri urâte. Începem cu al tău.' },
     salut: {
       label: 'Salut de la MAST Studio',
       greetings: {
@@ -513,6 +518,7 @@ const ro = {
     titleNamed: 'Mulțumim, {name}! Am primit cererea ta.',
     title: 'Mulțumim! Am primit cererea ta.',
     responseLine: 'Îți răspundem în aceeași zi lucrătoare, de obicei în câteva ore.',
+    signature: 'Încă un pas spre mai puține site-uri urâte pe internet.',
     stepsTitle: 'Ce urmează',
     steps: [
       'Citim cererea și pregătim întrebările.',
@@ -667,7 +673,7 @@ const en: typeof ro = {
         name: 'Automation and WhatsApp',
         description: 'Clients write to you, an automated assistant replies, collects the details, and leaves you only the decision. Plus automatic invoicing.',
         price: 'from 250 EUR',
-        message: 'Hi! I’m interested in automation and WhatsApp for my business.',
+        message: 'Hi! I��m interested in automation and WhatsApp for my business.',
       },
     ],
     recommend: {
@@ -752,6 +758,7 @@ const en: typeof ro = {
     cookies: 'Cookies',
     terms: 'Terms',
     register: 'Trade reg.',
+    signature: 'Fewer ugly websites on the internet, since 2026.',
     guideLinks: [
       { href: '/blog/cat-costa-un-site-in-romania', label: 'What a website costs in Romania' },
       { href: '/blog/cat-dureaza-constructia-unui-site', label: 'How long a website takes' },
@@ -783,8 +790,8 @@ const en: typeof ro = {
   },
   notFound: {
     kicker: 'BRG 404 · Off the chart',
-    title: 'This harbour doesn’t exist.',
-    body: 'These coordinates don’t lead to a live page. Head back to the helm and stay on course.',
+    title: 'This page doesn’t exist.',
+    body: 'Honestly, Google can’t find it either.',
     back: 'Back to MAST Studio',
     useful: 'Useful pages',
     links: [
@@ -796,6 +803,10 @@ const en: typeof ro = {
     ],
     metaTitle: 'Page not found',
     metaDescription: 'The page you asked for doesn’t exist or has moved. See the services and prices, the work, the website guides, or write to us on WhatsApp.',
+  },
+  voice: {
+    awayTitle: 'We’ll be right here. · MAST Studio',
+    console: 'Looking at the console? We’re hiring. → https://maststudio.ro/en/careers',
   },
   projects: {
     view: 'View',
@@ -809,7 +820,7 @@ const en: typeof ro = {
     clients: 'Client projects',
     concepts: 'Design concepts',
     conceptsNote: 'Design and interaction exercises, built to test ideas. They are not real businesses.',
-    empty: 'We don’t have projects in this category yet.',
+    empty: 'We don’t have projects here yet. Maybe yours will be the first?',
   },
   comparison: {
     kicker: 'Proof',
@@ -846,7 +857,7 @@ const en: typeof ro = {
     indexIntro: 'Practical articles on what is worth knowing before, during, and after you get a website: real prices, timelines, what the quote includes, and how to choose a supplier. No technical jargon. For our prices, see',
     servicesLink: 'MAST Studio services',
     articles: 'Articles',
-    empty: 'The first articles are on the way.',
+    empty: 'The first articles are on their way. We write them carefully, not by the kilo.',
     emptyEn: 'The guides are published in Romanian for now. You can read the collection in the original language. English articles will appear here when they are ready.',
     readRomanian: 'Read the guide in Romanian →',
     question: 'A question we haven’t answered yet?',
@@ -883,8 +894,8 @@ const en: typeof ro = {
     sending: 'Sending...',
     openWhatsapp: 'Continue on WhatsApp',
     sendEmail: 'Send by email',
-    error: 'Something went wrong.',
-    errorLink: 'Write to us directly on WhatsApp.',
+    error: 'Something went wrong. It’s not your fault. Try again or',
+    errorLink: 'message us on WhatsApp.',
     chooseType: 'Choose the project type.',
     badName: 'Tell us your name.',
     badEmail: 'Enter a valid email address.',
@@ -972,7 +983,7 @@ const en: typeof ro = {
       error: 'We couldn’t save the address. Please try again.',
       note: 'Unsubscribe any time with a single reply.',
     },
-    loader: { label: 'Loading', line: 'Building a world for you' },
+    loader: { label: 'Loading', line: 'Fewer ugly websites. Starting with yours.' },
     salut: {
       label: 'Hello from MAST Studio',
       greetings: {
@@ -1052,6 +1063,7 @@ const en: typeof ro = {
     titleNamed: 'Thank you, {name}! We received your request.',
     title: 'Thank you! We received your request.',
     responseLine: 'We reply on the same business day, usually within a few hours.',
+    signature: 'One step closer to fewer ugly websites on the internet.',
     stepsTitle: 'What happens next',
     steps: [
       'We read your request and prepare our questions.',

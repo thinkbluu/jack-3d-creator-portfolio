@@ -63,6 +63,9 @@ export default function ThankYouView({ locale }: { locale: Locale }) {
       <div className="studio-container flex flex-col items-center pb-24 pt-16 text-center md:pt-24">
         <h1 className="display-xl max-w-4xl text-balance">{title}</h1>
         <p className="mt-5 max-w-md text-lg leading-relaxed text-[var(--ink-2)]">{copy.responseLine}</p>
+        <p className="mt-3 max-w-md text-[15px] italic leading-relaxed text-[var(--ink-3)]" style={{ fontFamily: 'var(--font-display)' }}>
+          {copy.signature}
+        </p>
 
         <section aria-labelledby="ce-urmeaza" className="mt-16 w-full max-w-4xl">
           <h2 id="ce-urmeaza" className="mono-label text-[var(--ink-3)]">

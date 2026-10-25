@@ -28,6 +28,7 @@ type PricingCopy = {
   faq: { question: string; answer: string }[]
   cta: string
   ctaLink: string
+  closing: string
 }
 
 const pricingCopy: Record<Locale, PricingCopy> = {
@@ -82,6 +83,7 @@ const pricingCopy: Record<Locale, PricingCopy> = {
     ],
     cta: 'Vrei o ofertă cu preț fix? Scrie-ne și o primești azi',
     ctaLink: 'Trimite cererea de ofertă',
+    closing: 'Un site bun costă. Un site prost costă mai mult. Doar că nu vezi factura.',
   },
   en: {
     word: 'Pricing.',
@@ -134,6 +136,7 @@ const pricingCopy: Record<Locale, PricingCopy> = {
     ],
     cta: 'Want a fixed-price quote? Write to us and you get it today',
     ctaLink: 'Send the quote request',
+    closing: 'A good website costs money. A bad one costs more. You just never see the invoice.',
   },
 }
 
@@ -205,6 +208,9 @@ export function PricingView({ locale }: { locale: Locale }) {
                 </article>
               ))}
             </div>
+            <p className="mt-12 max-w-2xl text-lg italic leading-relaxed text-[var(--ink-2)]" style={{ fontFamily: 'var(--font-display)' }}>
+              {copy.closing}
+            </p>
           </div>
         </section>
 

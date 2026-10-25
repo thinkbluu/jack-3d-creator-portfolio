@@ -24,6 +24,10 @@ const about = {
     kicker: 'Despre studio',
     word: PAGE_WORDS['/despre'].ro,
     lead: 'Un studio mic de web design din Timișoara. Credem că un site bun se simte, nu doar se vede.',
+    missionTitle: 'Misiunea noastră: mai puține site-uri urâte pe internet.',
+    missionNote: 'E o luptă grea. Ajută-ne.',
+    missionBody:
+      'În practică înseamnă asta: fiecare site e construit de la zero, e rapid, spune clar ce trebuie și rămâne al clientului.',
     valuesLabel: 'Ce ne ghidează',
     statement: 'Ascultăm cum funcționează afacerea ta și construim ce o vinde.',
     values: [
@@ -127,6 +131,10 @@ const about = {
     kicker: 'About the studio',
     word: PAGE_WORDS['/despre'].en,
     lead: 'A small web design studio in Timișoara. We believe a good website is felt, not only seen.',
+    missionTitle: 'Our mission: fewer ugly websites on the internet.',
+    missionNote: 'It’s a hard fight. Help us.',
+    missionBody:
+      'In practice it means this: every site is custom-built, fast, says clearly what it needs to say, and stays owned by the client.',
     valuesLabel: 'What guides us',
     statement: 'We listen to how your business works and build what sells it.',
     values: [
@@ -254,6 +262,16 @@ export function AboutView({ locale }: { locale: Locale }) {
             <p className="mt-3 leading-relaxed text-[var(--fg-2)]">{copy.capsule}</p>
           </div>
         </PageOpen>
+
+        <section aria-labelledby="manifesto" className="page-section">
+          <div className="studio-container max-w-4xl">
+            <h2 id="manifesto" className="display-xl text-balance text-[clamp(2.2rem,4.5vw,4.2rem)]">{copy.missionTitle}</h2>
+            <p className="mt-5 text-xl italic text-[var(--brass-ink)]" style={{ fontFamily: 'var(--font-display)' }}>
+              {copy.missionNote}
+            </p>
+            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-[var(--ink-2)]">{copy.missionBody}</p>
+          </div>
+        </section>
 
         <ValuesDrop label={copy.valuesLabel} statement={copy.statement} cards={copy.values} />
 

@@ -180,6 +180,10 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
         <div className="flex flex-col gap-4 border-t border-[var(--hairline-dark)] pt-6 text-[var(--on-dark-3)] lg:flex-row lg:items-center lg:justify-between">
           <p>
             © {year} {SITE_NAME} · {LEGAL_NAME} · CUI {VAT_ID} · {footer.register} {TRADE_REGISTER_NUMBER}
+            <span className="mt-1 block text-xs lg:mt-0 lg:inline">
+              {' · '}
+              {footer.signature}
+            </span>
           </p>
           <nav aria-label={footer.legal} className="shrink-0">
             <ul className="flex flex-wrap gap-x-5">
