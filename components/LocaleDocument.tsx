@@ -1,9 +1,11 @@
 /* eslint-disable @next/next/no-head-element, @next/next/no-before-interactive-script-outside-document -- this component is the <html> shell for both root layouts */
 import type { Metadata, Viewport } from 'next'
+import type { CSSProperties } from 'react'
 import Script from 'next/script'
 import AdsTracking from '@/components/AdsTracking'
 import ConsentBanner from '@/components/ConsentBanner'
 import JsonLd from '@/components/JsonLd'
+import OfferBar from '@/components/OfferBar'
 import ScrollProgress from '@/components/ScrollProgress'
 import SmoothScroll from '@/components/SmoothScroll'
 import StudioCursor from '@/components/StudioCursor'
@@ -17,6 +19,7 @@ import { TRACKING_ACTIVE } from '@/lib/ads'
 import { fontClassName } from '@/lib/fonts'
 import { businessNode, graph, websiteNode } from '@/lib/schema'
 import { defaultOgImage } from '@/lib/seo'
+import { homeMetaOffer, isNoDepositActive } from '@/lib/offer'
 import { LEGAL_NAME, SITE_NAME, SITE_URL } from '@/lib/site'
 
 const consentGrantedUpdate = "{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'}"
@@ -35,7 +38,7 @@ export function localeMetadata(locale: Locale): Metadata {
       default: copy.defaultTitle,
       template: `%s | ${SITE_NAME}`,
     },
-    description: copy.defaultDescription,
+    description: isNoDepositActive() ? homeMetaOffer[locale].defaultDescription : copy.defaultDescription,
     applicationName: SITE_NAME,
     authors: [{ name: SITE_NAME, url: SITE_URL }],
     creator: SITE_NAME,
@@ -66,7 +69,13 @@ export function localeMetadata(locale: Locale): Metadata {
 
 export default function LocaleDocument({ locale, children }: { locale: Locale; children: React.ReactNode }) {
   return (
-    <html lang={htmlLang(locale)} className={`${fontClassName} bg-[var(--shell)]`} suppressHydrationWarning>
+    <html
+      lang={htmlLang(locale)}
+      className={`${fontClassName} bg-[var(--shell)]`}
+      // Reserve room for the offer announcement bar before hydration measures it.
+      style={isNoDepositActive() ? ({ '--offer-bar-h': '37px' } as CSSProperties) : undefined}
+      suppressHydrationWarning
+    >
       <head>
         {TRACKING_ACTIVE ? (
           <Script id="gtag-consent-default" strategy="beforeInteractive">
@@ -93,12 +102,14 @@ export default function LocaleDocument({ locale, children }: { locale: Locale; c
         ) : null}
         <link rel="alternate" type="application/rss+xml" title={ui[locale].meta.rss} href={`${SITE_URL}/feed.xml`} />
         <link rel="ard" href="/.well-known/ard.json" />
+        <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
         <noscript>
           <style>{'[data-fade]{opacity:1!important;transform:none!important}'}</style>
         </noscript>
       </head>
       <body className="bg-[var(--shell)] font-sans antialiased">
         <LocaleProvider locale={locale}>
+          <OfferBar locale={locale} />
           <SmoothScroll />
           <ScrollProgress />
           {children}

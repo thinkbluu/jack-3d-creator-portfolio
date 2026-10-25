@@ -9,6 +9,7 @@ import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
 import { LEAD_NAME_KEY, LEAD_SOURCE_KEY, LEAD_SUBMITTED_KEY } from '@/lib/leads'
+import { isNoDepositActive, thanksStepOffer } from '@/lib/offer'
 import { whatsappUrl } from '@/lib/site'
 
 const noSubscribe = () => () => {}
@@ -33,7 +34,11 @@ function readFirstName(): string | null {
  * refreshes and direct visits never count.
  */
 export default function ThankYouView({ locale }: { locale: Locale }) {
-  const copy = ui[locale].thanks
+  const base = ui[locale].thanks
+  // Third step switches to the no-deposit offer wording while it is active.
+  const copy = isNoDepositActive()
+    ? { ...base, steps: base.steps.map((step, index) => (index === base.steps.length - 1 ? thanksStepOffer[locale] : step)) }
+    : base
   // Server render shows the fallback title; the client snapshot (read before
   // the effect consumes the marker) personalises it.
   const firstName = useSyncExternalStore(noSubscribe, readFirstName, () => null)

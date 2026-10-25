@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 import { useState } from 'react'
 import TrackedLink from '@/components/TrackedLink'
-import { useHref, useUi } from '@/lib/i18n/context'
+import { useHref, useLocale, useUi } from '@/lib/i18n/context'
+import { isNoDepositActive, servicesIntroOffer } from '@/lib/offer'
 import { whatsappUrl } from '@/lib/site'
 import { Kicker, Reveal, SplitHeading } from './Reveal'
 
@@ -14,8 +15,9 @@ import { Kicker, Reveal, SplitHeading } from './Reveal'
  */
 export default function ServicesIndex() {
   const href = useHref()
+  const locale = useLocale()
   const { services, redesign } = useUi()
-  const copy = redesign.services
+  const copy = isNoDepositActive() ? { ...redesign.services, intro: servicesIntroOffer[locale] } : redesign.services
   const [open, setOpen] = useState<string | null>(services.items[0]?.id ?? null)
   const reduced = useReducedMotion()
 

@@ -48,6 +48,14 @@ const ro = {
       ecommerce: 'Vinzi și noaptea, cu plăți și facturi automate. Plătești 50 EUR acum, restul doar dacă îți place.',
       platforma: 'De la idee la primii utilizatori. Discutăm întâi, apoi facem oferta.',
     },
+    // No-deposit offer variants (November 2026), picked by isNoDepositActive().
+    subheadsOffer: {
+      default: 'Site-uri de prezentare de la 300 EUR, live în 48 de ore. În noiembrie, fără avans: plătești doar dacă îți place.',
+      salon: 'Rezervări online non-stop și mai puține programări ratate. În noiembrie, fără avans: plătești doar dacă îți place.',
+      servicii: 'Cereri de ofertă, nu doar vizite. În noiembrie, fără avans: plătești doar dacă îți place.',
+      ecommerce: 'Vinzi și noaptea, cu plăți și facturi automate. În noiembrie, fără avans: plătești doar dacă îți place.',
+      platforma: 'De la idee la primii utilizatori. Discutăm întâi, apoi facem oferta.',
+    },
     stats: [
       { value: '48h', label: 'de la conținut la site live' },
       { value: '300€', label: 'site de prezentare de la' },
@@ -151,6 +159,8 @@ const ro = {
       { other: 'Alții îți spun «revenim cu un termen».', before: 'Noi îți spunem ', highlight: 'ziua', after: '.' },
       { other: 'Alții cer 50% avans.', before: 'Noi, ', highlight: '50 de euro', after: '.' },
     ],
+    // No-deposit offer variant for the third pair (November 2026).
+    pairOffer: { other: 'Alții cer 50% avans.', before: 'Noi, în noiembrie, ', highlight: 'nimic', after: '.' },
     closing: 'Astea nu sunt promisiuni de marketing. Sunt clauze scrise în contract.',
   },
   process: {
@@ -593,6 +603,14 @@ const en: typeof ro = {
       ecommerce: 'You sell at night too, with payments and invoices handled automatically. Pay 50 EUR now, the rest only if you like it.',
       platforma: 'From the idea to the first users. We talk first, then we send the quote.',
     },
+    // No-deposit offer variants (November 2026), picked by isNoDepositActive().
+    subheadsOffer: {
+      default: 'Presentation websites from 300 EUR, live in 48 hours. In November, no deposit: you pay only if you like it.',
+      salon: 'Bookings around the clock, and fewer missed appointments. In November, no deposit: you pay only if you like it.',
+      servicii: 'Quote requests, not just visits. In November, no deposit: you pay only if you like it.',
+      ecommerce: 'You sell at night too, with payments and invoices handled automatically. In November, no deposit: you pay only if you like it.',
+      platforma: 'From the idea to the first users. We talk first, then we send the quote.',
+    },
     stats: [
       { value: '48h', label: 'from content to a live site' },
       { value: '300€', label: 'presentation websites from' },
@@ -696,6 +714,8 @@ const en: typeof ro = {
       { other: 'Others tell you “we��ll come back with a timeline”.', before: 'We tell you ', highlight: 'the day', after: '.' },
       { other: 'Others ask for a 50% deposit.', before: 'We ask for ', highlight: '50 euro', after: '.' },
     ],
+    // No-deposit offer variant for the third pair (November 2026).
+    pairOffer: { other: 'Others ask for a 50% deposit.', before: 'In November, we ask for ', highlight: 'nothing', after: '.' },
     closing: 'These are not marketing promises. They are clauses written into the contract.',
   },
   process: {

@@ -115,7 +115,7 @@ export default function SiteHeader({
       <header
         ref={headerRef}
         className={`${overlay ? 'fixed' : 'sticky'} inset-x-0 top-0 z-50 transition-[background-color,border-color,color] duration-500 ${surface}`}
-        style={dark ? DARK_VARS : undefined}
+        style={{ top: 'var(--offer-bar-h, 0px)', ...(dark ? DARK_VARS : {}) }}
       >
         <nav aria-label={nav.label} className="studio-container flex h-20 items-center justify-between gap-6">
           <Link href={href('/')} className="flex items-center gap-2 text-[var(--ink)]">

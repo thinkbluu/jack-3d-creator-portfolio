@@ -5,6 +5,7 @@ import { useEffect, useState, type ReactNode } from 'react'
 
 import ChartKicker from './ChartKicker'
 import { useUi } from '@/lib/i18n/context'
+import { isNoDepositActive } from '@/lib/offer'
 
 function ManifestPair({ other, statement }: { other: string; statement: ReactNode }) {
   const reduceMotion = useReducedMotion()
@@ -49,12 +50,16 @@ function ManifestPair({ other, statement }: { other: string; statement: ReactNod
 
 export default function ManifestSection() {
   const copy = useUi().manifest
+  // Third pair switches to the no-deposit offer wording while it is active.
+  const pairs = isNoDepositActive()
+    ? copy.pairs.map((pair, index) => (index === copy.pairs.length - 1 ? copy.pairOffer : pair))
+    : copy.pairs
   return (
     <section id="manifest" className="scene-section">
       <div className="porthole manifest-porthole">
         <ChartKicker label={copy.kicker} />
         <div className="manifest-pairs mt-8">
-          {copy.pairs.map((pair) => (
+          {pairs.map((pair) => (
             <ManifestPair
               key={pair.highlight}
               other={pair.other}

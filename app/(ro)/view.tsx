@@ -5,6 +5,7 @@ import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
 import { getHomeFaqs } from '@/lib/home-faq'
+import { homeMetaOffer, isNoDepositActive } from '@/lib/offer'
 import { businessRef, faqNode, graph, serviceNode, webPageNode } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { getAllServicePages } from '@/lib/services'
@@ -17,9 +18,11 @@ const homeServicesListName = {
 
 function homeCopy(locale: Locale) {
   const meta = ui[locale].meta
+  // No-deposit offer variant for the home meta description (November 2026).
+  const description = isNoDepositActive() ? homeMetaOffer[locale].homeDescription : meta.homeDescription
   return {
     title: meta.homeTitle,
-    description: meta.homeDescription,
+    description,
     socialTitle: meta.socialTitle,
     servicesName: homeServicesListName[locale],
   }

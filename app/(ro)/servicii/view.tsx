@@ -11,6 +11,7 @@ import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, graph, serviceNode, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { getAllServicePages } from '@/lib/services'
+import { isNoDepositActive } from '@/lib/offer'
 import { absoluteUrl } from '@/lib/site'
 import { PAGE_WORDS } from '@/lib/page-words'
 
@@ -99,6 +100,12 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
   },
 }
 
+// No-deposit offer variant for the intro (November 2026).
+const servicesIntroOffer: Record<Locale, string> = {
+  ro: 'Construim site-uri de prezentare, magazine online, aplicații și platforme pentru afaceri din Timișoara și din toată România. Fiecare serviciu are preț de pornire și termen scris. La site-uri și magazine online, în noiembrie, nu plătești avans: restul doar dacă ești mulțumit de rezultat.',
+  en: 'We build presentation websites, online stores, apps, and platforms for businesses in Timișoara and across Romania. Each service has a starting price and a written timeline. For websites and online stores, in November there is no deposit: you pay the rest only if you are happy with the result.',
+}
+
 export function servicesMetadata(locale: Locale) {
   const copy = servicesCopy[locale]
   return pageMetadata({
@@ -110,7 +117,7 @@ export function servicesMetadata(locale: Locale) {
 }
 
 export function ServicesView({ locale }: { locale: Locale }) {
-  const copy = servicesCopy[locale]
+  const copy = isNoDepositActive() ? { ...servicesCopy[locale], intro: servicesIntroOffer[locale] } : servicesCopy[locale]
   const path = localizePath('/servicii', locale)
   const services = getAllServicePages(locale)
   const crumbs: BreadcrumbItem[] = [

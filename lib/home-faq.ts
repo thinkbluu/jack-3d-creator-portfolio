@@ -1,5 +1,6 @@
 import type { Locale } from './i18n/locale'
 import { homeFaqGroupKickersEn, homeFaqsEn } from './i18n/content/home-faq.en'
+import { isNoDepositActive } from './offer'
 
 // Homepage FAQ. Shared by the accordion (client) and the FAQPage structured data (server).
 
@@ -64,8 +65,26 @@ export const homeFaqGroups: Array<{ kicker: string; indices: number[] }> = [
 
 const groupIndices = homeFaqGroups.map((group) => group.indices)
 
+// Offer variants for the two answers that mention the deposit; evaluated per
+// call so ISR revalidation flips the copy without a redeploy.
+const homeFaqOfferVariants: Record<Locale, Record<number, string>> = {
+  ro: {
+    0: 'La noi prețurile sunt la vedere: site de prezentare de la 300 EUR, magazin online de la 900 EUR, aplicații și platforme cu ofertă personalizată în 24h. În noiembrie, fără avans: plătești doar dacă îți place. Fără costuri ascunse: îți spunem de la început și cât costă domeniul și găzduirea, orientativ 50-120 EUR pe an, plătite direct de tine, pe numele tău.',
+    5: 'Nu plătești nimic. Vezi site-ul live pe adresa noastră de test, prima rundă de modificări e inclusă, iar dacă nici după aceea nu ți se potrivește, nu datorezi nimic.',
+  },
+  en: {
+    0: 'Our prices are in the open: a presentation website from 300 EUR, an online store from 900 EUR, and apps and platforms with a custom quote within 24 hours. In November, no deposit: you pay only if you like it. No hidden costs: we tell you from the start what the domain and hosting cost too, roughly 50–120 EUR a year, paid by you directly, in your name.',
+    5: 'You pay nothing. You see the site live on our test address, the first round of changes is included, and if it still isn’t right for you after that, you owe nothing.',
+  },
+}
+
 export function getHomeFaqs(locale: Locale = 'ro') {
-  return locale === 'en' ? homeFaqsEn : homeFaqs
+  const faqs = locale === 'en' ? homeFaqsEn : homeFaqs
+  if (!isNoDepositActive()) return faqs
+  const variants = homeFaqOfferVariants[locale]
+  return faqs.map(([question, answer], index) =>
+    variants[index] ? ([question, variants[index]] as [string, string]) : [question, answer],
+  )
 }
 
 export function getHomeFaqGroups(locale: Locale = 'ro') {

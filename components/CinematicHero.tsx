@@ -16,6 +16,7 @@ import LanguageSwitcher from './LanguageSwitcher'
 import ContactButton from './ContactButton'
 import ScrubStage from './ScrubStage'
 import { useHref, useLocale, useUi } from '@/lib/i18n/context'
+import { isNoDepositActive, offerConditions } from '@/lib/offer'
 import { getWaUrl, useSegment, type Segment } from './SegmentContext'
 
 const clips = [
@@ -192,7 +193,8 @@ export default function CinematicHero() {
     title: hero.options[id].title,
     icon: optionIcons[id],
   }))
-  const subheads = hero.subheads
+  const subheads = isNoDepositActive() ? hero.subheadsOffer : hero.subheads
+  const offerActive = isNoDepositActive()
   const stats = hero.stats
   const auditWaUrl = getWaUrl(null, hero.auditMessage, locale)
   const navLinks = [
@@ -650,6 +652,14 @@ export default function CinematicHero() {
             <motion.p {...enter(2)} key={segment ?? 'default'} className="type-body mt-4">
               {subheads[segment ?? 'default']}
             </motion.p>
+            {offerActive && (
+              <motion.p {...enter(2)} className="type-body mt-2 text-sm text-[var(--ink-2)]">
+                {offerConditions[locale]}{' '}
+                <Link href={href('/termeni')} className="underline underline-offset-4 hover:text-[var(--brass)]">
+                  {locale === 'en' ? 'Full terms' : 'Termeni compleți'}
+                </Link>
+              </motion.p>
+            )}
           </motion.div>
 
           <motion.div style={depth ? { x: cardsX, y: cardsY } : undefined}>
@@ -761,6 +771,14 @@ export default function CinematicHero() {
           >
             {subheads[segment ?? 'default']}
           </p>
+          {offerActive && (
+            <p className="mt-2" style={{ fontSize: '13px', lineHeight: 1.5, maxWidth: '34ch', color: 'var(--ink-2)' }}>
+              {offerConditions[locale]}{' '}
+              <Link href={href('/termeni')} className="underline underline-offset-4 hover:text-[var(--brass)]">
+                {locale === 'en' ? 'Full terms' : 'Termeni compleți'}
+              </Link>
+            </p>
+          )}
 
           <div role="group" aria-label={hero.choose} className="mt-5 grid grid-cols-2 gap-2">
             {options.map((option) => (

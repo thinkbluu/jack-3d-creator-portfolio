@@ -10,6 +10,7 @@ import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, faqNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
+import { isNoDepositActive } from '@/lib/offer'
 
 type ComparisonRow = {
   label: string
@@ -447,8 +448,20 @@ export function comparisonMetadata(locale: Locale) {
   })
 }
 
+// No-deposit offer variants (November 2026), applied only while the offer is active.
+const comparisonOfferOverrides: Record<Locale, Partial<(typeof comparisonCopy)['ro']>> = {
+  ro: {
+    questionsTitle: 'Patru întrebări de pus înainte să începi',
+    fitAfter: 'de la 90 EUR pe lună. În noiembrie, fără avans: restul îl plătești doar dacă ești mulțumit.',
+  },
+  en: {
+    questionsTitle: 'Four questions to ask before you start',
+    fitAfter: 'from 90 EUR a month. In November, no deposit: you pay the rest only if you are happy.',
+  },
+}
+
 export function ComparisonView({ locale }: { locale: Locale }) {
-  const copy = comparisonCopy[locale]
+  const copy = { ...comparisonCopy[locale], ...(isNoDepositActive() ? comparisonOfferOverrides[locale] : {}) }
   const path = localizePath('/comparatie', locale)
   const crumbs: BreadcrumbItem[] = [
     { name: ui[locale].common.home, path: localizePath('/', locale) },
