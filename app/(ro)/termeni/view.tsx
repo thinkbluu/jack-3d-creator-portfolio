@@ -33,6 +33,16 @@ const ro = {
   changesTitle: '8. Modificări',
   changesBody:
     'Putem actualiza acești termeni pentru schimbări ale serviciilor sau legislației. Versiunea aplicabilă utilizării site-ului este cea publicată aici la data accesării.',
+  // Records what the time-limited no-deposit offer applied; it stays after the offer ends.
+  offerTitle: 'Oferta fără avans (1–30 noiembrie 2026)',
+  offerItems: [
+    'Lucrul la site începe doar după primirea materialelor complete de la client, iar termenul de livrare curge din acel moment.',
+    'Site-ul rămâne pe adresa de test a MAST Studio până la plata integrală.',
+    'Codul, accesele și transferul domeniului se predau clientului doar după plată.',
+    'Clientul decide în 7 zile de la livrare dacă păstrează site-ul; după acest termen, cererea se închide.',
+    'Prima rundă de revizii este inclusă.',
+    'Oferta se aplică site-urilor de prezentare și magazinelor online comandate între 1 și 30 noiembrie 2026.',
+  ],
 }
 
 // HUMAN REVIEW: legal translation
@@ -64,6 +74,16 @@ const en: typeof ro = {
   changesTitle: '8. Changes',
   changesBody:
     'We may update these terms for changes to the services or to the law. The version that applies to use of the website is the one published here on the date it is accessed.',
+  // Records what the time-limited no-deposit offer applied; it stays after the offer ends.
+  offerTitle: 'No-deposit offer (1–30 November 2026)',
+  offerItems: [
+    'Work on the website starts only once the client’s complete materials are received, and the delivery deadline runs from that moment.',
+    'The website stays on MAST Studio’s test address until payment in full.',
+    'The code, the access and the domain transfer are handed to the client only after payment.',
+    'The client decides within 7 days of delivery whether to keep the website; after that, the request is closed.',
+    'The first round of revisions is included.',
+    'The offer applies to presentation websites and online stores ordered between 1 and 30 November 2026.',
+  ],
 }
 
 const copy = { ro, en }
@@ -96,6 +116,13 @@ export function TermsView({ locale }: { locale: Locale }) {
       </LegalSection>
       <LegalSection title={t.quotesTitle}>
         <p>{t.quotesBody}</p>
+      </LegalSection>
+      <LegalSection title={t.offerTitle}>
+        <ul className="flex list-disc flex-col gap-2 pl-5">
+          {t.offerItems.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
       </LegalSection>
       <LegalSection title={t.clientTitle}>
         <p>{t.clientBody}</p>

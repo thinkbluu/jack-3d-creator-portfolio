@@ -1,3 +1,4 @@
+import { isNoDepositActive, serviceOfferCopy } from './offer'
 import type { Locale } from './i18n/locale'
 import { canonicalServiceSlug } from './i18n/paths'
 import { serviceTextEn } from './i18n/content/services.en'
@@ -619,12 +620,20 @@ function localizeService(service: ServicePage, locale: Locale): ServicePage {
   return text ? { ...service, ...text } : service
 }
 
+// Deposit copy switches to the no-deposit offer variant while it is active;
+// evaluated per call so ISR revalidation flips the copy without a redeploy.
+function applyOfferCopy(service: ServicePage, locale: Locale): ServicePage {
+  if (!isNoDepositActive()) return service
+  const override = serviceOfferCopy[locale][service.slug]
+  return override ? { ...service, ...override } : service
+}
+
 export function getAllServicePages(locale: Locale = 'ro') {
-  return servicePages.map((service) => localizeService(service, locale))
+  return servicePages.map((service) => applyOfferCopy(localizeService(service, locale), locale))
 }
 
 export function getServicePageBySlug(slug: string, locale: Locale = 'ro') {
   const id = canonicalServiceSlug(slug) ?? slug
   const service = servicePages.find((item) => item.slug === id)
-  return service ? localizeService(service, locale) : undefined
+  return service ? applyOfferCopy(localizeService(service, locale), locale) : undefined
 }

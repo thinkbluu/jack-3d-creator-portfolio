@@ -1,5 +1,6 @@
 import { track } from '@vercel/analytics'
 import { CONSENT_STORAGE_KEY } from './consent'
+import { isNoDepositActive } from './offer'
 
 export { CONSENT_STORAGE_KEY }
 
@@ -9,6 +10,14 @@ export type ConsentState = 'granted' | 'denied'
 export const CONSENT_EVENT = 'mast:consent'
 
 type EventData = Record<string, string | number | boolean>
+
+// Lead events carry the active pricing offer so GA4 can compare test results.
+const OFFER_EVENTS = new Set(['generate_lead', 'lead_form_submit', 'whatsapp_click'])
+
+function withOffer(event: string, data?: EventData): EventData | undefined {
+  if (!OFFER_EVENTS.has(event)) return data
+  return { ...data, offer: isNoDepositActive() ? 'no_deposit' : 'deposit' }
+}
 
 declare global {
   interface Window {
@@ -34,9 +43,11 @@ function ensureVercelQueue() {
 export function trackConversion(event: string, data?: EventData) {
   if (typeof window === 'undefined') return
 
+  const payload = withOffer(event, data)
+
   try {
     ensureVercelQueue()
-    track(event, data)
+    track(event, payload)
   } catch {
     // Vercel Analytics may be blocked or unavailable; ignore.
   }
@@ -44,7 +55,7 @@ export function trackConversion(event: string, data?: EventData) {
   if (getStoredConsent() !== 'granted') return
 
   try {
-    window.gtag?.('event', event, data ?? {})
+    window.gtag?.('event', event, payload ?? {})
   } catch {
     // Google Tag may not be loaded or consent may be denied; ignore.
   }

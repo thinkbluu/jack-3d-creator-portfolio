@@ -9,6 +9,7 @@ import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, faqNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { getAllServicePages } from '@/lib/services'
+import { isNoDepositActive, offerConditions } from '@/lib/offer'
 
 type PricingCopy = {
   word: string
@@ -140,8 +141,78 @@ const pricingCopy: Record<Locale, PricingCopy> = {
   },
 }
 
+// No-deposit offer variants (November 2026), applied only while the offer is active.
+const pricingOfferOverrides: Record<Locale, Partial<PricingCopy>> = {
+  ro: {
+    description:
+      'Prețuri MAST Studio: site de prezentare de la 300 EUR, magazin online de la 900 EUR, design UX/UI de la 250 EUR, aplicații cu ofertă fixă. În noiembrie, fără avans: plătești doar dacă ești mulțumit.',
+    paymentBody:
+      'La site-uri și magazine online, în noiembrie, nu plătești nimic în avans: vezi site-ul live și plătești doar dacă ești mulțumit de rezultat. La aplicații și platforme prețul e fix și se plătește în etape, pe măsură ce vezi progresul.',
+    faq: [
+      {
+        question: 'Cât costă un site de prezentare?',
+        answer:
+          'Un site de prezentare pornește de la 300 EUR, cu design inclus și termen de livrare scris în ofertă. Prețul final depinde de numărul de pagini și de funcționalități.',
+      },
+      {
+        question: 'Cât costă un magazin online?',
+        answer:
+          'Un magazin online pornește de la 900 EUR, cu integrare de plată, produse încărcate și formare pentru echipa ta.',
+      },
+      {
+        question: 'Ce înseamnă „fără avans” în noiembrie?',
+        answer:
+          'La site-uri și magazine online, în noiembrie, nu plătești nimic la start: vezi site-ul live pe adresa noastră de test și plătești doar dacă ești mulțumit de rezultat.',
+      },
+      {
+        question: 'Ce se plătește separat?',
+        answer:
+          'Domeniul și găzduirea (anual, direct la furnizor), fotografiile profesionale și campaniile de publicitate. Toate celelalte costuri sunt scrise în ofertă.',
+      },
+      {
+        question: 'Aplicațiile au preț fix?',
+        answer:
+          'Da. După prima conversație primești în 24 de ore o ofertă cu preț fix și termen estimat. Prețul nu se schimbă pe parcurs, dacă nu schimbi tu cerințele.',
+      },
+    ],
+  },
+  en: {
+    description:
+      'MAST Studio prices: a presentation website from 300 EUR, an online store from 900 EUR, UX/UI design from 250 EUR, apps with a fixed-price quote. In November, no deposit: you pay only if you are happy.',
+    paymentBody:
+      'For websites and online stores, in November you pay nothing up front: you see the site live and pay only if you are happy with the result. For apps and platforms the price is fixed and paid in stages, as you see the progress.',
+    faq: [
+      {
+        question: 'How much does a presentation website cost?',
+        answer:
+          'A presentation website starts at 300 EUR, with the design included and a delivery time written in the quote. The final price depends on the number of pages and the features.',
+      },
+      {
+        question: 'How much does an online store cost?',
+        answer:
+          'An online store starts at 900 EUR, with payment integration, your products loaded, and training for your team.',
+      },
+      {
+        question: 'What does “no deposit” in November mean?',
+        answer:
+          'For websites and online stores, in November you pay nothing to start: you see the site live on our test address and pay only if you are happy with the result.',
+      },
+      {
+        question: 'What is paid separately?',
+        answer:
+          'The domain and hosting (yearly, directly to the provider), professional photography, and advertising campaigns. Every other cost is written in the quote.',
+      },
+      {
+        question: 'Do apps have a fixed price?',
+        answer:
+          'Yes. After the first conversation you get a fixed-price quote and an estimated timeline within 24 hours. The price does not change along the way, unless you change the requirements.',
+      },
+    ],
+  },
+}
+
 export function pricingMetadata(locale: Locale) {
-  const copy = pricingCopy[locale]
+  const copy = { ...pricingCopy[locale], ...pricingOfferOverrides[locale] }
   return pageMetadata({
     title: copy.title,
     description: copy.description,
@@ -151,7 +222,8 @@ export function pricingMetadata(locale: Locale) {
 }
 
 export function PricingView({ locale }: { locale: Locale }) {
-  const copy = pricingCopy[locale]
+  const noDeposit = isNoDepositActive()
+  const copy = { ...pricingCopy[locale], ...(noDeposit ? pricingOfferOverrides[locale] : {}) }
   const path = localizePath('/preturi', locale)
   const services = getAllServicePages(locale)
   const crumbs: BreadcrumbItem[] = [
@@ -230,6 +302,17 @@ export function PricingView({ locale }: { locale: Locale }) {
             <div>
               <h2 className="type-h3">{copy.paymentTitle}</h2>
               <p className="mt-6 max-w-md text-[15px] leading-relaxed text-[var(--ink-2)]">{copy.paymentBody}</p>
+              {noDeposit && (
+                <p className="mt-4 max-w-md text-[15px] leading-relaxed text-[var(--ink-2)]">
+                  {offerConditions[locale]}{' '}
+                  <Link
+                    href={localizePath('/termeni', locale)}
+                    className="font-semibold text-[var(--ink)] underline underline-offset-4 hover:text-[var(--brass-ink)]"
+                  >
+                    {locale === 'en' ? 'Full terms' : 'Termeni compleți'}
+                  </Link>
+                </p>
+              )}
             </div>
           </div>
         </section>

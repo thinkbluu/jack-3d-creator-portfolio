@@ -1,3 +1,6 @@
+// Offer copy re-evaluates hourly so the no-deposit offer flips without a redeploy.
+export const revalidate = 3600
+
 import type { Metadata } from 'next'
 import { ServiceDetail, serviceMetadata } from '@/app/(ro)/servicii/[slug]/view'
 import { publicServiceSlug } from '@/lib/i18n/paths'

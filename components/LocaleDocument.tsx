@@ -4,6 +4,7 @@ import Script from 'next/script'
 import AdsTracking from '@/components/AdsTracking'
 import ConsentBanner from '@/components/ConsentBanner'
 import JsonLd from '@/components/JsonLd'
+import OfferBar from '@/components/OfferBar'
 import ScrollProgress from '@/components/ScrollProgress'
 import SmoothScroll from '@/components/SmoothScroll'
 import StudioCursor from '@/components/StudioCursor'
@@ -17,6 +18,7 @@ import { TRACKING_ACTIVE } from '@/lib/ads'
 import { fontClassName } from '@/lib/fonts'
 import { businessNode, graph, websiteNode } from '@/lib/schema'
 import { defaultOgImage } from '@/lib/seo'
+import { homeMetaOffer, isNoDepositActive } from '@/lib/offer'
 import { LEGAL_NAME, SITE_NAME, SITE_URL } from '@/lib/site'
 
 const consentGrantedUpdate = "{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'}"
@@ -35,7 +37,7 @@ export function localeMetadata(locale: Locale): Metadata {
       default: copy.defaultTitle,
       template: `%s | ${SITE_NAME}`,
     },
-    description: copy.defaultDescription,
+    description: isNoDepositActive() ? homeMetaOffer[locale].defaultDescription : copy.defaultDescription,
     applicationName: SITE_NAME,
     authors: [{ name: SITE_NAME, url: SITE_URL }],
     creator: SITE_NAME,
@@ -99,6 +101,7 @@ export default function LocaleDocument({ locale, children }: { locale: Locale; c
       </head>
       <body className="bg-[var(--shell)] font-sans antialiased">
         <LocaleProvider locale={locale}>
+          <OfferBar locale={locale} />
           <SmoothScroll />
           <ScrollProgress />
           {children}

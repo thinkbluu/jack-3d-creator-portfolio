@@ -6,6 +6,21 @@ import type { Locale } from '@/lib/i18n/locale'
 import { getFeaturedProjects } from '@/lib/projects'
 import { pageMetadata } from '@/lib/seo'
 import { EMAIL, PHONE_DISPLAY, PHONE_HREF } from '@/lib/site'
+import { isNoDepositActive } from '@/lib/offer'
+
+// No-deposit offer variants (November 2026), applied only while the offer is active.
+const offerTrustOverrides: Record<Locale, Partial<(typeof offer)['ro']>> = {
+  ro: {
+    description:
+      'Primești oferta în aceeași zi. Site de prezentare de la 300 EUR, live în 48 de ore. În noiembrie, fără avans: plătești doar dacă ești mulțumit de rezultat.',
+    trust: ['48h de la conținut la site live', 'de la 300 EUR', 'fără avans în noiembrie, plătești doar dacă ești mulțumit'],
+  },
+  en: {
+    description:
+      'You get the quote the same day. Presentation websites from 300 EUR, live in 48 hours. In November, no deposit: you pay only if you’re happy with the result.',
+    trust: ['48h from content to a live site', 'from 300 EUR', 'no deposit in November, pay only if you’re happy'],
+  },
+}
 
 const offer = {
   ro: {
@@ -85,7 +100,7 @@ const offer = {
 // Landing page for paid campaigns. It duplicates /cerere-oferta on purpose, so it
 // stays out of the index (links are still followed) and out of the sitemap.
 export function offerMetadata(locale: Locale = 'ro') {
-  const copy = offer[locale]
+  const copy = { ...offer[locale], ...(isNoDepositActive() ? offerTrustOverrides[locale] : {}) }
   return pageMetadata({
     title: copy.title,
     description: copy.description,
@@ -96,7 +111,7 @@ export function offerMetadata(locale: Locale = 'ro') {
 }
 
 export function OfferView({ locale }: { locale: Locale }) {
-  const copy = offer[locale]
+  const copy = { ...offer[locale], ...(isNoDepositActive() ? offerTrustOverrides[locale] : {}) }
   const projects = getFeaturedProjects(3, locale)
 
   return (

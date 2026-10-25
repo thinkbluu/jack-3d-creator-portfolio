@@ -1,3 +1,6 @@
+// Offer copy re-evaluates hourly so the no-deposit offer flips without a redeploy.
+export const revalidate = 3600
+
 import Image from 'next/image'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
@@ -8,6 +11,7 @@ import { primaryButtonClass, textLinkClass } from '@/components/form-styles'
 import { ReviewsBlock } from '@/components/studio/SalutRings'
 import { faqNode, graph, webPageNode } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
+import { isNoDepositActive } from '@/lib/offer'
 
 const PATH = '/mockup'
 
@@ -61,6 +65,16 @@ const STEPS = [
   },
 ]
 
+// No-deposit offer variants (November 2026), applied only while the offer is active.
+const STEPS_OFFER = [
+  STEPS[0],
+  STEPS[1],
+  {
+    title: 'Decizi tu',
+    body: 'Îți place? În noiembrie, fără avans: site live în 48 de ore, iar tu plătești doar dacă ești mulțumit.',
+  },
+]
+
 const FAQS = [
   {
     question: 'Chiar e gratuit?',
@@ -86,6 +100,18 @@ const FAQS = [
   },
 ]
 
+const FAQS_OFFER = [
+  FAQS[0],
+  FAQS[1],
+  {
+    question: 'Ce se întâmplă după mockup?',
+    answer:
+      'Dacă îți place, în noiembrie începi fără avans. Site-ul e live în 48 de ore de la primirea materialelor, iar restul îl plătești doar dacă ești mulțumit.',
+  },
+  FAQS[3],
+  FAQS[4],
+]
+
 const WHATSAPP_URL =
   'https://wa.me/40746382204?text=Salut%2C%20vreau%20mockup-ul%20gratuit%20pentru%20firma%20mea'
 
@@ -108,10 +134,13 @@ function CheckIcon() {
 }
 
 export default function MockupPage() {
+  const noDeposit = isNoDepositActive()
+  const steps = noDeposit ? STEPS_OFFER : STEPS
+  const faqs = noDeposit ? FAQS_OFFER : FAQS
   return (
     <>
       <SiteHeader />
-      <JsonLd data={graph(webPageNode({ path: PATH, name: META_TITLE, description: META_DESCRIPTION }), faqNode(FAQS, PATH))} />
+      <JsonLd data={graph(webPageNode({ path: PATH, name: META_TITLE, description: META_DESCRIPTION }), faqNode(faqs, PATH))} />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
         {/* 1. Hero: copy left, form right on desktop; copy, then form on mobile. */}
         <section className="site-container pb-14 pt-8 md:pb-20 md:pt-14">
@@ -154,7 +183,7 @@ export default function MockupPage() {
             Cum funcționează
           </h2>
           <ol className="mt-8 grid gap-8 md:grid-cols-3 md:gap-6">
-            {STEPS.map((step, index) => (
+            {steps.map((step, index) => (
               <li key={step.title} className="flex flex-col gap-3 md:border-l md:border-[var(--hairline)] md:pl-6 md:first:border-l-0 md:first:pl-0">
                 <span
                   aria-hidden="true"
@@ -222,7 +251,7 @@ export default function MockupPage() {
             Întrebări frecvente
           </h2>
           <div className="mt-6 max-w-3xl divide-y divide-[var(--hairline)] border-y border-[var(--hairline)]">
-            {FAQS.map((item) => (
+            {faqs.map((item) => (
               <details key={item.question} className="faq-item group py-5">
                 <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-4 font-sans font-semibold [&::-webkit-details-marker]:hidden">
                   <span>{item.question}</span>

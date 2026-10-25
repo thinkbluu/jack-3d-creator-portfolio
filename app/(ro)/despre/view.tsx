@@ -14,6 +14,7 @@ import { breadcrumbNode, businessRef, faqNode, graph, webPageNode, type Breadcru
 import { pageMetadata } from '@/lib/seo'
 import { EMAIL, EMAIL_HREF, LEGAL_NAME, PHONE_DISPLAY, PHONE_HREF, TRADE_REGISTER_NUMBER, VAT_ID } from '@/lib/site'
 import { PAGE_WORDS } from '@/lib/page-words'
+import { isNoDepositActive } from '@/lib/offer'
 
 const about = {
   ro: {
@@ -232,6 +233,12 @@ const about = {
   },
 }
 
+// No-deposit offer variant for the handover step (November 2026).
+const aboutStepOffer: Record<Locale, string> = {
+  ro: 'În noiembrie, fără avans: restul îl plătești doar dacă ești mulțumit de rezultat. Primești accesele, documentația și un scurt instructaj de folosire.',
+  en: 'In November, no deposit: you pay the rest only if you’re happy with the result. You get the access, the documentation, and a short walkthrough of how to use it.',
+}
+
 export function aboutMetadata(locale: Locale = 'ro') {
   const copy = about[locale]
   return pageMetadata({
@@ -243,7 +250,15 @@ export function aboutMetadata(locale: Locale = 'ro') {
 }
 
 export function AboutView({ locale }: { locale: Locale }) {
-  const copy = about[locale]
+  const base = about[locale]
+  const copy = isNoDepositActive()
+    ? {
+        ...base,
+        steps: base.steps.map((step, index) =>
+          index === base.steps.length - 1 ? { ...step, text: aboutStepOffer[locale] } : step,
+        ),
+      }
+    : base
   const path = localizePath('/despre', locale)
   const crumbs: BreadcrumbItem[] = [
     { name: ui[locale].common.home, path: localizePath('/', locale) },
