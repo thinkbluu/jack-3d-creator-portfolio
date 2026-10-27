@@ -4,9 +4,11 @@
 slug: numele-slugului
 title: Titlul complet al articolului
 excerpt: Rezumat clar, folosit în lista blogului și ca descriere implicită.
-# Valori acceptate: ghid, comparatie, sfat.
+# Valori acceptate: ghid, comparatie, sfat. Pentru un studiu: studiu.
 category: ghid
 categoryLabel: Ghid
+# section: cercetare   # doar pentru studii. Implicit: ghid. Un studiu folosește category: studiu.
+# draft: true          # nepublicat: lipsește din listă, sitemap, feed și din ruta de producție.
 # Număr întreg pozitiv.
 readMin: 5
 # Date ISO YYYY-MM-DD. Elimină `updatedAt` până la prima actualizare reală.
@@ -27,6 +29,16 @@ faqItems:
 # Dacă fișierul lipsește, articolul apare fără copertă (build-ul nu pică).
 cover: /blog/numele-slugului/cover.webp
 coverAlt: Ce se vede în imagine, într-o propoziție.
+# Studiu (section: cercetare). Elimină blocul dacă articolul este un ghid.
+# methodology: Cum ai măsurat, pe cine și ce ai exclus.
+# sources:
+#   - name: Numele sursei
+#     url: https://exemplu.ro/sursa
+#     note: De ce contează sursa.
+# dataset:
+#   name: Numele setului de date
+#   description: Ce conține fișierul, într-o propoziție.
+#   path: /cercetare/numele-slugului/date.csv
 # Pași HowTo opționali. Elimină cheia dacă articolul nu descrie un proces.
 howToSteps:
   - name: Numele pasului

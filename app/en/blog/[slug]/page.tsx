@@ -9,7 +9,7 @@ type ArticlePageProps = {
 export const dynamicParams = false
 
 export function generateStaticParams() {
-  return getAllPosts('en').map((post) => ({ slug: post.slug }))
+  return getAllPosts('en', { includeDrafts: process.env.NODE_ENV !== 'production' }).map((post) => ({ slug: post.slug }))
 }
 
 export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {

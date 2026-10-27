@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import BlogCard from '@/components/BlogCard'
+import { DatasetBlock, DraftNotice, MethodologyBlock, SectionBadge, SourcesBlock } from '@/components/blog/ResearchBlocks'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
@@ -10,7 +11,7 @@ import MdxContent from '@/components/MdxContent'
 import SiteHeader from '@/components/SiteHeader'
 import PageHero from '@/components/studio/PageHero'
 import { SegmentProvider } from '@/components/SegmentContext'
-import { formatBlogDate, getAllPosts, getPostBySlug, getRelatedPosts, type BlogPost } from '@/lib/blog'
+import { formatBlogDate, getPostBySlug, getRelatedPosts, type BlogPost } from '@/lib/blog'
 import type { Locale } from '@/lib/i18n/locale'
 import { schemaLanguage } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
@@ -19,10 +20,6 @@ import { breadcrumbNode, faqNode, graph, webPageNode, type BreadcrumbItem } from
 import { pageMetadata, stripBrandSuffix } from '@/lib/seo'
 import { LOGO_URL, BUSINESS_ID, SITE_NAME, WEBSITE_ID, absoluteUrl } from '@/lib/site'
 import { getTeamMember } from '@/lib/team'
-
-type ArticlePageProps = {
-  params: Promise<{ slug: string }>
-}
 
 function ogImage(post: BlogPost, locale: Locale) {
   return { url: localizePath(`/blog/${post.slug}/og.png`, locale), alt: post.title, width: 1200, height: 630 }
@@ -45,6 +42,7 @@ export function articleMetadata(locale: Locale, slug: string): Metadata {
     type: 'article',
     publishedTime: isoDate(post.publishedAt),
     modifiedTime: isoDate(post.updatedAt ?? post.publishedAt),
+    noindex: post.draft,
     locale,
     hreflang: false,
   })
@@ -60,9 +58,11 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
   const related = getRelatedPosts(post, 3, locale)
   const author = post.author ? getTeamMember(post.author) : undefined
   const dateModified = post.updatedAt ?? post.publishedAt
+  const research = post.section === 'cercetare'
   const crumbs: BreadcrumbItem[] = [
     { name: ui[locale].common.home, path: localizePath('/', locale) },
     { name: copy.crumb, path: localizePath('/blog', locale) },
+    ...(research ? [{ name: copy.researchCrumb, path: localizePath('/blog/cercetare', locale) }] : []),
     { name: post.title, path },
   ]
 
@@ -70,7 +70,7 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
     webPageNode({ path, name: post.title, description: post.seoDescription ?? post.excerpt, breadcrumb: true, locale }),
     breadcrumbNode(crumbs),
     {
-      '@type': 'BlogPosting',
+      '@type': research ? 'Article' : 'BlogPosting',
       '@id': `${url}#article`,
       headline: post.title,
       description: post.excerpt,
@@ -78,7 +78,7 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
       datePublished: isoDate(post.publishedAt),
       dateModified: isoDate(dateModified),
       inLanguage: schemaLanguage(locale),
-      articleSection: post.categoryLabel,
+      articleSection: research ? copy.researchBadge : post.categoryLabel,
       wordCount: post.body.split(/\s+/).filter(Boolean).length,
       timeRequired: `PT${post.readMin}M`,
       mainEntityOfPage: { '@id': `${url}#webpage` },
@@ -98,7 +98,28 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
         url: absoluteUrl(localizePath('/', locale)),
         logo: { '@type': 'ImageObject', url: LOGO_URL, width: 512, height: 512 },
       },
+      ...(post.dataset ? { hasPart: { '@id': `${url}#dataset` } } : {}),
     },
+    post.dataset
+      ? {
+          '@type': 'Dataset',
+          '@id': `${url}#dataset`,
+          name: post.dataset.name,
+          description: post.dataset.description,
+          url: absoluteUrl(post.dataset.path),
+          encodingFormat: 'text/csv',
+          inLanguage: schemaLanguage(locale),
+          creator: { '@id': BUSINESS_ID },
+          datePublished: isoDate(post.publishedAt),
+          dateModified: isoDate(dateModified),
+          isPartOf: { '@id': `${url}#article` },
+          distribution: {
+            '@type': 'DataDownload',
+            encodingFormat: 'text/csv',
+            contentUrl: absoluteUrl(post.dataset.path),
+          },
+        }
+      : null,
     post.howToSteps?.length
       ? {
           '@type': 'HowTo',
@@ -117,10 +138,11 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
 
   return (
     <>
-      <SiteHeader current="blog" tone="dark" overlay />
+      <SiteHeader current={research ? 'cercetare' : 'blog'} tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
         <article>
           <PageHero crumbs={crumbs} kicker={post.categoryLabel} title={post.title} intro={post.excerpt}>
+            {post.draft ? <DraftNotice>{copy.draftNotice}</DraftNotice> : null}
             <div className="mono-label flex flex-col gap-1 text-[var(--fg-3)] sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4">
               <span>
                 {copy.by}{' '}
@@ -134,6 +156,12 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
                   </Link>
                 )}
               </span>
+              {research ? (
+                <>
+                  <span aria-hidden="true" className="hidden sm:inline">·</span>
+                  <SectionBadge>{copy.researchBadge}</SectionBadge>
+                </>
+              ) : null}
               <span aria-hidden="true" className="hidden sm:inline">·</span>
               <span>
                 {copy.published} <time dateTime={post.publishedAt}>{formatBlogDate(post.publishedAt, locale)}</time>
@@ -159,6 +187,12 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
             </figure>
           ) : null}
 
+          {post.methodology ? (
+            <div className="mx-auto mt-10 max-w-2xl">
+              <MethodologyBlock title={copy.researchMethod}>{post.methodology}</MethodologyBlock>
+            </div>
+          ) : null}
+
           <div className="mx-auto mt-10 max-w-2xl">
             <p className="kicker">{copy.inShort}</p>
             <div
@@ -178,6 +212,18 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
           <div className="prose mx-auto mt-12 max-w-2xl">
             <MdxContent source={post.body} />
           </div>
+
+          {post.sources?.length ? (
+            <div className="mx-auto mt-16 max-w-2xl">
+              <SourcesBlock title={copy.researchSources} sources={post.sources} />
+            </div>
+          ) : null}
+
+          {post.dataset ? (
+            <div className="mx-auto mt-16 max-w-2xl">
+              <DatasetBlock title={copy.researchData} downloadLabel={copy.researchDownload} dataset={post.dataset} />
+            </div>
+          ) : null}
 
           {post.faqItems?.length ? (
             <section className="mx-auto mt-16 max-w-2xl">

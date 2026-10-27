@@ -1,8 +1,11 @@
 import type { ComponentProps } from 'react'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import remarkGfm from 'remark-gfm'
+import { BarChart, Figure } from '@/components/blog/ResearchBlocks'
 
 const components = {
+  BarChart,
+  Figure,
   // Images in posts: ![Alt text](/blog/slug/image.webp "Optional caption").
   // Spans, not a figure, because Markdown puts images inside paragraphs.
   img: ({ src, alt, title }: ComponentProps<'img'>) => (

@@ -4,7 +4,10 @@ import matter from 'gray-matter'
 import type { Locale } from './i18n/locale'
 import { intlLocale } from './i18n/locale'
 
-export type BlogCategory = 'ghid' | 'comparatie' | 'sfat'
+export type BlogCategory = 'ghid' | 'comparatie' | 'sfat' | 'studiu'
+
+/** `ghid` is the practical guide. `cercetare` is a data study, listed under /blog/cercetare. */
+export type BlogSection = 'ghid' | 'cercetare'
 
 export type BlogFaqItem = {
   question: string
@@ -14,6 +17,19 @@ export type BlogFaqItem = {
 export type HowToStep = {
   name: string
   text: string
+}
+
+export type BlogSource = {
+  name: string
+  url?: string
+  note?: string
+}
+
+export type BlogDataset = {
+  name: string
+  description: string
+  /** Public file path, e.g. /cercetare/slug/date.csv */
+  path: string
 }
 
 export type BlogPost = {
@@ -37,6 +53,14 @@ export type BlogPost = {
   coverAlt?: string
   /** Team member slug (lib/team.ts) for the byline and authorship schema. */
   author?: string
+  /** Guides stay on /blog. Research studies are listed on /blog/cercetare. */
+  section: BlogSection
+  /** Unpublished layout samples stay out of the list, sitemap, feed and production routes. */
+  draft: boolean
+  /** How the study was measured. Rendered as its own block on research posts. */
+  methodology?: string
+  sources?: BlogSource[]
+  dataset?: BlogDataset
 }
 
 type BlogFrontmatter = Omit<BlogPost, 'body'>
@@ -45,7 +69,8 @@ function blogDirectory(locale: Locale = 'ro') {
   const root = path.join(process.cwd(), 'content', 'blog')
   return locale === 'en' ? path.join(root, 'en') : root
 }
-const validCategories = new Set<BlogCategory>(['ghid', 'comparatie', 'sfat'])
+const validCategories = new Set<BlogCategory>(['ghid', 'comparatie', 'sfat', 'studiu'])
+const validSections = new Set<BlogSection>(['ghid', 'cercetare'])
 
 function requiredString(value: unknown, field: string, fileName: string) {
   if (typeof value !== 'string' || value.trim() === '') {
@@ -95,6 +120,61 @@ function parseHowToSteps(value: unknown, fileName: string): HowToStep[] | undefi
   })
 }
 
+function parseSources(value: unknown, fileName: string): BlogSource[] | undefined {
+  if (value === undefined || value === null) return undefined
+  if (!Array.isArray(value)) throw new Error(`Frontmatter field "sources" must be an array in ${fileName}`)
+
+  return value.map((item, index) => {
+    if (!item || typeof item !== 'object') throw new Error(`sources[${index}] must be an object in ${fileName}`)
+    const entry = item as Record<string, unknown>
+    const url = optionalString(entry.url, `sources[${index}].url`, fileName)
+    if (url && !/^https?:\/\//.test(url)) {
+      throw new Error(`sources[${index}].url must be an http(s) URL in ${fileName}`)
+    }
+    return {
+      name: requiredString(entry.name, `sources[${index}].name`, fileName),
+      url,
+      note: optionalString(entry.note, `sources[${index}].note`, fileName),
+    }
+  })
+}
+
+function parseDataset(value: unknown, fileName: string): BlogDataset | undefined {
+  if (value === undefined || value === null) return undefined
+  if (!value || typeof value !== 'object' || Array.isArray(value)) {
+    throw new Error(`Frontmatter field "dataset" must be an object in ${fileName}`)
+  }
+  const entry = value as Record<string, unknown>
+  const filePath = requiredString(entry.path, 'dataset.path', fileName)
+  if (!filePath.startsWith('/')) {
+    throw new Error(`Frontmatter field "dataset.path" must start with / (a file under public/) in ${fileName}`)
+  }
+  if (!fs.existsSync(path.join(process.cwd(), 'public', filePath))) {
+    throw new Error(`Dataset file ${filePath} for ${fileName} is missing from public/`)
+  }
+  return {
+    name: requiredString(entry.name, 'dataset.name', fileName),
+    description: requiredString(entry.description, 'dataset.description', fileName),
+    path: filePath,
+  }
+}
+
+function parseSection(data: Record<string, unknown>, fileName: string): BlogSection {
+  const raw = data.section
+  if (raw === undefined || raw === null || raw === '') return 'ghid'
+  const section = requiredString(raw, 'section', fileName) as BlogSection
+  if (!validSections.has(section)) {
+    throw new Error(`Frontmatter field "section" must be ghid or cercetare in ${fileName}`)
+  }
+  return section
+}
+
+function parseDraft(value: unknown, fileName: string) {
+  if (value === undefined || value === null || value === false) return false
+  if (value === true) return true
+  throw new Error(`Frontmatter field "draft" must be true or false in ${fileName}`)
+}
+
 /**
  * Covers are optional, so a post written before its image exists still
  * builds: a missing file is reported and the post shows without a cover.
@@ -120,7 +200,11 @@ function parseFrontmatter(data: Record<string, unknown>, fileName: string): Blog
 
   const category = requiredString(data.category, 'category', fileName) as BlogCategory
   if (!validCategories.has(category)) {
-    throw new Error(`Frontmatter field "category" must be ghid, comparatie or sfat in ${fileName}`)
+    throw new Error(`Frontmatter field "category" must be ghid, comparatie, sfat or studiu in ${fileName}`)
+  }
+  const section = parseSection(data, fileName)
+  if (section === 'cercetare' && category !== 'studiu') {
+    throw new Error(`Research posts (section: cercetare) use category "studiu" in ${fileName}`)
   }
 
   const readMin = Number(data.readMin)
@@ -152,6 +236,11 @@ function parseFrontmatter(data: Record<string, unknown>, fileName: string): Blog
     faqItems: parseFaqItems(data.faqItems, fileName),
     howToSteps: parseHowToSteps(data.howToSteps, fileName),
     author: optionalString(data.author, 'author', fileName),
+    section,
+    draft: parseDraft(data.draft, fileName),
+    methodology: optionalString(data.methodology, 'methodology', fileName),
+    sources: parseSources(data.sources, fileName),
+    dataset: parseDataset(data.dataset, fileName),
     ...parseCover(data, fileName),
   }
 }
@@ -190,7 +279,10 @@ function readPost(fileName: string, locale: Locale): BlogPost {
   }
 }
 
-export function getAllPosts(locale: Locale = 'ro'): BlogPost[] {
+export function getAllPosts(
+  locale: Locale = 'ro',
+  options?: { includeDrafts?: boolean; section?: BlogSection },
+): BlogPost[] {
   const directory = blogDirectory(locale)
   if (!fs.existsSync(directory)) return []
 
@@ -198,7 +290,9 @@ export function getAllPosts(locale: Locale = 'ro'): BlogPost[] {
     .readdirSync(directory)
     .filter((fileName) => fileName.endsWith('.mdx'))
     .map((fileName) => readPost(fileName, locale))
-    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+    .filter((post) => options?.includeDrafts || !post.draft)
+    .filter((post) => !options?.section || post.section === options.section)
+    .sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.slug.localeCompare(b.slug))
 }
 
 export function getPostBySlug(slug: string, locale: Locale = 'ro'): BlogPost | undefined {
@@ -209,7 +303,10 @@ export function getPostBySlug(slug: string, locale: Locale = 'ro'): BlogPost | u
   const filePath = path.join(blogDirectory(locale), fileName)
   if (!fs.existsSync(filePath)) return undefined
 
-  return readPost(fileName, locale)
+  const post = readPost(fileName, locale)
+  // Drafts are a layout sample. Production routes, the sitemap and the feed never see them.
+  if (post.draft && process.env.NODE_ENV === 'production') return undefined
+  return post
 }
 
 const STOPWORDS = new Set(
@@ -295,13 +392,24 @@ function relatedPostsIndex(posts: BlogPost[], limit: number) {
 }
 
 export function getRelatedPosts(post: BlogPost, limit = 3, locale: Locale = 'ro'): BlogPost[] {
-  return relatedPostsIndex(getAllPosts(locale), limit).get(post.slug) ?? []
+  const sameSection = getAllPosts(locale).filter((item) => item.section === post.section)
+  return relatedPostsIndex(sameSection, limit).get(post.slug) ?? []
 }
 
+/**
+ * Format a stored YYYY-MM-DD as a calendar date in Romania.
+ * `new Date('YYYY-MM-DD')` is UTC midnight and can fall on the previous day
+ * in time zones behind UTC, so the day is read from the string itself.
+ */
 export function formatBlogDate(date: string, locale: Locale = 'ro') {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(date)
+  const value = match
+    ? new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]), 12))
+    : new Date(date)
   return new Intl.DateTimeFormat(intlLocale(locale), {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
-  }).format(new Date(date))
+    timeZone: 'Europe/Bucharest',
+  }).format(value)
 }

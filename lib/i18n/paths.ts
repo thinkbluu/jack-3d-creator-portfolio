@@ -24,6 +24,9 @@ const TOP: Pair[] = [
   { ro: 'echipa', en: 'team' },
 ]
 
+/** Second segment of /blog. English pages use the `en` slug. */
+export const BLOG_SLUGS: Pair[] = [{ ro: 'cercetare', en: 'research' }]
+
 /** Canonical service id is the Romanian slug. English pages use the `en` slug. */
 export const SERVICE_SLUGS: Pair[] = [
   { ro: 'site-de-prezentare', en: 'presentation-website' },
@@ -61,6 +64,7 @@ function mapParts(parts: string[], from: Locale, to: Locale) {
     if (index === 0) return pairValue(TOP, part, from, to)
     const top = pairValue(TOP, parts[0], from, 'ro')
     if (index === 1 && top === 'servicii') return pairValue(SERVICE_SLUGS, part, from, to)
+    if (index === 1 && top === 'blog') return pairValue(BLOG_SLUGS, part, from, to)
     return part
   })
 }
@@ -112,6 +116,9 @@ export function alternatePublicPath(publicPath: string) {
   const canonical = toCanonicalPath(split.pathname)
   const parts = canonical.split('/').filter(Boolean)
   if (parts[0] === 'blog' && parts.length > 1) {
+    // The research listing exists in both languages. Articles do not, so they
+    // switch to the other language's blog index.
+    if (parts[1] === 'cercetare') return localizePath('/blog/cercetare', target)
     return joinPath({ pathname: target === 'en' ? '/en/blog' : '/blog', search: split.search, hash: split.hash })
   }
   return localizePath(`${canonical}${split.search}${split.hash}`, target)
@@ -145,6 +152,7 @@ export function staticEnglishPaths() {
     '/cookies',
     '/termeni',
     '/blog',
+    '/blog/cercetare',
     ...SERVICE_SLUGS.map((pair) => `/servicii/${pair.ro}`),
   ]
   return paths.map((path) => localizePath(path, 'en'))
