@@ -71,6 +71,7 @@ export default function LocaleDocument({ locale, children }: { locale: Locale; c
   return (
     <html
       lang={htmlLang(locale)}
+      data-scroll-behavior="smooth"
       className={`${fontClassName} bg-[var(--shell)]`}
       // Reserve room for the offer announcement bar before hydration measures it.
       style={isNoDepositActive() ? ({ '--offer-bar-h': '37px' } as CSSProperties) : undefined}

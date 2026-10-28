@@ -30,7 +30,7 @@ Câmpurile opționale sunt `updatedAt`, `seoTitle`, `seoDescription`, `faqItems`
 
 ## Cercetare
 
-Studiile proprii (date despre prezența online, benchmark-uri, transparența prețurilor) stau tot în `content/blog/`, cu `section: cercetare` și `category: studiu`. Apar la `/blog/cercetare` (în engleză, `/en/blog/research`), cu insigna „Cercetare”, și nu se amestecă în lista de ghiduri.
+Studiile proprii (date despre prezența online, benchmark-uri, transparența prețurilor) stau tot în `content/blog/`, cu `section: cercetare` și `category: studiu`. Apar la `/blog/cercetare` (în engleză, `/en/blog/research`), cu insigna „Cercetare”, și nu se amestecă în lista de ghiduri. Slug-urile `cercetare` și `research` sunt rezervate pentru lista aceea.
 
 - `methodology`: cum ai măsurat, pe cine și ce ai exclus. Pagina o afișează într-un bloc separat.
 - `sources`: listă de `{ name, url?, note? }`. `url`, dacă există, este http(s).

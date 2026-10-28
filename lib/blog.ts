@@ -197,6 +197,10 @@ function parseFrontmatter(data: Record<string, unknown>, fileName: string): Blog
   if (slug !== fileSlug) {
     throw new Error(`Frontmatter slug "${slug}" must match filename "${fileSlug}.mdx"`)
   }
+  // These segments are the research listing (`/blog/cercetare`, `/en/blog/research`), served by the article route.
+  if (slug === 'cercetare' || slug === 'research') {
+    throw new Error(`Slug "${slug}" is reserved for the research listing in ${fileName}`)
+  }
 
   const category = requiredString(data.category, 'category', fileName) as BlogCategory
   if (!validCategories.has(category)) {

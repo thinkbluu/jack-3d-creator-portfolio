@@ -140,6 +140,8 @@ Optional: `updatedAt`, `seoTitle` (max 46 characters, no “MAST Studio”), `se
 
 `section: cercetare` with `category: studiu` marks a study. It is listed on `/blog/cercetare`, badged “Cercetare”, and kept out of the guide index. The article schema is `Article`, plus `Dataset` when `dataset` is set. Guides stay `BlogPosting`.
 
+The listing is not a separate `page.tsx` next to `blog/[slug]`. That dynamic segment matches first, and with `dynamicParams: false` a soft navigation to an unknown segment renders the root 404 inside the current page. `cercetare` (and `research` in English) is a reserved slug, included in `generateStaticParams`, and the article route renders the listing for it. Do not publish a post under either slug.
+
 `draft: true` drops the file from the list, the sitemap, the feed and the production route. `content/blog/model-studiu-cercetare.mdx` is that kind of file: a layout sample with an empty CSV header and no measurements. Do not publish it, and do not invent figures to fill a study.
 
 Authoring rules in full: `CONTRIBUTING.md`. The empty template is `content/TEMPLATE.mdx`.
