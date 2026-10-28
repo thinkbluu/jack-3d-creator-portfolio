@@ -30,6 +30,7 @@ export function GET() {
       <description>${escapeXml(post.excerpt)}</description>
       <link>${link}</link>
       <guid isPermaLink="true">${link}</guid>
+      <category>${escapeXml(post.section === 'cercetare' ? 'Cercetare' : post.categoryLabel)}</category>
       <pubDate>${toRfc822(post.publishedAt)}</pubDate>
     </item>`
     })

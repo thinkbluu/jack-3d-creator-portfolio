@@ -16,6 +16,7 @@ export type IdeaCard = {
   dateLabel: string
   cover?: string
   coverAlt?: string
+  badge?: string
 }
 
 /** Cover image, or a quiet navy plate with the compass when a post has none yet. */
@@ -67,7 +68,10 @@ export default function IdeasIndex({
           <Cover post={featured} sizes="(min-width: 768px) 58vw, 100vw" priority />
           <span className="idea-featured-text">
             <span className="mono-label idea-meta">
-              <span className="text-[var(--accent)]">{featured.categoryLabel}</span>
+              <span className="flex items-center gap-2 text-[var(--accent)]">
+                {featured.badge ? <span className="section-badge">{featured.badge}</span> : null}
+                {featured.categoryLabel}
+              </span>
               <span>
                 {featured.readMin} {readLabel}
               </span>
@@ -102,7 +106,10 @@ export default function IdeasIndex({
             <Link href={post.href} className="idea-card link-block">
               <Cover post={post} sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 100vw" />
               <span className="mono-label idea-meta">
-                <span className="text-[var(--accent)]">{post.categoryLabel}</span>
+                <span className="flex items-center gap-2 text-[var(--accent)]">
+                  {post.badge ? <span className="section-badge">{post.badge}</span> : null}
+                  {post.categoryLabel}
+                </span>
                 <span>
                   {post.readMin} {readLabel}
                 </span>

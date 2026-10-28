@@ -31,7 +31,10 @@ export default function BlogCard({ post, locale = 'ro', headingLevel = 'h2' }: B
         </span>
       ) : null}
       <span className="mono-label flex items-center justify-between gap-3 text-[var(--ink-3)]">
-        <span className="text-[var(--brass-ink)]">{post.categoryLabel}</span>
+        <span className="flex items-center gap-2 text-[var(--brass-ink)]">
+          {post.section === 'cercetare' ? <span className="section-badge">{ui[locale].blog.researchBadge}</span> : null}
+          {post.categoryLabel}
+        </span>
         <span>
           {post.readMin} {ui[locale].blog.readMin}
         </span>
