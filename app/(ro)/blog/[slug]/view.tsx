@@ -155,7 +155,7 @@ export async function ArticleView({ locale, slug }: { locale: Locale; slug: stri
           <div className="site-container py-16 md:py-24">
           {post.cover ? (
             <figure className="relative mx-auto aspect-[16/9] max-w-5xl overflow-hidden rounded-[22px] bg-[var(--shell-warm)]">
-              <Image src={post.cover} alt={post.coverAlt ?? ''} fill priority sizes="(min-width: 1024px) 64rem, 92vw" className="object-cover" />
+              <Image src={post.cover} alt={post.coverAlt ?? post.title} fill priority sizes="(min-width: 1024px) 64rem, 92vw" className="object-cover" />
             </figure>
           ) : null}
 

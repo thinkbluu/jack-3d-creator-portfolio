@@ -8,7 +8,12 @@ const components = {
   img: ({ src, alt, title }: ComponentProps<'img'>) => (
     <span className="mdx-figure">
       {/* eslint-disable-next-line @next/next/no-img-element -- MDX images have no known size */}
-      <img src={typeof src === 'string' ? src : undefined} alt={alt ?? ''} loading="lazy" decoding="async" />
+      <img
+        src={typeof src === 'string' ? src : undefined}
+        alt={alt || (typeof src === 'string' ? src.split('/').pop()?.replace(/\.[a-z]+$/, '').replace(/[-_]+/g, ' ') : '') || title || ''}
+        loading="lazy"
+        decoding="async"
+      />
       {title ? <span className="mdx-caption">{title}</span> : null}
     </span>
   ),

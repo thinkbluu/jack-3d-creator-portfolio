@@ -14,7 +14,7 @@ import ChartMarks from './ChartMarks'
 
 export default function RouteTransition() {
   const sectionRef = useRef<HTMLElement>(null)
-  const roseRef = useRef<HTMLImageElement>(null)
+  const roseRef = useRef<HTMLDivElement>(null)
   const roseCenter = useRef({ x: 0, y: 0 })
   const reduceMotion = useReducedMotion()
   const { scrollYProgress } = useScroll({
@@ -82,16 +82,20 @@ export default function RouteTransition() {
         <div className="w-full max-w-3xl">
           <ChartKicker label="Ruta e trasată." />
         </div>
-        <motion.img
+        <motion.div
           ref={roseRef}
           data-route-origin="true"
-          src="/images/mast-rose.png"
-          alt=""
           aria-hidden="true"
-          className="mt-8 h-auto w-[200px] md:w-[280px]"
-          style={reduceMotion
-            ? { opacity: 1, rotate: 0, scale: 1 }
-            : { rotate: combined, opacity, scale }}
+          className="mt-8 aspect-square w-[200px] md:w-[280px]"
+          style={{
+            backgroundImage: 'url(/images/mast-rose.png)',
+            backgroundSize: 'contain',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            ...(reduceMotion
+              ? { opacity: 1, rotate: 0, scale: 1 }
+              : { rotate: combined, opacity, scale }),
+          }}
         />
       </div>
     </section>

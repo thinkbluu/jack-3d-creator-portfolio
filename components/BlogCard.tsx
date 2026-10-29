@@ -23,7 +23,7 @@ export default function BlogCard({ post, locale = 'ro', headingLevel = 'h2' }: B
         <span className="relative block aspect-[16/10] overflow-hidden rounded-[14px] bg-[var(--shell-warm)]">
           <Image
             src={post.cover}
-            alt={post.coverAlt ?? ''}
+            alt={post.coverAlt ?? post.title}
             fill
             sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 92vw"
             className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.04]"

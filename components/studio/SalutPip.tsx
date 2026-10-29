@@ -49,7 +49,7 @@ export default function SalutPip() {
     <a href="#lucrari" className="salut-pip" data-hidden={hidden ? '1' : undefined} aria-label={redesign.salut.pip} tabIndex={hidden ? -1 : 0}>
       {projects.map((project, index) => (
         <span key={project.slug} className="salut-pip-shot" data-on={index === shot ? '1' : undefined}>
-          <Image src={project.cover} alt="" fill sizes="260px" className="object-cover object-[right_center]" />
+          <Image src={project.cover} alt={project.coverAlt} fill sizes="260px" className="object-cover object-[right_center]" />
         </span>
       ))}
       <span className="salut-pip-label mono-label">

@@ -96,7 +96,7 @@ export function TeamMemberView({ locale, slug }: { locale: Locale; slug: string 
                     <li key={person.slug}>
                       <Link href={localizePath(`/echipa/${person.slug}`, locale)} className="team-card link-block">
                         <span className="team-card-photo">
-                          {person.photo ? <Image src={person.photo} alt="" fill sizes="25vw" className="object-cover" /> : null}
+                          {person.photo ? <Image src={person.photo} alt={`${person.name}, ${person.role[locale]}`} fill sizes="25vw" className="object-cover" /> : null}
                         </span>
                         <span className="team-card-name display-xl">{person.name}</span>
                         <span className="mono-label text-[var(--ink-3)]">{person.role[locale]}</span>

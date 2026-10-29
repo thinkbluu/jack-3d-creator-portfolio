@@ -373,7 +373,7 @@ export async function ProjectView({ locale, slug }: { locale: Locale; slug: stri
             {next.cover ? (
               <Image
                 src={next.cover}
-                alt=""
+                alt={next.coverAlt}
                 fill
                 sizes="100vw"
                 className="object-cover object-[right_center] opacity-25 transition-[opacity,transform] duration-[1.2s] ease-[cubic-bezier(.2,.7,.2,1)] group-hover:scale-[1.03] group-hover:opacity-45"
