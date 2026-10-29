@@ -2,11 +2,9 @@
 
 import { FormEvent, useState } from 'react'
 import { ArrowUpRight } from 'lucide-react'
-import { ADS_WHATSAPP_SEND_TO, fireAdsConversion } from '@/lib/ads'
 import { trackConversion } from '@/lib/analytics'
 import { redirectToThankYou } from '@/lib/leads'
 import { useLocale } from '@/lib/i18n/context'
-import { WHATSAPP_NUMBER } from '@/lib/site'
 
 const businessTypes = [
   'Cabinet medical sau clinică',
@@ -21,16 +19,33 @@ const businessTypes = [
 type FormErrors = {
   name?: string
   phone?: string
+  email?: string
+  contact?: string
   businessType?: string
 }
 
 const inputClass =
   'min-h-12 w-full rounded-[var(--radius-card)] border-[1.5px] border-[var(--hairline)] bg-[rgba(255,255,255,0.5)] px-4 py-3.5 font-sans text-base text-[var(--ink)] outline-none transition-colors placeholder:text-[var(--fg-3)] focus:border-[var(--brass)] focus-visible:ring-2 focus-visible:ring-[var(--brass)] focus-visible:ring-offset-2'
 
+// Romanian mobile formats: 07xx xxx xxx or +40 7xx xxx xxx, spaces, dashes,
+// dots and parentheses allowed.
+function isValidRoPhone(value: string) {
+  const normalized = value
+    .replace(/[\s.\-()]/g, '')
+    .replace(/^\+40/, '0')
+    .replace(/^40/, '0')
+  return /^07\d{8}$/.test(normalized)
+}
+
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value.trim())
+}
+
 export default function OfferForm() {
   const locale = useLocale()
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
   const [businessType, setBusinessType] = useState('')
   const [honeypot, setHoneypot] = useState('')
   const [errors, setErrors] = useState<FormErrors>({})
@@ -38,7 +53,10 @@ export default function OfferForm() {
   function validate() {
     const nextErrors: FormErrors = {}
     if (name.trim().length < 2) nextErrors.name = 'Spune-ne cum te numești.'
-    if (phone.replace(/\D/g, '').length < 9) nextErrors.phone = 'Scrie un număr de telefon valid.'
+    if (phone.trim() && !isValidRoPhone(phone)) nextErrors.phone = 'Scrie un număr de telefon valid.'
+    if (email.trim() && !isValidEmail(email)) nextErrors.email = 'Scrie o adresă de email validă.'
+    if (!phone.trim() && !email.trim())
+      nextErrors.contact = 'Lasă-ne un număr de telefon sau o adresă de email, ca să te putem contacta.'
     if (!businessType) nextErrors.businessType = 'Alege tipul afacerii.'
     setErrors(nextErrors)
     return Object.keys(nextErrors).length === 0
@@ -48,30 +66,11 @@ export default function OfferForm() {
     event.preventDefault()
     if (!validate()) return
 
-    // Bots that fill the hidden field get the same redirect, without a
-    // WhatsApp conversation being opened on our side.
+    // Bots that fill the hidden field get the same redirect, without the
+    // conversion being counted on our side.
     if (!honeypot.trim()) {
-      const message = [
-        'Salut! Vreau site-ul gratuit.',
-        `Nume: ${name.trim()}`,
-        `Telefon: ${phone.trim()}`,
-        `Tip afacere: ${businessType}`,
-      ].join('\n')
-      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
-
-      trackConversion('whatsapp_click', { placement: 'oferta_form' })
-      try {
-        fireAdsConversion(ADS_WHATSAPP_SEND_TO, { placement: 'oferta_form' })
-      } catch {
-        // Tracking must never block the submission.
-      }
-      // window.open with noopener returns null, so the redirect is not gated
-      // on its result: WhatsApp keeps the conversation, the tab behind it
-      // counts the lead.
-      window.open(url, '_blank', 'noopener,noreferrer')
+      trackConversion('lead_form_submit', { channel: 'form', placement: 'oferta' })
     }
-
-    trackConversion('lead_form_submit', { channel: 'whatsapp', placement: 'oferta' })
     redirectToThankYou(locale, 'oferta', name)
   }
 
@@ -81,6 +80,9 @@ export default function OfferForm() {
         {message}
       </p>
     ) : null
+
+  const describedBy = (...ids: (string | false | undefined)[]) =>
+    ids.filter(Boolean).join(' ') || undefined
 
   return (
     <form onSubmit={submit} noValidate className="mt-6 flex flex-col gap-5">
@@ -119,11 +121,32 @@ export default function OfferForm() {
           maxLength={30}
           placeholder="07xx xxx xxx"
           className={`${inputClass} mt-2`}
-          aria-invalid={Boolean(errors.phone)}
-          aria-describedby={errors.phone ? 'oferta-phone-error' : undefined}
-          required
+          aria-invalid={Boolean(errors.phone || errors.contact)}
+          aria-describedby={describedBy(errors.phone && 'oferta-phone-error', errors.contact && 'oferta-contact-error')}
         />
         {fieldError('oferta-phone-error', errors.phone)}
+        {fieldError('oferta-contact-error', errors.contact)}
+      </div>
+
+      <div>
+        <label htmlFor="oferta-email" className="font-sans text-sm font-semibold text-[var(--ink)]">
+          Email
+        </label>
+        <input
+          id="oferta-email"
+          name="email"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          maxLength={160}
+          placeholder="nume@exemplu.ro"
+          className={`${inputClass} mt-2`}
+          aria-invalid={Boolean(errors.email || errors.contact)}
+          aria-describedby={describedBy(errors.email && 'oferta-email-error', errors.contact && 'oferta-contact-error')}
+        />
+        {fieldError('oferta-email-error', errors.email)}
       </div>
 
       <div>
