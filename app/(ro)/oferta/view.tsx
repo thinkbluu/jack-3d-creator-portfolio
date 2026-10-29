@@ -10,7 +10,7 @@ import AnpcSalBadge from '@/components/AnpcSalBadge'
 import { getAllProjects } from '@/lib/projects'
 import { reviewCards } from '@/lib/reviews'
 import { offerConditions } from '@/lib/offer'
-import { LEGAL_NAME, SITE_NAME, TRADE_REGISTER_NUMBER, VAT_ID, whatsappUrl } from '@/lib/site'
+import { EMAIL_HREF, LEGAL_NAME, SITE_NAME, TRADE_REGISTER_NUMBER, VAT_ID, whatsappUrl } from '@/lib/site'
 
 // The exact prefill the campaign promises in the ad copy.
 const OFFER_WA_MESSAGE = 'Salut! Am văzut oferta și vreau să-mi faceți site-ul gratuit să văd cum arată.'
@@ -144,7 +144,7 @@ export default function OfferLanding() {
             <div id="formular" className="porthole scroll-mt-24 border-[var(--glass-edge)] p-6 md:p-8">
               <h2 className="font-display text-2xl text-[var(--ink)]">Vreau site-ul gratuit</h2>
               <p className="mt-2 text-sm leading-relaxed text-[var(--fg-2)]">
-                Lasă datele și deschidem conversația pe WhatsApp în secunda următoare.
+                Nu folosești WhatsApp? Lasă-ne datele și te contactăm noi în aceeași zi.
               </p>
               <OfferForm />
               <p className="mt-5 border-t border-[var(--hairline)] pt-4 text-xs leading-relaxed text-[var(--fg-3)]">
@@ -156,7 +156,7 @@ export default function OfferLanding() {
       </section>
 
       {/* 2. Trust bar: real Google reviews, three visible. */}
-      <section aria-labelledby="recenzii-titlu" className="tone-warm border-y border-[var(--hairline)] py-16 md:py-20">
+      <section id="recenzii" aria-labelledby="recenzii-titlu" className="tone-warm scroll-mt-24 border-y border-[var(--hairline)] py-16 md:py-20">
         <div className="studio-container">
           <h2 id="recenzii-titlu" className="font-display text-[clamp(1.6rem,3vw,2.4rem)] text-[var(--ink)]">
             11 recenzii de 5 stele pe Google
@@ -180,7 +180,7 @@ export default function OfferLanding() {
       </section>
 
       {/* 3. Cum funcționează */}
-      <section aria-labelledby="cum-titlu" className="tone-cream py-20 md:py-28">
+      <section id="cum-functioneaza" aria-labelledby="cum-titlu" className="tone-cream scroll-mt-24 py-20 md:py-28">
         <div className="studio-container">
           <p className="mono-label text-[var(--brass-ink)]">Cum funcționează</p>
           <h2 id="cum-titlu" className="display-xl mt-4 text-[clamp(2rem,4.5vw,3.4rem)] text-[var(--ink)]">
@@ -220,7 +220,7 @@ export default function OfferLanding() {
       </section>
 
       {/* 5. Portfolio: image cards only, no outbound navigation. */}
-      <section aria-labelledby="portofoliu-titlu" className="tone-cream py-20 md:py-28">
+      <section id="lucrari" aria-labelledby="portofoliu-titlu" className="tone-cream scroll-mt-24 py-20 md:py-28">
         <div className="studio-container">
           <p className="mono-label text-[var(--brass-ink)]">Portofoliu</p>
           <h2 id="portofoliu-titlu" className="display-xl mt-4 text-[clamp(2rem,4.5vw,3.4rem)] text-[var(--ink)]">
@@ -236,7 +236,7 @@ export default function OfferLanding() {
       </section>
 
       {/* 6. Prices */}
-      <section aria-labelledby="preturi-titlu" className="tone-dark grain relative py-20 md:py-28">
+      <section id="preturi" aria-labelledby="preturi-titlu" className="tone-dark grain relative scroll-mt-24 py-20 md:py-28">
         <div className="studio-container relative">
           <p className="mono-label text-[var(--brass-lite)]">Prețuri</p>
           <h2 id="preturi-titlu" className="display-xl mt-4 text-[clamp(2rem,4.5vw,3.4rem)] text-[var(--on-dark)]">
@@ -289,6 +289,15 @@ export default function OfferLanding() {
               Completează formularul
             </a>
           </div>
+          <p className="mt-5 text-sm text-[var(--on-dark-2)]">
+            Preferi email?{' '}
+            <a
+              href={EMAIL_HREF}
+              className="font-semibold text-[var(--on-dark)] underline decoration-[var(--brass-lite)] decoration-2 underline-offset-4 transition-colors hover:text-[var(--brass-lite)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass)]"
+            >
+              Scrie-ne la contact@maststudio.ro
+            </a>
+          </p>
         </div>
       </section>
 
