@@ -6,6 +6,7 @@ import NewsletterForm from '@/components/NewsletterForm'
 import TrackedLink from '@/components/TrackedLink'
 import { openConsentSettings } from '@/lib/consent'
 import { useHref, useLocale, useUi } from '@/lib/i18n/context'
+import { getAllIndustries } from '@/lib/industries'
 import { getServicesByGroup } from '@/lib/services'
 import {
   EMAIL,
@@ -59,6 +60,7 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
   const href = useHref()
   const { footer, whatsapp, consent, redesign } = useUi()
   const serviceGroups = getServicesByGroup(locale)
+  const industries = getAllIndustries(locale)
   // Guides stay on the Romanian URLs: the articles themselves are not translated.
   const guideLinks = footer.guideLinks.map((link) => ({ ...link, href: link.href }))
   const studioLinks = footer.studioLinks.map((link) => ({ ...link, href: href(link.href) }))
@@ -126,7 +128,7 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
           </div>
         ) : null}
 
-        <div className="grid gap-10 border-t border-[var(--hairline-dark)] pt-12 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 border-t border-[var(--hairline-dark)] pt-12 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
           <div className="flex flex-col gap-4">
             <p className="max-w-xs leading-relaxed text-[var(--on-dark-2)]">{footer.blurb}</p>
             <address className="flex flex-col items-start not-italic leading-relaxed text-[var(--on-dark-2)]">
@@ -193,6 +195,18 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
                 </ul>
               </div>
             ))}
+          </nav>
+          <nav aria-label={footer.solutions} className="flex flex-col gap-1 sm:col-span-2 lg:col-span-1">
+            <p className="mono-label mb-2 text-[var(--brass-lite)]">{footer.solutions}</p>
+            <ul className="flex flex-col">
+              {industries.map((industry) => (
+                <li key={industry.slug}>
+                  <Link href={href(`/solutii/${industry.slug}`)} className={linkClass}>
+                    {industry.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
           <FooterColumn title={footer.guides} links={guideLinks} />
           <FooterColumn title={footer.studio} links={studioLinks} />

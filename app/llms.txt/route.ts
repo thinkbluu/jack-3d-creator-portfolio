@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 
+import { getAllIndustries } from '@/lib/industries'
 import { isNoDepositActive, llmsParagraphOffer } from '@/lib/offer'
 import { getAllServicePages, serviceGroups } from '@/lib/services'
 import { absoluteUrl } from '@/lib/site'
@@ -9,6 +10,7 @@ const DEPOSIT_PARAGRAPH =
   'Clientul plătește un avans de 50 EUR care se scade din prețul final. Vede site-ul finalizat, live pe internet, și plătește restul doar dacă este mulțumit de rezultat. Prima rundă de modificări este inclusă.'
 
 const SERVICES_HEADER = '## Servicii și prețuri'
+const INDUSTRIES_HEADER = '## Soluții pe domenii'
 const NEXT_HEADER = '## Model de plată'
 
 /** First sentence of the answer capsule, as the one-line summary. */
@@ -31,6 +33,15 @@ function servicesSection() {
   return lines.join('\n').trimEnd()
 }
 
+/** The six industry pages, generated from lib/industries so llms.txt never goes stale. */
+function industriesSection() {
+  const lines: string[] = [INDUSTRIES_HEADER, '']
+  for (const industry of getAllIndustries('ro')) {
+    lines.push(`- [${industry.name}](${absoluteUrl(`/solutii/${industry.slug}`)}): ${capsuleSummary(industry.answerCapsule)}`)
+  }
+  return lines.join('\n').trimEnd()
+}
+
 // Served at request time so the payment-model paragraph follows the active
 // offer and the services list follows lib/services without a redeploy. The
 // base copy lives in public/llms-base.txt (public/llms.txt would shadow this
@@ -41,11 +52,11 @@ export async function GET() {
   const base = await readFile(path.join(process.cwd(), 'public', 'llms-base.txt'), 'utf8')
   const start = base.indexOf(SERVICES_HEADER)
   const end = base.indexOf(NEXT_HEADER)
-  const withServices =
+  const withSections =
     start !== -1 && end !== -1 && end > start
-      ? base.slice(0, start) + servicesSection() + '\n\n' + base.slice(end)
+      ? base.slice(0, start) + servicesSection() + '\n\n' + industriesSection() + '\n\n' + base.slice(end)
       : base
-  const body = isNoDepositActive() ? withServices.replace(DEPOSIT_PARAGRAPH, llmsParagraphOffer) : withServices
+  const body = isNoDepositActive() ? withSections.replace(DEPOSIT_PARAGRAPH, llmsParagraphOffer) : withSections
   return new Response(body, {
     headers: { 'Content-Type': 'text/plain; charset=utf-8' },
   })

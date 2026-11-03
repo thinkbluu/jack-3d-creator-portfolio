@@ -5,6 +5,7 @@ type Pair = { ro: string; en: string }
 /** First URL segment. Romanian values are the canonical ids. */
 const TOP: Pair[] = [
   { ro: 'servicii', en: 'services' },
+  { ro: 'solutii', en: 'solutions' },
   { ro: 'preturi', en: 'pricing' },
   { ro: 'portofoliu', en: 'work' },
   { ro: 'despre', en: 'about' },
@@ -51,6 +52,16 @@ export const SERVICE_SLUGS: Pair[] = [
   { ro: 'training-ai', en: 'ai-training' },
 ]
 
+/** Canonical industry id is the Romanian slug. English pages use the `en` slug. */
+export const INDUSTRY_SLUGS: Pair[] = [
+  { ro: 'clinici-medicale', en: 'medical-clinics' },
+  { ro: 'cabinete-veterinare', en: 'veterinary-practices' },
+  { ro: 'saloane-infrumusetare', en: 'beauty-salons' },
+  { ro: 'avocati-contabili', en: 'lawyers-accountants' },
+  { ro: 'meseriasi', en: 'trades' },
+  { ro: 'magazine-online', en: 'online-stores' },
+]
+
 function pairValue(pairs: Pair[], value: string, from: Locale, to: Locale) {
   const match = pairs.find((pair) => pair[from] === value)
   return match ? match[to] : value
@@ -77,6 +88,7 @@ function mapParts(parts: string[], from: Locale, to: Locale) {
     if (index === 0) return pairValue(TOP, part, from, to)
     const top = pairValue(TOP, parts[0], from, 'ro')
     if (index === 1 && top === 'servicii') return pairValue(SERVICE_SLUGS, part, from, to)
+    if (index === 1 && top === 'solutii') return pairValue(INDUSTRY_SLUGS, part, from, to)
     return part
   })
 }
@@ -142,6 +154,15 @@ export function publicServiceSlug(canonicalSlug: string, locale: Locale) {
   return pairValue(SERVICE_SLUGS, canonicalSlug, 'ro', locale)
 }
 
+export function canonicalIndustrySlug(slug: string) {
+  const match = INDUSTRY_SLUGS.find((pair) => pair.ro === slug || pair.en === slug)
+  return match?.ro
+}
+
+export function publicIndustrySlug(canonicalSlug: string, locale: Locale) {
+  return pairValue(INDUSTRY_SLUGS, canonicalSlug, 'ro', locale)
+}
+
 /** Static English paths, excluding blog articles (added when an English post exists). */
 export function staticEnglishPaths() {
   const paths = [
@@ -162,6 +183,8 @@ export function staticEnglishPaths() {
     '/termeni',
     '/blog',
     ...SERVICE_SLUGS.map((pair) => `/servicii/${pair.ro}`),
+    '/solutii',
+    ...INDUSTRY_SLUGS.map((pair) => `/solutii/${pair.ro}`),
   ]
   return paths.map((path) => localizePath(path, 'en'))
 }
