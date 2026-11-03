@@ -586,6 +586,141 @@ export const servicePages: ServicePage[] = [
     updatedAt: '2026-11-03',
   },
   {
+    slug: 'seo-local',
+    group: 'crestere',
+    name: 'SEO local și Google Business',
+    shortName: 'SEO local',
+    h1: 'SEO local și Google Business Profile',
+    seoTitle: 'SEO local și Google Business, 150 EUR/lună',
+    metaDescription:
+      'SEO local pentru afaceri din orașul tău: profil Google Business îngrijit, recenzii, pagini locale și raport lunar. De la 150 EUR pe lună, fără contract lung.',
+    answerCapsule:
+      'SEO local de la MAST Studio înseamnă că afacerea ta apare când cineva caută serviciul tău în oraș: profil Google Business îngrijit lunar, postări, răspunsuri la recenzii, pagini locale pe site și raport lunar. Costă de la 150 EUR pe lună, fără contract pe termen lung.',
+    priceFrom: 150,
+    priceUnit: 'MON',
+    priceLabel: 'de la 150 EUR pe lună',
+    deliveryLabel: 'Contract',
+    deliveryTime: 'lunar, fără contract lung',
+    intro:
+      'Când cineva caută „dentist Timișoara” sau „instalator lângă mine”, primele trei rezultate de pe hartă iau aproape toate apelurile. Locul acolo nu se cumpără, se câștigă lună de lună: un profil complet, recenzii constante, informații corecte peste tot și un site care spune clar ce faci și unde.',
+    includes: [
+      'optimizarea completă a profilului Google Business',
+      'postări lunare pe profil',
+      'răspunsuri la recenzii, scrise împreună cu tine',
+      'plan pentru recenzii noi constante',
+      'pagini locale pe site, pentru zonele în care lucrezi',
+      'date identice în directoare',
+      'raport lunar: apeluri, vizite, poziții',
+    ],
+    notIncluded: [
+      'bugetul de reclame plătite',
+      'recenzii false sau cumpărate',
+      'garanția primului loc',
+    ],
+    process: [
+      { step: 'Audit local', description: 'Vedem unde apari azi, cum stai față de concurenți și ce lipsește din profil.' },
+      { step: 'Punem la punct baza', description: 'Profil complet, date corecte peste tot, pagini locale pe site.' },
+      { step: 'Lucrăm lunar', description: 'Postări, recenzii, ajustări.' },
+      { step: 'Raport lunar', description: 'Cifrele reale: apeluri, vizite, cereri de direcții, poziții.' },
+    ],
+    forWho: [
+      'cabinete, clinici și saloane',
+      'meseriași și firme de servicii la domiciliu',
+      'restaurante și cafenele',
+      'firme de avocatură și contabilitate',
+    ],
+    faq: [
+      {
+        question: 'Ce este SEO local?',
+        answer:
+          'Totalitatea lucrurilor care fac o afacere să apară în căutările cu localizare, pe Google Maps și în pachetul de trei rezultate de pe hartă: profilul Google, recenziile, datele de contact și paginile locale de pe site.',
+      },
+      {
+        question: 'În cât timp se văd rezultate?',
+        answer:
+          'Primele schimbări apar de obicei în 4-8 săptămâni, în funcție de concurența din domeniu și de cât de complet era profilul la început.',
+      },
+      {
+        question: 'Pot renunța oricând?',
+        answer:
+          'Da. Abonamentul e lunar, fără contract pe termen lung. Tot ce am construit rămâne al tău.',
+      },
+    ],
+    relatedSlugs: ['vizibilitate-ai', 'site-de-prezentare', 'campanii-reclame'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau să apar mai sus pe Google Maps în orașul meu.',
+    serviceType: 'SEO local și Google Business Profile',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'campanii-reclame',
+    group: 'crestere',
+    name: 'Campanii Google și Meta',
+    shortName: 'Campanii reclame',
+    h1: 'Campanii Google Ads și Meta Ads',
+    seoTitle: 'Campanii Google Ads și Meta, de la 250 EUR',
+    metaDescription:
+      'Campanii Google Ads, Facebook și Instagram pentru afaceri mici: buget controlat, reclame testate, raport lunar cu clienții reali aduși. De la 250 EUR pe lună.',
+    answerCapsule:
+      'Administrăm campaniile Google Ads, Facebook și Instagram ale afacerii tale de la 250 EUR pe lună, plus bugetul de reclame, plătit direct de tine platformelor. Măsurăm ce contează: mesaje, apeluri și cereri reale, nu doar clicuri, iar raportul lunar arată cât te costă fiecare client nou.',
+    priceFrom: 250,
+    priceUnit: 'MON',
+    priceLabel: 'de la 250 EUR pe lună + bugetul de reclame',
+    deliveryLabel: 'Contract',
+    deliveryTime: 'lunar, fără contract lung',
+    intro:
+      'Reclamele pot aduce clienți rapid sau pot arde bani la fel de rapid. Diferența o fac pagina pe care ajunge omul, mesajul, publicul ales și măsurarea corectă. Noi construim campania împreună cu pagina de destinație, testăm mai multe variante și oprim repede ce nu funcționează.',
+    includes: [
+      'strategie de campanie și alegerea publicului',
+      'configurarea măsurării: apeluri, WhatsApp, formulare',
+      'texte și vizualuri pentru reclame',
+      'testarea mai multor variante',
+      'optimizare săptămânală',
+      'raport lunar cu costul pe client nou',
+    ],
+    notIncluded: [
+      'bugetul de reclame, plătit direct către Google și Meta',
+      'producție video complexă',
+      'promisiuni de vânzări garantate',
+    ],
+    process: [
+      { step: 'Stabilim obiectivul', description: 'Ce înseamnă un rezultat pentru tine: un apel, o programare, o comandă.' },
+      { step: 'Pregătim campania', description: 'Măsurare, pagină de destinație, mesaje și public.' },
+      { step: 'Lansăm și testăm', description: 'Mai multe variante, buget mic la început, apoi creștem ce merge.' },
+      { step: 'Raport lunar', description: 'Cât ai cheltuit, câți clienți au venit și cât a costat fiecare.' },
+    ],
+    forWho: [
+      'afaceri locale care vor clienți noi rapid',
+      'magazine online',
+      'clinici și cabinete (cu respectarea regulilor de publicitate medicală)',
+      'academii și cursuri cu înscrieri',
+    ],
+    faq: [
+      {
+        question: 'Ce buget de reclame îmi trebuie?',
+        answer:
+          'Pentru o afacere locală, de obicei de la 30-50 de lei pe zi pentru început. Îl stabilim împreună și îl creștem doar când vedem rezultate.',
+      },
+      {
+        question: 'Plătesc bugetul prin voi?',
+        answer:
+          'Nu. Bugetul se plătește direct de tine către Google și Meta, din contul tău. Noi primim doar onorariul de administrare.',
+      },
+      {
+        question: 'Pot renunța oricând?',
+        answer:
+          'Da. Abonamentul e lunar, iar conturile de reclame rămân ale tale, cu tot istoricul.',
+      },
+    ],
+    relatedSlugs: ['seo-local', 'site-de-prezentare', 'magazin-online'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau campanii Google sau Meta pentru afacerea mea.',
+    serviceType: 'Administrare campanii Google Ads și Meta Ads',
+    updatedAt: '2026-11-03',
+  },
+  {
     slug: 'automatizari-whatsapp',
     group: 'ai',
     name: 'Automatizări WhatsApp',

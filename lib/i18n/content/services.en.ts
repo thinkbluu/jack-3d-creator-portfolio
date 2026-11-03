@@ -1005,4 +1005,123 @@ export const serviceTextEn: Record<string, ServiceText> = {
     waMessage: 'Hi! I am interested in AI training for my team.',
     serviceType: 'AI training for teams',
   },
+  'seo-local': {
+    name: 'Local SEO and Google Business',
+    shortName: 'Local SEO',
+    h1: 'Local SEO and Google Business Profile',
+    seoTitle: 'Local SEO and Google Business, 150 EUR/mo',
+    metaDescription:
+      'Local SEO for businesses in your city: a well-kept Google Business Profile, reviews, local pages and a monthly report. From 150 EUR a month, no long contract.',
+    answerCapsule:
+      'Local SEO at MAST Studio means your business appears when someone searches for your service in your city: a well-kept Google Business Profile, monthly posts, replies to reviews, local pages on your site and a monthly report. From 150 EUR a month, with no long-term contract.',
+    priceLabel: 'from 150 EUR a month',
+    deliveryLabel: 'Contract',
+    deliveryTime: 'monthly, no long contract',
+    intro:
+      'When someone searches for a dentist in their city or a plumber near them, the first three results on the map take almost all the calls. That spot is not bought, it is earned month by month: a complete profile, steady reviews, correct information everywhere and a site that says clearly what you do and where.',
+    includes: [
+      'a complete Google Business Profile setup',
+      'monthly posts on the profile',
+      'replies to reviews, written together with you',
+      'a plan for a steady flow of new reviews',
+      'local pages on your site, for the areas you serve',
+      'identical data across directories',
+      'a monthly report: calls, visits, rankings',
+    ],
+    notIncluded: [
+      'the paid ads budget',
+      'fake or bought reviews',
+      'a guarantee of the first spot',
+    ],
+    process: [
+      { step: 'Local audit', description: 'We see where you appear today, how you stand against competitors and what the profile is missing.' },
+      { step: 'We set the base right', description: 'A complete profile, correct data everywhere, local pages on your site.' },
+      { step: 'We work monthly', description: 'Posts, reviews, adjustments.' },
+      { step: 'Monthly report', description: 'The real numbers: calls, visits, direction requests, rankings.' },
+    ],
+    forWho: [
+      'clinics, practices and salons',
+      'tradespeople and home-service companies',
+      'restaurants and cafés',
+      'law and accounting firms',
+    ],
+    faq: [
+      {
+        question: 'What is local SEO?',
+        answer:
+          'Everything that makes a business appear in location-based searches, on Google Maps and in the pack of three results on the map: the Google Profile, reviews, contact details and the local pages on your site.',
+      },
+      {
+        question: 'How long until I see results?',
+        answer:
+          'The first changes usually appear within 4-8 weeks, depending on the competition in your field and how complete the profile was at the start.',
+      },
+      {
+        question: 'Can I cancel at any time?',
+        answer:
+          'Yes. The plan is monthly, with no long-term contract. Everything we built stays yours.',
+      },
+    ],
+    waMessage: 'Hi! I want to show up higher on Google Maps in my city.',
+    serviceType: 'Local SEO and Google Business Profile',
+  },
+  'campanii-reclame': {
+    name: 'Google and Meta ad campaigns',
+    shortName: 'Ad campaigns',
+    h1: 'Google Ads and Meta Ads campaigns',
+    seoTitle: 'Google Ads and Meta campaigns, from 250 EUR',
+    metaDescription:
+      'Google Ads, Facebook and Instagram campaigns for small businesses: controlled budget, tested ads, monthly reports with real customers. From 250 EUR a month.',
+    answerCapsule:
+      'We manage the Google Ads, Facebook and Instagram campaigns of your business from 250 EUR a month, plus the ad budget, paid directly by you to the platforms. We measure what matters: messages, calls and real requests, not just clicks, and the monthly report shows what each new customer costs you.',
+    priceLabel: 'from 250 EUR a month + ad budget',
+    deliveryLabel: 'Contract',
+    deliveryTime: 'monthly, no long contract',
+    intro:
+      'Ads can bring customers fast or burn money just as fast. The difference is made by the page people land on, the message, the audience chosen and correct measurement. We build the campaign together with the landing page, test several variants and quickly stop what does not work.',
+    includes: [
+      'campaign strategy and audience selection',
+      'measurement setup: calls, WhatsApp, forms',
+      'ad copy and visuals',
+      'testing several variants',
+      'weekly optimisation',
+      'a monthly report with the cost per new customer',
+    ],
+    notIncluded: [
+      'the ad budget, paid directly to Google and Meta',
+      'complex video production',
+      'guaranteed sales promises',
+    ],
+    process: [
+      { step: 'We set the goal', description: 'What a result means for you: a call, a booking, an order.' },
+      { step: 'We prepare the campaign', description: 'Measurement, landing page, messages and audience.' },
+      { step: 'We launch and test', description: 'Several variants, a small budget at first, then we scale what works.' },
+      { step: 'Monthly report', description: 'What you spent, how many customers came and what each one cost.' },
+    ],
+    forWho: [
+      'local businesses that want new customers fast',
+      'online stores',
+      'clinics and practices (following medical advertising rules)',
+      'academies and courses with enrolments',
+    ],
+    faq: [
+      {
+        question: 'What ad budget do I need?',
+        answer:
+          'For a local business, usually from 30-50 lei a day to start. We set it together and increase it only when we see results.',
+      },
+      {
+        question: 'Do I pay the budget through you?',
+        answer:
+          'No. The budget is paid directly by you to Google and Meta, from your own account. We only receive the management fee.',
+      },
+      {
+        question: 'Can I cancel at any time?',
+        answer:
+          'Yes. The plan is monthly, and the ad accounts stay yours, with all their history.',
+      },
+    ],
+    waMessage: 'Hi! I want Google or Meta campaigns for my business.',
+    serviceType: 'Google Ads and Meta Ads management',
+  },
 }

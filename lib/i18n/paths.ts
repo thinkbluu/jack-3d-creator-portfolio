@@ -32,6 +32,8 @@ export const SERVICE_SLUGS: Pair[] = [
   { ro: 'platforme-saas', en: 'saas-platforms' },
   { ro: 'design-ux-ui', en: 'ux-ui-design' },
   { ro: 'mentenanta', en: 'maintenance' },
+  { ro: 'seo-local', en: 'local-seo' },
+  { ro: 'campanii-reclame', en: 'ads-management' },
   { ro: 'automatizari-whatsapp', en: 'whatsapp-automation' },
   { ro: 'asistent-ai', en: 'ai-assistant' },
   { ro: 'automatizari-ai', en: 'ai-automation' },
