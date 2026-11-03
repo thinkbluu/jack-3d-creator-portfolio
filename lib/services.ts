@@ -144,6 +144,77 @@ export const servicePages: ServicePage[] = [
     updatedAt: '2026-11-03',
   },
   {
+    slug: 'refacere-site',
+    group: 'web',
+    name: 'Refacere site',
+    shortName: 'Refacere site',
+    h1: 'Refacere site (redesign) pentru firme',
+    seoTitle: 'Refacere site și redesign pentru firme',
+    metaDescription:
+      'Refacem site-ul vechi: design nou, viteză pe telefon, texte clare și aceleași adrese, ca să nu pierzi pozițiile din Google. La prețul unui site de prezentare.',
+    answerCapsule:
+      'Refacerea unui site la MAST Studio costă cât un site de prezentare nou. Păstrăm ce funcționează, adică adresele paginilor, pozițiile din Google și conținutul bun, și refacem ce nu: designul, viteza pe telefon, textele și butoanele de contact. Redirecționăm corect fiecare pagină veche, ca să nu pierzi vizitatori.',
+    priceFrom: PRESENTATION_WEBSITE_PRICE_FROM,
+    priceLabel: `de la ${PRESENTATION_WEBSITE_PRICE_FROM} EUR`,
+    deliveryLabel: 'Termen de livrare',
+    deliveryTime: '48 de ore după materiale',
+    intro:
+      'Un site vechi nu e doar urât. E lent pe telefon, nu mai spune ce faci acum și îi trimite pe clienți la concurență. Dar un redesign făcut prost te poate costa și pozițiile din Google câștigate în ani. De aceea pornim de la ce merge deja și refacem restul.',
+    includes: [
+      'analiza site-ului vechi: ce pagini aduc vizitatori, ce merge, ce nu',
+      'design nou, unic',
+      'texte rescrise clar',
+      'viteză bună pe telefon',
+      'redirecționarea fiecărei pagini vechi către cea nouă',
+      'păstrarea datelor din Google Search Console și Analytics',
+      'mutarea pe un domeniu și o găzduire pe numele tău, dacă nu sunt deja',
+    ],
+    notIncluded: [
+      'funcții noi complexe (magazin, conturi, programări), ofertate separat',
+      'migrarea a sute de produse sau articole fără ofertă separată',
+    ],
+    process: [
+      { step: 'Analizăm site-ul vechi', description: 'Vedem ce pagini contează pentru Google și pentru clienți.' },
+      { step: 'Propunem structura nouă', description: 'Ce păstrăm, ce comasăm, ce scriem din nou.' },
+      { step: 'Construim și redirecționăm', description: 'Site nou, cu fiecare adresă veche trimisă unde trebuie.' },
+      { step: 'Lansăm și urmărim', description: 'Verificăm în primele săptămâni că pozițiile din Google se păstrează.' },
+    ],
+    forWho: [
+      'firme cu site mai vechi de 4-5 ani',
+      'site-uri lente pe telefon',
+      'firme care și-au schimbat serviciile sau identitatea',
+      'site-uri făcute pe teme care se strică la actualizări',
+    ],
+    faq: [
+      {
+        question: 'Pierd pozițiile din Google dacă refac site-ul?',
+        answer:
+          'Nu, dacă redesignul e făcut corect. Păstrăm adresele importante și redirecționăm fiecare pagină veche, apoi urmărim în Search Console primele săptămâni după lansare.',
+      },
+      {
+        question: 'Cât costă refacerea unui site?',
+        answer:
+          'Cât un site de prezentare nou, la același preț de pornire. Dacă site-ul vechi are multe pagini sau funcții speciale, prețul se stabilește în ofertă.',
+      },
+      {
+        question: 'Puteți prelua un site făcut de altcineva?',
+        answer:
+          'Da. Avem nevoie de acces la domeniu sau de ajutorul vechiului furnizor. Dacă domeniul nu e pe numele tău, te ajutăm să-l transferi.',
+      },
+      {
+        question: 'Pot păstra textele vechi?',
+        answer:
+          'Da, pe cele bune le păstrăm. De obicei rescriem doar ce nu mai e actual sau nu e clar pe telefon.',
+      },
+    ],
+    relatedSlugs: ['site-de-prezentare', 'mentenanta', 'conformitate-legala-site'],
+    relatedPosts: ['de-ce-sunt-lente-temele-wordpress', 'ce-inseamna-pagespeed'],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau să refac site-ul firmei.',
+    serviceType: 'Refacere site (redesign)',
+    updatedAt: '2026-11-03',
+  },
+  {
     slug: 'magazin-online',
     group: 'web',
     name: 'Magazin online',
@@ -328,6 +399,79 @@ export const servicePages: ServicePage[] = [
     updatedAt: '2026-11-03',
   },
   {
+    slug: 'aplicatii-mobile',
+    group: 'software',
+    name: 'Aplicații mobile iOS și Android',
+    shortName: 'Aplicații mobile',
+    h1: 'Dezvoltare aplicații mobile pentru iOS și Android',
+    seoTitle: 'Dezvoltare aplicații mobile iOS și Android',
+    metaDescription:
+      'Dezvoltăm aplicații mobile pentru iPhone și Android: de la prima versiune la publicarea în App Store și Google Play, cu AI integrat unde aduce valoare.',
+    answerCapsule:
+      'MAST Studio dezvoltă aplicații mobile pentru iPhone și Android dintr-o singură bază de cod, de la design și prima versiune până la publicarea în App Store și Google Play. Construim în etape, cu versiuni de test pe telefonul tău, și integrăm AI acolo unde aduce valoare reală. Oferta cu preț vine în 24 de ore.',
+    priceFrom: null,
+    priceLabel: 'ofertă în 24 de ore',
+    deliveryLabel: 'Termen',
+    deliveryTime: 'în etape, stabilite în ofertă',
+    intro:
+      'O aplicație mobilă are sens când clienții tăi o folosesc des: rezervă, comandă, urmăresc un rezultat sau primesc notificări. Te ajutăm întâi să decizi dacă ai nevoie de aplicație sau de o aplicație web, apoi o construim în etape, ca să o testezi pe telefonul tău de la primele săptămâni.',
+    includes: [
+      'analiză: aplicație mobilă sau aplicație web, ce ți se potrivește',
+      'design de interfață pentru telefon',
+      'o singură bază de cod pentru iPhone și Android',
+      'conturi, notificări, plăți în aplicație, la nevoie',
+      'funcții AI: recunoaștere de imagini, recomandări, asistent',
+      'versiuni de test pe telefonul tău pe parcurs',
+      'publicarea în App Store și Google Play',
+      'codul și conturile de dezvoltator pe numele tău',
+    ],
+    notIncluded: [
+      'taxele conturilor de dezvoltator Apple și Google',
+      'promovarea aplicației după lansare (separat)',
+      'jocuri 3D complexe',
+    ],
+    process: [
+      { step: 'Discuție și ofertă', description: 'Înțelegem ce trebuie să facă aplicația. Oferta cu etape și preț vine în 24 de ore.' },
+      { step: 'Design', description: 'Ecranele cheie, testate pe telefon înainte de programare.' },
+      { step: 'Construcție în etape', description: 'Primești versiuni de test pe telefon și dai feedback pe parcurs.' },
+      { step: 'Publicare și predare', description: 'O publicăm în magazine, îți predăm codul și conturile.' },
+    ],
+    forWho: [
+      'clinici și cabinete cu pacienți care revin des',
+      'servicii cu rezervări și abonamente',
+      'startup-uri cu un produs mobil',
+      'firme care vor o aplicație internă pentru echipele din teren',
+    ],
+    faq: [
+      {
+        question: 'Cât costă o aplicație mobilă?',
+        answer:
+          'Depinde de numărul de ecrane, de funcții și de integrări, așa că facem o ofertă după prima discuție, în 24 de ore. Pornim de obicei cu o primă versiune mică, ca să testezi ideea înainte de investiția mare.',
+      },
+      {
+        question: 'Aplicație mobilă sau aplicație web?',
+        answer:
+          'Dacă oamenii o folosesc rar sau o găsesc din Google, o aplicație web e de obicei suficientă și mai ieftină. Dacă o deschid des, primesc notificări sau folosesc camera și locația, o aplicație mobilă merită.',
+      },
+      {
+        question: 'Publicați aplicația în App Store și Google Play?',
+        answer:
+          'Da, ne ocupăm de tot procesul de publicare, pe conturile de dezvoltator ale firmei tale.',
+      },
+      {
+        question: 'Puteți integra AI în aplicație?',
+        answer:
+          'Da. Am construit aplicații care recunosc valori nutritive dintr-o fotografie și care analizează date complexe pentru recomandări personalizate.',
+      },
+    ],
+    relatedSlugs: ['aplicatii-web', 'design-ux-ui', 'mvp-startup'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Am o idee de aplicație mobilă. Putem discuta?',
+    serviceType: 'Dezvoltare aplicații mobile iOS și Android',
+    updatedAt: '2026-11-03',
+  },
+  {
     slug: 'platforme-saas',
     group: 'software',
     name: 'Platforme SaaS',
@@ -408,6 +552,150 @@ export const servicePages: ServicePage[] = [
     projectSlugs: ['asesor'],
     waMessage: 'Salut! Vreau să construim o platformă personalizată. Putem discuta?',
     serviceType: 'Dezvoltare platforme SaaS',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'mvp-startup',
+    group: 'software',
+    name: 'MVP pentru startup-uri',
+    shortName: 'MVP startup',
+    h1: 'Dezvoltare MVP pentru startup-uri',
+    seoTitle: 'Dezvoltare MVP pentru startup-uri',
+    metaDescription:
+      'Construim prima versiune a produsului tău în 4-8 săptămâni: doar ce trebuie ca să testezi ideea cu clienți reali. Web, mobil sau SaaS, cu AI unde contează.',
+    answerCapsule:
+      'Un MVP este prima versiune a produsului tău, cu doar funcțiile necesare ca să-l testezi cu clienți reali. La MAST Studio îl construim în 4-8 săptămâni, ca aplicație web, mobilă sau SaaS, cu design curat, plăți și analiză de utilizare. Oferta vine în 24 de ore, iar codul rămâne al tău.',
+    priceFrom: null,
+    priceLabel: 'ofertă în 24 de ore',
+    deliveryLabel: 'Termen',
+    deliveryTime: '4-8 săptămâni pentru prima versiune',
+    intro:
+      'Cele mai multe startup-uri pierd luni și bani construind funcții pe care nu le folosește nimeni. Un MVP bun face invers: alege cele două sau trei lucruri care dovedesc că ideea merită, le construiește bine și le pune repede în fața clienților. Apoi decizi cu date, nu cu presupuneri.',
+    includes: [
+      'atelier de definire: ce intră în prima versiune și ce așteaptă',
+      'design de produs pentru ecranele cheie',
+      'aplicație web, mobilă sau SaaS, după produs',
+      'conturi, plăți și abonamente, la nevoie',
+      'analiză de utilizare, ca să vezi ce folosesc oamenii',
+      'lansare la primii utilizatori',
+      'cod și conturi pe numele tău, gata de dezvoltat mai departe',
+    ],
+    notIncluded: [
+      'marketingul și vânzările de după lansare',
+      'funcții care nu sunt necesare pentru testarea ideii',
+      'acționariat sau plată în părți sociale',
+    ],
+    process: [
+      { step: 'Atelier de definire', description: 'Stabilim ipoteza de testat și cele 2-3 funcții care o dovedesc.' },
+      { step: 'Design rapid', description: 'Ecranele cheie, testate cu 3-5 oameni din publicul tău.' },
+      { step: 'Construcție', description: '4-8 săptămâni, cu o versiune nouă de văzut în fiecare săptămână.' },
+      { step: 'Lansare și măsurare', description: 'Primii utilizatori reali și datele despre ce funcționează.' },
+    ],
+    forWho: [
+      'fondatori cu o idee validată în discuții, dar fără produs',
+      'firme care vor să testeze un produs digital nou',
+      'startup-uri care pregătesc o rundă de finanțare',
+      'echipe non-tehnice care au nevoie de un partener tehnic',
+    ],
+    faq: [
+      {
+        question: 'Ce este un MVP?',
+        answer:
+          'Minimum Viable Product, prima versiune a unui produs, cu doar funcțiile necesare ca să afli dacă oamenii îl vor și îl folosesc.',
+      },
+      {
+        question: 'Cât costă un MVP?',
+        answer:
+          'Depinde de produs, așa că oferta vine în 24 de ore după prima discuție. Ținem prima versiune mică intenționat, ca să cheltui puțin până afli dacă ideea merită.',
+      },
+      {
+        question: 'În cât timp e gata?',
+        answer:
+          'De obicei în 4-8 săptămâni pentru prima versiune, cu o versiune nouă de văzut în fiecare săptămână.',
+      },
+      {
+        question: 'Ce se întâmplă după MVP?',
+        answer:
+          'Dacă datele arată că ideea merită, continuăm dezvoltarea împreună sau predăm codul complet echipei tale.',
+      },
+    ],
+    relatedSlugs: ['platforme-saas', 'aplicatii-mobile', 'design-ux-ui'],
+    relatedPosts: [],
+    projectSlugs: ['asesor'],
+    waMessage: 'Salut! Am o idee de startup și am nevoie de un MVP.',
+    serviceType: 'Dezvoltare MVP pentru startup-uri',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'sistem-programari-online',
+    group: 'software',
+    name: 'Sistem de programări online',
+    shortName: 'Programări online',
+    h1: 'Sistem de programări online pentru cabinete și saloane',
+    seoTitle: 'Sistem de programări online, de la 690 EUR',
+    metaDescription:
+      'Sistem de programări online pe site-ul tău: calendar pe specialiști, confirmări și remindere pe WhatsApp sau SMS, fără comision pe programare. De la 690 EUR.',
+    answerCapsule:
+      'Sistemul de programări online de la MAST Studio pune un calendar direct pe site-ul tău: clientul alege serviciul, specialistul și ora, iar confirmarea și reminderele pleacă automat pe e-mail sau WhatsApp. Nu plătești comision pe programare și datele rămân ale tale. Pornește de la 690 EUR și e gata în 2-3 săptămâni.',
+    priceFrom: 690,
+    priceLabel: 'de la 690 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '2-3 săptămâni',
+    intro:
+      'Platformele de programări te pun lângă concurenți, iau comision și păstrează datele clienților tăi. Un sistem propriu, pe site-ul tău, îți dă aceleași avantaje fără dezavantajele astea: calendar online, remindere care reduc neprezentările și o listă de clienți care rămâne a ta.',
+    includes: [
+      'calendar online pe site, pe servicii și specialiști',
+      'program de lucru, pauze și concedii',
+      'confirmări și remindere automate pe e-mail, WhatsApp sau SMS',
+      'anulare și reprogramare de către client',
+      'panou de administrare pentru tine și echipă',
+      'listă de clienți cu istoricul programărilor',
+      'fără comision pe programare',
+    ],
+    notIncluded: [
+      'costurile SMS sau WhatsApp Business, plătite separat',
+      'plata online în avans (la cerere, ofertă separată)',
+      'integrare cu un program medical existent (după analiză)',
+    ],
+    process: [
+      { step: 'Ne spui cum lucrezi', description: 'Servicii, durate, specialiști, program și regulile de anulare.' },
+      { step: 'Configurăm sistemul', description: 'Calendarul, mesajele de confirmare și reminderele, pe tonul tău.' },
+      { step: 'Testăm cu echipa', description: 'Facem programări de probă până merge totul fără cusur.' },
+      { step: 'Lansăm și te instruim', description: 'Echipa știe să-l folosească din prima zi.' },
+    ],
+    forWho: [
+      'cabinete medicale, stomatologice și veterinare',
+      'saloane de înfrumusețare și clinici estetice',
+      'kinetoterapeuți, nutriționiști și psihologi',
+      'servicii auto și alte servicii pe programare',
+    ],
+    faq: [
+      {
+        question: 'De ce un sistem propriu și nu o platformă de programări?',
+        answer:
+          'Pentru că nu plătești comision pe fiecare programare, clientul nu vede concurenții lângă tine, iar datele clienților rămân ale tale.',
+      },
+      {
+        question: 'Reduc reminderele neprezentările?',
+        answer:
+          'Da, reminderul trimis cu o zi înainte și posibilitatea de a reprograma ușor sunt cele mai eficiente metode de a reduce programările ratate.',
+      },
+      {
+        question: 'Cât costă un sistem de programări?',
+        answer:
+          'De la 690 EUR pentru un cabinet sau salon cu un singur sediu. Costurile mesajelor SMS sau WhatsApp sunt separate și mici.',
+      },
+      {
+        question: 'Se poate lega de asistentul AI?',
+        answer:
+          'Da. Asistentul AI poate prelua programări în conversație și le pune direct în calendar.',
+      },
+    ],
+    relatedSlugs: ['automatizari-whatsapp', 'asistent-ai', 'site-de-prezentare'],
+    relatedPosts: [],
+    projectSlugs: ['asesor'],
+    waMessage: 'Salut! Vreau un sistem de programări online pe site.',
+    serviceType: 'Sistem de programări online',
     updatedAt: '2026-11-03',
   },
   {
@@ -568,77 +856,6 @@ export const servicePages: ServicePage[] = [
     projectSlugs: ['decodex', 'oncogen'],
     waMessage: 'Salut! Am un proiect cu finanțare europeană și am nevoie de site.',
     serviceType: 'Site pentru proiect cu finanțare europeană',
-    updatedAt: '2026-11-03',
-  },
-  {
-    slug: 'refacere-site',
-    group: 'web',
-    name: 'Refacere site',
-    shortName: 'Refacere site',
-    h1: 'Refacere site (redesign) pentru firme',
-    seoTitle: 'Refacere site și redesign pentru firme',
-    metaDescription:
-      'Refacem site-ul vechi: design nou, viteză pe telefon, texte clare și aceleași adrese, ca să nu pierzi pozițiile din Google. La prețul unui site de prezentare.',
-    answerCapsule:
-      'Refacerea unui site la MAST Studio costă cât un site de prezentare nou. Păstrăm ce funcționează, adică adresele paginilor, pozițiile din Google și conținutul bun, și refacem ce nu: designul, viteza pe telefon, textele și butoanele de contact. Redirecționăm corect fiecare pagină veche, ca să nu pierzi vizitatori.',
-    priceFrom: PRESENTATION_WEBSITE_PRICE_FROM,
-    priceLabel: `de la ${PRESENTATION_WEBSITE_PRICE_FROM} EUR`,
-    deliveryLabel: 'Termen de livrare',
-    deliveryTime: '48 de ore după materiale',
-    intro:
-      'Un site vechi nu e doar urât. E lent pe telefon, nu mai spune ce faci acum și îi trimite pe clienți la concurență. Dar un redesign făcut prost te poate costa și pozițiile din Google câștigate în ani. De aceea pornim de la ce merge deja și refacem restul.',
-    includes: [
-      'analiza site-ului vechi: ce pagini aduc vizitatori, ce merge, ce nu',
-      'design nou, unic',
-      'texte rescrise clar',
-      'viteză bună pe telefon',
-      'redirecționarea fiecărei pagini vechi către cea nouă',
-      'păstrarea datelor din Google Search Console și Analytics',
-      'mutarea pe un domeniu și o găzduire pe numele tău, dacă nu sunt deja',
-    ],
-    notIncluded: [
-      'funcții noi complexe (magazin, conturi, programări), ofertate separat',
-      'migrarea a sute de produse sau articole fără ofertă separată',
-    ],
-    process: [
-      { step: 'Analizăm site-ul vechi', description: 'Vedem ce pagini contează pentru Google și pentru clienți.' },
-      { step: 'Propunem structura nouă', description: 'Ce păstrăm, ce comasăm, ce scriem din nou.' },
-      { step: 'Construim și redirecționăm', description: 'Site nou, cu fiecare adresă veche trimisă unde trebuie.' },
-      { step: 'Lansăm și urmărim', description: 'Verificăm în primele săptămâni că pozițiile din Google se păstrează.' },
-    ],
-    forWho: [
-      'firme cu site mai vechi de 4-5 ani',
-      'site-uri lente pe telefon',
-      'firme care și-au schimbat serviciile sau identitatea',
-      'site-uri făcute pe teme care se strică la actualizări',
-    ],
-    faq: [
-      {
-        question: 'Pierd pozițiile din Google dacă refac site-ul?',
-        answer:
-          'Nu, dacă redesignul e făcut corect. Păstrăm adresele importante și redirecționăm fiecare pagină veche, apoi urmărim în Search Console primele săptămâni după lansare.',
-      },
-      {
-        question: 'Cât costă refacerea unui site?',
-        answer:
-          'Cât un site de prezentare nou, la același preț de pornire. Dacă site-ul vechi are multe pagini sau funcții speciale, prețul se stabilește în ofertă.',
-      },
-      {
-        question: 'Puteți prelua un site făcut de altcineva?',
-        answer:
-          'Da. Avem nevoie de acces la domeniu sau de ajutorul vechiului furnizor. Dacă domeniul nu e pe numele tău, te ajutăm să-l transferi.',
-      },
-      {
-        question: 'Pot păstra textele vechi?',
-        answer:
-          'Da, pe cele bune le păstrăm. De obicei rescriem doar ce nu mai e actual sau nu e clar pe telefon.',
-      },
-    ],
-    relatedSlugs: ['site-de-prezentare', 'mentenanta', 'conformitate-legala-site'],
-    relatedPosts: ['de-ce-sunt-lente-temele-wordpress', 'ce-inseamna-pagespeed'],
-    projectSlugs: [],
-    waMessage: 'Salut! Vreau să refac site-ul firmei.',
-    serviceType: 'Refacere site (redesign)',
     updatedAt: '2026-11-03',
   },
   {
@@ -864,6 +1081,80 @@ export const servicePages: ServicePage[] = [
     projectSlugs: [],
     waMessage: 'Salut! Vreau campanii Google sau Meta pentru afacerea mea.',
     serviceType: 'Administrare campanii Google Ads și Meta Ads',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'continut-seo',
+    group: 'crestere',
+    name: 'Conținut SEO lunar',
+    shortName: 'Conținut SEO',
+    h1: 'Articole de blog și conținut SEO lunar',
+    seoTitle: 'Conținut SEO și articole de blog lunar',
+    metaDescription:
+      'Articole de blog și pagini scrise pentru căutările clienților tăi, verificate de un om, cu date reale și legături interne. De la 240 EUR pe lună, 4 articole.',
+    answerCapsule:
+      'Serviciul de conținut SEO de la MAST Studio îți aduce lunar 4 articole sau pagini noi, scrise pentru întrebările pe care clienții tăi le caută pe Google și le pun asistenților AI. Folosim AI pentru viteză, dar fiecare text e verificat de un om, cu date reale și legături către serviciile tale. Pornește de la 240 EUR pe lună.',
+    priceFrom: 240,
+    priceUnit: 'MON',
+    priceLabel: 'de la 240 EUR pe lună',
+    deliveryLabel: 'Contract',
+    deliveryTime: 'lunar, fără contract lung',
+    intro:
+      'Un blog la care nu scrie nimeni nu aduce nimic. Un blog cu articole generice, scrise doar ca să existe, aduce și mai puțin. Noi scriem puțin și bine: răspunsuri concrete la întrebările reale ale clienților tăi, cu cifre verificate și cu un pas următor clar spre serviciile tale.',
+    includes: [
+      'plan lunar de subiecte, după ce caută clienții tăi',
+      '4 articole sau pagini noi pe lună',
+      'fiecare text verificat și editat de un om',
+      'cifre și surse verificate, fără informații inventate',
+      'legături interne către serviciile și paginile tale',
+      'imagini pentru fiecare articol',
+      'publicare directă pe site',
+      'raport lunar: ce s-a publicat și ce trafic aduce',
+    ],
+    notIncluded: [
+      'articole sponsorizate pe alte site-uri',
+      'texte publicate fără verificarea ta, dacă vrei să le aprobi',
+      'traduceri în alte limbi (separat)',
+    ],
+    process: [
+      { step: 'Plan de subiecte', description: 'Găsim întrebările pe care clienții tăi le caută și pe care nu le acoperă nimeni bine.' },
+      { step: 'Scriem', description: 'AI pentru viteză, om pentru verificare, ton și cifre.' },
+      { step: 'Aprobi și publicăm', description: 'Tu vezi fiecare articol înainte, dacă vrei.' },
+      { step: 'Măsurăm', description: 'Raport lunar cu traficul și cu ce subiecte merită continuate.' },
+    ],
+    forWho: [
+      'firme cu site, dar fără timp de scris',
+      'cabinete și clinici care vor să răspundă la întrebările pacienților',
+      'magazine online care vor trafic din Google',
+      'firme de servicii profesionale',
+    ],
+    faq: [
+      {
+        question: 'Scrieți articolele cu AI?',
+        answer:
+          'Folosim AI pentru documentare și o primă variantă, dar fiecare articol e verificat, editat și completat de un om, cu cifre și surse reale. Nu publicăm texte generate și nevăzute.',
+      },
+      {
+        question: 'În cât timp aduc articolele trafic?',
+        answer:
+          'De obicei în 2-4 luni pentru primele rezultate vizibile, în funcție de domeniu și de cât de puternic e site-ul.',
+      },
+      {
+        question: 'Pot renunța oricând?',
+        answer:
+          'Da, abonamentul e lunar. Articolele publicate rămân ale tale.',
+      },
+      {
+        question: 'Pot alege eu subiectele?',
+        answer:
+          'Da. Propunem un plan lunar, iar tu adaugi, scoți sau schimbi subiecte înainte să scriem.',
+      },
+    ],
+    relatedSlugs: ['seo-local', 'vizibilitate-ai', 'mentenanta'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Mă interesează conținut SEO lunar pentru site.',
+    serviceType: 'Conținut SEO și articole de blog',
     updatedAt: '2026-11-03',
   },
   {

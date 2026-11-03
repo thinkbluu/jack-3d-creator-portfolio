@@ -271,6 +271,72 @@ export const serviceTextEn: Record<string, ServiceText> = {
     waMessage: 'Hi! I need a web or mobile app. Can we talk?',
     serviceType: 'Web application development',
   },
+  'aplicatii-mobile': {
+    name: 'iOS and Android mobile apps',
+    shortName: 'Mobile apps',
+    h1: 'iOS and Android mobile app development',
+    seoTitle: 'iOS and Android mobile app development',
+    metaDescription:
+      'We build mobile apps for iPhone and Android: from the first version to App Store and Google Play release, with AI built in where it adds real value.',
+    answerCapsule:
+      'MAST Studio develops mobile apps for iPhone and Android from a single code base, from design and the first version to release on the App Store and Google Play. We build in stages, with test versions on your own phone, and we integrate AI where it brings real value. The quote with the price arrives within 24 hours.',
+    priceLabel: 'quote within 24 hours',
+    deliveryLabel: 'Timeline',
+    deliveryTime: 'in stages, set out in the quote',
+    intro:
+      'A mobile app makes sense when your customers use it often: they book, order, follow a result or receive notifications. We first help you decide whether you need a mobile app or a web app, then we build it in stages, so you can test it on your own phone from the first weeks.',
+    includes: [
+      'an analysis: mobile app or web app, whichever suits you',
+      'interface design for the phone',
+      'a single code base for iPhone and Android',
+      'accounts, notifications, in-app payments, when needed',
+      'AI features: image recognition, recommendations, an assistant',
+      'test versions on your own phone along the way',
+      'release on the App Store and Google Play',
+      'the code and the developer accounts in your name',
+    ],
+    notIncluded: [
+      'the Apple and Google developer account fees',
+      'promoting the app after release (separate)',
+      'complex 3D games',
+    ],
+    process: [
+      { step: 'Discussion and quote', description: 'We understand what the app must do. The quote with stages and price arrives within 24 hours.' },
+      { step: 'Design', description: 'The key screens, tested on the phone before programming.' },
+      { step: 'Building in stages', description: 'You receive test versions on your phone and give feedback along the way.' },
+      { step: 'Release and handover', description: 'We release it to the stores and hand over the code and the accounts.' },
+    ],
+    forWho: [
+      'clinics and practices with patients who come back often',
+      'services with bookings and subscriptions',
+      'startups with a mobile product',
+      'companies that want an internal app for their field teams',
+    ],
+    faq: [
+      {
+        question: 'How much does a mobile app cost?',
+        answer:
+          'It depends on the number of screens, the features and the integrations, so we make a quote after the first discussion, within 24 hours. We usually start with a small first version, so you can test the idea before the big investment.',
+      },
+      {
+        question: 'Mobile app or web app?',
+        answer:
+          'If people use it rarely or find it through Google, a web app is usually enough and cheaper. If they open it often, receive notifications or use the camera and the location, a mobile app is worth it.',
+      },
+      {
+        question: 'Do you release the app on the App Store and Google Play?',
+        answer:
+          'Yes, we handle the whole release process, on your company’s developer accounts.',
+      },
+      {
+        question: 'Can you integrate AI into the app?',
+        answer:
+          'Yes. We have built apps that recognise nutritional values from a photo and apps that analyse complex data for personalised recommendations.',
+      },
+    ],
+    waMessage: 'Hi! I have an idea for a mobile app. Can we talk?',
+    serviceType: 'iOS and Android app development',
+  },
   'platforme-saas': {
     name: 'SaaS platforms',
     shortName: 'SaaS platforms',
@@ -346,6 +412,136 @@ export const serviceTextEn: Record<string, ServiceText> = {
     ],
     waMessage: 'Hi! I want to build a custom platform. Can we talk?',
     serviceType: 'SaaS platform development',
+  },
+  'mvp-startup': {
+    name: 'MVP for startups',
+    shortName: 'Startup MVP',
+    h1: 'Startup MVP development',
+    seoTitle: 'Startup MVP development',
+    metaDescription:
+      'We build the first version of your product in 4-8 weeks: just what you need to test the idea with real customers. Web, mobile or SaaS, AI where it counts.',
+    answerCapsule:
+      'An MVP is the first version of your product, with only the features needed to test it with real customers. At MAST Studio we build it in 4-8 weeks, as a web, mobile or SaaS application, with clean design, payments and usage analytics. The quote arrives within 24 hours, and the code stays yours.',
+    priceLabel: 'quote within 24 hours',
+    deliveryLabel: 'Timeline',
+    deliveryTime: '4-8 weeks for the first version',
+    intro:
+      'Most startups lose months and money building features nobody uses. A good MVP does the opposite: it picks the two or three things that prove the idea is worth it, builds them well and puts them quickly in front of customers. Then you decide with data, not with assumptions.',
+    includes: [
+      'a definition workshop: what goes into the first version and what waits',
+      'product design for the key screens',
+      'a web, mobile or SaaS application, depending on the product',
+      'accounts, payments and subscriptions, when needed',
+      'usage analytics, so you can see what people use',
+      'a launch to the first users',
+      'code and accounts in your name, ready to be developed further',
+    ],
+    notIncluded: [
+      'the marketing and sales after the launch',
+      'features that are not needed to test the idea',
+      'equity or payment in company shares',
+    ],
+    process: [
+      { step: 'Definition workshop', description: 'We set the hypothesis to test and the 2-3 features that prove it.' },
+      { step: 'Fast design', description: 'The key screens, tested with 3-5 people from your audience.' },
+      { step: 'Building', description: '4-8 weeks, with a new version to see every week.' },
+      { step: 'Launch and measurement', description: 'The first real users and the data about what works.' },
+    ],
+    forWho: [
+      'founders with an idea validated in conversations, but without a product',
+      'companies that want to test a new digital product',
+      'startups preparing a funding round',
+      'non-technical teams that need a technical partner',
+    ],
+    faq: [
+      {
+        question: 'What is an MVP?',
+        answer:
+          'Minimum Viable Product, the first version of a product, with only the features needed to find out whether people want it and use it.',
+      },
+      {
+        question: 'How much does an MVP cost?',
+        answer:
+          'It depends on the product, so the quote arrives within 24 hours after the first discussion. We keep the first version small on purpose, so you spend little before you find out whether the idea is worth it.',
+      },
+      {
+        question: 'How long does it take?',
+        answer:
+          'Usually 4-8 weeks for the first version, with a new version to see every week.',
+      },
+      {
+        question: 'What happens after the MVP?',
+        answer:
+          'If the data shows the idea is worth it, we continue the development together or we hand over the complete code to your team.',
+      },
+    ],
+    waMessage: 'Hi! I have a startup idea and I need an MVP.',
+    serviceType: 'Startup MVP development',
+  },
+  'sistem-programari-online': {
+    name: 'Online booking system',
+    shortName: 'Online bookings',
+    h1: 'Online booking system for clinics and salons',
+    seoTitle: 'Online booking system, from 690 EUR',
+    metaDescription:
+      'An online booking system on your own website: calendar by specialist, confirmations and reminders by WhatsApp or SMS, no commission per booking. From 690 EUR.',
+    answerCapsule:
+      'The MAST Studio online booking system puts a calendar directly on your website: the client picks the service, the specialist and the time, and the confirmation and reminders go out automatically by e-mail or WhatsApp. You pay no commission per booking and the data stays yours. It starts at 690 EUR and is ready in 2-3 weeks.',
+    priceLabel: 'from 690 EUR',
+    deliveryLabel: 'Timeline',
+    deliveryTime: '2-3 weeks',
+    intro:
+      'Booking platforms put you next to your competitors, take a commission and keep your clients’ data. Your own system, on your website, gives you the same advantages without those drawbacks: an online calendar, reminders that reduce no-shows and a client list that stays yours.',
+    includes: [
+      'an online calendar on your website, by services and specialists',
+      'working hours, breaks and time off',
+      'automatic confirmations and reminders by e-mail, WhatsApp or SMS',
+      'cancellation and rescheduling by the client',
+      'an admin panel for you and your team',
+      'a client list with the booking history',
+      'no commission per booking',
+    ],
+    notIncluded: [
+      'the SMS or WhatsApp Business costs, paid separately',
+      'online payment in advance (on request, a separate quote)',
+      'integration with an existing medical system (after an analysis)',
+    ],
+    process: [
+      { step: 'You tell us how you work', description: 'Services, durations, specialists, schedule and the cancellation rules.' },
+      { step: 'We configure the system', description: 'The calendar, the confirmation messages and the reminders, in your tone.' },
+      { step: 'We test with the team', description: 'We make trial bookings until everything runs without a hitch.' },
+      { step: 'We launch and train you', description: 'The team knows how to use it from the first day.' },
+    ],
+    forWho: [
+      'medical, dental and veterinary practices',
+      'beauty salons and aesthetic clinics',
+      'physiotherapists, nutritionists and psychologists',
+      'auto services and other appointment-based services',
+    ],
+    faq: [
+      {
+        question: 'Why my own system and not a booking platform?',
+        answer:
+          'Because you pay no commission per booking, the client does not see your competitors next to you, and the client data stays yours.',
+      },
+      {
+        question: 'Do reminders reduce no-shows?',
+        answer:
+          'Yes, the reminder sent one day before and the possibility to reschedule easily are the most effective ways to reduce missed bookings.',
+      },
+      {
+        question: 'How much does a booking system cost?',
+        answer:
+          'From 690 EUR for a practice or salon with a single location. The SMS or WhatsApp message costs are separate and small.',
+      },
+      {
+        question: 'Can it be linked to the AI assistant?',
+        answer:
+          'Yes. The AI assistant can take bookings in a conversation and put them straight into the calendar.',
+      },
+    ],
+    waMessage: 'Hi! I want an online booking system on my website.',
+    serviceType: 'Online booking system',
   },
   'design-ux-ui': {
     name: 'UX/UI design',
@@ -1253,135 +1449,70 @@ export const serviceTextEn: Record<string, ServiceText> = {
     waMessage: 'Hi! I want Google or Meta campaigns for my business.',
     serviceType: 'Google Ads and Meta Ads management',
   },
-  'audit-securitate-gdpr': {
-    name: 'Security and GDPR audit',
-    shortName: 'Security audit',
-    h1: 'Security and GDPR audit for websites and apps',
-    seoTitle: 'Website security and GDPR audit, 290 EUR',
+  'continut-seo': {
+    name: 'Monthly SEO content',
+    shortName: 'SEO content',
+    h1: 'Blog articles and monthly SEO content',
+    seoTitle: 'Monthly SEO content and blog articles',
     metaDescription:
-      'A security and GDPR audit for your website, store or app: vulnerabilities, cookies set before consent, exposed data. A clear report, from 290 EUR.',
+      'Blog articles and pages written for what your customers search, checked by a person, with real data and internal links. From 240 EUR a month, 4 articles.',
     answerCapsule:
-      'The MAST Studio security and GDPR audit checks your website, store or app for known vulnerabilities, exposed data, missing security settings and tracking that starts before the visitor’s consent. Within 5 working days you receive a report with every issue, its severity and how to fix it. It starts at 290 EUR.',
-    priceLabel: 'from 290 EUR',
-    deliveryLabel: 'Timeline',
-    deliveryTime: '5 working days',
+      'The MAST Studio SEO content service brings you 4 new articles or pages every month, written for the questions your customers search on Google and ask AI assistants. We use AI for speed, but every text is checked by a person, with real data and links to your services. It starts at 240 EUR a month.',
+    priceLabel: 'from 240 EUR a month',
+    deliveryLabel: 'Contract',
+    deliveryTime: 'monthly, no long contract',
     intro:
-      'Most business websites are never checked after launch. In a study of a random sample of Romanian business websites, more than a third started tracking visitors before consent. The audit tells you exactly where you are exposed, before someone else finds out.',
+      'A blog nobody writes brings nothing. A blog with generic articles, written just to exist, brings even less. We write little and well: concrete answers to your customers’ real questions, with verified figures and a clear next step towards your services.',
     includes: [
-      'a scan for known vulnerabilities and outdated versions',
-      'a check of the security settings: HTTPS, headers, forms, admin access',
-      'data exposed publicly: files, keys, user lists',
-      'cookies and scripts that start before consent',
-      'the privacy policy compared with what the website actually does',
-      'for mobile apps: an analysis of the published package',
-      'a report with the severity of every issue and the remediation steps',
-      'a 30-minute call to walk through the report',
+      'a monthly topic plan, based on what your customers search',
+      '4 new articles or pages a month',
+      'every text checked and edited by a person',
+      'verified figures and sources, no invented information',
+      'internal links to your services and pages',
+      'images for every article',
+      'publishing directly on your website',
+      'a monthly report: what was published and what traffic it brings',
     ],
     notIncluded: [
-      'fixing the issues found (a separate quote, after the report)',
-      'a complex penetration test on large infrastructure',
-      'legal advice',
+      'sponsored articles on other websites',
+      'texts published without your check, if you want to approve them',
+      'translations into other languages (separate)',
     ],
     process: [
-      { step: 'You give us the address and the permitted access', description: 'We agree in writing what we check and what we do not, so the audit is legal and safe.' },
-      { step: 'We check', description: 'We test from the outside, like a malicious visitor, without affecting your website.' },
-      { step: 'The report', description: 'Every issue with its severity, the proof and how to fix it, in plain language.' },
-      { step: 'The call', description: 'We explain what is urgent and what can wait. If you want, we do the repairs.' },
+      { step: 'Topic plan', description: 'We find the questions your customers search and that nobody answers well.' },
+      { step: 'We write', description: 'AI for speed, a person for the checking, the tone and the figures.' },
+      { step: 'You approve and we publish', description: 'You see every article first, if you want.' },
+      { step: 'We measure', description: 'A monthly report with the traffic and the topics worth continuing.' },
     ],
     forWho: [
-      'online stores that receive payments and delivery details',
-      'clinics and practices that work with health data',
-      'apps and platforms with user accounts',
-      'companies that received a website from another provider and do not know what state it is in',
+      'companies with a website, but no time to write',
+      'practices and clinics that want to answer patients’ questions',
+      'online stores that want traffic from Google',
+      'professional services firms',
     ],
     faq: [
       {
-        question: 'What does a security audit for a website check?',
+        question: 'Do you write the articles with AI?',
         answer:
-          'Known vulnerabilities, outdated versions, missing security settings, data exposed publicly, and how the website handles cookies and personal data. For mobile apps we also analyse the published package.',
+          'We use AI for research and a first draft, but every article is checked, edited and completed by a person, with real figures and sources. We do not publish generated texts nobody has seen.',
       },
       {
-        question: 'Can the audit break my website?',
+        question: 'How long until the articles bring traffic?',
         answer:
-          'No. We test from the outside, with limits agreed in writing beforehand, without attacks that would load the server or change data.',
+          'Usually 2-4 months for the first visible results, depending on the field and on how strong the website is.',
       },
       {
-        question: 'How much does a security audit cost?',
+        question: 'Can I cancel at any time?',
         answer:
-          'From 290 EUR for a presentation website or a small store. Apps with user accounts and larger platforms are quoted based on complexity.',
+          'Yes, the subscription is monthly. The published articles stay yours.',
       },
       {
-        question: 'What do I do after I receive the report?',
+        question: 'Can I choose the topics?',
         answer:
-          'Fix the urgent issues first. If the website was built by another provider, the report is written so you can send it straight to them. If you want, we do the repairs, based on a separate quote.',
+          'Yes. We propose a monthly plan, and you add, remove or change topics before we write.',
       },
     ],
-    waMessage: 'Hi! I want a security and GDPR audit for my website.',
-    serviceType: 'Website security and GDPR audit',
-  },
-  'conformitate-legala-site': {
-    name: 'Legal compliance for websites and stores',
-    shortName: 'Legal compliance',
-    h1: 'Legal compliance for websites and online stores',
-    seoTitle: 'Legal compliance for websites and stores',
-    metaDescription:
-      'We bring your website or store in line with Romanian rules: ANPC and SAL links, company details, policies, a cookie banner with reject, basic accessibility.',
-    answerCapsule:
-      'The MAST Studio legal compliance service brings your website or store in line with the basic requirements in Romania: the ANPC and SAL links, your company details, the privacy policy and the cookie policy, a banner with a reject button just as visible as accept, and accessibility elements. It costs from 190 EUR and takes 3 working days.',
-    priceLabel: 'from 190 EUR',
-    deliveryLabel: 'Timeline',
-    deliveryTime: '3 working days',
-    intro:
-      'When we tested 50 Romanian online stores, 15 had no reject button for cookies and 8 ticked marketing consent by default. These are easy mistakes to fix, but they can cost you dearly during an inspection. We check all of them and fix them directly on your website.',
-    includes: [
-      'the ANPC and SAL links, in the required format',
-      'your company details in the footer: name, tax ID, registration number',
-      'a privacy policy and a cookie policy, adapted to your website',
-      'a cookie banner with a reject button just as visible as the accept one',
-      'no pre-ticked marketing boxes',
-      'terms and conditions and the return policy for stores',
-      'a basic accessibility check: contrast, alternative texts, labels',
-    ],
-    notIncluded: [
-      'legal advice or taking on legal responsibility',
-      'policies for special data processing, without a lawyer',
-      'rebuilding the website (if the technology does not allow it, a separate quote)',
-    ],
-    process: [
-      { step: 'We check the website', description: 'We go through the requirements list and tell you what is missing.' },
-      { step: 'We prepare the texts', description: 'The policies are adapted to what your website actually does, not copied.' },
-      { step: 'We implement', description: 'We put everything directly on the website, including the cookie banner.' },
-      { step: 'We hand over the list', description: 'You receive the list of everything that was done, useful at any inspection.' },
-    ],
-    forWho: [
-      'small and medium online stores',
-      'business websites built by others, without the legal elements',
-      'practices and clinics that collect data through forms',
-      'companies that run Google or Meta ads on their website',
-    ],
-    faq: [
-      {
-        question: 'What does a business website in Romania need by law?',
-        answer:
-          'The basics: your company identification details, a privacy policy, information about cookies with the option to refuse them, and for stores the terms and conditions, the return policy and the links to ANPC and alternative dispute resolution.',
-      },
-      {
-        question: 'Does the cookie banner need a reject button?',
-        answer:
-          'Yes. Refusing must be just as easy as accepting, and non-essential cookies are not allowed to start before consent.',
-      },
-      {
-        question: 'Does this service replace a lawyer?',
-        answer:
-          'No. We put the usual website requirements into practice, and for special situations or sensitive data we recommend a final check by a lawyer.',
-      },
-      {
-        question: 'How much does it cost?',
-        answer:
-          'From 190 EUR for a presentation website or a small store, done in 3 working days.',
-      },
-    ],
-    waMessage: 'Hi! I want my website brought in line with ANPC, GDPR and the cookie rules.',
-    serviceType: 'Website and online store legal compliance',
+    waMessage: 'Hi! I am interested in monthly SEO content for my website.',
+    serviceType: 'SEO content and blog articles',
   },
 }
