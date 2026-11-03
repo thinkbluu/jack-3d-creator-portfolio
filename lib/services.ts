@@ -310,7 +310,7 @@ export const servicePages: ServicePage[] = [
     deliveryLabel: 'Termen de livrare',
     deliveryTime: 'estimat în ofertă',
     intro:
-      'Ai o idee de produs digital pentru care clienții să plătească lunar? Te ajutăm să o transformi într-o platformă reală: stabilim împreună ce intră în prima versiune, o construim în etape și o lansăm fără funcții inutile care întârzie primii clienți.',
+      'Ai o idee de produs digital pentru care clienții să plătească lunar? Te ajutăm să o transformi ��ntr-o platformă reală: stabilim împreună ce intră în prima versiune, o construim în etape și o lansăm fără funcții inutile care întârzie primii clienți.',
     includes: [
       'definirea primei versiuni (MVP) și a priorităților',
       'design de interfață personalizat',
@@ -622,6 +622,239 @@ export const servicePages: ServicePage[] = [
     waMessage: 'Salut! Mă interesează automatizări și WhatsApp pentru afacerea mea.',
     serviceType: 'Automatizări WhatsApp',
     updatedAt: '2026-10-02',
+  },
+  {
+    slug: 'asistent-ai',
+    group: 'ai',
+    name: 'Asistent AI pentru clienți',
+    shortName: 'Asistent AI',
+    h1: 'Asistent AI pentru site și WhatsApp',
+    seoTitle: 'Asistent AI pentru site și WhatsApp',
+    metaDescription:
+      'Asistent AI care răspunde clienților pe site și WhatsApp din informațiile firmei tale, preia programări și predă conversația unui om. De la 790 EUR.',
+    answerCapsule:
+      'Asistentul AI de la MAST Studio răspunde clienților pe site și pe WhatsApp, zi și noapte, doar din informațiile aprobate de tine: servicii, prețuri, program, politici. Preia cereri și programări și predă conversația unui om când e nevoie. Pornește de la 790 EUR, plus costurile lunare de rulare, stabilite în ofertă.',
+    priceFrom: 790,
+    priceLabel: 'de la 790 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '2-3 săptămâni',
+    intro:
+      'Clienții tăi pun aceleași întrebări la orice oră, iar cine nu primește răspuns în câteva minute merge la următorul din listă. Un asistent AI bine construit răspunde imediat, corect și pe tonul firmei tale, pentru că știe doar ce l-ai învățat tu. Nu inventează prețuri, nu promite lucruri pe care nu le faci și îți lasă ție deciziile importante.',
+    includes: [
+      'analiza întrebărilor pe care le primești cel mai des',
+      'bază de cunoștințe construită din informațiile firmei: servicii, prețuri, program, politici, FAQ',
+      'asistent pe site și, la cerere, pe WhatsApp Business',
+      'preluarea cererilor de ofertă și a programărilor',
+      'predarea conversației către un om, cu tot istoricul',
+      'mesaj clar că persoana vorbește cu un asistent AI',
+      'testare pe întrebări reale înainte de lansare',
+      'raport lunar cu întrebările primite și răspunsurile date',
+    ],
+    notIncluded: [
+      'costurile lunare ale modelului AI și ale WhatsApp Business, plătite separat, la vedere',
+      'sfaturi medicale, juridice sau financiare date de AI în locul unui specialist',
+      'integrări complexe cu ERP sau CRM (ofertă separată)',
+    ],
+    process: [
+      { step: 'Strângem ce trebuie să știe asistentul', description: 'Întrebările frecvente, prețurile, programul și regulile tale. Tot ce nu e scris aici, asistentul nu spune.' },
+      { step: 'Construim și antrenăm baza de cunoștințe', description: 'Asistentul răspunde doar din sursele aprobate și spune „nu știu, vă pun în legătură cu un coleg” când nu are răspunsul.' },
+      { step: 'Testăm cu întrebările tale reale', description: 'Îl punem la încercare cu zeci de întrebări, inclusiv cele dificile, și corectăm până răspunde cum ai răspunde tu.' },
+      { step: 'Lansăm și urmărim', description: 'Îl punem pe site și pe WhatsApp, iar în prima lună verificăm conversațiile și ajustăm răspunsurile.' },
+    ],
+    forWho: [
+      'cabinete medicale, stomatologice și veterinare cu multe întrebări repetitive',
+      'saloane și clinici care fac programări',
+      'magazine online cu întrebări despre produse, livrare și retur',
+      'firme de servicii care primesc cereri de ofertă după program',
+    ],
+    faq: [
+      {
+        question: 'Ce e un asistent AI pentru clienți?',
+        answer:
+          'Un program care înțelege întrebările scrise de clienți și răspunde în limbaj natural, din informațiile firmei tale. Spre deosebire de un chatbot cu butoane, înțelege și întrebări formulate în felul fiecăruia.',
+      },
+      {
+        question: 'Poate inventa răspunsuri sau prețuri?',
+        answer:
+          'Îl construim să răspundă doar din informațiile aprobate de tine. Când nu știe, spune asta și trimite conversația unui om. Testăm exact acest lucru înainte de lansare.',
+      },
+      {
+        question: 'Cât costă un asistent AI?',
+        answer:
+          'Construcția pornește de la 790 EUR. Separat plătești costul lunar al modelului AI și, dacă îl folosești, al WhatsApp Business. Ambele depind de numărul de conversații și le estimăm în ofertă.',
+      },
+      {
+        question: 'E conform cu GDPR și cu regulile europene privind AI?',
+        answer:
+          'Da. Clientul este anunțat de la început că vorbește cu un asistent AI, cum cer regulile europene, datele sunt prelucrate doar pentru conversație, iar politica de confidențialitate se actualizează în consecință.',
+      },
+      {
+        question: 'Care e diferența față de automatizările WhatsApp?',
+        answer:
+          'Automatizările WhatsApp trimit mesaje fixe, scrise dinainte. Asistentul AI poartă o conversație: înțelege întrebarea și formulează răspunsul din informațiile tale. Multe afaceri pornesc cu automatizări și trec apoi la asistent.',
+      },
+    ],
+    relatedSlugs: ['automatizari-whatsapp', 'automatizari-ai', 'site-de-prezentare'],
+    relatedPosts: ['automatizari-whatsapp-afacere-mica', 'conversie-site-prezentare', 'cat-costa-aplicatie-web'],
+    projectSlugs: [],
+    waMessage: 'Salut! Mă interesează un asistent AI pentru clienți, pe site și WhatsApp.',
+    serviceType: 'Asistent AI pentru clienți',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'automatizari-ai',
+    group: 'ai',
+    name: 'Automatizări AI pentru procese',
+    shortName: 'Automatizări AI',
+    h1: 'Automatizări AI pentru procesele firmei tale',
+    seoTitle: 'Automatizări AI pentru firme, de la 990 EUR',
+    metaDescription:
+      'Automatizări AI pentru documente, oferte, e-mailuri și rapoarte: preiau munca repetitivă a echipei, iar un om validează ce contează. De la 990 EUR.',
+    answerCapsule:
+      'Automatizările AI de la MAST Studio preiau munca repetitivă din firmă: citesc și sortează e-mailuri, extrag date din facturi și documente, pregătesc oferte și rapoarte. Pornesc de la 990 EUR pentru un proces, iar un om din echipa ta validează fiecare pas important.',
+    priceFrom: 990,
+    priceLabel: 'de la 990 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '2-4 săptămâni, după proces',
+    intro:
+      'În aproape orice firmă există ore pierdute săptămânal pe aceleași lucruri: copiat date dintr-un document în altul, răspuns la e-mailuri asemănătoare, făcut aceeași ofertă cu alte cifre. Inteligența artificială face astăzi aceste lucruri bine și repede. Noi alegem procesul care îți mănâncă cel mai mult timp, îl automatizăm și lăsăm omul acolo unde e nevoie de judecată.',
+    includes: [
+      'analiza procesului și calculul timpului economisit, înainte de start',
+      'automatizarea unui proces complet, cap-coadă',
+      'extragere de date din documente, facturi, PDF-uri și e-mailuri',
+      'generare de oferte, rapoarte și răspunsuri pe baza șabloanelor tale',
+      'legătură cu instrumentele pe care le folosești deja: e-mail, Google Workspace, Excel, CRM',
+      'pas de validare umană pentru deciziile importante',
+      'documentație și instruirea echipei',
+    ],
+    notIncluded: [
+      'costurile lunare ale modelelor AI și ale serviciilor terțe, estimate în ofertă',
+      'automatizarea mai multor procese odată (fiecare se ofertează separat)',
+      'decizii luate de AI fără control uman în zone sensibile',
+    ],
+    process: [
+      { step: 'Alegem procesul', description: 'Ne arăți cum lucrați azi. Alegem procesul cu cel mai mult timp pierdut și calculăm câte ore pe lună poate economisi.' },
+      { step: 'Construim o primă versiune', description: 'În prima săptămână vezi automatizarea lucrând pe exemple reale din firma ta.' },
+      { step: 'Testăm pe date reale', description: 'O rulăm în paralel cu felul vostru de lucru și corectăm până rezultatele sunt sigure.' },
+      { step: 'Predăm și instruim', description: 'Echipa primește documentația, știe cum validează rezultatele și ce face când ceva nu e în regulă.' },
+    ],
+    forWho: [
+      'firme de contabilitate și birouri care lucrează mult cu documente',
+      'firme de distribuție și producție care fac multe oferte',
+      'cabinete și clinici cu multă administrație',
+      'echipe de vânzări și suport care răspund la e-mailuri similare',
+    ],
+    faq: [
+      {
+        question: 'Ce procese se pot automatiza cu AI?',
+        answer:
+          'Orice proces repetitiv bazat pe text sau documente: sortarea e-mailurilor, extragerea datelor din facturi și contracte, pregătirea ofertelor, rezumate de ședințe, rapoarte periodice, răspunsuri standard. Le alegem pe cele cu cel mai mult timp economisit.',
+      },
+      {
+        question: 'Cât costă o automatizare AI?',
+        answer:
+          'Pornește de la 990 EUR pentru un proces. Prețul final depinde de numărul de pași, de sursele de date și de integrări. Costurile lunare ale modelelor AI sunt separate și le estimăm în ofertă.',
+      },
+      {
+        question: 'Datele firmei rămân în siguranță?',
+        answer:
+          'Lucrăm doar cu furnizori AI care nu folosesc datele tale pentru antrenare, limităm accesul la ce e strict necesar și documentăm prelucrarea pentru GDPR.',
+      },
+      {
+        question: 'Înlocuiește AI-ul angajații?',
+        answer:
+          'Nu. Preia partea repetitivă, iar oamenii rămân pe ce cere judecată: validare, relația cu clienții, decizii. Scopul e ca echipa să aibă timp pentru munca care contează.',
+      },
+      {
+        question: 'Nu știu ce să automatizez. De unde încep?',
+        answer:
+          'Cu un audit AI: în 7-10 zile îți arătăm ce procese merită automatizate, cât timp economisești și în ce ordine. Costul auditului se scade din prima implementare.',
+      },
+    ],
+    relatedSlugs: ['audit-strategie-ai', 'asistent-ai', 'aplicatii-web'],
+    relatedPosts: ['automatizari-whatsapp-afacere-mica', 'conversie-site-prezentare', 'cat-costa-aplicatie-web'],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau să automatizez un proces din firmă cu AI. Putem discuta?',
+    serviceType: 'Automatizări cu inteligență artificială',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'solutii-ai-personalizate',
+    group: 'ai',
+    name: 'Soluții AI personalizate',
+    shortName: 'Soluții AI',
+    h1: 'Dezvoltare soluții AI personalizate',
+    seoTitle: 'Dezvoltare soluții AI personalizate',
+    metaDescription:
+      'Dezvoltăm soluții AI pe datele tale: recunoaștere de imagini, analiză de date, recomandări personalizate și AI integrat în aplicații. Ofertă în 24 de ore.',
+    answerCapsule:
+      'MAST Studio dezvoltă soluții de inteligență artificială pe măsură: recunoaștere de imagini, analiză de date complexe, recomandări personalizate și AI integrat în aplicații existente. Am construit sisteme pentru supraveghere cu drone, nutriție personalizată și cercetare medicală. Oferta vine în 24 de ore de la prima discuție.',
+    priceFrom: null,
+    priceLabel: 'ofertă în 24 de ore',
+    deliveryLabel: 'Termen',
+    deliveryTime: 'în etape, stabilite în ofertă',
+    intro:
+      'Unele probleme nu se rezolvă cu un instrument gata făcut. Ai date proprii, un proces unic sau o idee de produs în care AI-ul e miezul, nu un accesoriu. Pentru astfel de proiecte construim soluția de la zero, în etape, cu o primă versiune funcțională devreme și cu decizii de arhitectură, securitate și date luate de oameni.',
+    includes: [
+      'descoperire tehnică: ce date ai, ce trebuie să facă sistemul, ce e realist',
+      'recunoaștere de imagini și documente (computer vision)',
+      'analiză de date și modele de recomandare personalizate',
+      'integrarea modelelor AI în aplicații, platforme și fluxuri existente',
+      'panouri de control și vizualizare de date în timp real',
+      'securitate și protecția datelor gândite de la început',
+      'construcție în etape, cu acces la progres',
+      'cod, date și conturi pe numele tău, documentație completă',
+    ],
+    notIncluded: [
+      'promisiuni de acuratețe înainte de testul pe datele tale',
+      'hardware specializat (drone, senzori, servere), dacă proiectul îl cere',
+      'costurile de rulare a modelelor și a infrastructurii, estimate în ofertă',
+    ],
+    process: [
+      { step: 'Discuție de descoperire', description: 'Înțelegem problema, datele și constrângerile. Primești o ofertă cu etape și preț în 24 de ore.' },
+      { step: 'Dovada de concept', description: 'Testăm ideea pe datele tale reale, ca să știm ce acuratețe e posibilă înainte de investiția mare.' },
+      { step: 'Construcție în etape', description: 'Fiecare etapă se încheie cu ceva ce poți folosi și testa, nu cu un raport.' },
+      { step: 'Lansare și predare', description: 'Sistemul intră în folosire, iar tu primești codul, documentația și instruirea echipei.' },
+    ],
+    forWho: [
+      'firme cu date proprii pe care vor să le transforme în decizii',
+      'clinici și centre de cercetare',
+      'startup-uri care construiesc un produs bazat pe AI',
+      'proiecte cu finanțare europeană care includ o componentă de inteligență artificială',
+    ],
+    faq: [
+      {
+        question: 'Ce fel de soluții AI ați construit?',
+        answer:
+          'Un centru de comandă pentru drone care cartografiază ambrozia în jurul Timișoarei, o platformă care analizează datele de microbiom pentru nutriție personalizată, un instrument care recunoaște valorile nutritive dintr-o fotografie și o platformă securizată de management clinic și cercetare.',
+      },
+      {
+        question: 'Cât costă o soluție AI personalizată?',
+        answer:
+          'Depinde de date, de complexitate și de integrări, așa că facem o ofertă după prima discuție, în 24 de ore. Recomandăm să pornim cu o dovadă de concept, ca să știi ce funcționează înainte de investiția mare.',
+      },
+      {
+        question: 'Am nevoie de multe date?',
+        answer:
+          'Nu întotdeauna. Modelele AI actuale pot face multe cu puține exemple, iar unde e nevoie de mai multe date te ajutăm să le colectezi corect. Răspunsul cinstit vine după ce vedem datele tale.',
+      },
+      {
+        question: 'Se pot finanța astfel de proiecte din fonduri europene?',
+        answer:
+          'Da, multe programe de digitalizare și cercetare finanțează componente de inteligență artificială. Oferta și planul de etape pe care le primești de la noi pot fi folosite în documentația cererii.',
+      },
+      {
+        question: 'Cine deține soluția la final?',
+        answer:
+          'Tu. Codul, datele și conturile sunt pe numele firmei tale, iar documentația îți permite să lucrezi mai departe cu orice echipă.',
+      },
+    ],
+    relatedSlugs: ['aplicatii-web', 'platforme-saas', 'audit-strategie-ai'],
+    relatedPosts: ['automatizari-whatsapp-afacere-mica', 'conversie-site-prezentare', 'cat-costa-aplicatie-web'],
+    projectSlugs: [],
+    waMessage: 'Salut! Am o idee de proiect cu inteligență artificială. Putem discuta?',
+    serviceType: 'Dezvoltare soluții de inteligență artificială',
+    updatedAt: '2026-11-03',
   },
 ]
 

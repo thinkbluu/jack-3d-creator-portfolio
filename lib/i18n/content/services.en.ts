@@ -541,4 +541,216 @@ export const serviceTextEn: Record<string, ServiceText> = {
     waMessage: 'Hi! I’m interested in automation and WhatsApp for my business.',
     serviceType: 'WhatsApp automation',
   },
+  'asistent-ai': {
+    name: 'AI customer assistant',
+    shortName: 'AI assistant',
+    h1: 'AI assistant for your website and WhatsApp',
+    seoTitle: 'AI assistant for website and WhatsApp',
+    metaDescription:
+      'An AI assistant that answers customers on your website and WhatsApp from your business information, takes bookings and hands over to a person. From 790 EUR.',
+    answerCapsule:
+      'The MAST Studio AI assistant answers customers on your website and on WhatsApp, day and night, only from information you approve: services, prices, opening hours, policies. It takes enquiries and bookings and hands the conversation to a person when needed. It starts at 790 EUR, plus monthly running costs set out in the quote.',
+    priceLabel: 'from 790 EUR',
+    deliveryLabel: 'Timeline',
+    deliveryTime: '2-3 weeks',
+    intro:
+      'Your customers ask the same questions at all hours, and anyone who waits more than a few minutes moves on to the next business. A well-built AI assistant answers at once, correctly and in your tone, because it only knows what you taught it. It does not invent prices, does not promise things you do not do and leaves the important decisions to you.',
+    includes: [
+      'analysis of the questions you get most often',
+      'a knowledge base built from your business information: services, prices, hours, policies, FAQ',
+      'an assistant on your website and, on request, on WhatsApp Business',
+      'collecting quote requests and bookings',
+      'handover to a person, with the full conversation history',
+      'a clear notice that the person is talking to an AI assistant',
+      'testing on real questions before launch',
+      'a monthly report of the questions received and the answers given',
+    ],
+    notIncluded: [
+      'the monthly costs of the AI model and WhatsApp Business, paid separately and shown upfront',
+      'medical, legal or financial advice given by AI in place of a specialist',
+      'complex ERP or CRM integrations (separate quote)',
+    ],
+    process: [
+      { step: 'We collect what the assistant must know', description: 'Your frequent questions, prices, hours and rules. Anything not written down here, the assistant will not say.' },
+      { step: 'We build and train the knowledge base', description: 'The assistant answers only from approved sources and says "I don\'t know, let me connect you with a colleague" when it has no answer.' },
+      { step: 'We test it with your real questions', description: 'We put dozens of questions to it, including the hard ones, and correct it until it answers the way you would.' },
+      { step: 'We launch and monitor', description: 'It goes live on your site and WhatsApp, and in the first month we review conversations and adjust the answers.' },
+    ],
+    forWho: [
+      'medical, dental and veterinary practices with many repetitive questions',
+      'salons and clinics that take bookings',
+      'online stores with questions about products, delivery and returns',
+      'service businesses that get quote requests after hours',
+    ],
+    faq: [
+      {
+        question: 'What is an AI customer assistant?',
+        answer:
+          "A program that understands the questions customers type and answers in natural language, from your business information. Unlike a button-based chatbot, it also understands questions phrased in everyone's own way.",
+      },
+      {
+        question: 'Can it make up answers or prices?',
+        answer:
+          'We build it to answer only from information you approve. When it does not know, it says so and passes the conversation to a person. We test exactly this before launch.',
+      },
+      {
+        question: 'How much does an AI assistant cost?',
+        answer:
+          'The build starts at 790 EUR. Separately, you pay the monthly cost of the AI model and, if you use it, WhatsApp Business. Both depend on the number of conversations and are estimated in the quote.',
+      },
+      {
+        question: 'Does it comply with GDPR and European AI rules?',
+        answer:
+          'Yes. Customers are told from the start that they are talking to an AI assistant, as European rules require, data is processed only for the conversation, and your privacy policy is updated accordingly.',
+      },
+      {
+        question: 'How is it different from WhatsApp automation?',
+        answer:
+          'WhatsApp automation sends fixed, pre-written messages. The AI assistant holds a conversation: it understands the question and writes the answer from your information. Many businesses start with automation and move to the assistant later.',
+      },
+    ],
+    waMessage: 'Hi! I am interested in an AI customer assistant for my website and WhatsApp.',
+    serviceType: 'AI customer assistant',
+  },
+  'automatizari-ai': {
+    name: 'AI process automation',
+    shortName: 'AI automation',
+    h1: 'AI automation for your business processes',
+    seoTitle: 'AI automation for businesses, from 990 EUR',
+    metaDescription:
+      'AI automation for documents, quotes, emails and reports: it takes over repetitive work for your team while a person approves what matters. From 990 EUR.',
+    answerCapsule:
+      'MAST Studio AI automation takes over repetitive work in your business: it reads and sorts emails, extracts data from invoices and documents, and prepares quotes and reports. It starts at 990 EUR per process, and a person on your team approves every important step.',
+    priceLabel: 'from 990 EUR',
+    deliveryLabel: 'Timeline',
+    deliveryTime: '2-4 weeks, depending on the process',
+    intro:
+      'Almost every business loses hours every week on the same things: copying data from one document to another, answering similar emails, making the same quote with different numbers. AI now does these things well and fast. We pick the process that eats most of your time, automate it, and keep people where judgement is needed.',
+    includes: [
+      'process analysis and an estimate of time saved, before we start',
+      'automation of one complete process, end to end',
+      'data extraction from documents, invoices, PDFs and emails',
+      'quotes, reports and replies generated from your templates',
+      'connection to the tools you already use: email, Google Workspace, Excel, CRM',
+      'a human approval step for important decisions',
+      'documentation and team training',
+    ],
+    notIncluded: [
+      'the monthly costs of AI models and third-party services, estimated in the quote',
+      'automating several processes at once (each one is quoted separately)',
+      'decisions taken by AI without human control in sensitive areas',
+    ],
+    process: [
+      { step: 'We choose the process', description: 'You show us how you work today. We pick the process that wastes the most time and estimate how many hours a month it can save.' },
+      { step: 'We build a first version', description: 'In the first week you see the automation working on real examples from your business.' },
+      { step: 'We test on real data', description: 'We run it alongside your current way of working and correct it until the results are reliable.' },
+      { step: 'We hand over and train', description: 'Your team gets the documentation, knows how to check the results and what to do when something is off.' },
+    ],
+    forWho: [
+      'accounting firms and offices that handle many documents',
+      'distribution and manufacturing companies that send many quotes',
+      'practices and clinics with heavy admin',
+      'sales and support teams answering similar emails',
+    ],
+    faq: [
+      {
+        question: 'Which processes can be automated with AI?',
+        answer:
+          'Any repetitive process based on text or documents: sorting emails, extracting data from invoices and contracts, preparing quotes, meeting summaries, periodic reports, standard replies. We start with the ones that save the most time.',
+      },
+      {
+        question: 'How much does AI automation cost?',
+        answer:
+          'It starts at 990 EUR per process. The final price depends on the number of steps, data sources and integrations. Monthly AI model costs are separate and estimated in the quote.',
+      },
+      {
+        question: 'Is my company data safe?',
+        answer:
+          'We only work with AI providers that do not use your data for training, limit access to what is strictly needed and document the processing for GDPR.',
+      },
+      {
+        question: 'Does AI replace employees?',
+        answer:
+          'No. It takes over the repetitive part, and people stay on what needs judgement: approval, customer relationships, decisions. The goal is to give your team time for the work that matters.',
+      },
+      {
+        question: 'I do not know what to automate. Where do I start?',
+        answer:
+          'With an AI audit: in 7-10 days we show you which processes are worth automating, how much time you save and in what order. The audit fee is deducted from the first implementation.',
+      },
+    ],
+    waMessage: 'Hi! I want to automate a process in my business with AI. Can we talk?',
+    serviceType: 'AI process automation',
+  },
+  'solutii-ai-personalizate': {
+    name: 'Custom AI solutions',
+    shortName: 'Custom AI',
+    h1: 'Custom AI solution development',
+    seoTitle: 'Custom AI solution development',
+    metaDescription:
+      'We build AI solutions on your data: image recognition, data analysis, personalised recommendations and AI built into your apps. Quote within 24 hours.',
+    answerCapsule:
+      'MAST Studio builds custom artificial intelligence solutions: image recognition, analysis of complex data, personalised recommendations and AI built into existing applications. We have built systems for drone surveillance, personalised nutrition and medical research. The quote arrives within 24 hours of the first conversation.',
+    priceLabel: 'quote within 24 hours',
+    deliveryLabel: 'Timeline',
+    deliveryTime: 'in stages, set out in the quote',
+    intro:
+      'Some problems cannot be solved with an off-the-shelf tool. You have your own data, a unique process or a product idea where AI is the core, not an add-on. For these projects we build the solution from scratch, in stages, with a working first version early and with architecture, security and data decisions made by people.',
+    includes: [
+      'technical discovery: what data you have, what the system must do, what is realistic',
+      'image and document recognition (computer vision)',
+      'data analysis and personalised recommendation models',
+      'AI models integrated into existing apps, platforms and workflows',
+      'dashboards and real-time data visualisation',
+      'security and data protection designed in from the start',
+      'build in stages, with access to progress',
+      'code, data and accounts in your name, full documentation',
+    ],
+    notIncluded: [
+      'accuracy promises before testing on your data',
+      'specialised hardware (drones, sensors, servers), if the project needs it',
+      'model and infrastructure running costs, estimated in the quote',
+    ],
+    process: [
+      { step: 'Discovery conversation', description: 'We understand the problem, the data and the constraints. You get a quote with stages and a price within 24 hours.' },
+      { step: 'Proof of concept', description: 'We test the idea on your real data, so we know what accuracy is possible before the big investment.' },
+      { step: 'Build in stages', description: 'Every stage ends with something you can use and test, not with a report.' },
+      { step: 'Launch and handover', description: 'The system goes into use, and you receive the code, the documentation and team training.' },
+    ],
+    forWho: [
+      'companies with their own data that they want to turn into decisions',
+      'clinics and research centres',
+      'startups building an AI-based product',
+      'EU-funded projects that include an artificial intelligence component',
+    ],
+    faq: [
+      {
+        question: 'What kind of AI solutions have you built?',
+        answer:
+          'A drone command centre that maps ragweed around Timișoara, a platform that analyses microbiome data for personalised nutrition, a tool that recognises nutritional values from a photo and a secure clinical management and research platform.',
+      },
+      {
+        question: 'How much does a custom AI solution cost?',
+        answer:
+          'It depends on the data, the complexity and the integrations, so we quote after the first conversation, within 24 hours. We recommend starting with a proof of concept, so you know what works before the big investment.',
+      },
+      {
+        question: 'Do I need a lot of data?',
+        answer:
+          'Not always. Current AI models can do a lot with few examples, and where more data is needed we help you collect it properly. The honest answer comes after we see your data.',
+      },
+      {
+        question: 'Can these projects be funded with EU money?',
+        answer:
+          'Yes, many digitalisation and research programmes fund artificial intelligence components. The quote and stage plan you get from us can be used in the application documents.',
+      },
+      {
+        question: 'Who owns the solution at the end?',
+        answer:
+          "You do. The code, data and accounts are in your company's name, and the documentation lets you continue with any team.",
+      },
+    ],
+    waMessage: 'Hi! I have an idea for an artificial intelligence project. Can we talk?',
+    serviceType: 'Custom AI development',
+  },
 }
