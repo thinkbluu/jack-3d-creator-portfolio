@@ -43,6 +43,9 @@ export type ServicePage = {
   updatedAt: string
 }
 
+/** refacere-site costs exactly what site-de-prezentare costs; one source so the two never drift. */
+const PRESENTATION_WEBSITE_PRICE_FROM = 300
+
 export const servicePages: ServicePage[] = [
   {
     slug: 'site-de-prezentare',
@@ -55,7 +58,7 @@ export const servicePages: ServicePage[] = [
       'Creare site de prezentare pentru firme din Timișoara și din toată țara: design unic, texte incluse, gândit pentru telefon. De la 300 EUR, live în 48 de ore.',
     answerCapsule:
       'Un site de prezentare la MAST Studio costă de la 300 EUR și este livrat live în 48 de ore de la primirea materialelor. Include design unic, texte scrise de noi, versiune pentru mobil și optimizare de viteză. Plătești un avans de 50 EUR, restul doar dacă ești mulțumit de rezultat.',
-    priceFrom: 300,
+    priceFrom: PRESENTATION_WEBSITE_PRICE_FROM,
     priceLabel: 'de la 300 EUR',
     deliveryLabel: 'Termen de livrare',
     deliveryTime: '48 de ore după materiale',
@@ -496,6 +499,149 @@ export const servicePages: ServicePage[] = [
     updatedAt: '2026-11-03',
   },
   {
+    slug: 'site-proiect-finantat',
+    group: 'web',
+    name: 'Site pentru proiect cu finanțare europeană',
+    shortName: 'Site proiect finanțat',
+    h1: 'Site pentru proiecte cu finanțare europeană',
+    seoTitle: 'Site pentru proiect cu finanțare europeană',
+    metaDescription:
+      'Site pentru proiecte finanțate prin PoCIDIF, PR și PNRR, cu elementele obligatorii de vizibilitate, rezultate și noutăți. De la 690 EUR, în 7-10 zile.',
+    answerCapsule:
+      'Construim site-uri pentru proiecte cu finanțare europeană care respectă regulile de vizibilitate ale finanțatorului: siglele și mențiunile obligatorii, codul SMIS, valoarea finanțării, pagini pentru obiective, rezultate, echipă, parteneri și noutăți. Pornesc de la 690 EUR și sunt gata în 7-10 zile după materiale.',
+    priceFrom: 690,
+    priceLabel: 'de la 690 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '7-10 zile după materiale',
+    intro:
+      'Un proiect cu finanțare europeană trebuie să aibă o prezență online care respectă reguli stricte de vizibilitate și care rămâne actualizată pe toată durata proiectului. Am construit astfel de site-uri pentru proiecte de cercetare biomedicală, unde trebuia să le vorbim în același timp cercetătorilor, partenerilor și evaluatorilor finanțatorului.',
+    includes: [
+      'elementele obligatorii de vizibilitate ale programului, plasate corect',
+      'bară permanentă cu identificatorii proiectului: cod SMIS, beneficiar, valoare',
+      'pagini pentru obiective, activități, rezultate, echipă și parteneri',
+      'secțiune de noutăți și comunicate, ușor de actualizat',
+      'variantă în română și engleză, la cerere',
+      'arhivă de documente și rapoarte publice',
+      'predare completă și instruirea echipei de proiect',
+    ],
+    notIncluded: [
+      'redactarea comunicatelor de presă obligatorii (ofertă separată)',
+      'găzduirea și domeniul, pe numele beneficiarului',
+      'verificarea juridică a conformității cu contractul de finanțare',
+    ],
+    process: [
+      { step: 'Ne trimiți contractul și manualul de identitate', description: 'Din ele extragem exact ce elemente de vizibilitate cere programul tău.' },
+      { step: 'Structurăm conținutul', description: 'Separăm ce e pentru evaluatori, ce e pentru parteneri și ce e pentru public.' },
+      { step: 'Construim și verificăm', description: 'Fiecare element obligatoriu e bifat pe o listă înainte de lansare.' },
+      { step: 'Lansăm și te instruim', description: 'Echipa de proiect poate publica singură noutățile și rezultatele.' },
+    ],
+    forWho: [
+      'beneficiari de proiecte PoCIDIF, PR și PNRR',
+      'centre de cercetare și universități',
+      'firme cu proiecte de investiții finanțate',
+      'ONG-uri și asociații cu proiecte europene',
+    ],
+    faq: [
+      {
+        question: 'Ce elemente de vizibilitate sunt obligatorii pe site-ul unui proiect finanțat?',
+        answer:
+          'De obicei: siglele programului și ale Uniunii Europene, mențiunea finanțării, titlul și codul proiectului, beneficiarul, valoarea și perioada de implementare. Lista exactă depinde de program și o luăm din manualul de identitate vizuală al finanțatorului.',
+      },
+      {
+        question: 'Pot plăti site-ul din bugetul proiectului?',
+        answer:
+          'De multe ori da, la cheltuielile de informare și publicitate. Verifică în ghidul și bugetul proiectului tău; îți dăm factura și documentele de livrare de care ai nevoie la decont.',
+      },
+      {
+        question: 'Cine actualizează site-ul pe durata proiectului?',
+        answer:
+          'Echipa ta, după instruire, sau noi, printr-un abonament de mentenanță. Site-ul trebuie să rămână actualizat și după încheierea proiectului, pe perioada de durabilitate.',
+      },
+      {
+        question: 'Faceți și versiunea în engleză?',
+        answer:
+          'Da. Pentru proiectele cu parteneri internaționali recomandăm site bilingv, cu aceeași structură în ambele limbi.',
+      },
+    ],
+    relatedSlugs: ['site-de-prezentare', 'mentenanta', 'conformitate-legala-site'],
+    relatedPosts: [],
+    projectSlugs: ['decodex', 'oncogen'],
+    waMessage: 'Salut! Am un proiect cu finanțare europeană și am nevoie de site.',
+    serviceType: 'Site pentru proiect cu finanțare europeană',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'refacere-site',
+    group: 'web',
+    name: 'Refacere site',
+    shortName: 'Refacere site',
+    h1: 'Refacere site (redesign) pentru firme',
+    seoTitle: 'Refacere site și redesign pentru firme',
+    metaDescription:
+      'Refacem site-ul vechi: design nou, viteză pe telefon, texte clare și aceleași adrese, ca să nu pierzi pozițiile din Google. La prețul unui site de prezentare.',
+    answerCapsule:
+      'Refacerea unui site la MAST Studio costă cât un site de prezentare nou. Păstrăm ce funcționează, adică adresele paginilor, pozițiile din Google și conținutul bun, și refacem ce nu: designul, viteza pe telefon, textele și butoanele de contact. Redirecționăm corect fiecare pagină veche, ca să nu pierzi vizitatori.',
+    priceFrom: PRESENTATION_WEBSITE_PRICE_FROM,
+    priceLabel: `de la ${PRESENTATION_WEBSITE_PRICE_FROM} EUR`,
+    deliveryLabel: 'Termen de livrare',
+    deliveryTime: '48 de ore după materiale',
+    intro:
+      'Un site vechi nu e doar urât. E lent pe telefon, nu mai spune ce faci acum și îi trimite pe clienți la concurență. Dar un redesign făcut prost te poate costa și pozițiile din Google câștigate în ani. De aceea pornim de la ce merge deja și refacem restul.',
+    includes: [
+      'analiza site-ului vechi: ce pagini aduc vizitatori, ce merge, ce nu',
+      'design nou, unic',
+      'texte rescrise clar',
+      'viteză bună pe telefon',
+      'redirecționarea fiecărei pagini vechi către cea nouă',
+      'păstrarea datelor din Google Search Console și Analytics',
+      'mutarea pe un domeniu și o găzduire pe numele tău, dacă nu sunt deja',
+    ],
+    notIncluded: [
+      'funcții noi complexe (magazin, conturi, programări), ofertate separat',
+      'migrarea a sute de produse sau articole fără ofertă separată',
+    ],
+    process: [
+      { step: 'Analizăm site-ul vechi', description: 'Vedem ce pagini contează pentru Google și pentru clienți.' },
+      { step: 'Propunem structura nouă', description: 'Ce păstrăm, ce comasăm, ce scriem din nou.' },
+      { step: 'Construim și redirecționăm', description: 'Site nou, cu fiecare adresă veche trimisă unde trebuie.' },
+      { step: 'Lansăm și urmărim', description: 'Verificăm în primele săptămâni că pozițiile din Google se păstrează.' },
+    ],
+    forWho: [
+      'firme cu site mai vechi de 4-5 ani',
+      'site-uri lente pe telefon',
+      'firme care și-au schimbat serviciile sau identitatea',
+      'site-uri făcute pe teme care se strică la actualizări',
+    ],
+    faq: [
+      {
+        question: 'Pierd pozițiile din Google dacă refac site-ul?',
+        answer:
+          'Nu, dacă redesignul e făcut corect. Păstrăm adresele importante și redirecționăm fiecare pagină veche, apoi urmărim în Search Console primele săptămâni după lansare.',
+      },
+      {
+        question: 'Cât costă refacerea unui site?',
+        answer:
+          'Cât un site de prezentare nou, la același preț de pornire. Dacă site-ul vechi are multe pagini sau funcții speciale, prețul se stabilește în ofertă.',
+      },
+      {
+        question: 'Puteți prelua un site făcut de altcineva?',
+        answer:
+          'Da. Avem nevoie de acces la domeniu sau de ajutorul vechiului furnizor. Dacă domeniul nu e pe numele tău, te ajutăm să-l transferi.',
+      },
+      {
+        question: 'Pot păstra textele vechi?',
+        answer:
+          'Da, pe cele bune le păstrăm. De obicei rescriem doar ce nu mai e actual sau nu e clar pe telefon.',
+      },
+    ],
+    relatedSlugs: ['site-de-prezentare', 'mentenanta', 'conformitate-legala-site'],
+    relatedPosts: ['de-ce-sunt-lente-temele-wordpress', 'ce-inseamna-pagespeed'],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau să refac site-ul firmei.',
+    serviceType: 'Refacere site (redesign)',
+    updatedAt: '2026-11-03',
+  },
+  {
     slug: 'mentenanta',
     group: 'crestere',
     name: 'Mentenanță și creștere',
@@ -718,6 +864,151 @@ export const servicePages: ServicePage[] = [
     projectSlugs: [],
     waMessage: 'Salut! Vreau campanii Google sau Meta pentru afacerea mea.',
     serviceType: 'Administrare campanii Google Ads și Meta Ads',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'audit-securitate-gdpr',
+    group: 'crestere',
+    name: 'Audit de securitate și GDPR',
+    shortName: 'Audit securitate',
+    h1: 'Audit de securitate și GDPR pentru site și aplicații',
+    seoTitle: 'Audit securitate și GDPR site, de la 290 EUR',
+    metaDescription:
+      'Audit de securitate și GDPR pentru site, magazin sau aplicație: vulnerabilități, cookie-uri înainte de acord, date expuse. Raport clar, de la 290 EUR.',
+    answerCapsule:
+      'Auditul de securitate și GDPR de la MAST Studio verifică site-ul, magazinul sau aplicația ta pentru vulnerabilități cunoscute, date expuse, setări de securitate lipsă și urmărire pornită înainte de acordul vizitatorului. Primești în 5 zile lucrătoare un raport cu fiecare problemă, gravitatea ei și cum se repară. Pornește de la 290 EUR.',
+    priceFrom: 290,
+    priceLabel: 'de la 290 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '5 zile lucrătoare',
+    intro:
+      'Majoritatea site-urilor de firmă nu sunt verificate niciodată după lansare. Într-un studiu pe un eșantion aleator de site-uri de firme din România, peste o treime porneau urmărirea vizitatorilor înainte de acord. Auditul îți spune exact unde ești expus, înainte să o afle altcineva.',
+    includes: [
+      'scanare de vulnerabilități cunoscute și versiuni învechite',
+      'verificarea setărilor de securitate: HTTPS, antete, formulare, acces la administrare',
+      'date expuse public: fișiere, chei, liste de utilizatori',
+      'cookie-uri și scripturi pornite înainte de acord',
+      'politica de confidențialitate comparată cu ce face site-ul în realitate',
+      'pentru aplicații mobile: analiza pachetului publicat',
+      'raport cu gravitatea fiecărei probleme și pașii de remediere',
+      'discuție de 30 de minute pe raport',
+    ],
+    notIncluded: [
+      'repararea problemelor găsite (ofertă separată, după raport)',
+      'test de penetrare complex pe infrastructură mare',
+      'consultanță juridică',
+    ],
+    process: [
+      { step: 'Ne dai adresa și accesele permise', description: 'Stabilim în scris ce verificăm și ce nu, ca auditul să fie legal și sigur.' },
+      { step: 'Verificăm', description: 'Testăm din exterior, ca un vizitator rău intenționat, fără să afectăm site-ul.' },
+      { step: 'Raportul', description: 'Fiecare problemă cu gravitatea ei, dovada și cum se repară, pe înțelesul tău.' },
+      { step: 'Discuția', description: 'Îți explicăm ce e urgent și ce poate aștepta. Dacă vrei, reparăm noi.' },
+    ],
+    forWho: [
+      'magazine online care primesc plăți și date de livrare',
+      'clinici și cabinete care lucrează cu date de sănătate',
+      'aplicații și platforme cu conturi de utilizatori',
+      'firme care au primit un site de la alt furnizor și nu știu în ce stare e',
+    ],
+    faq: [
+      {
+        question: 'Ce verifică un audit de securitate pentru site?',
+        answer:
+          'Vulnerabilitățile cunoscute, versiunile învechite, setările de securitate lipsă, datele expuse public și felul în care site-ul tratează cookie-urile și datele personale. La aplicații mobile analizăm și pachetul publicat.',
+      },
+      {
+        question: 'Poate auditul să strice site-ul?',
+        answer:
+          'Nu. Testăm din exterior, cu limite stabilite în scris înainte, fără atacuri care să încarce serverul sau să modifice date.',
+      },
+      {
+        question: 'Cât costă un audit de securitate?',
+        answer:
+          'De la 290 EUR pentru un site de prezentare sau un magazin mic. Aplicațiile cu conturi de utilizatori și platformele mai mari se ofertează după complexitate.',
+      },
+      {
+        question: 'Ce fac după ce primesc raportul?',
+        answer:
+          'Reparați problemele urgente primele. Dacă site-ul e făcut de alt furnizor, raportul e scris ca să-l poți trimite direct lui. Dacă vrei, reparăm noi, pe baza unei oferte separate.',
+      },
+    ],
+    relatedSlugs: ['conformitate-legala-site', 'mentenanta', 'aplicatii-web'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau un audit de securitate și GDPR pentru site.',
+    serviceType: 'Audit de securitate și GDPR pentru site',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'conformitate-legala-site',
+    group: 'crestere',
+    name: 'Conformitate legală site și magazin',
+    shortName: 'Conformitate legală',
+    h1: 'Conformitate legală pentru site și magazin online',
+    seoTitle: 'Site conform legal: ANPC, GDPR, cookie-uri',
+    metaDescription:
+      'Punem site-ul sau magazinul în regulă: ANPC și SAL, date de firmă, politici, banner de cookie-uri cu refuz, accesibilitate de bază. De la 190 EUR, în 3 zile.',
+    answerCapsule:
+      'Serviciul de conformitate legală de la MAST Studio pune site-ul sau magazinul tău în regulă cu cerințele de bază din România: legăturile ANPC și SAL, datele firmei, politica de confidențialitate și cea de cookie-uri, banner cu buton de refuz și elemente de accesibilitate. Costă de la 190 EUR și durează 3 zile lucrătoare.',
+    priceFrom: 190,
+    priceLabel: 'de la 190 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '3 zile lucrătoare',
+    intro:
+      'Când am testat 50 de magazine online românești, 15 nu aveau buton de refuz pentru cookie-uri, iar 8 bifau din start consimțământul de marketing. Sunt greșeli ușor de reparat, dar care pot costa scump la un control. Le verificăm pe toate și le reparăm direct pe site.',
+    includes: [
+      'legăturile ANPC și SAL, în formatul cerut',
+      'datele firmei în subsol: denumire, CUI, număr de înregistrare',
+      'politica de confidențialitate și politica de cookie-uri, adaptate site-ului tău',
+      'banner de cookie-uri cu refuz la fel de vizibil ca acceptul',
+      'fără bife precompletate de marketing',
+      'termeni și condiții, politica de retur pentru magazine',
+      'verificare de accesibilitate de bază: contrast, texte alternative, etichete',
+    ],
+    notIncluded: [
+      'consultanță juridică sau asumarea răspunderii legale',
+      'politici pentru prelucrări speciale de date, fără avocat',
+      'refacerea site-ului (dacă tehnologia nu permite, ofertă separată)',
+    ],
+    process: [
+      { step: 'Verificăm site-ul', description: 'Trecem prin lista de cerințe și îți spunem ce lipsește.' },
+      { step: 'Pregătim textele', description: 'Politicile se adaptează la ce face site-ul tău în realitate, nu se copiază.' },
+      { step: 'Implementăm', description: 'Punem totul direct pe site, inclusiv bannerul de cookie-uri.' },
+      { step: 'Îți predăm lista', description: 'Primești lista cu tot ce s-a făcut, utilă la orice control.' },
+    ],
+    forWho: [
+      'magazine online mici și mijlocii',
+      'site-uri de firmă făcute de alții, fără elementele legale',
+      'cabinete și clinici care colectează date prin formulare',
+      'firme care folosesc reclame Google sau Meta pe site',
+    ],
+    faq: [
+      {
+        question: 'Ce trebuie să aibă legal un site de firmă în România?',
+        answer:
+          'De bază: datele de identificare ale firmei, politica de confidențialitate, informarea despre cookie-uri cu posibilitatea de refuz, iar pentru magazine termenii și condițiile, politica de retur și legăturile către ANPC și soluționarea alternativă a litigiilor.',
+      },
+      {
+        question: 'Bannerul de cookie-uri trebuie să aibă buton de refuz?',
+        answer:
+          'Da, refuzul trebuie să fie la fel de ușor ca acceptul, iar cookie-urile neesențiale nu au voie să pornească înainte de acord.',
+      },
+      {
+        question: 'Înlocuiește serviciul un avocat?',
+        answer:
+          'Nu. Punem în practică cerințele obișnuite pe site, iar pentru situații speciale sau date sensibile îți recomandăm verificarea finală a unui jurist.',
+      },
+      {
+        question: 'Cât costă?',
+        answer:
+          'De la 190 EUR pentru un site de prezentare sau un magazin mic, în 3 zile lucrătoare.',
+      },
+    ],
+    relatedSlugs: ['audit-securitate-gdpr', 'magazin-online', 'mentenanta'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau să pun site-ul în regulă cu ANPC, GDPR și cookie-urile.',
+    serviceType: 'Conformitate legală pentru site și magazin online',
     updatedAt: '2026-11-03',
   },
   {
@@ -1298,10 +1589,10 @@ export const serviceGroups: {
   },
   {
     id: 'crestere',
-    name: { ro: 'Creștere și suport', en: 'Growth and support' },
+    name: { ro: 'Creștere, siguranță și suport', en: 'Growth, safety and support' },
     line: {
-      ro: 'După lansare: mentenanță, vizibilitate și clienți noi, lună de lună.',
-      en: 'After launch: maintenance, visibility and new customers, month after month.',
+      ro: 'După lansare: siguranță, conformitate, vizibilitate și clienți noi, lună de lună.',
+      en: 'After launch: security, compliance, visibility and new customers, month after month.',
     },
   },
 ]

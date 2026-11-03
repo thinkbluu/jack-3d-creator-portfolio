@@ -428,6 +428,135 @@ export const serviceTextEn: Record<string, ServiceText> = {
     waMessage: 'Hi! I’m interested in UX/UI design for a project. Can we talk?',
     serviceType: 'UX/UI design',
   },
+  'site-proiect-finantat': {
+    name: 'Website for an EU-funded project',
+    shortName: 'EU project website',
+    h1: 'Websites for EU-funded projects',
+    seoTitle: 'Website for an EU-funded project',
+    metaDescription:
+      'Websites for EU-funded projects with every mandatory visibility element, results pages and news. Built to programme rules. From 690 EUR, in 7-10 days.',
+    answerCapsule:
+      'We build websites for EU-funded projects that follow the funder’s visibility rules: mandatory logos and statements, the project code, the funding amount, and pages for objectives, results, team, partners and news. They start at 690 EUR and are ready 7-10 days after we receive the materials.',
+    priceLabel: 'from 690 EUR',
+    deliveryLabel: 'Timeline',
+    deliveryTime: '7-10 days after materials',
+    intro:
+      'An EU-funded project needs an online presence that follows strict visibility rules and stays up to date for the whole duration of the project. We have built websites like this for biomedical research projects, where we had to speak at the same time to researchers, partners and the funder’s evaluators.',
+    includes: [
+      'the programme’s mandatory visibility elements, placed correctly',
+      'a permanent bar with the project identifiers: SMIS code, beneficiary, funding amount',
+      'pages for objectives, activities, results, team and partners',
+      'a news and press-release section that is easy to update',
+      'a Romanian and an English version, on request',
+      'an archive of public documents and reports',
+      'a full handover and training for the project team',
+    ],
+    notIncluded: [
+      'writing the mandatory press releases (a separate quote)',
+      'hosting and the domain, in the beneficiary’s name',
+      'legal verification of compliance with the funding contract',
+    ],
+    process: [
+      { step: 'You send us the contract and the identity manual', description: 'From them we extract exactly which visibility elements your programme requires.' },
+      { step: 'We structure the content', description: 'We separate what is for evaluators, what is for partners and what is for the public.' },
+      { step: 'We build and verify', description: 'Every mandatory element is ticked off a list before launch.' },
+      { step: 'We launch and train you', description: 'The project team can publish the news and results on their own.' },
+    ],
+    forWho: [
+      'beneficiaries of PoCIDIF, PR and PNRR projects',
+      'research centres and universities',
+      'companies with funded investment projects',
+      'NGOs and associations with European projects',
+    ],
+    faq: [
+      {
+        question: 'Which visibility elements are mandatory on the website of a funded project?',
+        answer:
+          'Usually: the programme and European Union logos, the funding statement, the project title and code, the beneficiary, the funding amount and the implementation period. The exact list depends on the programme, and we take it from the funder’s visual identity manual.',
+      },
+      {
+        question: 'Can I pay for the website from the project budget?',
+        answer:
+          'Often yes, under information and publicity costs. Check your project’s guide and budget; we give you the invoice and the delivery documents you need for reimbursement.',
+      },
+      {
+        question: 'Who updates the website during the project?',
+        answer:
+          'Your team, after training, or us, through a maintenance plan. The website must stay up to date after the project ends as well, during the sustainability period.',
+      },
+      {
+        question: 'Do you also make the English version?',
+        answer:
+          'Yes. For projects with international partners we recommend a bilingual website, with the same structure in both languages.',
+      },
+    ],
+    waMessage: 'Hi! I have an EU-funded project and I need a website.',
+    serviceType: 'Website for an EU-funded project',
+  },
+  'refacere-site': {
+    name: 'Website redesign',
+    shortName: 'Website redesign',
+    h1: 'Website redesign for businesses',
+    seoTitle: 'Website redesign for businesses',
+    metaDescription:
+      'We redesign your old website: new design, speed on phones, clear copy and the same page addresses, so you keep your Google rankings. Same price as a new site.',
+    answerCapsule:
+      'Redesigning a website at MAST Studio costs the same as a new presentation website. We keep what works: the page addresses, your Google rankings and the good content. We rebuild what does not: the design, the speed on phones, the copy and the contact buttons. We redirect every old page correctly, so you do not lose visitors.',
+    priceLabel: 'from 300 EUR',
+    deliveryLabel: 'Delivery time',
+    deliveryTime: '48 hours after materials',
+    intro:
+      'An old website is not just ugly. It is slow on phones, it no longer says what you do now, and it sends clients to your competitors. But a badly done redesign can also cost you Google rankings won over years. That is why we start from what already works and rebuild the rest.',
+    includes: [
+      'an analysis of the old website: which pages bring visitors, what works, what does not',
+      'a new, unique design',
+      'copy rewritten clearly',
+      'good speed on phones',
+      'a redirect from every old page to its new one',
+      'keeping the data in Google Search Console and Analytics',
+      'moving you to a domain and a hosting in your name, if you do not have them already',
+    ],
+    notIncluded: [
+      'complex new features (a store, accounts, bookings), quoted separately',
+      'migrating hundreds of products or articles without a separate quote',
+    ],
+    process: [
+      { step: 'We analyse the old website', description: 'We see which pages matter for Google and for clients.' },
+      { step: 'We propose the new structure', description: 'What we keep, what we merge, what we write again.' },
+      { step: 'We build and redirect', description: 'A new website, with every old address sent where it should go.' },
+      { step: 'We launch and monitor', description: 'In the first weeks we check that your Google rankings are kept.' },
+    ],
+    forWho: [
+      'businesses with a website older than 4-5 years',
+      'websites that are slow on phones',
+      'businesses that have changed their services or identity',
+      'websites built on themes that break at updates',
+    ],
+    faq: [
+      {
+        question: 'Will I lose my Google rankings if I redesign my website?',
+        answer:
+          'Not if the redesign is done correctly. We keep the important addresses and redirect every old page, then we monitor Search Console in the first weeks after launch.',
+      },
+      {
+        question: 'How much does a website redesign cost?',
+        answer:
+          'The same as a new presentation website, at the same starting price. If the old website has many pages or special features, the price is set in a quote.',
+      },
+      {
+        question: 'Can you take over a website built by someone else?',
+        answer:
+          'Yes. We need access to the domain or the help of the previous provider. If the domain is not in your name, we help you transfer it.',
+      },
+      {
+        question: 'Can I keep my old texts?',
+        answer:
+          'Yes, we keep the good ones. We usually rewrite only what is no longer current or is not clear on phones.',
+      },
+    ],
+    waMessage: 'Hi! I want to redesign my business website.',
+    serviceType: 'Website redesign',
+  },
   mentenanta: {
     name: 'Maintenance and growth',
     shortName: 'Maintenance',
@@ -1123,5 +1252,136 @@ export const serviceTextEn: Record<string, ServiceText> = {
     ],
     waMessage: 'Hi! I want Google or Meta campaigns for my business.',
     serviceType: 'Google Ads and Meta Ads management',
+  },
+  'audit-securitate-gdpr': {
+    name: 'Security and GDPR audit',
+    shortName: 'Security audit',
+    h1: 'Security and GDPR audit for websites and apps',
+    seoTitle: 'Website security and GDPR audit, 290 EUR',
+    metaDescription:
+      'A security and GDPR audit for your website, store or app: vulnerabilities, cookies set before consent, exposed data. A clear report, from 290 EUR.',
+    answerCapsule:
+      'The MAST Studio security and GDPR audit checks your website, store or app for known vulnerabilities, exposed data, missing security settings and tracking that starts before the visitor’s consent. Within 5 working days you receive a report with every issue, its severity and how to fix it. It starts at 290 EUR.',
+    priceLabel: 'from 290 EUR',
+    deliveryLabel: 'Timeline',
+    deliveryTime: '5 working days',
+    intro:
+      'Most business websites are never checked after launch. In a study of a random sample of Romanian business websites, more than a third started tracking visitors before consent. The audit tells you exactly where you are exposed, before someone else finds out.',
+    includes: [
+      'a scan for known vulnerabilities and outdated versions',
+      'a check of the security settings: HTTPS, headers, forms, admin access',
+      'data exposed publicly: files, keys, user lists',
+      'cookies and scripts that start before consent',
+      'the privacy policy compared with what the website actually does',
+      'for mobile apps: an analysis of the published package',
+      'a report with the severity of every issue and the remediation steps',
+      'a 30-minute call to walk through the report',
+    ],
+    notIncluded: [
+      'fixing the issues found (a separate quote, after the report)',
+      'a complex penetration test on large infrastructure',
+      'legal advice',
+    ],
+    process: [
+      { step: 'You give us the address and the permitted access', description: 'We agree in writing what we check and what we do not, so the audit is legal and safe.' },
+      { step: 'We check', description: 'We test from the outside, like a malicious visitor, without affecting your website.' },
+      { step: 'The report', description: 'Every issue with its severity, the proof and how to fix it, in plain language.' },
+      { step: 'The call', description: 'We explain what is urgent and what can wait. If you want, we do the repairs.' },
+    ],
+    forWho: [
+      'online stores that receive payments and delivery details',
+      'clinics and practices that work with health data',
+      'apps and platforms with user accounts',
+      'companies that received a website from another provider and do not know what state it is in',
+    ],
+    faq: [
+      {
+        question: 'What does a security audit for a website check?',
+        answer:
+          'Known vulnerabilities, outdated versions, missing security settings, data exposed publicly, and how the website handles cookies and personal data. For mobile apps we also analyse the published package.',
+      },
+      {
+        question: 'Can the audit break my website?',
+        answer:
+          'No. We test from the outside, with limits agreed in writing beforehand, without attacks that would load the server or change data.',
+      },
+      {
+        question: 'How much does a security audit cost?',
+        answer:
+          'From 290 EUR for a presentation website or a small store. Apps with user accounts and larger platforms are quoted based on complexity.',
+      },
+      {
+        question: 'What do I do after I receive the report?',
+        answer:
+          'Fix the urgent issues first. If the website was built by another provider, the report is written so you can send it straight to them. If you want, we do the repairs, based on a separate quote.',
+      },
+    ],
+    waMessage: 'Hi! I want a security and GDPR audit for my website.',
+    serviceType: 'Website security and GDPR audit',
+  },
+  'conformitate-legala-site': {
+    name: 'Legal compliance for websites and stores',
+    shortName: 'Legal compliance',
+    h1: 'Legal compliance for websites and online stores',
+    seoTitle: 'Legal compliance for websites and stores',
+    metaDescription:
+      'We bring your website or store in line with Romanian rules: ANPC and SAL links, company details, policies, a cookie banner with reject, basic accessibility.',
+    answerCapsule:
+      'The MAST Studio legal compliance service brings your website or store in line with the basic requirements in Romania: the ANPC and SAL links, your company details, the privacy policy and the cookie policy, a banner with a reject button just as visible as accept, and accessibility elements. It costs from 190 EUR and takes 3 working days.',
+    priceLabel: 'from 190 EUR',
+    deliveryLabel: 'Timeline',
+    deliveryTime: '3 working days',
+    intro:
+      'When we tested 50 Romanian online stores, 15 had no reject button for cookies and 8 ticked marketing consent by default. These are easy mistakes to fix, but they can cost you dearly during an inspection. We check all of them and fix them directly on your website.',
+    includes: [
+      'the ANPC and SAL links, in the required format',
+      'your company details in the footer: name, tax ID, registration number',
+      'a privacy policy and a cookie policy, adapted to your website',
+      'a cookie banner with a reject button just as visible as the accept one',
+      'no pre-ticked marketing boxes',
+      'terms and conditions and the return policy for stores',
+      'a basic accessibility check: contrast, alternative texts, labels',
+    ],
+    notIncluded: [
+      'legal advice or taking on legal responsibility',
+      'policies for special data processing, without a lawyer',
+      'rebuilding the website (if the technology does not allow it, a separate quote)',
+    ],
+    process: [
+      { step: 'We check the website', description: 'We go through the requirements list and tell you what is missing.' },
+      { step: 'We prepare the texts', description: 'The policies are adapted to what your website actually does, not copied.' },
+      { step: 'We implement', description: 'We put everything directly on the website, including the cookie banner.' },
+      { step: 'We hand over the list', description: 'You receive the list of everything that was done, useful at any inspection.' },
+    ],
+    forWho: [
+      'small and medium online stores',
+      'business websites built by others, without the legal elements',
+      'practices and clinics that collect data through forms',
+      'companies that run Google or Meta ads on their website',
+    ],
+    faq: [
+      {
+        question: 'What does a business website in Romania need by law?',
+        answer:
+          'The basics: your company identification details, a privacy policy, information about cookies with the option to refuse them, and for stores the terms and conditions, the return policy and the links to ANPC and alternative dispute resolution.',
+      },
+      {
+        question: 'Does the cookie banner need a reject button?',
+        answer:
+          'Yes. Refusing must be just as easy as accepting, and non-essential cookies are not allowed to start before consent.',
+      },
+      {
+        question: 'Does this service replace a lawyer?',
+        answer:
+          'No. We put the usual website requirements into practice, and for special situations or sensitive data we recommend a final check by a lawyer.',
+      },
+      {
+        question: 'How much does it cost?',
+        answer:
+          'From 190 EUR for a presentation website or a small store, done in 3 working days.',
+      },
+    ],
+    waMessage: 'Hi! I want my website brought in line with ANPC, GDPR and the cookie rules.',
+    serviceType: 'Website and online store legal compliance',
   },
 }
