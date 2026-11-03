@@ -17,11 +17,14 @@ export const fraunces = Fraunces({
   variable: '--font-fraunces',
 })
 
-// Small uppercase labels, counters and coordinates.
+// Small uppercase labels, counters and coordinates. Not preloaded: only
+// DM Sans (body) and Fraunces (display headlines) are preloaded as the
+// above-the-fold faces; the mono labels swap in without delaying LCP.
 export const dmMono = DM_Mono({
   subsets: ['latin', 'latin-ext'],
   weight: ['400', '500'],
   display: 'swap',
+  preload: false,
   variable: '--font-dm-mono',
 })
 

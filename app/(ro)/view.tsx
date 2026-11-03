@@ -69,3 +69,5 @@ export function HomeView({ locale }: { locale: Locale }) {
     </>
   )
 }
+
+// Performance pass: prerender regenerated after the mobile LCP CSS fixes.
