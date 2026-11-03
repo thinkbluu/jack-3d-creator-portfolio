@@ -3,8 +3,12 @@ import type { Locale } from './i18n/locale'
 import { canonicalServiceSlug } from './i18n/paths'
 import { serviceTextEn } from './i18n/content/services.en'
 
+export type ServiceGroup = 'web' | 'software' | 'ai' | 'crestere'
+
 export type ServicePage = {
   slug: string
+  /** Family the service belongs to; groups /servicii, the homepage deck and the footer. */
+  group: ServiceGroup
   /** Name used in navigation, cards and structured data. */
   name: string
   shortName: string
@@ -42,6 +46,7 @@ export type ServicePage = {
 export const servicePages: ServicePage[] = [
   {
     slug: 'site-de-prezentare',
+    group: 'web',
     name: 'Site de prezentare',
     shortName: 'Site de prezentare',
     h1: 'Creare site de prezentare',
@@ -127,6 +132,7 @@ export const servicePages: ServicePage[] = [
   },
   {
     slug: 'magazin-online',
+    group: 'web',
     name: 'Magazin online',
     shortName: 'Magazin online',
     h1: 'Creare magazin online',
@@ -211,6 +217,7 @@ export const servicePages: ServicePage[] = [
   },
   {
     slug: 'aplicatii-web',
+    group: 'software',
     name: 'Aplicații web și mobile',
     shortName: 'Aplicații web și mobile',
     h1: 'Dezvoltare aplicații web și mobile',
@@ -289,6 +296,7 @@ export const servicePages: ServicePage[] = [
   },
   {
     slug: 'platforme-saas',
+    group: 'software',
     name: 'Platforme SaaS',
     shortName: 'Platforme SaaS',
     h1: 'Platforme SaaS custom',
@@ -366,6 +374,7 @@ export const servicePages: ServicePage[] = [
   },
   {
     slug: 'design-ux-ui',
+    group: 'web',
     name: 'Design UX/UI',
     shortName: 'Design UX/UI',
     h1: 'Design UX/UI pentru aplicații și platforme',
@@ -453,6 +462,7 @@ export const servicePages: ServicePage[] = [
   },
   {
     slug: 'mentenanta',
+    group: 'crestere',
     name: 'Mentenanță și creștere',
     shortName: 'Mentenanță',
     h1: 'Mentenanță site web',
@@ -537,6 +547,7 @@ export const servicePages: ServicePage[] = [
   },
   {
     slug: 'automatizari-whatsapp',
+    group: 'ai',
     name: 'Automatizări WhatsApp',
     shortName: 'Automatizări WhatsApp',
     h1: 'Automatizări WhatsApp pentru afaceri mici',
@@ -613,6 +624,55 @@ export const servicePages: ServicePage[] = [
     updatedAt: '2026-10-02',
   },
 ]
+
+/** The four service families, in the order they appear on /servicii. */
+export const serviceGroups: {
+  id: ServiceGroup
+  name: Record<Locale, string>
+  line: Record<Locale, string>
+}[] = [
+  {
+    id: 'web',
+    name: { ro: 'Site-uri și magazine online', en: 'Websites and online stores' },
+    line: {
+      ro: 'Prezența ta online: un site care convinge și un magazin care vinde.',
+      en: 'Your online presence: a site that convinces and a store that sells.',
+    },
+  },
+  {
+    id: 'software',
+    name: { ro: 'Aplicații și software', en: 'Apps and software' },
+    line: {
+      ro: 'Instrumente construite pe măsura afacerii tale, de la portaluri la platforme SaaS.',
+      en: 'Tools built around your business, from client portals to SaaS platforms.',
+    },
+  },
+  {
+    id: 'ai',
+    name: { ro: 'Inteligență artificială și automatizări', en: 'AI and automation' },
+    line: {
+      ro: 'AI care lucrează pentru tine: răspunde clienților, preia munca repetitivă și te face vizibil în ChatGPT.',
+      en: 'AI that works for you: it answers customers, takes over repetitive work and makes you visible in ChatGPT.',
+    },
+  },
+  {
+    id: 'crestere',
+    name: { ro: 'Creștere și suport', en: 'Growth and support' },
+    line: {
+      ro: 'După lansare: mentenanță, vizibilitate și clienți noi, lună de lună.',
+      en: 'After launch: maintenance, visibility and new customers, month after month.',
+    },
+  },
+]
+
+/** Groups in display order, each with its localized services (offer copy included). */
+export function getServicesByGroup(locale: Locale = 'ro') {
+  const services = getAllServicePages(locale)
+  return serviceGroups.map((group) => ({
+    ...group,
+    services: services.filter((service) => service.group === group.id),
+  }))
+}
 
 function localizeService(service: ServicePage, locale: Locale): ServicePage {
   if (locale === 'ro') return service

@@ -6,7 +6,7 @@ import NewsletterForm from '@/components/NewsletterForm'
 import TrackedLink from '@/components/TrackedLink'
 import { openConsentSettings } from '@/lib/consent'
 import { useHref, useLocale, useUi } from '@/lib/i18n/context'
-import { getAllServicePages } from '@/lib/services'
+import { getServicesByGroup } from '@/lib/services'
 import {
   EMAIL,
   EMAIL_HREF,
@@ -58,7 +58,7 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
   const locale = useLocale()
   const href = useHref()
   const { footer, whatsapp, consent, redesign } = useUi()
-  const serviceLinks = getAllServicePages(locale).map((service) => ({ href: href(`/servicii/${service.slug}`), label: service.name }))
+  const serviceGroups = getServicesByGroup(locale)
   // Guides stay on the Romanian URLs: the articles themselves are not translated.
   const guideLinks = footer.guideLinks.map((link) => ({ ...link, href: link.href }))
   const studioLinks = footer.studioLinks.map((link) => ({ ...link, href: href(link.href) }))
@@ -172,7 +172,28 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
               ) : null}
             </ul>
           </div>
-          <FooterColumn title={footer.services} links={serviceLinks} />
+          <nav aria-label={footer.services} className="flex flex-col gap-6">
+            {serviceGroups.map((group) => (
+              <div key={group.id} className="flex flex-col gap-1">
+                {/* Under 640px only the group name shows, linking to /servicii#<group>. */}
+                <Link
+                  href={`${href('/servicii')}#${group.id}`}
+                  className="mono-label mb-2 text-[var(--brass-lite)] transition-colors hover:text-[var(--on-dark)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass-lite)] sm:pointer-events-none"
+                >
+                  {group.name[locale]}
+                </Link>
+                <ul className="hidden flex-col sm:flex">
+                  {group.services.map((service) => (
+                    <li key={service.slug}>
+                      <Link href={href(`/servicii/${service.slug}`)} className={linkClass}>
+                        {service.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </nav>
           <FooterColumn title={footer.guides} links={guideLinks} />
           <FooterColumn title={footer.studio} links={studioLinks} />
         </div>

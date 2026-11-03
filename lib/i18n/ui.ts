@@ -122,6 +122,15 @@ const ro = {
         guarantee: 'Auditul se scade din proiectul de design',
         message: 'Salut! Mă interesează design UX/UI pentru un proiect. Putem vorbi?',
       },
+      {
+        id: 'ai',
+        name: 'AI și automatizări',
+        description: 'AI care lucrează pentru tine: răspunde clienților, preia munca repetitivă și te face vizibil în ChatGPT.',
+        price: 'de la 250 EUR',
+        guarantee: 'Tu aprobi fiecare mesaj trimis',
+        message: 'Salut! Mă interesează automatizări și WhatsApp pentru afacerea mea.',
+        groupLink: '#ai',
+      },
     ],
     continuing: [
       {
@@ -676,6 +685,15 @@ const en: typeof ro = {
         price: 'from 250 EUR',
         guarantee: 'The audit is deducted from a design project',
         message: 'Hi! I’m interested in UX/UI design for a project. Can we talk?',
+      },
+      {
+        id: 'ai',
+        name: 'AI and automation',
+        description: 'AI that works for you: it answers customers, takes over repetitive work and makes you visible in ChatGPT.',
+        price: 'from 250 EUR',
+        guarantee: 'You approve every message it sends',
+        message: 'Hi! I’m interested in automation and WhatsApp for my business.',
+        groupLink: '#ai',
       },
     ],
     continuing: [
