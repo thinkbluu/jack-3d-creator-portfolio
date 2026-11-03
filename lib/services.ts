@@ -49,10 +49,10 @@ export const servicePages: ServicePage[] = [
     group: 'web',
     name: 'Site de prezentare',
     shortName: 'Site de prezentare',
-    h1: 'Creare site de prezentare',
+    h1: 'Creare site de prezentare pentru firme',
     seoTitle: 'Creare site de prezentare, de la 300 EUR',
     metaDescription:
-      'Creare site de prezentare pentru afaceri mici: design unic, texte incluse, până la 5 pagini. De la 300 EUR, live în 48 de ore după materiale.',
+      'Creare site de prezentare pentru firme din Timișoara și din toată țara: design unic, texte incluse, gândit pentru telefon. De la 300 EUR, live în 48 de ore.',
     answerCapsule:
       'Un site de prezentare la MAST Studio costă de la 300 EUR și este livrat live în 48 de ore de la primirea materialelor. Include design unic, texte scrise de noi, versiune pentru mobil și optimizare de viteză. Plătești un avans de 50 EUR, restul doar dacă ești mulțumit de rezultat.',
     priceFrom: 300,
@@ -116,8 +116,18 @@ export const servicePages: ServicePage[] = [
         answer:
           'Da, primești optimizare SEO de bază: titluri corecte, viteză de încărcare bună și structură citibilă pentru motoarele de căutare. SEO avansat sau campanii de promovare sunt servicii separate.',
       },
+      {
+        question: 'Lucrați doar cu firme din Timișoara?',
+        answer:
+          'Nu. Suntem în Timișoara, dar lucrăm la distanță cu firme din toată România și din străinătate. Totul se poate face pe WhatsApp, e-mail și apel video.',
+      },
+      {
+        question: 'Site-ul meu va apărea și în ChatGPT sau Google AI?',
+        answer:
+          'Îl construim cu date structurate și texte clare, care ajută și la căutarea cu AI. Pentru o pregătire completă, cu profil Google și directoare, există serviciul separat de vizibilitate AI.',
+      },
     ],
-    relatedSlugs: ['magazin-online', 'mentenanta', 'automatizari-whatsapp'],
+    relatedSlugs: ['magazin-online', 'vizibilitate-ai', 'mentenanta'],
     relatedPosts: [
       'cat-costa-un-site-in-romania',
       'cat-dureaza-constructia-unui-site',
@@ -128,17 +138,17 @@ export const servicePages: ServicePage[] = [
     projectSlugs: ['veterinaria-timisoara', 'agd-innerpath-consulting', 'painea-casei'],
     waMessage: 'Salut! Vreau un site de prezentare, livrat în 48 de ore. Îmi poți face o ofertă?',
     serviceType: 'Creare site de prezentare',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'magazin-online',
     group: 'web',
     name: 'Magazin online',
     shortName: 'Magazin online',
-    h1: 'Creare magazin online',
+    h1: 'Creare magazin online personalizat',
     seoTitle: 'Creare magazin online, de la 900 EUR',
     metaDescription:
-      'Creare magazin online cu plată cu cardul, gestionare comenzi, facturare și curieri. De la 900 EUR, livrat în 7 zile după materiale. Avans 50 EUR.',
+      'Creare magazin online personalizat, fără teme: plată cu cardul și ramburs, facturare, curieri și finalizarea comenzii gândită pentru telefon. De la 900 EUR.',
     answerCapsule:
       'Un magazin online la MAST Studio costă de la 900 EUR și este livrat în 7 zile. Include catalog de produse, plată cu cardul, gestionare comenzi și integrare cu programul de facturare. Plătești un avans de 50 EUR, restul doar dacă ești mulțumit.',
     priceFrom: 900,
@@ -202,8 +212,18 @@ export const servicePages: ServicePage[] = [
         answer:
           'Da. Primești acces la un panou de administrare din care adaugi produse, urmărești comenzile și gestionezi stocul, plus un instructaj complet la predare.',
       },
+      {
+        question: 'De ce contează finalizarea comenzii pe telefon?',
+        answer:
+          'Pentru că acolo se pierd cele mai multe vânzări. Când am testat 50 de magazine online românești pe telefon, toate aveau cel puțin o problemă, iar doar 48% arătau costul transportului înainte de finalizare. Le construim pe ale noastre ca să evite exact aceste greșeli.',
+      },
+      {
+        question: 'Faceți magazine pe Shopify sau WooCommerce?',
+        answer:
+          'Construim magazine personalizate, fără teme gata făcute, ca să fie rapide și să arate ca brandul tău. Dacă ai nevoie de un sistem de administrare anume, discutăm înainte de ofertă.',
+      },
     ],
-    relatedSlugs: ['site-de-prezentare', 'automatizari-whatsapp', 'mentenanta'],
+    relatedSlugs: ['site-de-prezentare', 'asistent-ai', 'mentenanta'],
     relatedPosts: [
       'cat-costa-magazin-online',
       'ce-e-efactura-magazin-online',
@@ -213,17 +233,17 @@ export const servicePages: ServicePage[] = [
     projectSlugs: [],
     waMessage: 'Salut! Vreau un magazin online. Îmi poți face o ofertă?',
     serviceType: 'Creare magazin online',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'aplicatii-web',
     group: 'software',
     name: 'Aplicații web și mobile',
     shortName: 'Aplicații web și mobile',
-    h1: 'Dezvoltare aplicații web și mobile',
+    h1: 'Dezvoltare aplicații web și mobile la comandă',
     seoTitle: 'Dezvoltare aplicații web și mobile',
     metaDescription:
-      'Aplicații web și mobile pentru procese interne, portaluri de clienți și programări. Ofertă cu preț fix în 24 de ore, construcție în etape, predare completă.',
+      'Dezvoltare aplicații web și mobile la comandă: portaluri de clienți, programări, instrumente interne și AI integrat. Ofertă cu preț fix în 24 de ore.',
     answerCapsule:
       'Aplicațiile web și mobile se estimează individual, iar oferta cu preț fix vine în 24 de ore de la prima discuție. Construim instrumente interne care automatizează procese repetitive, portaluri pentru clienți și sisteme de programări, în etape, cu acces la progres.',
     priceFrom: null,
@@ -286,23 +306,33 @@ export const servicePages: ServicePage[] = [
         answer:
           'Da, la cerere. Poți opta pentru un abonament de mentenanță și dezvoltare continuă, discutat separat, sau poți continua cu echipa ta folosind documentația primită la predare.',
       },
+      {
+        question: 'Puteți integra inteligență artificială în aplicație?',
+        answer:
+          'Da. Am construit aplicații care recunosc valori nutritive din fotografii, analizează date de microbiom și cartografiază date de la drone în timp real. Dacă AI-ul e miezul proiectului, vezi și serviciul de soluții AI personalizate.',
+      },
+      {
+        question: 'Faceți și aplicații pentru iPhone și Android?',
+        answer:
+          'Da. În funcție de proiect, construim aplicații web care merg pe orice telefon sau aplicații mobile publicate în App Store și Google Play. Îți recomandăm varianta potrivită în ofertă.',
+      },
     ],
-    relatedSlugs: ['platforme-saas', 'automatizari-whatsapp', 'mentenanta'],
+    relatedSlugs: ['platforme-saas', 'solutii-ai-personalizate', 'design-ux-ui'],
     relatedPosts: ['cat-costa-aplicatie-web', 'automatizari-whatsapp-afacere-mica'],
     projectSlugs: [],
     waMessage: 'Salut! Am nevoie de o aplicație web sau mobilă. Putem discuta?',
     serviceType: 'Dezvoltare aplicații web',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'platforme-saas',
     group: 'software',
     name: 'Platforme SaaS',
     shortName: 'Platforme SaaS',
-    h1: 'Platforme SaaS custom',
+    h1: 'Dezvoltare platforme SaaS custom',
     seoTitle: 'Platformă SaaS custom: de la idee la lansare',
     metaDescription:
-      'Platforme SaaS custom: conturi, abonamente și plăți online, construite în etape de la prima versiune la primii clienți. Ofertă cu preț fix în 24 de ore.',
+      'Dezvoltare platformă SaaS de la idee la primii clienți: conturi, abonamente, plăți online și AI unde aduce valoare. Construită în etape, ofertă în 24 de ore.',
     answerCapsule:
       'O platformă SaaS custom se estimează individual, cu ofertă în 24 de ore de la prima discuție. Pornim de la o primă versiune clară, cu conturi, abonamente și plăți online, și o construim în etape, cu acces la progres, până la primii utilizatori care plătesc.',
     priceFrom: null,
@@ -310,7 +340,7 @@ export const servicePages: ServicePage[] = [
     deliveryLabel: 'Termen de livrare',
     deliveryTime: 'estimat în ofertă',
     intro:
-      'Ai o idee de produs digital pentru care clienții să plătească lunar? Te ajutăm să o transformi ����ntr-o platformă reală: stabilim împreună ce intră în prima versiune, o construim în etape și o lansăm fără funcții inutile care întârzie primii clienți.',
+      'Ai o idee de produs digital pentru care clienții să plătească lunar? Te ajutăm să o transformi ������ntr-o platformă reală: stabilim împreună ce intră în prima versiune, o construim în etape și o lansăm fără funcții inutile care întârzie primii clienți.',
     includes: [
       'definirea primei versiuni (MVP) și a priorităților',
       'design de interfață personalizat',
@@ -364,23 +394,28 @@ export const servicePages: ServicePage[] = [
         answer:
           'Poți continua cu un abonament de mentenanță și dezvoltare, discutat separat, sau poți merge mai departe cu echipa ta, folosind documentația primită la predare.',
       },
+      {
+        question: 'Puteți construi un SaaS cu funcții de AI?',
+        answer:
+          'Da. Integrăm modele AI acolo unde aduc valoare reală utilizatorilor, de la recomandări personalizate la analiza documentelor, și ținem costurile de rulare sub control din arhitectură.',
+      },
     ],
-    relatedSlugs: ['aplicatii-web', 'mentenanta', 'automatizari-whatsapp'],
+    relatedSlugs: ['aplicatii-web', 'solutii-ai-personalizate', 'design-ux-ui'],
     relatedPosts: ['cat-costa-aplicatie-web'],
     projectSlugs: ['asesor'],
     waMessage: 'Salut! Vreau să construim o platformă personalizată. Putem discuta?',
     serviceType: 'Dezvoltare platforme SaaS',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'design-ux-ui',
     group: 'web',
     name: 'Design UX/UI',
     shortName: 'Design UX/UI',
-    h1: 'Design UX/UI pentru aplicații și platforme',
+    h1: 'Design UX/UI pentru aplicații, platforme și site-uri',
     seoTitle: 'Design UX/UI pentru aplicații, de la 250 EUR',
     metaDescription:
-      'Design UX/UI pentru aplicații, platforme și SaaS. Audit de la 250 EUR, design de produs de la 1.200 EUR, prototip interactiv în Figma și predare către programator.',
+      'Design UX/UI pentru aplicații, SaaS și site-uri: audit de la 250 EUR, design de produs de la 1.200 EUR, prototip interactiv și predare către programator.',
     answerCapsule:
       'La MAST Studio, designul UX/UI pornește de la 250 EUR pentru auditul unui site sau al unei aplicații existente și de la 1.200 EUR pentru designul unui MVP (până la 12 ecrane cheie) în aproximativ 2 săptămâni. Primești fluxuri de utilizare, wireframe-uri, UI high-fidelity pentru desktop și mobil, prototip interactiv în Figma, un mini design system și predarea către programator.',
     priceFrom: 250,
@@ -458,17 +493,17 @@ export const servicePages: ServicePage[] = [
     projectSlugs: ['asesor', 'lumora', 'mostar', 'lithos'],
     waMessage: 'Salut! Mă interesează design UX/UI pentru un proiect. Putem vorbi?',
     serviceType: 'Design UX/UI',
-    updatedAt: '2026-10-24',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'mentenanta',
     group: 'crestere',
     name: 'Mentenanță și creștere',
     shortName: 'Mentenanță',
-    h1: 'Mentenanță site web',
+    h1: 'Mentenanță site web și magazin online',
     seoTitle: 'Mentenanță site web, de la 90 EUR pe lună',
     metaDescription:
-      'Mentenanță site de la 90 EUR pe lună, fără contract pe termen lung: actualizări, backup, monitorizare și mici modificări. Preluăm și site-uri făcute de alții.',
+      'Mentenanță site și magazin online de la 90 EUR pe lună, fără contract lung: actualizări, backup, securitate, modificări. Preluăm și site-uri făcute de alții.',
     answerCapsule:
       'Mentenanța unui site la MAST Studio pornește de la 90 EUR pe lună, fără contract pe termen lung. Include actualizări, backup-uri, monitorizare de bază și mici modificări de conținut. Hostingul și domeniul rămân separate, pe numele firmei tale.',
     priceFrom: 90,
@@ -537,23 +572,28 @@ export const servicePages: ServicePage[] = [
         answer:
           'Nu obligatoriu din prima zi, dar e utilă dacă nu vrei să te ocupi tu de actualizări și backup. Poți începe oricând simți că nu mai ai timp pentru partea tehnică.',
       },
+      {
+        question: 'Preluați un site făcut de altcineva?',
+        answer:
+          'Da. Facem întâi o verificare a site-ului, îți spunem cinstit în ce stare e și abia apoi propunem un abonament. Dacă domeniul nu e pe numele tău, te ajutăm să-l transferi.',
+      },
     ],
-    relatedSlugs: ['site-de-prezentare', 'magazin-online', 'automatizari-whatsapp'],
+    relatedSlugs: ['vizibilitate-ai', 'site-de-prezentare', 'magazin-online'],
     relatedPosts: ['cat-costa-mentenanta-site', 'de-ce-sunt-lente-temele-wordpress', 'ce-inseamna-pagespeed'],
     projectSlugs: ['decodex'],
     waMessage: 'Salut! Mă interesează mentenanță și creștere pentru site-ul meu.',
     serviceType: 'Mentenanță site web',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'automatizari-whatsapp',
     group: 'ai',
     name: 'Automatizări WhatsApp',
     shortName: 'Automatizări WhatsApp',
-    h1: 'Automatizări WhatsApp pentru afaceri mici',
+    h1: 'Automatizări WhatsApp Business pentru afaceri mici',
     seoTitle: 'Automatizări WhatsApp pentru afaceri mici',
     metaDescription:
-      'Automatizări WhatsApp de la 250 EUR: răspunsuri după program, confirmări de programare și informații despre servicii. Tu aprobi fiecare mesaj trimis.',
+      'Automatizări WhatsApp Business de la 250 EUR: răspunsuri după program, confirmări și remindere de programare. Tu aprobi fiecare mesaj, decizia rămâne a ta.',
     answerCapsule:
       'Automatizările WhatsApp de la MAST Studio pornesc de la 250 EUR: răspunsuri în afara programului, confirmări de programare, informații despre servicii și status de comandă. Stabilim împreună 2-4 fluxuri utile, tu aprobi fiecare text, iar deciziile rămân la tine.',
     priceFrom: 250,
@@ -615,13 +655,18 @@ export const servicePages: ServicePage[] = [
         answer:
           'Depinde de câte fluxuri vrei și de cât de clare sunt textele. Nu avem un termen standard ca la site-ul de prezentare; îl stabilim în ofertă, după ce știm exact ce automatizăm.',
       },
+      {
+        question: 'Când am nevoie de un asistent AI în loc de automatizări?',
+        answer:
+          'Când întrebările clienților sunt prea variate pentru mesaje fixe. Automatizările răspund la scenarii stabilite dinainte, asistentul AI poartă o conversație din informațiile tale.',
+      },
     ],
     relatedSlugs: ['asistent-ai', 'automatizari-ai', 'site-de-prezentare'],
     relatedPosts: ['automatizari-whatsapp-afacere-mica', 'conversie-site-prezentare'],
     projectSlugs: [],
     waMessage: 'Salut! Mă interesează automatizări și WhatsApp pentru afacerea mea.',
     serviceType: 'Automatizări WhatsApp',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'asistent-ai',

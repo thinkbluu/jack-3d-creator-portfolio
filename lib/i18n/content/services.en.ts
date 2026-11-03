@@ -26,10 +26,10 @@ export const serviceTextEn: Record<string, ServiceText> = {
   'site-de-prezentare': {
     name: 'Presentation website',
     shortName: 'Presentation website',
-    h1: 'Presentation website design',
+    h1: 'Presentation website design for businesses',
     seoTitle: 'Presentation website, from 300 EUR',
     metaDescription:
-      'A presentation website for a small business: a unique design, copy included, up to 5 pages. From 300 EUR, live in 48 hours after we have your materials.',
+      'Presentation website design for businesses in Romania and abroad: unique design, copywriting included, built for phones first. From 300 EUR, live in 48 hours.',
     answerCapsule:
       'A presentation website at MAST Studio starts at 300 EUR and goes live in 48 hours from the moment we receive your materials. It includes a unique design, copy we write, a mobile version, and speed optimisation. You pay a 50 EUR deposit, and the rest only if you are happy with the result.',
     priceLabel: 'from 300 EUR',
@@ -92,6 +92,16 @@ export const serviceTextEn: Record<string, ServiceText> = {
         answer:
           'Yes. You get basic SEO: correct titles, a fast load, and a structure search engines can read. Advanced SEO or advertising campaigns are separate services.',
       },
+      {
+        question: 'Do you only work with businesses in Timișoara?',
+        answer:
+          'No. We are based in Timișoara, but we work remotely with businesses across Romania and abroad. Everything can be done over WhatsApp, email and video calls.',
+      },
+      {
+        question: 'Will my website appear in ChatGPT or Google AI?',
+        answer:
+          'We build it with structured data and clear copy, which also helps with AI search. For full preparation, with a Google profile and directories, there is the separate AI visibility service.',
+      },
     ],
     waMessage: 'Hi! I want a presentation website, delivered in 48 hours. Can you send me a quote?',
     serviceType: 'Presentation website design',
@@ -99,10 +109,10 @@ export const serviceTextEn: Record<string, ServiceText> = {
   'magazin-online': {
     name: 'Online store',
     shortName: 'Online store',
-    h1: 'Online store design',
+    h1: 'Custom online store development',
     seoTitle: 'Online store, from 900 EUR',
     metaDescription:
-      'An online store with card payments, order management, invoicing, and couriers. From 900 EUR, delivered in 7 days after your materials. 50 EUR deposit.',
+      'Custom online store development, no themes: card and cash on delivery, invoicing, couriers and a checkout built for phones. From 900 EUR.',
     answerCapsule:
       'An online store at MAST Studio starts at 900 EUR and is delivered in 7 days. It includes a product catalogue, card payments, order management, and a connection to your invoicing software. You pay a 50 EUR deposit, and the rest only if you are happy.',
     priceLabel: 'from 900 EUR',
@@ -165,6 +175,16 @@ export const serviceTextEn: Record<string, ServiceText> = {
         answer:
           'Yes. You get access to an admin panel where you add products, follow orders, and manage stock, plus a full walkthrough at handover.',
       },
+      {
+        question: 'Why does the checkout on phones matter?',
+        answer:
+          'Because that is where most sales are lost. When we tested 50 Romanian online stores on a phone, every single one had at least one problem, and only 48% showed the delivery cost before checkout. We build ours to avoid exactly these mistakes.',
+      },
+      {
+        question: 'Do you build stores on Shopify or WooCommerce?',
+        answer:
+          'We build custom stores, without ready-made themes, so they are fast and look like your brand. If you need a specific admin system, we discuss it before the quote.',
+      },
     ],
     waMessage: 'Hi! I want an online store. Can you send me a quote?',
     serviceType: 'Online store design',
@@ -172,10 +192,10 @@ export const serviceTextEn: Record<string, ServiceText> = {
   'aplicatii-web': {
     name: 'Web and mobile apps',
     shortName: 'Web and mobile apps',
-    h1: 'Mobile app development and web apps',
+    h1: 'Custom web and mobile app development',
     seoTitle: 'Mobile app development, fixed-price quote',
     metaDescription:
-      'Web and mobile apps for internal processes, client portals, and bookings. A fixed-price quote in 24 hours, built in stages, with a full handover.',
+      'Custom web and mobile app development: client portals, booking, internal tools and built-in AI. A fixed-price quote within 24 hours.',
     answerCapsule:
       'Web and mobile apps are estimated individually, and the fixed-price quote arrives within 24 hours of the first conversation. We build internal tools that automate repetitive work, client portals, and booking systems, in stages, with access to the progress.',
     priceLabel: 'custom quote',
@@ -237,6 +257,16 @@ export const serviceTextEn: Record<string, ServiceText> = {
         answer:
           'Yes, on request. You can take a maintenance and ongoing-development subscription, discussed separately, or continue with your own team using the documentation from the handover.',
       },
+      {
+        question: 'Can you integrate artificial intelligence into the app?',
+        answer:
+          'Yes. We have built apps that recognise nutritional values from photos, analyse microbiome data and map drone data in real time. If AI is the core of the project, see also the custom AI solutions service.',
+      },
+      {
+        question: 'Do you also build apps for iPhone and Android?',
+        answer:
+          'Yes. Depending on the project, we build web apps that work on any phone or mobile apps published on the App Store and Google Play. We recommend the right option in the quote.',
+      },
     ],
     waMessage: 'Hi! I need a web or mobile app. Can we talk?',
     serviceType: 'Web application development',
@@ -244,10 +274,10 @@ export const serviceTextEn: Record<string, ServiceText> = {
   'platforme-saas': {
     name: 'SaaS platforms',
     shortName: 'SaaS platforms',
-    h1: 'Custom SaaS platforms',
+    h1: 'Custom SaaS platform development',
     seoTitle: 'Custom SaaS: from idea to launch',
     metaDescription:
-      'Custom SaaS platforms: accounts, subscriptions, and online payments, built in stages from the first version to the first customers. A fixed quote in 24 hours.',
+      'SaaS platform development from idea to first customers: accounts, subscriptions, payments and AI where it adds value. Built in stages, quote in 24 hours.',
     answerCapsule:
       'A custom SaaS platform is estimated individually, with a quote within 24 hours of the first conversation. We start from a clear first version, with accounts, subscriptions, and online payments, and build it in stages, with access to the progress, up to the first users who pay.',
     priceLabel: 'custom quote',
@@ -308,6 +338,11 @@ export const serviceTextEn: Record<string, ServiceText> = {
         answer:
           'You can continue with a maintenance and development subscription, discussed separately, or go on with your own team, using the documentation from the handover.',
       },
+      {
+        question: 'Can you build a SaaS with AI features?',
+        answer:
+          'Yes. We integrate AI models where they bring real value to users, from personalised recommendations to document analysis, and we keep running costs under control through the architecture.',
+      },
     ],
     waMessage: 'Hi! I want to build a custom platform. Can we talk?',
     serviceType: 'SaaS platform development',
@@ -315,10 +350,10 @@ export const serviceTextEn: Record<string, ServiceText> = {
   'design-ux-ui': {
     name: 'UX/UI design',
     shortName: 'UX/UI design',
-    h1: 'UX/UI design for apps and platforms',
+    h1: 'UX/UI design for apps, platforms and websites',
     seoTitle: 'UX/UI design for apps, from 250 EUR',
     metaDescription:
-      'UX/UI design for apps, platforms, and SaaS. Audit from 250 EUR, product design from 1,200 EUR, an interactive Figma prototype, and developer handoff.',
+      'UX/UI design for apps, SaaS platforms and websites: audit from 250 EUR, product design from 1,200 EUR, interactive prototype and developer handover.',
     answerCapsule:
       'At MAST Studio, UX/UI design starts at 250 EUR for an audit of an existing site or app, and at 1,200 EUR for the design of an MVP (up to 12 key screens) in about 2 weeks. You get user flows, wireframes, high-fidelity UI for desktop and mobile, an interactive Figma prototype, a mini design system, and the handoff to your developer.',
     priceLabel: 'from 250 EUR',
@@ -396,10 +431,10 @@ export const serviceTextEn: Record<string, ServiceText> = {
   mentenanta: {
     name: 'Maintenance and growth',
     shortName: 'Maintenance',
-    h1: 'Website maintenance',
+    h1: 'Website and online store maintenance',
     seoTitle: 'Website maintenance, from 90 EUR/month',
     metaDescription:
-      'Website maintenance from 90 EUR a month, with no long-term contract: updates, backups, monitoring, and small changes. We also take on sites built by others.',
+      'Website and online store maintenance from 90 EUR a month, no long contract: updates, backups, security, changes. We also take over sites built by others.',
     answerCapsule:
       'Website maintenance at MAST Studio starts at 90 EUR a month, with no long-term contract. It includes updates, backups, basic monitoring, and small content changes. Hosting and the domain stay separate, in your company’s name.',
     priceLabel: 'from 90 EUR/month',
@@ -466,6 +501,11 @@ export const serviceTextEn: Record<string, ServiceText> = {
         answer:
           'Not necessarily from day one, but it is useful if you don’t want to handle updates and backups yourself. You can start whenever you feel you no longer have time for the technical side.',
       },
+      {
+        question: 'Do you take over a site built by someone else?',
+        answer:
+          'Yes. We first run a check of the site, tell you honestly what state it is in, and only then propose a plan. If the domain is not in your name, we help you transfer it.',
+      },
     ],
     waMessage: 'Hi! I’m interested in maintenance and growth for my website.',
     serviceType: 'Website maintenance',
@@ -473,10 +513,10 @@ export const serviceTextEn: Record<string, ServiceText> = {
   'automatizari-whatsapp': {
     name: 'WhatsApp automation',
     shortName: 'WhatsApp automation',
-    h1: 'WhatsApp automation for small businesses',
+    h1: 'WhatsApp Business automation for small businesses',
     seoTitle: 'WhatsApp automation for small businesses',
     metaDescription:
-      'WhatsApp automation from 250 EUR: replies after hours, booking confirmations, and service information. You approve every message that is sent.',
+      'WhatsApp Business automation from 250 EUR: out-of-hours replies, booking confirmations and reminders. You approve every message, decisions stay with you.',
     answerCapsule:
       'WhatsApp automation from MAST Studio starts at 250 EUR: replies outside opening hours, booking confirmations, service information, and order status. Together we set 2–4 useful flows, you approve every text, and the decisions stay with you.',
     priceLabel: 'from 250 EUR',
@@ -536,6 +576,11 @@ export const serviceTextEn: Record<string, ServiceText> = {
         question: 'How long does the setup take?',
         answer:
           'It depends on how many flows you want and how clear the texts are. We don’t have a standard timeline the way we do for a presentation website. We set it in the quote, once we know exactly what we are automating.',
+      },
+      {
+        question: 'When do I need an AI assistant instead of automation?',
+        answer:
+          'When customer questions are too varied for fixed messages. Automation answers pre-defined scenarios, while an AI assistant holds a conversation from your information.',
       },
     ],
     waMessage: 'Hi! I’m interested in automation and WhatsApp for my business.',
