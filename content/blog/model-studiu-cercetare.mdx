@@ -1,0 +1,52 @@
+---
+slug: model-studiu-cercetare
+title: "Model de studiu (nepublicat)"
+excerpt: "Ciornă de așezare în pagină pentru un studiu MAST. Nu conține măsurători, concluzii sau cifre."
+category: studiu
+categoryLabel: Studiu
+section: cercetare
+draft: true
+readMin: 3
+publishedAt: "2026-10-27"
+author: "paul"
+answerCapsule: "Acesta este un model nepublicat. Arată unde stau metoda, tabelul, figura, sursele și fișierul CSV. Nu conține măsurători și nu se publică."
+seoTitle: "Model de studiu, nepublicat"
+seoDescription: "Ciornă de layout pentru studiile MAST. Fără date, fără concluzii și fără publicare: doar metoda, tabelul, figura și locul fișierului CSV."
+methodology: "Înlocuiește acest text cu metoda reală înainte de publicare: pe cine ai măsurat, în ce perioadă, cum ai cules datele și ce ai exclus. Ciorna nu descrie un studiu făcut."
+sources:
+  - name: "Sursele se adaugă aici, cu link, când studiul este verificat"
+    note: "Rând de exemplu. Nu este o sursă reală."
+dataset:
+  name: "Șablon de date, fără măsurători"
+  description: "CSV cu antetul coloanelor și fără rânduri de date. Se înlocuiește cu măsurătorile studiului înainte de publicare."
+  path: "/cercetare/model-studiu-cercetare/date.csv"
+---
+
+Modelul ăsta stă în repo ca să se vadă așezarea unui studiu. Nu este un studiu. Nu are cifre, eșantion sau concluzie, și rămâne `draft: true` până când un material real îi ia locul.
+
+## Cum se citește un studiu publicat
+
+Un studiu publicat răspunde la o întrebare cu datele noastre, spune cum au fost măsurate și lasă fișierul de descărcat. Ghidurile practice rămân în [lista de idei](/blog). Studiile stau în [Cercetare](/blog/cercetare).
+
+## Tabel
+
+Antetul arată coloanele. Rândul de mai jos nu este o măsurătoare.
+
+| Indicator | Valoare | Notă |
+| --- | --- | --- |
+| Se completează | — | Fără măsurători în ciornă |
+
+<Figure caption="Loc pentru o figură. Înlocuiește textul și legenda cu materialul studiului, înainte de publicare.">
+Figura nu are date în această ciornă.
+</Figure>
+
+<BarChart
+  title="Grafic"
+  caption="Înlocuiește titlul și valorile cu datele studiului. Ciorna nu are valori."
+  emptyLabel="Fără valori."
+  data={[]}
+/>
+
+## Înainte de publicare
+
+Scoate `draft: true` doar după ce metoda, sursele și CSV-ul sunt cele reale. Până atunci pagina nu intră în listă, în sitemap și în feed.

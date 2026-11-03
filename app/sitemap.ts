@@ -69,6 +69,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // Romanian-only campaign landing page — no English alternate.
     entry('/mockup', '2026-10-09', 'weekly', 0.8, ['ro']),
     entry('/blog', latestPost, 'weekly', 0.7),
+    entry('/blog/cercetare', '2026-10-27', 'weekly', 0.6),
     ...getAllServicePages('ro').map((service) => entry(`/servicii/${service.slug}`, service.updatedAt, 'monthly', 0.9)),
     ...getJobOpenings('ro').map((job) => entry(`/cariere/${job.id}`, '2026-10-03', 'monthly', 0.5)),
     ...getAllProjects('ro')

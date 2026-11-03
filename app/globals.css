@@ -203,6 +203,13 @@
     scroll-behavior: smooth;
   }
 
+  /* Lenis is off for reduced motion, so this is the scroll that remains. Instant, so a route change does not animate the document while React swaps it. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
   html,
   body {
     background: var(--shell);

@@ -27,7 +27,8 @@ export function blogMetadata(locale: Locale) {
 export function BlogView({ locale }: { locale: Locale }) {
   const copy = ui[locale].blog
   const path = localizePath('/blog', locale)
-  const posts = getAllPosts(locale)
+  const posts = getAllPosts(locale, { section: 'ghid' })
+  const researchPath = localizePath('/blog/cercetare', locale)
   const crumbs: BreadcrumbItem[] = [
     { name: ui[locale].common.home, path: localizePath('/', locale) },
     { name: copy.crumb, path },
@@ -74,16 +75,34 @@ export function BlogView({ locale }: { locale: Locale }) {
       <SiteHeader current="blog" tone="dark" overlay />
       <main className="min-h-screen bg-[var(--shell)] text-[var(--ink)]">
         <PageOpen crumbs={crumbs} index="05" title={copy.indexTitle} word={PAGE_WORDS['/blog'][locale]} lead={copy.lead} short>
-          <p className="max-w-sm leading-relaxed text-[var(--fg-2)]">
-            {copy.indexIntro}{' '}
-            <Link href={localizePath('/servicii', locale)} className="inline min-h-0 text-[var(--fg)] underline underline-offset-4">
-              {copy.servicesLink}
-            </Link>
-            .
-          </p>
+          <div className="max-w-sm leading-relaxed text-[var(--fg-2)]">
+            <p>
+              {copy.indexIntro}{' '}
+              <Link href={localizePath('/servicii', locale)} className="inline min-h-0 text-[var(--fg)] underline underline-offset-4">
+                {copy.servicesLink}
+              </Link>
+              .
+            </p>
+            <p className="mt-4">
+              <Link href={researchPath} className="inline min-h-0 text-[var(--fg)] underline underline-offset-4">
+                {copy.researchEntryLink}
+              </Link>
+              {' · '}
+              {copy.researchEntryBody}
+            </p>
+          </div>
         </PageOpen>
         <section aria-label={copy.articles} className="tone-cream page-section">
           <div className="studio-container">
+            <div className="big-rows mb-14">
+              <Link href={researchPath} className="big-row">
+                <span className="mono-label text-[var(--fg-3)]">{copy.researchEntryKicker}</span>
+                <span className="big-row-name">{copy.researchEntryTitle.replace(/\.$/, '')}</span>
+                <span aria-hidden="true" className="big-row-arrow">
+                  →
+                </span>
+              </Link>
+            </div>
             {ideas.length > 0 ? (
               <IdeasIndex posts={ideas} allLabel={copy.all} readLabel={copy.readMin} filtersLabel={copy.filters} />
             ) : locale === 'en' ? (

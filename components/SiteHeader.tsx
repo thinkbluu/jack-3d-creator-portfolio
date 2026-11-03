@@ -7,7 +7,7 @@ import LanguageSwitcher from '@/components/LanguageSwitcher'
 import MenuOverlay, { type MenuItem } from '@/components/MenuOverlay'
 import { useHref, useUi } from '@/lib/i18n/context'
 
-export type SiteSection = 'servicii' | 'portofoliu' | 'cum-lucram' | 'blog' | 'despre' | 'cariere' | 'contact'
+export type SiteSection = 'servicii' | 'portofoliu' | 'cum-lucram' | 'blog' | 'cercetare' | 'despre' | 'cariere' | 'contact'
 
 const DARK_VARS = {
   '--ink': '#faf7f2',
@@ -49,6 +49,7 @@ export default function SiteHeader({
     { id: 'cum-lucram', href: href('/cum-lucram'), label: nav.approach },
     { id: 'despre', href: href('/despre'), label: nav.about },
     { id: 'blog', href: href('/blog'), label: nav.guide },
+    { id: 'cercetare', href: href('/blog/cercetare'), label: nav.research },
     { id: 'cariere', href: href('/cariere'), label: nav.careers },
     { id: 'contact', href: href('/contact'), label: nav.contact },
   ]

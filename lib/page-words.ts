@@ -14,6 +14,7 @@ export const PAGE_WORDS = {
   '/cum-lucram': { ro: 'Cum lucrăm.', en: 'Approach.' },
   '/despre': { ro: 'Studio.', en: 'Studio.' },
   '/blog': { ro: 'Idei.', en: 'Ideas.' },
+  '/blog/cercetare': { ro: 'Cercetare.', en: 'Research.' },
   '/contact': { ro: 'Scrie-ne.', en: 'Write.' },
   '/cariere': { ro: 'Cariere.', en: 'Careers.' },
   '/newsletter': { ro: 'Scrisori.', en: 'Letters.' },

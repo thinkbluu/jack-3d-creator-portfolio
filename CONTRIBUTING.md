@@ -20,13 +20,25 @@ Studiile de caz lungi din portofoliu urmează același model: `content/portofoli
 - `slug`: identic cu numele fișierului.
 - `title`: titlul editorial complet.
 - `excerpt`: rezumat clar și autonom.
-- `category`: una dintre `ghid`, `comparatie`, `sfat`.
-- `categoryLabel`: eticheta vizibilă, de exemplu `Ghid`.
+- `category`: una dintre `ghid`, `comparatie`, `sfat`, sau `studiu` pentru un material de cercetare.
+- `categoryLabel`: eticheta vizibilă, de exemplu `Ghid` sau `Studiu`.
 - `readMin`: număr întreg pozitiv.
 - `publishedAt`: dată ISO în format `YYYY-MM-DD`.
 - `answerCapsule`: răspuns direct în 2-4 propoziții, inteligibil fără restul articolului.
 
-Câmpurile opționale sunt `updatedAt`, `seoTitle`, `seoDescription`, `faqItems` și `howToSteps`. Adaugă `updatedAt` doar când conținutul a fost modificat semnificativ și folosește tot formatul `YYYY-MM-DD`. `updatedAt` nu poate fi mai vechi decât `publishedAt`; build-ul se oprește dacă se întâmplă.
+Câmpurile opționale sunt `updatedAt`, `seoTitle`, `seoDescription`, `faqItems`, `howToSteps`, `section`, `draft`, `methodology`, `sources` și `dataset`. Adaugă `updatedAt` doar când conținutul a fost modificat semnificativ și folosește tot formatul `YYYY-MM-DD`. `updatedAt` nu poate fi mai vechi decât `publishedAt`; build-ul se oprește dacă se întâmplă. `publishedAt` este ziua în care articolul a ajuns pe `main`. Nu copia aceeași dată de modificat pe toate articolele.
+
+## Cercetare
+
+Studiile proprii (date despre prezența online, benchmark-uri, transparența prețurilor) stau tot în `content/blog/`, cu `section: cercetare` și `category: studiu`. Apar la `/blog/cercetare` (în engleză, `/en/blog/research`), cu insigna „Cercetare”, și nu se amestecă în lista de ghiduri. Slug-urile `cercetare` și `research` sunt rezervate pentru lista aceea.
+
+- `methodology`: cum ai măsurat, pe cine și ce ai exclus. Pagina o afișează într-un bloc separat.
+- `sources`: listă de `{ name, url?, note? }`. `url`, dacă există, este http(s).
+- `dataset`: `{ name, description, path }`. `path` este un fișier din `public/`, de exemplu `/cercetare/<slug>/date.csv`. Pagina pune link de descărcare și un nod JSON-LD `Dataset` lângă `Article`.
+- În corp poți folosi tabele Markdown, `<Figure caption="...">` și `<BarChart title="..." caption="..." unit="%" data={[{ label: '...', value: 12 }]} />`. Valorile vin din studiu. Nu lăsa cifre de umplutură.
+- `draft: true` ține materialul în afara listei, a sitemap-ului, a feed-ului și a rutei de producție. Modelul `content/blog/model-studiu-cercetare.mdx` este o ciornă de așezare, fără date. Nu scoate `draft` ca să „se vadă” ceva.
+
+Nu publica un studiu fără metodă, surse și fișierul de date, și nu inventa cifre ca să umpli pagina.
 
 ## Reguli editoriale și SEO
 

@@ -60,7 +60,10 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
   const { footer, whatsapp, consent, redesign } = useUi()
   const serviceLinks = getAllServicePages(locale).map((service) => ({ href: href(`/servicii/${service.slug}`), label: service.name }))
   // Guides stay on the Romanian URLs: the articles themselves are not translated.
-  const guideLinks = footer.guideLinks.map((link) => ({ ...link, href: link.href }))
+  const guideLinks = [
+    ...footer.guideLinks.map((link) => ({ ...link, href: link.href })),
+    { href: href('/blog/cercetare'), label: footer.research },
+  ]
   const studioLinks = footer.studioLinks.map((link) => ({ ...link, href: href(link.href) }))
   const year = new Date().getFullYear()
 
