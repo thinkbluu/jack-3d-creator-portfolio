@@ -310,7 +310,7 @@ export const servicePages: ServicePage[] = [
     deliveryLabel: 'Termen de livrare',
     deliveryTime: 'estimat în ofertă',
     intro:
-      'Ai o idee de produs digital pentru care clienții să plătească lunar? Te ajutăm să o transformi ��ntr-o platformă reală: stabilim împreună ce intră în prima versiune, o construim în etape și o lansăm fără funcții inutile care întârzie primii clienți.',
+      'Ai o idee de produs digital pentru care clienții să plătească lunar? Te ajutăm să o transformi ����ntr-o platformă reală: stabilim împreună ce intră în prima versiune, o construim în etape și o lansăm fără funcții inutile care întârzie primii clienți.',
     includes: [
       'definirea primei versiuni (MVP) și a priorităților',
       'design de interfață personalizat',
@@ -616,7 +616,7 @@ export const servicePages: ServicePage[] = [
           'Depinde de câte fluxuri vrei și de cât de clare sunt textele. Nu avem un termen standard ca la site-ul de prezentare; îl stabilim în ofertă, după ce știm exact ce automatizăm.',
       },
     ],
-    relatedSlugs: ['site-de-prezentare', 'aplicatii-web', 'mentenanta'],
+    relatedSlugs: ['asistent-ai', 'automatizari-ai', 'site-de-prezentare'],
     relatedPosts: ['automatizari-whatsapp-afacere-mica', 'conversie-site-prezentare'],
     projectSlugs: [],
     waMessage: 'Salut! Mă interesează automatizări și WhatsApp pentru afacerea mea.',
@@ -717,7 +717,7 @@ export const servicePages: ServicePage[] = [
     deliveryLabel: 'Termen',
     deliveryTime: '2-4 săptămâni, după proces',
     intro:
-      'În aproape orice firmă există ore pierdute săptămânal pe aceleași lucruri: copiat date dintr-un document în altul, răspuns la e-mailuri asemănătoare, făcut aceeași ofertă cu alte cifre. Inteligența artificială face astăzi aceste lucruri bine și repede. Noi alegem procesul care îți mănâncă cel mai mult timp, îl automatizăm și lăsăm omul acolo unde e nevoie de judecată.',
+      'În aproape orice firmă există ore pierdute săptăm��nal pe aceleași lucruri: copiat date dintr-un document în altul, răspuns la e-mailuri asemănătoare, făcut aceeași ofertă cu alte cifre. Inteligența artificială face astăzi aceste lucruri bine și repede. Noi alegem procesul care îți mănâncă cel mai mult timp, îl automatizăm și lăsăm omul acolo unde e nevoie de judecată.',
     includes: [
       'analiza procesului și calculul timpului economisit, înainte de start',
       'automatizarea unui proces complet, cap-coadă',
@@ -854,6 +854,234 @@ export const servicePages: ServicePage[] = [
     projectSlugs: [],
     waMessage: 'Salut! Am o idee de proiect cu inteligență artificială. Putem discuta?',
     serviceType: 'Dezvoltare soluții de inteligență artificială',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'audit-strategie-ai',
+    group: 'ai',
+    name: 'Audit și strategie AI',
+    shortName: 'Audit AI',
+    h1: 'Audit și strategie AI pentru firme',
+    seoTitle: 'Audit și strategie AI, de la 490 EUR',
+    metaDescription:
+      'Audit AI pentru firme: aflăm unde îți economisește AI timp și bani, ce riscuri ai și în ce ordine să implementezi. De la 490 EUR, în 7-10 zile.',
+    answerCapsule:
+      'Auditul AI de la MAST Studio îți arată, în 7-10 zile, unde poate economisi inteligența artificială timp și bani în firma ta, ce riscuri de date și de conformitate ai și în ce ordine merită implementat fiecare pas. Costă de la 490 EUR, iar suma se scade din prima implementare făcută cu noi.',
+    priceFrom: 490,
+    priceLabel: 'de la 490 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '7-10 zile',
+    intro:
+      'Toată lumea vorbește despre AI, dar puțini patroni știu de unde să înceapă și ce merită cu adevărat. Auditul răspunde concret: ne uităm la cum lucrează firma ta, măsurăm unde se pierde timp și îți dăm un plan cu 3-5 oportunități, cu costuri, economii estimate și riscuri, nu o prezentare despre viitor.',
+    includes: [
+      'interviuri scurte cu oamenii care fac munca',
+      'harta proceselor repetitive din firmă',
+      '3-5 oportunități AI, ordonate după timpul economisit și efort',
+      'estimare de cost și de economie pentru fiecare',
+      'verificarea riscurilor: date personale, GDPR, regulile europene privind AI',
+      'recomandări de instrumente, cu prețurile lor reale',
+      'plan de implementare pe 90 de zile',
+      'prezentare și discuție de o oră cu echipa de conducere',
+    ],
+    notIncluded: [
+      'implementarea propriu-zisă (ofertată separat, auditul se scade din preț)',
+      'consultanță juridică (recomandările de conformitate nu înlocuiesc un avocat)',
+    ],
+    process: [
+      { step: 'Discuție de pornire', description: 'Aflăm ce face firma, unde simți că pierzi timp și ce ai încercat deja.' },
+      { step: 'Analiză în firmă', description: 'Vorbim cu oamenii care fac munca și ne uităm la documentele și instrumentele folosite.' },
+      { step: 'Planul', description: 'Primești raportul cu oportunitățile, costurile, economiile și riscurile, pe înțelesul tuturor.' },
+      { step: 'Prezentare și pași următori', description: 'Îl discutăm împreună. Dacă vrei să implementăm, costul auditului se scade din prima etapă.' },
+    ],
+    forWho: [
+      'patroni care vor să înțeleagă ce poate face AI concret pentru firma lor',
+      'firme cu 5-100 de angajați și multă muncă administrativă',
+      'echipe care folosesc deja ChatGPT, dar fără reguli și fără un plan',
+      'firme care pregătesc o cerere de finanțare pentru digitalizare',
+    ],
+    faq: [
+      {
+        question: 'Ce primesc concret după auditul AI?',
+        answer:
+          'Un raport cu 3-5 oportunități ordonate după impact, cu estimări de cost și de timp economisit, riscurile de date și conformitate și un plan pe 90 de zile. Plus o discuție de o oră în care îl trecem în revistă.',
+      },
+      {
+        question: 'Cât costă un audit AI?',
+        answer:
+          'De la 490 EUR pentru o firmă mică, cu un singur departament. Dacă alegi să implementezi cu noi, suma se scade din prima etapă.',
+      },
+      {
+        question: 'Trebuie să știu ceva despre AI înainte?',
+        answer:
+          'Nu. Auditul e făcut tocmai pentru cine nu are timp să urmărească tot ce apare. Îți explicăm totul pe limba afacerii, nu în termeni tehnici.',
+      },
+      {
+        question: 'Ce înseamnă regulile europene privind AI pentru firma mea?',
+        answer:
+          'Pentru majoritatea firmelor mici, obligațiile sunt simple: oamenii trebuie anunțați când vorbesc cu un AI, iar datele personale se prelucrează conform GDPR. În audit verificăm exact ce se aplică la tine.',
+      },
+      {
+        question: 'Ajută auditul la o cerere de finanțare?',
+        answer:
+          'Da. Planul de digitalizare din audit, cu costuri și pași, e o bază bună pentru o cerere de finanțare pentru digitalizare.',
+      },
+    ],
+    relatedSlugs: ['automatizari-ai', 'asistent-ai', 'training-ai'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Mă interesează un audit AI pentru firma mea.',
+    serviceType: 'Consultanță și strategie AI',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'vizibilitate-ai',
+    group: 'ai',
+    name: 'Vizibilitate în ChatGPT și AI',
+    shortName: 'Vizibilitate AI',
+    h1: 'Vizibilitate în ChatGPT, Gemini și căutarea cu AI',
+    seoTitle: 'Cum apari în ChatGPT: vizibilitate AI (GEO)',
+    metaDescription:
+      'Te pregătim să fii recomandat de ChatGPT, Gemini și Google AI: profil Google, directoare, date structurate și conținut clar. De la 390 EUR, în 10 zile.',
+    answerCapsule:
+      'Tot mai mulți clienți cer recomandări direct de la ChatGPT sau Gemini, nu de la Google. Serviciul de vizibilitate AI de la MAST Studio pregătește afacerea ta să apară în aceste răspunsuri: profil Google complet, prezență în directoare, date structurate pe site și conținut pe care AI-ul îl poate cita. Pornește de la 390 EUR și durează 10 zile.',
+    priceFrom: 390,
+    priceLabel: 'de la 390 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '10 zile',
+    intro:
+      'Când am întrebat ChatGPT care e cel mai bun dentist, veterinar sau avocat din Timișoara, 90% dintre firmele recomandate aveau site propriu, dar sursele citate erau mai ales Google Maps, directoare și site-uri de recenzii. Asta înseamnă că AI-ul află despre tine din tot ce scrie internetul despre tine, nu doar din site. Noi punem ordine în toate aceste locuri, ca să fii ușor de găsit și de recomandat.',
+    includes: [
+      'test inițial: ce spun ChatGPT, Gemini și Perplexity despre firma ta și despre concurenți',
+      'optimizarea profilului Google Business',
+      'listare și corectare în directoarele relevante pentru domeniul tău',
+      'date identice peste tot: nume, adresă, telefon, program',
+      'date structurate pe site (schema.org) și fișier llms.txt',
+      'pagini și răspunsuri scrise ca AI-ul să le poată cita',
+      'plan pentru recenzii constante',
+      'raport final și un nou test după 30 de zile',
+    ],
+    notIncluded: [
+      'garanția că vei fi recomandat (nimeni nu o poate da cinstit)',
+      'recenzii false sau cumpărate',
+      'reconstruirea completă a site-ului (dacă e nevoie, ofertă separată)',
+    ],
+    process: [
+      { step: 'Testul de pornire', description: 'Punem asistenților AI întrebările pe care le pun clienții tăi și notăm cine apare și de unde își iau informațiile.' },
+      { step: 'Punem ordine în surse', description: 'Profil Google, directoare, date de contact identice peste tot.' },
+      { step: 'Optimizăm site-ul', description: 'Date structurate, răspunsuri clare la întrebările clienților și conținut ușor de citat.' },
+      { step: 'Testăm din nou', description: 'După 30 de zile repetăm testul și îți arătăm ce s-a schimbat.' },
+    ],
+    forWho: [
+      'afaceri locale: cabinete, clinici, saloane, restaurante, meseriași',
+      'firme de servicii profesionale: avocați, contabili, consultanți',
+      'magazine online care vor să apară în recomandările de produse',
+      'oricine a observat că clienții spun „am găsit pe ChatGPT”',
+    ],
+    faq: [
+      {
+        question: 'Ce este GEO (optimizarea pentru căutarea cu AI)?',
+        answer:
+          'GEO înseamnă pregătirea informațiilor despre firma ta ca asistenții AI, precum ChatGPT, Gemini sau Google AI Overviews, să le găsească, să le înțeleagă și să le citeze când cineva cere o recomandare.',
+      },
+      {
+        question: 'Poți garanta că ChatGPT mă va recomanda?',
+        answer:
+          'Nu, și cine îți garantează asta nu spune adevărul. Putem însă să te facem prezent, corect și consecvent în toate sursele din care AI-ul își ia informațiile, iar testul de la 30 de zile arată concret ce s-a schimbat.',
+      },
+      {
+        question: 'Care e diferența față de SEO?',
+        answer:
+          'SEO te ajută să apari în lista de rezultate Google. GEO te ajută să apari în răspunsul scris de un AI. Se completează: multe dintre lucrurile care ajută la una ajută și la cealaltă.',
+      },
+      {
+        question: 'De unde își iau asistenții AI informațiile despre firme locale?',
+        answer:
+          'În testul nostru din Timișoara, ChatGPT a citat cel mai des Google Maps, directoare de firme, site-uri de recenzii și articole de tip top. Site-urile firmelor au fost citate direct doar rar, dar aproape toate firmele recomandate aveau site.',
+      },
+      {
+        question: 'Cât costă și cât durează?',
+        answer:
+          'De la 390 EUR, în aproximativ 10 zile, plus testul de verificare după 30 de zile. Dacă vrei urmărire lunară, se poate adăuga la mentenanță.',
+      },
+    ],
+    relatedSlugs: ['site-de-prezentare', 'mentenanta', 'asistent-ai'],
+    relatedPosts: ['ce-inseamna-pagespeed'],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau să apar în recomandările ChatGPT și Google AI.',
+    serviceType: 'Optimizare pentru căutarea cu AI (GEO)',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'training-ai',
+    group: 'ai',
+    name: 'Training AI pentru echipe',
+    shortName: 'Training AI',
+    h1: 'Training AI pentru echipe și firme',
+    seoTitle: 'Training AI pentru echipe, de la 450 EUR',
+    metaDescription:
+      'Atelier practic de AI pentru echipe: ChatGPT, Claude și Gemini folosite corect, pe sarcinile voastre reale, cu reguli clare pentru date. De la 450 EUR.',
+    answerCapsule:
+      'Trainingul AI de la MAST Studio e un atelier practic de o jumătate de zi, la sediul tău sau online, pentru până la 12 oameni. Echipa învață să folosească ChatGPT, Claude și Gemini pe sarcinile ei reale, să verifice ce produce AI-ul și ce date nu are voie să introducă. Costă de la 450 EUR pe atelier.',
+    priceFrom: 450,
+    priceLabel: 'de la 450 EUR / atelier',
+    deliveryLabel: 'Durată',
+    deliveryTime: 'o jumătate de zi, la sediul tău sau online',
+    intro:
+      'Echipa ta folosește probabil deja AI, fiecare în felul lui, unii bine, alții riscant. Un atelier bun face din obiceiuri individuale o practică a firmei: aceleași instrumente, aceleași reguli pentru date, prompt-uri care chiar funcționează pe munca voastră, nu exemple generice de pe internet.',
+    includes: [
+      'discuție înainte, ca exercițiile să fie pe sarcinile reale ale echipei',
+      'atelier practic de o jumătate de zi, pentru până la 12 participanți',
+      'ChatGPT, Claude și Gemini: când folosești fiecare',
+      'scrierea de prompt-uri bune și verificarea rezultatelor',
+      'reguli de siguranță: ce date nu se introduc niciodată în AI',
+      'o bibliotecă de prompt-uri pentru firma ta, de folosit după atelier',
+      'regulament intern scurt de folosire a AI, gata de adoptat',
+    ],
+    notIncluded: ['abonamentele la instrumentele AI', 'certificare oficială acreditată'],
+    process: [
+      { step: 'Aflăm ce face echipa', description: 'O discuție scurtă despre sarcinile zilnice, ca exemplele din atelier să fie despre munca voastră.' },
+      { step: 'Pregătim atelierul', description: 'Exerciții, prompt-uri și reguli adaptate domeniului vostru.' },
+      { step: 'Atelierul', description: 'Patru ore practice: fiecare participant lucrează pe calculatorul lui, pe sarcini reale.' },
+      { step: 'După atelier', description: 'Primiți biblioteca de prompt-uri și regulamentul intern. Răspundem la întrebări încă două săptămâni.' },
+    ],
+    forWho: [
+      'echipe de birou, vânzări, marketing și suport',
+      'firme care vor reguli clare înainte ca AI-ul să fie folosit peste tot',
+      'cabinete și clinici care lucrează cu date sensibile',
+      'asociații și camere de comerț care organizează instruiri pentru membri',
+    ],
+    faq: [
+      {
+        question: 'Pentru cine este trainingul AI?',
+        answer:
+          'Pentru orice echipă care lucrează la calculator: birou, vânzări, marketing, suport, administrație. Nu e nevoie de cunoștințe tehnice, doar de un laptop și de sarcinile de zi cu zi.',
+      },
+      {
+        question: 'Ce instrumente AI învățăm?',
+        answer:
+          'ChatGPT, Claude și Gemini, cu accent pe ce face fiecare cel mai bine. Dacă firma folosește deja un instrument anume, construim atelierul în jurul lui.',
+      },
+      {
+        question: 'Cât costă trainingul AI?',
+        answer:
+          'De la 450 EUR pentru un atelier de o jumătate de zi cu până la 12 participanți, online sau în Timișoara. Pentru alte orașe se adaugă costurile de deplasare.',
+      },
+      {
+        question: 'Echipa mea folosește deja ChatGPT. Mai are sens?',
+        answer:
+          'Da, de obicei chiar mai mult. Atelierul aduce reguli comune pentru date, verificarea rezultatelor și prompt-uri care economisesc timp real, nu doar curiozitate.',
+      },
+      {
+        question: 'Se poate deconta trainingul din fonduri?',
+        answer:
+          'Multe programe de digitalizare finanțează și instruirea personalului. Îți dăm toate documentele de care ai nevoie: program, durată, participanți și factură.',
+      },
+    ],
+    relatedSlugs: ['audit-strategie-ai', 'automatizari-ai', 'asistent-ai'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Mă interesează un training AI pentru echipa mea.',
+    serviceType: 'Training de inteligență artificială pentru echipe',
     updatedAt: '2026-11-03',
   },
 ]

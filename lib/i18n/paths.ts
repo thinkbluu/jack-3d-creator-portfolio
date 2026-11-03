@@ -36,6 +36,9 @@ export const SERVICE_SLUGS: Pair[] = [
   { ro: 'asistent-ai', en: 'ai-assistant' },
   { ro: 'automatizari-ai', en: 'ai-automation' },
   { ro: 'solutii-ai-personalizate', en: 'custom-ai-solutions' },
+  { ro: 'audit-strategie-ai', en: 'ai-audit-strategy' },
+  { ro: 'vizibilitate-ai', en: 'ai-search-visibility' },
+  { ro: 'training-ai', en: 'ai-training' },
 ]
 
 function pairValue(pairs: Pair[], value: string, from: Locale, to: Locale) {

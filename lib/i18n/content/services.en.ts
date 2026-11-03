@@ -753,4 +753,211 @@ export const serviceTextEn: Record<string, ServiceText> = {
     waMessage: 'Hi! I have an idea for an artificial intelligence project. Can we talk?',
     serviceType: 'Custom AI development',
   },
+  'audit-strategie-ai': {
+    name: 'AI audit and strategy',
+    shortName: 'AI audit',
+    h1: 'AI audit and strategy for businesses',
+    seoTitle: 'AI audit and strategy, from 490 EUR',
+    metaDescription:
+      'An AI audit for businesses: we find where AI saves you time and money, what risks you face and in what order to implement. From 490 EUR, in 7-10 days.',
+    answerCapsule:
+      'The MAST Studio AI audit shows you, in 7-10 days, where artificial intelligence can save time and money in your business, what data and compliance risks you have and in what order each step is worth implementing. It costs from 490 EUR, and the fee is deducted from the first implementation you do with us.',
+    priceLabel: 'from 490 EUR',
+    deliveryLabel: 'Timeline',
+    deliveryTime: '7-10 days',
+    intro:
+      'Everyone talks about AI, but few business owners know where to start or what is really worth it. The audit gives a concrete answer: we look at how your business works, measure where time is lost and give you a plan with 3-5 opportunities, with costs, estimated savings and risks, not a presentation about the future.',
+    includes: [
+      'short interviews with the people who do the work',
+      'a map of the repetitive processes in your business',
+      '3-5 AI opportunities, ranked by time saved and effort',
+      'a cost and savings estimate for each',
+      'a risk check: personal data, GDPR, European AI rules',
+      'tool recommendations, with their real prices',
+      'a 90-day implementation plan',
+      'a one-hour presentation and discussion with management',
+    ],
+    notIncluded: [
+      'the implementation itself (quoted separately, with the audit fee deducted)',
+      'legal advice (compliance recommendations do not replace a lawyer)',
+    ],
+    process: [
+      { step: 'Kick-off conversation', description: 'We learn what the business does, where you feel time is lost and what you have tried already.' },
+      { step: 'On-site analysis', description: 'We talk to the people who do the work and look at the documents and tools they use.' },
+      { step: 'The plan', description: 'You get the report with opportunities, costs, savings and risks, in plain language.' },
+      { step: 'Presentation and next steps', description: 'We discuss it together. If you want us to implement, the audit fee is deducted from the first stage.' },
+    ],
+    forWho: [
+      'owners who want to understand what AI can concretely do for their business',
+      'companies with 5-100 employees and a lot of admin work',
+      'teams already using ChatGPT, but without rules or a plan',
+      'companies preparing a funding application for digitalisation',
+    ],
+    faq: [
+      {
+        question: 'What exactly do I get from the AI audit?',
+        answer:
+          'A report with 3-5 opportunities ranked by impact, with cost and time-saving estimates, data and compliance risks and a 90-day plan. Plus a one-hour discussion where we go through it together.',
+      },
+      {
+        question: 'How much does an AI audit cost?',
+        answer:
+          'From 490 EUR for a small company with one department. If you choose to implement with us, the fee is deducted from the first stage.',
+      },
+      {
+        question: 'Do I need to know anything about AI beforehand?',
+        answer:
+          'No. The audit is made precisely for people who do not have time to follow everything new. We explain everything in business terms, not technical ones.',
+      },
+      {
+        question: 'What do the European AI rules mean for my business?',
+        answer:
+          'For most small businesses the obligations are simple: people must be told when they are talking to an AI, and personal data must be processed under GDPR. In the audit we check exactly what applies to you.',
+      },
+      {
+        question: 'Does the audit help with a funding application?',
+        answer:
+          'Yes. The digitalisation plan from the audit, with costs and steps, is a good basis for a digitalisation funding application.',
+      },
+    ],
+    waMessage: 'Hi! I am interested in an AI audit for my business.',
+    serviceType: 'AI consulting and strategy',
+  },
+  'vizibilitate-ai': {
+    name: 'Visibility in ChatGPT and AI search',
+    shortName: 'AI visibility',
+    h1: 'Visibility in ChatGPT, Gemini and AI search',
+    seoTitle: 'Get recommended by ChatGPT: AI visibility',
+    metaDescription:
+      'We prepare your business to be recommended by ChatGPT, Gemini and Google AI: Google profile, directories, structured data and clear content. From 390 EUR.',
+    answerCapsule:
+      'More and more customers ask ChatGPT or Gemini for recommendations instead of Google. The MAST Studio AI visibility service prepares your business to appear in these answers: a complete Google profile, presence in directories, structured data on your site and content AI can quote. It starts at 390 EUR and takes 10 days.',
+    priceLabel: 'from 390 EUR',
+    deliveryLabel: 'Timeline',
+    deliveryTime: '10 days',
+    intro:
+      'When we asked ChatGPT for the best dentist, vet or lawyer in Timișoara, 90% of the businesses it recommended had their own website, but the sources it cited were mostly Google Maps, directories and review sites. So AI learns about you from everything the internet says about you, not only from your site. We put all those places in order, so you are easy to find and easy to recommend.',
+    includes: [
+      'a starting test: what ChatGPT, Gemini and Perplexity say about you and your competitors',
+      'Google Business Profile optimisation',
+      'listing and corrections in the directories that matter for your field',
+      'identical details everywhere: name, address, phone, hours',
+      'structured data on your site (schema.org) and an llms.txt file',
+      'pages and answers written so AI can quote them',
+      'a plan for steady reviews',
+      'a final report and a new test after 30 days',
+    ],
+    notIncluded: [
+      'a guarantee that you will be recommended (no one can honestly give one)',
+      'fake or bought reviews',
+      'a full rebuild of your site (separate quote if needed)',
+    ],
+    process: [
+      { step: 'The starting test', description: 'We ask AI assistants the questions your customers ask and note who appears and where the information comes from.' },
+      { step: 'We fix your sources', description: 'Google profile, directories, identical contact details everywhere.' },
+      { step: 'We optimise your site', description: 'Structured data, clear answers to customer questions and content that is easy to quote.' },
+      { step: 'We test again', description: 'After 30 days we repeat the test and show you what changed.' },
+    ],
+    forWho: [
+      'local businesses: practices, clinics, salons, restaurants, trades',
+      'professional services: lawyers, accountants, consultants',
+      'online stores that want to appear in product recommendations',
+      'anyone who has heard a customer say "I found you on ChatGPT"',
+    ],
+    faq: [
+      {
+        question: 'What is GEO (generative engine optimisation)?',
+        answer:
+          'GEO means preparing information about your business so AI assistants such as ChatGPT, Gemini or Google AI Overviews can find it, understand it and cite it when someone asks for a recommendation.',
+      },
+      {
+        question: 'Can you guarantee ChatGPT will recommend me?',
+        answer:
+          'No, and anyone who guarantees it is not telling the truth. We can make you present, accurate and consistent in all the sources AI draws on, and the 30-day test shows exactly what changed.',
+      },
+      {
+        question: 'How is it different from SEO?',
+        answer:
+          "SEO helps you appear in Google's list of results. GEO helps you appear in the answer an AI writes. They work together: much of what helps one helps the other.",
+      },
+      {
+        question: 'Where do AI assistants get information about local businesses?',
+        answer:
+          'In our Timișoara test, ChatGPT most often cited Google Maps, business directories, review sites and "best of" articles. Businesses\' own sites were cited directly only rarely, but almost every recommended business had one.',
+      },
+      {
+        question: 'How much does it cost and how long does it take?',
+        answer:
+          'From 390 EUR, in about 10 days, plus the check-up test after 30 days. Monthly monitoring can be added to a maintenance plan.',
+      },
+    ],
+    waMessage: 'Hi! I want to appear in ChatGPT and Google AI recommendations.',
+    serviceType: 'Generative engine optimisation (GEO)',
+  },
+  'training-ai': {
+    name: 'AI training for teams',
+    shortName: 'AI training',
+    h1: 'AI training for teams and businesses',
+    seoTitle: 'AI training for teams, from 450 EUR',
+    metaDescription:
+      'A hands-on AI workshop for teams: ChatGPT, Claude and Gemini used properly, on your real tasks, with clear rules for data. From 450 EUR per workshop.',
+    answerCapsule:
+      'MAST Studio AI training is a hands-on half-day workshop, at your office or online, for up to 12 people. Your team learns to use ChatGPT, Claude and Gemini on its real tasks, to check what AI produces and which data must never go into it. It costs from 450 EUR per workshop.',
+    priceLabel: 'from 450 EUR per workshop',
+    deliveryLabel: 'Duration',
+    deliveryTime: 'half a day, at your office or online',
+    intro:
+      'Your team probably already uses AI, each person in their own way, some well, some riskily. A good workshop turns individual habits into company practice: the same tools, the same data rules, prompts that actually work on your work, not generic internet examples.',
+    includes: [
+      "a conversation beforehand, so exercises use the team's real tasks",
+      'a hands-on half-day workshop for up to 12 participants',
+      'ChatGPT, Claude and Gemini: when to use each',
+      'writing good prompts and checking the results',
+      'safety rules: which data never goes into AI',
+      'a prompt library for your company, to use after the workshop',
+      'a short internal AI use policy, ready to adopt',
+    ],
+    notIncluded: ['subscriptions to AI tools', 'an official accredited certificate'],
+    process: [
+      { step: 'We learn what the team does', description: 'A short conversation about daily tasks, so the workshop examples are about your work.' },
+      { step: 'We prepare the workshop', description: 'Exercises, prompts and rules adapted to your field.' },
+      { step: 'The workshop', description: 'Four hands-on hours: each participant works on their own laptop, on real tasks.' },
+      { step: 'After the workshop', description: 'You receive the prompt library and the internal policy. We answer questions for two more weeks.' },
+    ],
+    forWho: [
+      'office, sales, marketing and support teams',
+      'companies that want clear rules before AI is used everywhere',
+      'practices and clinics that work with sensitive data',
+      'associations and chambers of commerce running training for members',
+    ],
+    faq: [
+      {
+        question: 'Who is the AI training for?',
+        answer:
+          'Any team that works at a computer: office, sales, marketing, support, admin. No technical knowledge is needed, just a laptop and everyday tasks.',
+      },
+      {
+        question: 'Which AI tools do we learn?',
+        answer:
+          'ChatGPT, Claude and Gemini, with a focus on what each does best. If your company already uses a specific tool, we build the workshop around it.',
+      },
+      {
+        question: 'How much does AI training cost?',
+        answer:
+          'From 450 EUR for a half-day workshop with up to 12 participants, online or in Timișoara. Travel costs are added for other cities.',
+      },
+      {
+        question: 'My team already uses ChatGPT. Is it still worth it?',
+        answer:
+          'Yes, usually even more so. The workshop brings shared data rules, result checking and prompts that save real time, not just curiosity.',
+      },
+      {
+        question: 'Can the training be funded?',
+        answer:
+          'Many digitalisation programmes also fund staff training. We give you every document you need: agenda, duration, participants and invoice.',
+      },
+    ],
+    waMessage: 'Hi! I am interested in AI training for my team.',
+    serviceType: 'AI training for teams',
+  },
 }
