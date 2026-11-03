@@ -17,7 +17,7 @@ import { ui } from '@/lib/i18n/ui'
 import { getProjectBySlug, type Project } from '@/lib/projects'
 import { breadcrumbNode, faqNode, graph, serviceNode, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
-import { getServicePageBySlug } from '@/lib/services'
+import { getServicePageBySlug, serviceGroups } from '@/lib/services'
 import { whatsappUrl } from '@/lib/site'
 
 type ServiceChrome = {
@@ -41,6 +41,7 @@ type ServiceChrome = {
   guides: string
   other: string
   all: string
+  partOf: string
   imageAlt: (h1: string, price: string) => string
 }
 
@@ -66,6 +67,7 @@ const serviceChrome: Record<Locale, ServiceChrome> = {
     guides: 'Ghiduri utile',
     other: 'Alte servicii',
     all: 'Toate serviciile și prețurile',
+    partOf: 'Parte din:',
     imageAlt: (h1, price) => `${h1} la MAST Studio, ${price}`,
   },
   en: {
@@ -89,6 +91,7 @@ const serviceChrome: Record<Locale, ServiceChrome> = {
     guides: 'Useful guides',
     other: 'Other services',
     all: 'All services and prices',
+    partOf: 'Part of:',
     imageAlt: (h1, price) => `${h1} at MAST Studio, ${price}`,
   },
 }
@@ -158,6 +161,7 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
   const copy = serviceChrome[locale]
   const path = localizePath(`/servicii/${service.slug}`, locale)
   const name = phraseName(service.shortName, locale)
+  const group = serviceGroups.find((item) => item.id === service.group)
   const related = service.relatedSlugs
     .map((relatedSlug) => getServicePageBySlug(relatedSlug, locale))
     .filter((item): item is NonNullable<typeof item> => Boolean(item))
@@ -190,6 +194,16 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
             crumbs={crumbs}
             kicker={copy.kicker}
             title={service.h1}
+            titleNote={
+              group ? (
+                <Link
+                  href={`${localizePath('/servicii', locale)}#${group.id}`}
+                  className="mono-label mt-5 inline-flex text-[var(--fg-3)] transition-colors hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass-lite)]"
+                >
+                  {copy.partOf} {group.name[locale]}
+                </Link>
+              ) : undefined
+            }
             intro={service.intro}
             aside={
               <div>

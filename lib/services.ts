@@ -1338,3 +1338,14 @@ export function getServicePageBySlug(slug: string, locale: Locale = 'ro') {
   const service = servicePages.find((item) => item.slug === id)
   return service ? applyOfferCopy(localizeService(service, locale), locale) : undefined
 }
+
+// Fail the build when a relatedSlugs entry points at a service that does not
+// exist — a broken internal link would otherwise ship silently.
+const knownServiceSlugs = new Set(servicePages.map((service) => service.slug))
+for (const service of servicePages) {
+  for (const relatedSlug of service.relatedSlugs) {
+    if (!knownServiceSlugs.has(relatedSlug)) {
+      throw new Error(`[services] "${service.slug}" lists unknown relatedSlugs entry "${relatedSlug}"`)
+    }
+  }
+}

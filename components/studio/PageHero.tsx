@@ -15,6 +15,7 @@ export default function PageHero({
   kicker,
   title,
   accent,
+  titleNote,
   intro,
   tone = 'dark',
   children,
@@ -24,6 +25,7 @@ export default function PageHero({
   kicker?: string
   title: string
   accent?: string
+  titleNote?: ReactNode
   intro?: ReactNode
   tone?: 'dark' | 'navy' | 'cream'
   children?: ReactNode
@@ -54,6 +56,7 @@ export default function PageHero({
               className="display-xl mt-6 text-balance text-[clamp(2.8rem,7.2vw,7rem)]"
               accentClassName="display-italic text-[var(--accent)]"
             />
+            {titleNote}
           </div>
           {aside ? <Reveal delay={0.25}>{aside}</Reveal> : null}
         </div>

@@ -4,12 +4,32 @@
 
 ## Servicii și prețuri
 
-- [Site de prezentare](https://maststudio.ro/servicii/site-de-prezentare): de la 300 EUR, livrat live în 48 de ore de la primirea materialelor de la client
-- [Magazin online](https://maststudio.ro/servicii/magazin-online): de la 900 EUR, livrat în 7 zile
-- [Aplicații web și mobile](https://maststudio.ro/servicii/aplicatii-web): ofertă personalizată, răspuns în 24 de ore
-- [Platforme SaaS](https://maststudio.ro/servicii/platforme-saas): ofertă personalizată, răspuns în 24 de ore
-- [Mentenanță și creștere](https://maststudio.ro/servicii/mentenanta): de la 90 EUR pe lună, fără contract pe termen lung
-- [Automatizări WhatsApp](https://maststudio.ro/servicii/automatizari-whatsapp) și integrare facturare: de la 250 EUR
+### Site-uri și magazine online
+
+- [Site de prezentare](https://maststudio.ro/servicii/site-de-prezentare): de la 300 EUR. Un site de prezentare la MAST Studio costă de la 300 EUR și este livrat live în 48 de ore de la primirea materialelor.
+- [Magazin online](https://maststudio.ro/servicii/magazin-online): de la 900 EUR. Un magazin online la MAST Studio costă de la 900 EUR și este livrat în 7 zile.
+- [Design UX/UI](https://maststudio.ro/servicii/design-ux-ui): de la 250 EUR. La MAST Studio, designul UX/UI pornește de la 250 EUR pentru auditul unui site sau al unei aplicații existente și de la 1.200 EUR pentru designul unui MVP (până la 12 ecrane cheie) în aproximativ 2 săptămâni.
+
+### Aplicații și software
+
+- [Aplicații web și mobile](https://maststudio.ro/servicii/aplicatii-web): ofertă personalizată. Aplicațiile web și mobile se estimează individual, iar oferta cu preț fix vine în 24 de ore de la prima discuție.
+- [Platforme SaaS](https://maststudio.ro/servicii/platforme-saas): ofertă personalizată. O platformă SaaS custom se estimează individual, cu ofertă în 24 de ore de la prima discuție.
+
+### Inteligență artificială și automatizări
+
+- [Automatizări WhatsApp](https://maststudio.ro/servicii/automatizari-whatsapp): de la 250 EUR. Automatizările WhatsApp de la MAST Studio pornesc de la 250 EUR: răspunsuri în afara programului, confirmări de programare, informații despre servicii și status de comandă.
+- [Asistent AI pentru clienți](https://maststudio.ro/servicii/asistent-ai): de la 790 EUR. Asistentul AI de la MAST Studio răspunde clienților pe site și pe WhatsApp, zi și noapte, doar din informațiile aprobate de tine: servicii, prețuri, program, politici.
+- [Automatizări AI pentru procese](https://maststudio.ro/servicii/automatizari-ai): de la 990 EUR. Automatizările AI de la MAST Studio preiau munca repetitivă din firmă: citesc și sortează e-mailuri, extrag date din facturi și documente, pregătesc oferte și rapoarte.
+- [Soluții AI personalizate](https://maststudio.ro/servicii/solutii-ai-personalizate): ofertă în 24 de ore. MAST Studio dezvoltă soluții de inteligență artificială pe măsură: recunoaștere de imagini, analiză de date complexe, recomandări personalizate și AI integrat în aplicații existente.
+- [Audit și strategie AI](https://maststudio.ro/servicii/audit-strategie-ai): de la 490 EUR. Auditul AI de la MAST Studio îți arată, în 7-10 zile, unde poate economisi inteligența artificială timp și bani în firma ta, ce riscuri de date și de conformitate ai și în ce ordine merită implementat fiecare pas.
+- [Vizibilitate în ChatGPT și AI](https://maststudio.ro/servicii/vizibilitate-ai): de la 390 EUR. Tot mai mulți clienți cer recomandări direct de la ChatGPT sau Gemini, nu de la Google.
+- [Training AI pentru echipe](https://maststudio.ro/servicii/training-ai): de la 450 EUR / atelier. Trainingul AI de la MAST Studio e un atelier practic de o jumătate de zi, la sediul tău sau online, pentru până la 12 oameni.
+
+### Creștere și suport
+
+- [Mentenanță și creștere](https://maststudio.ro/servicii/mentenanta): de la 90 EUR/lună. Mentenanța unui site la MAST Studio pornește de la 90 EUR pe lună, fără contract pe termen lung.
+- [SEO local și Google Business](https://maststudio.ro/servicii/seo-local): de la 150 EUR pe lună. SEO local de la MAST Studio înseamnă că afacerea ta apare când cineva caută serviciul tău în oraș: profil Google Business îngrijit lunar, postări, răspunsuri la recenzii, pagini locale pe site și raport lunar.
+- [Campanii Google și Meta](https://maststudio.ro/servicii/campanii-reclame): de la 250 EUR pe lună + bugetul de reclame. Administrăm campaniile Google Ads, Facebook și Instagram ale afacerii tale de la 250 EUR pe lună, plus bugetul de reclame, plătit direct de tine platformelor.
 
 ## Model de plată
 

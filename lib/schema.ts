@@ -15,7 +15,7 @@ import {
   WEBSITE_ID,
   absoluteUrl,
 } from './site'
-import { getAllServicePages, type ServicePage } from './services'
+import { getAllServicePages, serviceGroups, type ServicePage } from './services'
 
 type JsonObject = Record<string, unknown>
 
@@ -120,12 +120,31 @@ export function businessNode(locale: Locale = 'ro'): JsonObject {
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: locale === 'en' ? 'Web design services' : 'Servicii web design',
-      itemListElement: services.map((service) => ({
-        '@type': 'Offer',
-        itemOffered: { '@type': 'Service', name: service.name, url: serviceUrl(service, locale) },
-        url: serviceUrl(service, locale),
-        ...(service.priceFrom !== null ? { price: service.priceFrom, priceCurrency: 'EUR' } : {}),
-      })),
+      // One nested catalog per service group, in display order.
+      itemListElement: serviceGroups.flatMap((group) =>
+        services
+          .filter((service) => service.group === group.id)
+          .map((service) => ({
+            '@type': 'OfferCatalog',
+            name: group.name[locale],
+            itemListElement: [
+              {
+                '@type': 'Offer',
+                itemOffered: {
+                  '@type': 'Service',
+                  name: service.name,
+                  serviceType: service.serviceType,
+                  url: serviceUrl(service, locale),
+                  areaServed: areaServed(locale),
+                  provider: businessRef,
+                  offers: offerFor(service, locale),
+                },
+                url: serviceUrl(service, locale),
+                ...(service.priceFrom !== null ? { price: service.priceFrom, priceCurrency: 'EUR' } : {}),
+              },
+            ],
+          })),
+      ),
     },
     ...(SOCIAL_PROFILES.length ? { sameAs: SOCIAL_PROFILES } : {}),
   }
