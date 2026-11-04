@@ -1292,3 +1292,171 @@
 .tone-navy .contact-submit:hover {
   background: var(--brass-lite);
 }
+
+/* ── Desktop dropdown navigation (≥1024px) ─────────────────────────────── */
+
+.nav-panel {
+  --ink: #faf7f2;
+  --ink-2: rgba(250, 247, 242, 0.74);
+  --ink-3: rgba(250, 247, 242, 0.6);
+  position: absolute;
+  top: 100%;
+  z-index: 60;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease,
+    visibility 0s linear 0.18s;
+  background: rgba(11, 15, 22, 0.97);
+  border: 1px solid rgba(250, 247, 242, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(5, 8, 14, 0.45);
+  color: var(--ink-2);
+}
+
+.nav-panel.is-open {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+/* The Servicii panel spans the full header width; the header is sticky/fixed
+   at top: var(--offer-bar-h) and 5rem tall, so the panel pins just below it. */
+.nav-panel-wide {
+  position: fixed;
+  inset-inline: 0;
+  top: calc(var(--offer-bar-h, 0px) + 5rem);
+  border-radius: 0 0 14px 14px;
+  border-top: 0;
+}
+
+.nav-panel-narrow {
+  left: 0;
+  min-width: 250px;
+}
+
+[data-desktop-nav] li:last-child .nav-panel-narrow {
+  left: auto;
+  right: 0;
+}
+
+.nav-panel-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px 28px;
+  padding: 22px 0 14px;
+}
+
+.nav-panel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px;
+}
+
+.nav-group-label {
+  padding: 0 10px;
+  font-size: 11px;
+  color: var(--brass-lite);
+  transition: color 0.2s ease;
+}
+
+.nav-group-label:hover {
+  color: var(--ink);
+}
+
+.nav-link {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink-2);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: var(--ink);
+  background: rgba(250, 247, 242, 0.06);
+}
+
+.nav-note {
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--ink-3);
+  max-width: 240px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.nav-panel-more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  border-top: 1px solid rgba(250, 247, 242, 0.12);
+  padding: 12px 10px 14px;
+}
+
+.nav-panel-wide .nav-panel-more {
+  padding: 12px 0 16px;
+}
+
+.nav-more-link {
+  font-size: 11px;
+  color: var(--ink-2);
+  transition: color 0.2s ease;
+}
+
+.nav-more-link:hover {
+  color: var(--brass-lite);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-panel,
+  .nav-panel.is-open,
+  .nav-link,
+  [data-desktop-nav] svg {
+    transition: none;
+  }
+}
+
+/* ── Compact footer ────────────────────────────────────────────────────── */
+
+.foot-link {
+  padding: 3px 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.foot-details > summary {
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.foot-details[open] .foot-details-plus {
+  transform: rotate(45deg);
+}
+
+/* On desktop the columns are forced open by the layout effect; the summary
+   stops being a toggle so a click can't collapse them. */
+@media (min-width: 1024px) {
+  .foot-details > summary {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .foot-details-plus {
+    display: none;
+  }
+}

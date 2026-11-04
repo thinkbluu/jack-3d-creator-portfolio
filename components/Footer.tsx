@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { useEffect, useRef } from 'react'
 import AnpcSalBadge from '@/components/AnpcSalBadge'
 import NewsletterForm from '@/components/NewsletterForm'
 import TrackedLink from '@/components/TrackedLink'
@@ -34,45 +35,86 @@ const DARK_VARS = {
 const linkClass =
   'text-[var(--on-dark-2)] transition-colors hover:text-[var(--on-dark)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass-lite)]'
 
-function FooterColumn({ title, links }: { title: string; links: Array<{ href: string; label: string }> }) {
-  return (
-    <nav aria-label={title} className="flex flex-col gap-1">
-      <p className="mono-label mb-2 text-[var(--brass-lite)]">{title}</p>
-      <ul className="flex flex-col">
-        {links.map((link) => (
-          <li key={link.href}>
-            <Link href={link.href} className={linkClass}>
-              {link.label}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  )
-}
-
 /**
- * Site footer. `cta` opens it with "Hai să vorbim." and the three ways to
- * reach us; pages that end with their own call to action pass `cta={false}`.
- * The studio letter sign-up shows unless `letter={false}`.
+ * Compact site footer. The full service tree lives in the header now, so the
+ * columns list group names only. On mobile the link columns collapse into
+ * <details> sections (closed by default); on desktop they are forced open so
+ * the whole footer is one short row. The brand block, company data, legal
+ * links and the ANPC/SAL badge stay visible without opening anything.
  */
 export default function Footer({ cta = true, letter = true }: { cta?: boolean; letter?: boolean } = {}) {
   const locale = useLocale()
   const href = useHref()
-  const { footer, whatsapp, consent, redesign } = useUi()
+  const { footer, whatsapp, consent, redesign, nav } = useUi()
   const serviceGroups = getServicesByGroup(locale)
   const industries = getAllIndustries(locale)
   // Guides stay on the Romanian URLs: the articles themselves are not translated.
   const guideLinks = footer.guideLinks.map((link) => ({ ...link, href: link.href }))
   const studioLinks = footer.studioLinks.map((link) => ({ ...link, href: href(link.href) }))
+  const secondaryLinks = ['/newsletter', '/glosar', '/comparatie'].map(
+    (path) => footer.studioLinks.find((link) => link.href === path),
+  ).filter((link) => link !== undefined)
   const year = new Date().getFullYear()
+
+  // On desktop the collapsible columns render open; on mobile they stay closed.
+  const detailsRef = useRef<HTMLDetailsElement[]>([])
+  useEffect(() => {
+    const query = window.matchMedia('(min-width: 1024px)')
+    const sync = () => {
+      for (const details of detailsRef.current) details.open = query.matches
+    }
+    sync()
+    query.addEventListener('change', sync)
+    return () => query.removeEventListener('change', sync)
+  }, [])
+
+  const serviceColumn = [
+    ...serviceGroups.map((group) => ({
+      href: `${href('/servicii')}#${group.id}`,
+      label: group.name[locale],
+    })),
+    { href: href('/servicii'), label: footer.allServices },
+    { href: href('/preturi'), label: nav.pricing },
+    { href: href('/verifica-site'), label: nav.checker },
+  ]
+
+  const studioColumn = ['/despre', '/portofoliu', '/cum-lucram', '/contact', '/cerere-oferta', '/cariere'].map(
+    (path) => ({ href: href(path), label: footer.studioLinks.find((link) => link.href === path)?.label ?? path }),
+  )
+
+  const renderColumn = (title: string, links: Array<{ href: string; label: string }>, index: number) => (
+    <details
+      ref={(element) => {
+        if (element) detailsRef.current[index] = element
+      }}
+      className="foot-details"
+    >
+      <summary className="mono-label flex cursor-pointer list-none items-center justify-between text-[var(--brass-lite)] [&::-webkit-details-marker]:hidden">
+        {title}
+        <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" className="foot-details-plus transition-transform duration-300 lg:hidden">
+          <path d="M6 1v10M1 6h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+        </svg>
+      </summary>
+      <nav aria-label={title} className="mt-3 flex flex-col">
+        <ul className="flex flex-col">
+          {links.map((link) => (
+            <li key={link.href + link.label}>
+              <Link href={link.href} className={`${linkClass} foot-link`}>
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </details>
+  )
 
   return (
     <footer
       className={`site-foot tone-dark grain relative z-10 overflow-hidden font-sans text-sm ${cta ? '' : 'border-t border-[var(--hairline-dark)]'}`}
       style={DARK_VARS}
     >
-      <div className="studio-container relative flex flex-col gap-16 pt-24 pb-10">
+      <div className="studio-container relative flex flex-col gap-12 pt-20 pb-8">
         {cta ? (
           <div className="foot-talk">
             <p className="mono-label flex items-center gap-3 text-[var(--on-dark-3)]">
@@ -120,7 +162,7 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
         ) : null}
 
         {letter ? (
-          <div className={`foot-letter grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-end ${cta ? 'border-t border-[var(--hairline-dark)] pt-12' : ''}`}>
+          <div className={`foot-letter grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-end ${cta ? 'border-t border-[var(--hairline-dark)] pt-10' : ''}`}>
             <div>
               <p className="display-xl text-[clamp(2.2rem,4.4vw,4rem)] leading-[0.95] text-[var(--on-dark)]">{redesign.footer.letterTitle}</p>
               <p className="mt-4 max-w-md leading-relaxed text-[var(--on-dark-2)]">{redesign.footer.letterText}</p>
@@ -129,11 +171,11 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
           </div>
         ) : null}
 
-        <div className="grid gap-10 border-t border-[var(--hairline-dark)] pt-12 sm:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr_1fr_1fr]">
-          <div className="flex flex-col gap-4">
-            <p className="max-w-xs leading-relaxed text-[var(--on-dark-2)]">{footer.blurb}</p>
+        <div className="grid gap-x-10 gap-y-8 border-t border-[var(--hairline-dark)] pt-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1fr]">
+          <div className="flex flex-col gap-3">
+            <p className="mono-label text-[var(--brass-lite)]">{SITE_NAME}</p>
+            <p className="max-w-xs text-[13px] leading-relaxed text-[var(--on-dark-2)]">{footer.blurb}</p>
             <address className="flex flex-col items-start not-italic leading-relaxed text-[var(--on-dark-2)]">
-              <span className="text-[var(--on-dark)]">{SITE_NAME}</span>
               <span>{REGISTERED_OFFICE}</span>
               <a href={PHONE_HREF} className={linkClass}>
                 {PHONE_DISPLAY}
@@ -145,7 +187,7 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
                 {EMAIL}
               </a>
             </address>
-            <ul className="flex gap-5" aria-label={footer.social}>
+            <ul className="flex gap-4" aria-label={footer.social}>
               {SOCIAL_LINKS.map((link) => (
                 <li key={link.url}>
                   <a href={link.url} target="_blank" rel="noopener noreferrer" className={`${linkClass} font-semibold text-[var(--on-dark)]`}>
@@ -175,54 +217,25 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
               ) : null}
             </ul>
           </div>
-          <nav aria-label={footer.services} className="flex flex-col gap-6">
-            {serviceGroups.map((group) => (
-              <div key={group.id} className="flex flex-col gap-1">
-                {/* Under 640px only the group name shows, linking to /servicii#<group>. */}
-                <Link
-                  href={`${href('/servicii')}#${group.id}`}
-                  className="mono-label mb-2 text-[var(--brass-lite)] transition-colors hover:text-[var(--on-dark)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass-lite)] sm:pointer-events-none"
-                >
-                  {group.name[locale]}
-                </Link>
-                <ul className="hidden flex-col sm:flex">
-                  {group.services.map((service) => (
-                    <li key={service.slug}>
-                      <Link href={href(`/servicii/${service.slug}`)} className={linkClass}>
-                        {service.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </nav>
-          <nav aria-label={footer.solutions} className="flex flex-col gap-1 sm:col-span-2 lg:col-span-1">
-            <p className="mono-label mb-2 text-[var(--brass-lite)]">{footer.solutions}</p>
-            <ul className="flex flex-col">
-              {industries.map((industry) => (
-                <li key={industry.slug}>
-                  <Link href={href(`/solutii/${industry.slug}`)} className={linkClass}>
-                    {industry.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <FooterColumn title={footer.guides} links={guideLinks} />
-          <FooterColumn title={footer.studio} links={studioLinks} />
+          {renderColumn(footer.services, serviceColumn, 0)}
+          {renderColumn(footer.solutions, industries.map((industry) => ({ href: href(`/solutii/${industry.slug}`), label: industry.name })), 1)}
+          {renderColumn(footer.guides, guideLinks, 2)}
+          {renderColumn(footer.studio, studioColumn, 3)}
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-[var(--hairline-dark)] pt-6 text-[var(--on-dark-3)] lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-3 border-t border-[var(--hairline-dark)] pt-5 text-[13px] text-[var(--on-dark-3)] lg:flex-row lg:items-center lg:gap-6">
           <p>
             © {year} {SITE_NAME} · {LEGAL_NAME} · CUI {VAT_ID} · {footer.register} {TRADE_REGISTER_NUMBER}
-            <span className="mt-1 block text-xs lg:mt-0 lg:inline">
-              {' · '}
-              {footer.signature}
-            </span>
+            {' · '}
+            {footer.signature}
           </p>
           <nav aria-label={footer.legal} className="shrink-0">
-            <ul className="flex flex-wrap gap-x-5">
+            <ul className="flex flex-wrap gap-x-4">
+              <li>
+                <Link href={href('/termeni')} className={linkClass}>
+                  {footer.terms}
+                </Link>
+              </li>
               <li>
                 <Link href={href('/confidentialitate')} className={linkClass}>
                   {footer.privacy}
@@ -238,14 +251,20 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
                   {consent.settings}
                 </button>
               </li>
-              <li>
-                <Link href={href('/termeni')} className={linkClass}>
-                  {footer.terms}
-                </Link>
-              </li>
             </ul>
           </nav>
-          <AnpcSalBadge className="mx-0 self-start lg:self-auto" />
+          <nav aria-label={footer.secondary} className="shrink-0">
+            <ul className="flex flex-wrap gap-x-4">
+              {secondaryLinks.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className={linkClass}>
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <AnpcSalBadge className="mx-0 self-start lg:ml-auto lg:self-auto" />
         </div>
       </div>
     </footer>

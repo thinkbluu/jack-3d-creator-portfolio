@@ -1,5 +1,6 @@
 import BrandVoice from '@/components/BrandVoice'
 import LocaleDocument, { localeMetadata, localeViewport } from '@/components/LocaleDocument'
+import NavJsonLd from '@/components/NavJsonLd'
 import '@/app/globals.css'
 
 export const metadata = localeMetadata('en')
@@ -9,6 +10,7 @@ export default function EnglishLayout({ children }: Readonly<{ children: React.R
   return (
     <LocaleDocument locale="en">
       <BrandVoice locale="en" />
+      <NavJsonLd locale="en" />
       {children}
     </LocaleDocument>
   )

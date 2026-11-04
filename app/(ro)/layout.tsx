@@ -1,5 +1,6 @@
 import BrandVoice from '@/components/BrandVoice'
 import LocaleDocument, { localeMetadata, localeViewport } from '@/components/LocaleDocument'
+import NavJsonLd from '@/components/NavJsonLd'
 import '@/app/globals.css'
 
 export const metadata = localeMetadata('ro')
@@ -9,6 +10,7 @@ export default function RomanianLayout({ children }: Readonly<{ children: React.
   return (
     <LocaleDocument locale="ro">
       <BrandVoice locale="ro" />
+      <NavJsonLd locale="ro" />
       {children}
     </LocaleDocument>
   )
