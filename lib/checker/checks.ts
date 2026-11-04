@@ -139,8 +139,30 @@ type PsiResponse = {
   }
 }
 
+/**
+ * Dev-only test switch: when CHECKER_PSI_FIXTURE=1 (and never in production),
+ * PageSpeed responses come from tests/fixtures/psi-<strategy>.json instead of
+ * the live API, so the PDF speed section can be rendered and inspected
+ * without burning API quota.
+ */
+async function loadPsiFixture(strategy: 'mobile' | 'desktop'): Promise<PsiResponse | null> {
+  if (process.env.CHECKER_PSI_FIXTURE !== '1') return null
+  if (process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production') return null
+  try {
+    const { readFile } = await import('node:fs/promises')
+    const path = await import('node:path')
+    const file = path.join(process.cwd(), 'tests', 'fixtures', `psi-${strategy}.json`)
+    return JSON.parse(await readFile(file, 'utf8')) as PsiResponse
+  } catch {
+    return null
+  }
+}
+
 /** One PageSpeed Insights run. Returns null when the API fails or times out. */
 export async function fetchPsi(url: string, strategy: 'mobile' | 'desktop', timeoutMs: number): Promise<PsiResponse | null> {
+  const fixture = await loadPsiFixture(strategy)
+  if (fixture) return fixture
+
   const key = process.env.PAGESPEED_API_KEY?.trim()
   const psiUrl =
     `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=${strategy}&category=performance` +

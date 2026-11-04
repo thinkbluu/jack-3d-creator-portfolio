@@ -203,8 +203,6 @@ export async function POST(request: Request) {
   }
 
   const domain = new URL(url).hostname.replace(/^www\./, '')
-  const minute = Math.floor(Date.now() / 60_000)
-  const key = createHash('sha256').update(`${email}\n${url}\n${minute}`).digest('hex').slice(0, 32)
   const filename = `raport-verificare-${domain}.pdf`
   const subject =
     locale === 'ro' ? `Raportul verificării pentru ${domain}` : `Your website check report for ${domain}`
@@ -212,6 +210,13 @@ export async function POST(request: Request) {
     locale === 'ro'
       ? `Bună, ${name},\n\nAtașat găsești raportul complet al verificării pentru ${url}.\n\nDacă vrei să discutăm rezultatele, ne găsești pe WhatsApp la +40 746 382 204.\n\nO zi bună,\nMAST Studio`
       : `Hi ${name},\n\nAttached is the full check report for ${url}.\n\nIf you'd like to talk through the results, reach us on WhatsApp at +40 746 382 204.\n\nBest,\nMAST Studio`
+  // The idempotency key must cover the exact outbound content: Resend rejects
+  // a reused key whose body changed, which would turn a legitimate retry into
+  // a 502. Identical retries dedupe; any real change gets a fresh key.
+  const key = createHash('sha256')
+    .update(`${email}\n${subject}\n${bodyText}\n${createHash('sha256').update(pdfBytes).digest('hex')}`)
+    .digest('hex')
+    .slice(0, 32)
 
   try {
     const { error: sendError } = await resend.emails.send(

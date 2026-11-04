@@ -1,0 +1,39 @@
+{
+  "lighthouseResult": {
+    "categories": {
+      "performance": { "score": 0.62 }
+    },
+    "audits": {
+      "first-contentful-paint": { "displayValue": "2.1 s" },
+      "largest-contentful-paint": { "displayValue": "4.3 s" },
+      "total-blocking-time": { "displayValue": "780 ms" },
+      "cumulative-layout-shift": { "displayValue": "0.18" },
+      "speed-index": { "displayValue": "5.2 s" },
+      "render-blocking-resources": {
+        "title": "Eliminate render-blocking resources",
+        "displayValue": "Potential savings of 620 ms",
+        "details": { "overallSavingsMs": 620 }
+      },
+      "unused-javascript": {
+        "title": "Reduce unused JavaScript",
+        "displayValue": "Potential savings of 410 KiB",
+        "details": { "overallSavingsMs": 450, "overallSavingsBytes": 419840 }
+      },
+      "uses-responsive-images": {
+        "title": "Properly size images",
+        "displayValue": "Potential savings of 380 KiB",
+        "details": { "overallSavingsMs": 300, "overallSavingsBytes": 389120 }
+      },
+      "modern-image-formats": {
+        "title": "Serve images in modern formats",
+        "displayValue": "Potential savings of 210 KiB",
+        "details": { "overallSavingsMs": 180, "overallSavingsBytes": 215040 }
+      },
+      "offscreen-images": {
+        "title": "Defer offscreen images",
+        "displayValue": "Potential savings of 95 KiB",
+        "details": { "overallSavingsMs": 120, "overallSavingsBytes": 97280 }
+      }
+    }
+  }
+}

@@ -134,12 +134,20 @@ function drawField(cursor: Cursor, fonts: Fonts, label: string, value: string, o
   let carry = ''
   for (const word of sanitize(value).split(/\s+/).filter(Boolean)) {
     const candidate = carry ? `${carry} ${word}` : word
-    if (fonts.regular.widthOfTextAtSize(candidate, size) <= firstMax || !carry) {
+    if (fonts.regular.widthOfTextAtSize(candidate, size) <= firstMax) {
       carry = candidate
       continue
     }
-    lines.push(carry)
-    carry = word
+    if (carry) lines.push(carry)
+    // A single word longer than the line (long URLs) is broken, not overflowed.
+    let rest = word
+    while (fonts.regular.widthOfTextAtSize(rest, size) > firstMax) {
+      let cut = rest.length
+      while (cut > 1 && fonts.regular.widthOfTextAtSize(rest.slice(0, cut), size) > firstMax) cut -= 1
+      lines.push(rest.slice(0, cut))
+      rest = rest.slice(cut)
+    }
+    carry = rest
   }
   if (carry) lines.push(carry)
 
@@ -236,8 +244,10 @@ function drawPsiTable(cursor: Cursor, fonts: Fonts, copy: PdfCopy, side: PsiSide
     const color = verdict ? verdictColor[verdict] : INK
     const scale = copy.metricScale[key]
     ensureSpace(cursor, 30)
-    cursor.page.drawText(copy.metricLabels[key], { x: MARGIN + 20, y: cursor.y, size: 9.5, font: fonts.bold, color: INK })
-    cursor.page.drawText(value ?? copy.psiFailed, { x: MARGIN + 70, y: cursor.y, size: 9.5, font: fonts.bold, color })
+    const labelX = MARGIN + 20
+    const valueX = labelX + fonts.bold.widthOfTextAtSize(copy.metricLabels[key], 9.5) + 10
+    cursor.page.drawText(copy.metricLabels[key], { x: labelX, y: cursor.y, size: 9.5, font: fonts.bold, color: INK })
+    cursor.page.drawText(value ?? copy.psiFailed, { x: valueX, y: cursor.y, size: 9.5, font: fonts.bold, color })
     cursor.y -= 12
     drawParagraph(cursor, `${copy.metricExplanations[key]} ${copy.scaleWords.thresholds}: ${scale.good} (${copy.scaleWords.good}), ${scale.poor} (${copy.scaleWords.poor}).`, { font: fonts.regular, size: 8.5, color: GREY, indent: 20 })
     cursor.y -= 2
