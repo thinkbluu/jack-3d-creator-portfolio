@@ -8,7 +8,10 @@ import { CONSENT_OPEN_EVENT } from '@/lib/consent'
 import { useHref, useUi } from '@/lib/i18n/context'
 
 export default function ConsentBanner() {
-  const [visible, setVisible] = useState(false)
+  // Rendered in the server HTML too: the banner is part of the page's legal
+  // surface, and visitors (and checkers) should see it in the first response,
+  // not only after hydration. Returning visitors see it hide right after mount.
+  const [visible, setVisible] = useState(Boolean(GA4_ID))
 
   useEffect(() => {
     if (!GA4_ID) return
@@ -16,7 +19,7 @@ export default function ConsentBanner() {
     // during render would cause a hydration mismatch. Defer to the next frame to
     // keep this out of the synchronous effect body.
     const id = requestAnimationFrame(() => {
-      if (getStoredConsent() === null) setVisible(true)
+      if (getStoredConsent() !== null) setVisible(false)
     })
     return () => cancelAnimationFrame(id)
   }, [])

@@ -5,7 +5,8 @@ import fontkit from '@pdf-lib/fontkit'
 import { PDFDocument, PDFFont, PDFPage, rgb, type RGB } from 'pdf-lib'
 
 import { checkerCopy } from './copy'
-import { sortCategories, type SiteReport } from './types'
+import { sortCategories } from './checks'
+import { type SiteReport } from './types'
 
 /**
  * Server-side PDF report with MAST Studio branding. Noto Sans is embedded so

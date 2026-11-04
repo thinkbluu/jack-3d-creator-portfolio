@@ -10,6 +10,7 @@ import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, graph, serviceNode, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
+import { checkerCopy } from '@/lib/checker/copy'
 import { getServicesByGroup } from '@/lib/services'
 import { isNoDepositActive } from '@/lib/offer'
 import { absoluteUrl } from '@/lib/site'
@@ -204,6 +205,14 @@ export function ServicesView({ locale }: { locale: Locale }) {
                   className="font-sans text-base font-semibold text-[var(--ink)] underline decoration-[var(--brass)] underline-offset-4 transition-colors hover:text-[var(--brass-ink)]"
                 >
                   {copy.guideLink}
+                </Link>
+              </p>
+              <p className="mt-4">
+                <Link
+                  href={localizePath('/verifica-site', locale)}
+                  className="font-sans text-base font-semibold text-[var(--ink)] underline underline-offset-4 transition-colors hover:text-[var(--brass-ink)]"
+                >
+                  {checkerCopy[locale].servicesLink}
                 </Link>
               </p>
             </nav>

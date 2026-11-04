@@ -4,6 +4,7 @@ import MobileWhatsAppBar from '@/components/MobileWhatsAppBar'
 import { SegmentProvider } from '@/components/SegmentContext'
 import SiteHeader from '@/components/SiteHeader'
 import HomeFaq from '@/components/studio/HomeFaq'
+import CheckerBlock from '@/components/studio/CheckerBlock'
 import IntroLoader from '@/components/studio/IntroLoader'
 import SalutBye from '@/components/studio/SalutBye'
 import SalutHero from '@/components/studio/SalutHero'
@@ -31,6 +32,7 @@ export default function HomePage({ afterScenes, footer }: { afterScenes?: React.
         <ReviewsBlock />
         <SalutServices />
         <HomeFaq />
+        <CheckerBlock />
         <SalutBye />
         {afterScenes}
       </main>

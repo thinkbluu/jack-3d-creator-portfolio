@@ -25,6 +25,8 @@ export type CheckerCopy = {
   ui: {
     kicker: string
     h1: string
+    lead: string
+    navLabel: string
     intro: string
     urlLabel: string
     urlPlaceholder: string
@@ -269,6 +271,8 @@ const ro: CheckerCopy = {
   ui: {
     kicker: 'Verificare gratuită',
     h1: 'Verifică-ți site-ul gratuit',
+    lead: 'Rezultatul pe ecran, raportul PDF pe email.',
+    navLabel: 'Verificare site',
     intro:
       'Află în aproximativ 15 secunde cum arată site-ul firmei tale prin ochii unui client: viteză pe telefon, încredere și legal, prezență pe Google, contact și accesibilitate. Vezi rezultatul aici, pe ecran. Abia apoi, dacă vrei raportul complet în PDF, ne dai adresa de e-mail.',
     urlLabel: 'Adresa site-ului tău',
@@ -518,6 +522,8 @@ const en: CheckerCopy = {
   ui: {
     kicker: 'Free check',
     h1: 'Check your website for free',
+    lead: 'The result on screen, the PDF report by email.',
+    navLabel: 'Website checker',
     intro:
       'In about 15 seconds you see your business’s website the way a customer does: mobile speed, trust and legal, Google presence, contact and accessibility. The result appears right here on screen. Only if you want the full PDF report do we ask for your email.',
     urlLabel: 'Your website address',

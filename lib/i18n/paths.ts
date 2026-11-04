@@ -24,6 +24,7 @@ const TOP: Pair[] = [
   { ro: 'newsletter', en: 'newsletter' },
   { ro: 'echipa', en: 'team' },
   { ro: 'ce-iti-trebuie', en: 'what-you-need' },
+  { ro: 'verifica-site', en: 'website-checker' },
 ]
 
 /** Canonical service id is the Romanian slug. English pages use the `en` slug. */
@@ -186,6 +187,7 @@ export function staticEnglishPaths() {
     ...SERVICE_SLUGS.map((pair) => `/servicii/${pair.ro}`),
     '/solutii',
     ...INDUSTRY_SLUGS.map((pair) => `/solutii/${pair.ro}`),
+    '/verifica-site',
   ]
   return paths.map((path) => localizePath(path, 'en'))
 }

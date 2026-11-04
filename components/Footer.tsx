@@ -15,6 +15,7 @@ import {
   PHONE_DISPLAY,
   LINKEDIN_URL,
   PHONE_HREF,
+  REGISTERED_OFFICE,
   SITE_NAME,
   SOCIAL_LINKS,
   TRADE_REGISTER_NUMBER,
@@ -133,7 +134,7 @@ export default function Footer({ cta = true, letter = true }: { cta?: boolean; l
             <p className="max-w-xs leading-relaxed text-[var(--on-dark-2)]">{footer.blurb}</p>
             <address className="flex flex-col items-start not-italic leading-relaxed text-[var(--on-dark-2)]">
               <span className="text-[var(--on-dark)]">{SITE_NAME}</span>
-              <span>{footer.location}</span>
+              <span>{REGISTERED_OFFICE}</span>
               <a href={PHONE_HREF} className={linkClass}>
                 {PHONE_DISPLAY}
               </a>

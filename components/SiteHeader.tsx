@@ -47,6 +47,8 @@ export default function SiteHeader({
     { id: 'servicii', href: href('/servicii'), label: nav.services },
     { id: 'solutii', href: href('/solutii'), label: nav.solutions },
     { id: 'preturi', href: href('/preturi'), label: nav.pricing },
+    // The free checker lives in the full menu only — the desktop inline row stays short.
+    { id: 'verifica-site', href: href('/verifica-site'), label: nav.checker },
     { id: 'cum-lucram', href: href('/cum-lucram'), label: nav.approach },
     { id: 'despre', href: href('/despre'), label: nav.about },
     { id: 'blog', href: href('/blog'), label: nav.guide },

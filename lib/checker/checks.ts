@@ -426,6 +426,9 @@ function recommendedSlugs(categories: CategoryResult[]): string[] {
   const byKey = new Map(categories.map((category) => [category.key, category]))
   const legal = byKey.get('legal')
   if (legal?.verdict === 'poor') slugs.push('conformitate-legala-site')
+  // A single failed legal sub-check (missing ANPC link, no cookie banner…) is
+  // already worth the legal-compliance service, even if the category averages "good".
+  if (legal?.sub.some((entry) => entry.status === 'fail')) slugs.push('conformitate-legala-site')
   if (legal?.sub.some((entry) => entry.id === 'trackers' && entry.status === 'fail')) slugs.push('audit-securitate-gdpr')
   const speed = byKey.get('speed')
   if (speed?.verdict === 'poor') slugs.push('refacere-site')
@@ -433,6 +436,7 @@ function recommendedSlugs(categories: CategoryResult[]): string[] {
   if (contact?.verdict === 'poor') slugs.push('site-de-prezentare')
   const google = byKey.get('google')
   if (google?.verdict === 'poor') slugs.push('seo-local')
+  if (google?.sub.some((entry) => entry.id === 'maps' && entry.status === 'fail')) slugs.push('seo-local')
   return [...new Set(slugs)]
 }
 
@@ -507,7 +511,7 @@ export async function runChecks(url: string, locale: 'ro' | 'en', deadline: numb
     checkedAt: new Date().toISOString(),
     overall,
     categories,
-    fixes: buildFixes(overall, categories),
+    fixes: buildFixes(locale, speedResult.status === 'fulfilled' ? speedResult.value.score : null, categories),
     recommendedSlugs: recommendedSlugs(categories),
   }
 }
