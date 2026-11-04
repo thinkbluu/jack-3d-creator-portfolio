@@ -3,7 +3,7 @@
 import Script from 'next/script'
 import { useEffect, useState } from 'react'
 import { trackConversion } from '@/lib/analytics'
-import { ADS_ID, ADS_WHATSAPP_SEND_TO, GA4_ID, TRACKING_ACTIVE, fireAdsConversion, saveAttributionFromUrl } from '@/lib/ads'
+import { ADS_CALL_SEND_TO, ADS_ID, ADS_WHATSAPP_SEND_TO, GA4_ID, TRACKING_ACTIVE, fireAdsConversion, saveAttributionFromUrl } from '@/lib/ads'
 
 let configured = false
 
@@ -57,6 +57,7 @@ export default function AdsTracking() {
         if (!alreadyTracked)
           trackConversion('whatsapp_click', { link_location: whatsappLocation(anchor), page_path: window.location.pathname })
       } else if (href.startsWith('tel:')) {
+        fireAdsConversion(ADS_CALL_SEND_TO)
         if (!alreadyTracked) trackConversion('phone_click', { page_path: window.location.pathname })
       }
     }

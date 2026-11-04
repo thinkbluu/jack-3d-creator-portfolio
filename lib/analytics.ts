@@ -45,6 +45,12 @@ export function trackConversion(event: string, data?: EventData) {
 
   const payload = withOffer(event, data)
 
+  // Dev diagnostic: every analytics event is visible in the console outside
+  // production, so conversion wiring can be verified without a deployment.
+  if (process.env.NODE_ENV !== 'production') {
+    console.log('[analytics]', event, payload ?? {})
+  }
+
   try {
     ensureVercelQueue()
     track(event, payload)

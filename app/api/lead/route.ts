@@ -8,6 +8,7 @@ const projectTypeLabels = {
   presentation: 'Site de prezentare',
   store: 'Magazin online',
   app: 'Aplicație sau platformă',
+  redesign: 'Refacere site (redesign)',
   unsure: 'Nu știu încă',
 } as const
 
@@ -19,6 +20,7 @@ const englishTypes: Record<string, string> = {
   'Site de prezentare': 'a presentation website',
   'Magazin online': 'an online store',
   'Aplicație sau platformă': 'an app or platform',
+  'Refacere site (redesign)': 'a website redesign',
   'Nu știu încă': 'a project you are still defining',
 }
 
@@ -33,6 +35,12 @@ type LeadPayload = {
   channel?: unknown
   website?: unknown
   locale?: unknown
+  /** Free text: what the visitor's business does (callback form). */
+  business?: unknown
+  /** The landing URL the form was submitted from. */
+  pageUrl?: unknown
+  /** gclid / utm_* captured client-side on first load (lib/ads.ts). */
+  attribution?: unknown
 }
 
 const confirmation = {
@@ -150,13 +158,34 @@ export async function POST(request: Request) {
   const name = str(payload.name, 120)
   const email = str(payload.email, 254).toLowerCase()
   const phone = str(payload.phone, 30)
-  const channel = payload.channel === 'email' ? 'email' : 'whatsapp'
+  const channel = payload.channel === 'email' ? 'email' : payload.channel === 'call' ? 'call' : 'whatsapp'
   const currentSite = typeof payload.currentSite === 'string' ? payload.currentSite.trim() : ''
+  const business = str(payload.business, 300)
+  const pageUrl = str(payload.pageUrl, 2048)
 
+  // Client-side attribution (gclid / utm_*), whitelisted and length-capped.
+  const attribution: Record<string, string> = {}
+  if (payload.attribution && typeof payload.attribution === 'object') {
+    for (const [key, value] of Object.entries(payload.attribution as Record<string, unknown>)) {
+      if (
+        (key === 'gclid' || key === 'gbraid' || key === 'wbraid' || key.startsWith('utm_')) &&
+        typeof value === 'string' &&
+        value.trim()
+      ) {
+        attribution[key] = value.trim().slice(0, 200)
+      }
+    }
+  }
+
+  // The callback channel is phone-only: name and a valid phone are enough.
   // The email channel sends name + email (+ optional phone); older clients
   // send a single "contact" field with a phone number or an email address.
   let contact: string
-  if (email || name) {
+  if (channel === 'call') {
+    if (name.length < 2) return json({ ok: false, error: error.name }, 400)
+    if (phone.replace(/\D/g, '').length < 9) return json({ ok: false, error: error.contact }, 400)
+    contact = phone
+  } else if (email || name) {
     if (name.length < 2) return json({ ok: false, error: error.name }, 400)
     if (!isValidEmail(email)) return json({ ok: false, error: error.email }, 400)
     if (phone && phone.replace(/\D/g, '').length < 9) return json({ ok: false, error: error.contact }, 400)
@@ -175,16 +204,21 @@ export async function POST(request: Request) {
   const timeBucket = Math.floor(Date.now() / RATE_LIMIT_WINDOW_MS)
   const timestamp = new Date(timeBucket * RATE_LIMIT_WINDOW_MS).toISOString()
   const utmParameters = getUtmParameters(request.headers.get('referer'))
+  // Client-side attribution wins: the referer loses the query string under
+  // strict-origin-when-cross-origin, so gclid only arrives from the form.
+  const mergedUtm: Record<string, string> = { ...Object.fromEntries(utmParameters), ...attribution }
   const lead = {
     projectType,
     locale,
     currentSite: currentSite || 'Nu a fost furnizat',
     name: name || undefined,
     contact,
+    business: business || undefined,
+    pageUrl: pageUrl || undefined,
     channel,
     timestamp,
     ip,
-    utm: Object.fromEntries(utmParameters),
+    utm: mergedUtm,
   }
 
   const resend = resendClient()
@@ -195,12 +229,14 @@ export async function POST(request: Request) {
     return json({ ok: false, error: error.send }, 503)
   }
 
-  const utmText = utmParameters.length
-    ? utmParameters.map(([key, value]) => `${key}: ${value}`).join('\n')
+  const utmEntries = Object.entries(mergedUtm)
+  const utmText = utmEntries.length
+    ? utmEntries.map(([key, value]) => `${key}: ${value}`).join('\n')
     : 'Nu sunt disponibili'
-  const utmHtml = utmParameters.length
-    ? `<ul>${utmParameters.map(([key, value]) => `<li><strong>${escapeHtml(key)}:</strong> ${escapeHtml(value)}</li>`).join('')}</ul>`
+  const utmHtml = utmEntries.length
+    ? `<ul>${utmEntries.map(([key, value]) => `<li><strong>${escapeHtml(key)}:</strong> ${escapeHtml(value)}</li>`).join('')}</ul>`
     : '<p>Nu sunt disponibili</p>'
+  const channelLabel = channel === 'email' ? 'email' : channel === 'call' ? 'Telefon (te sunăm noi)' : 'WhatsApp'
   const languageLine = locale === 'en' ? 'Limbă formular: engleză' : ''
   const idempotencyHash = createHash('sha256')
     .update(`${projectType}\n${currentSite}\n${contact}\n${JSON.stringify(utmParameters)}\n${timeBucket}`)
@@ -220,7 +256,9 @@ export async function POST(request: Request) {
           `Site actual: ${currentSite || 'Nu a fost furnizat'}`,
           ...(name ? [`Nume: ${name}`] : []),
           `Contact: ${contact}`,
-          `Răspuns preferat: ${channel === 'email' ? 'email' : 'WhatsApp'}`,
+          ...(business ? [`Ce face firma: ${business}`] : []),
+          ...(pageUrl ? [`Pagina de proveniență: ${pageUrl}`] : []),
+          `Răspuns preferat: ${channelLabel}`,
           `Timestamp: ${timestamp}`,
           '',
           'Parametri UTM:',
@@ -233,7 +271,9 @@ export async function POST(request: Request) {
           <p><strong>Site actual:</strong> ${escapeHtml(currentSite || 'Nu a fost furnizat')}</p>
           ${name ? `<p><strong>Nume:</strong> ${escapeHtml(name)}</p>` : ''}
           <p><strong>Contact:</strong> ${escapeHtml(contact)}</p>
-          <p><strong>Răspuns preferat:</strong> ${channel === 'email' ? 'email' : 'WhatsApp'}</p>
+          ${business ? `<p><strong>Ce face firma:</strong> ${escapeHtml(business)}</p>` : ''}
+          ${pageUrl ? `<p><strong>Pagina de proveniență:</strong> ${escapeHtml(pageUrl)}</p>` : ''}
+          <p><strong>Răspuns preferat:</strong> ${escapeHtml(channelLabel)}</p>
           <p><strong>Timestamp:</strong> ${escapeHtml(timestamp)}</p>
           <h2>Parametri UTM</h2>
           ${utmHtml}

@@ -3,15 +3,19 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import BlogCard from '@/components/BlogCard'
+import CallbackForm from '@/components/ads/CallbackForm'
 import ContactButton from '@/components/ContactButton'
 import Footer from '@/components/Footer'
 import JsonLd from '@/components/JsonLd'
+import NeedsBlock from '@/components/ads/NeedsBlock'
 import SiteHeader from '@/components/SiteHeader'
+import StickyContactBar from '@/components/ads/StickyContactBar'
 import TrackedLink from '@/components/TrackedLink'
 import PageHero from '@/components/studio/PageHero'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { getPostBySlug, type BlogPost } from '@/lib/blog'
 import { coverExists } from '@/lib/covers'
+import { RESPONSE_MICROCOPY } from '@/lib/ads-copy'
 import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
@@ -19,7 +23,14 @@ import { getProjectBySlug, type Project } from '@/lib/projects'
 import { breadcrumbNode, faqNode, graph, serviceNode, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
 import { getServicePageBySlug, serviceGroups } from '@/lib/services'
-import { whatsappUrl } from '@/lib/site'
+import { PHONE_HREF, whatsappUrl } from '@/lib/site'
+
+// The two services the Google Search campaign points at get the full
+// conversion treatment: needs block, callback form and sticky mobile bar.
+const ADS_LANDINGS: Record<string, { projectType: 'store' | 'redesign'; landing: 'magazin-online' | 'refacere-site' }> = {
+  'magazin-online': { projectType: 'store', landing: 'magazin-online' },
+  'refacere-site': { projectType: 'redesign', landing: 'refacere-site' },
+}
 
 type ServiceChrome = {
   kicker: string
@@ -37,8 +48,11 @@ type ServiceChrome = {
   writeDirect: (message: string) => string
   quoteCta: string
   whatsappCta: string
+  callCta: string
   preferForm: string
   quoteForm: string
+  callbackTitle: string
+  callbackIntro: string
   guides: string
   other: string
   all: string
@@ -63,8 +77,11 @@ const serviceChrome: Record<Locale, ServiceChrome> = {
     writeDirect: (message) => `Sau scrie-ne direct: „${message}”`,
     quoteCta: 'Cere ofertă',
     whatsappCta: 'Scrie-ne pe WhatsApp',
+    callCta: 'Sună-ne',
     preferForm: 'Preferi un formular?',
     quoteForm: 'Trimite o cerere de ofertă',
+    callbackTitle: 'Te sunăm noi',
+    callbackIntro: 'Lasă numărul de telefon și te sunăm. Fără telefoane în plus, fără presiune.',
     guides: 'Ghiduri utile',
     other: 'Alte servicii',
     all: 'Toate serviciile și prețurile',
@@ -87,8 +104,11 @@ const serviceChrome: Record<Locale, ServiceChrome> = {
     writeDirect: (message) => `Or write to us directly: “${message}”`,
     quoteCta: 'Get a quote',
     whatsappCta: 'Message us on WhatsApp',
+    callCta: 'Call us',
     preferForm: 'Prefer a form?',
     quoteForm: 'Send a quote request',
+    callbackTitle: 'We call you',
+    callbackIntro: 'Leave your phone number and we call you. No extra calls, no pressure.',
     guides: 'Useful guides',
     other: 'Other services',
     all: 'All services and prices',
@@ -162,6 +182,7 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
   const copy = serviceChrome[locale]
   const path = localizePath(`/servicii/${service.slug}`, locale)
   const name = phraseName(service.shortName, locale)
+  const adsLanding = ADS_LANDINGS[service.slug]
   const group = serviceGroups.find((item) => item.id === service.group)
   const related = service.relatedSlugs
     .map((relatedSlug) => getServicePageBySlug(relatedSlug, locale))
@@ -235,7 +256,14 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
                   >
                     {copy.whatsappCta}
                   </TrackedLink>
+                  <a
+                    href={PHONE_HREF}
+                    className="mono-label inline-flex min-h-11 items-center justify-center whitespace-nowrap rounded-[var(--radius-pill)] border border-[var(--hairline-dark)] px-6 text-[var(--on-dark)] transition-colors hover:border-[var(--on-dark)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass-lite)]"
+                  >
+                    {copy.callCta}
+                  </a>
                 </div>
+                <p className="mono-label mt-4 text-[var(--on-dark-2)] lg:text-right">{RESPONSE_MICROCOPY[locale]}</p>
               </div>
             }
           >
@@ -380,6 +408,27 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
             </p>
           </section>
 
+          {adsLanding ? (
+            <>
+              <div className="mt-24">
+                <NeedsBlock landing={adsLanding.landing} locale={locale} />
+              </div>
+              <section id="te-sunam-noi" aria-labelledby="callback-title" className="porthole mt-12 scroll-mt-24 p-8 md:p-12">
+                <h2 id="callback-title" className="type-h3">
+                  {copy.callbackTitle}
+                </h2>
+                <p className="mt-3 max-w-md text-[15px] leading-relaxed text-[var(--ink-2)]">{copy.callbackIntro}</p>
+                <div className="mt-6 max-w-md">
+                  <CallbackForm
+                    projectType={adsLanding.projectType}
+                    placement={`${adsLanding.landing}_callback`}
+                    locale={locale}
+                  />
+                </div>
+              </section>
+            </>
+          ) : null}
+
           {posts.length > 0 ? (
             <section className="mt-24">
               <h2 className="type-h2">{copy.guides}</h2>
@@ -415,6 +464,13 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
         </article>
       </main>
       <Footer />
+      {adsLanding ? (
+        <StickyContactBar
+          waHref={whatsappUrl(service.waMessage)}
+          hideWhenVisible="#te-sunam-noi"
+          labels={{ whatsapp: 'WhatsApp', call: copy.callCta }}
+        />
+      ) : null}
       <JsonLd data={jsonLd} />
     </>
   )

@@ -19,6 +19,12 @@ export const offerConditions: Record<Locale, string> = {
   en: 'Conditions: we start once we have your complete materials, the site stays on our test address until payment, and you decide within 7 days of delivery.',
 }
 
+/** Short hero line for the ad landing pages while the offer is active. */
+export const offerHeroLine: Record<Locale, string> = {
+  ro: 'În noiembrie, fără avans: plătești doar dacă îți place.',
+  en: 'In November, no deposit: you pay only if you like it.',
+}
+
 /** Announcement bar copy, linking to the pricing page (canonical path). */
 export const offerBar: Record<Locale, { text: string; href: string }> = {
   ro: { text: 'Fără avans în noiembrie. Plătești doar dacă îți place. →', href: '/preturi' },

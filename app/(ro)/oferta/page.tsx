@@ -4,9 +4,9 @@ import OfferLanding from './view'
 // Campaign landing page for Google Ads traffic only: kept out of search
 // results and out of the sitemap on purpose.
 export const metadata: Metadata = {
-  title: 'Site gratuit, plătești doar dacă îți place',
+  title: 'Site de prezentare de la 300 EUR, în 48 de ore',
   description:
-    'Site de prezentare de la 300 EUR, gata în 48 de ore după ce primim materialele. Fără avans până la 30 noiembrie: plătești doar dacă îți place.',
+    'Site de prezentare pentru firma ta, de la 300 EUR, gata în 48 de ore. Textele le scriem noi. Fără avans în noiembrie: plătești doar dacă îți place.',
   robots: { index: false, follow: false },
 }
 
