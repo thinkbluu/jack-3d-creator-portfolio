@@ -1,14 +1,17 @@
 import { createHash } from 'node:crypto'
 
 import { checkerCopy } from '@/lib/checker/copy'
+import { collectDetail } from '@/lib/checker/detail'
 import { buildReportPdf } from '@/lib/checker/pdf'
 import { normalizeInputUrl } from '@/lib/checker/checks'
-import type { CategoryKey, CategoryResult, FixSuggestion, SiteReport } from '@/lib/checker/types'
+import type { CategoryKey, CategoryResult, FixSuggestion, SiteReport, SpeedMetricSet } from '@/lib/checker/types'
 import { CATEGORY_KEYS } from '@/lib/checker/types'
 import { escapeHtml, fromAddress, isValidEmail, resendClient } from '@/lib/email'
+import { localizePath } from '@/lib/i18n/paths'
 import type { Locale } from '@/lib/i18n/locale'
 import { clientIp, isRateLimited } from '@/lib/request'
-import { EMAIL } from '@/lib/site'
+import { getServicePageBySlug } from '@/lib/services'
+import { EMAIL, absoluteUrl } from '@/lib/site'
 
 export const runtime = 'nodejs'
 export const maxDuration = 30
@@ -34,6 +37,27 @@ function text(value: unknown, max: number) {
   return typeof value === 'string' ? value.trim().slice(0, max) : ''
 }
 
+/** Validates an optional speed-metric set sent by the client. */
+function parseMetrics(value: unknown): SpeedMetricSet | undefined {
+  if (!value || typeof value !== 'object') return undefined
+  const raw = value as Record<string, unknown>
+  if (typeof raw.performance !== 'number' || raw.performance < 0 || raw.performance > 100) return undefined
+  const str = (key: string) => (typeof raw[key] === 'string' ? (raw[key] as string).slice(0, 40) : undefined)
+  const fcp = str('fcp')
+  const lcp = str('lcp')
+  const tbt = str('tbt')
+  const cls = str('cls')
+  const si = str('si')
+  return {
+    performance: Math.round(raw.performance),
+    ...(fcp ? { fcp } : {}),
+    ...(lcp ? { lcp } : {}),
+    ...(tbt ? { tbt } : {}),
+    ...(cls ? { cls } : {}),
+    ...(si ? { si } : {}),
+  }
+}
+
 /** Strict shape check: the PDF is rebuilt only from well-formed report data. */
 function parseReport(value: unknown, url: string): SiteReport | null {
   if (!value || typeof value !== 'object') return null
@@ -55,7 +79,12 @@ function parseReport(value: unknown, url: string): SiteReport | null {
         if (!entrySub || typeof entrySub !== 'object') return null
         const subItem = entrySub as Record<string, unknown>
         if (typeof subItem.id !== 'string' || typeof subItem.status !== 'string' || typeof subItem.label !== 'string') return null
-        sub.push({ id: subItem.id, status: subItem.status as 'pass', label: subItem.label.slice(0, 300) })
+        sub.push({
+          id: subItem.id,
+          status: subItem.status as 'pass',
+          label: subItem.label.slice(0, 300),
+          ...(typeof subItem.detail === 'string' ? { detail: subItem.detail.slice(0, 300) } : {}),
+        })
       }
     }
     categories.push({
@@ -63,6 +92,7 @@ function parseReport(value: unknown, url: string): SiteReport | null {
       score: item.score === null ? null : Math.round(item.score),
       verdict: item.verdict as CategoryResult['verdict'],
       sub,
+      ...(item.key === 'speed' ? { metrics: parseMetrics(item.metrics) } : {}),
     })
   }
 
@@ -87,6 +117,10 @@ function parseReport(value: unknown, url: string): SiteReport | null {
         ? Math.round(raw.overall)
         : null
 
+  const recommendedSlugs = Array.isArray(raw.recommendedSlugs)
+    ? raw.recommendedSlugs.filter((slug): slug is string => typeof slug === 'string').slice(0, 8).map((slug) => slug.slice(0, 60))
+    : []
+
   return {
     url,
     finalUrl: raw.finalUrl.slice(0, 500),
@@ -94,7 +128,7 @@ function parseReport(value: unknown, url: string): SiteReport | null {
     overall,
     categories,
     fixes,
-    recommendedSlugs: [],
+    recommendedSlugs,
   }
 }
 
@@ -143,9 +177,26 @@ export async function POST(request: Request) {
     return json({ ok: false, error: copy.ui.reportError }, 503)
   }
 
+  // The PDF is the detailed audit: raw measured values are collected fresh
+  // here (one page fetch + a PageSpeed desktop run); the mobile speed result
+  // is reused from the on-screen check.
+  let facts
+  try {
+    facts = await collectDetail(url, 18_000, 12_000)
+  } catch (error) {
+    console.error('[check-report] Detaliile nu au putut fi colectate:', error)
+    return json({ ok: false, error: copy.ui.reportError }, 500)
+  }
+
+  const services = report.recommendedSlugs.flatMap((slug) => {
+    const service = getServicePageBySlug(slug, locale)
+    return service ? [{ name: service.name, priceLabel: service.priceLabel }] : []
+  })
+  const recheckUrl = `${absoluteUrl(localizePath('/verifica-site', locale))}?url=${encodeURIComponent(url)}`
+
   let pdfBytes: Uint8Array
   try {
-    pdfBytes = await buildReportPdf(report, locale)
+    pdfBytes = await buildReportPdf(report, facts, locale, { recheckUrl, services })
   } catch (error) {
     console.error('[check-report] PDF nu a putut fi generat:', error)
     return json({ ok: false, error: copy.ui.reportError }, 500)

@@ -21,6 +21,16 @@ export type SubCheck = {
 
 export type CategoryVerdict = 'good' | 'fair' | 'poor' | 'unverified'
 
+/** Core Web Vitals + diagnostic metrics as reported by PageSpeed (display values). */
+export type SpeedMetricSet = {
+  performance: number
+  fcp?: string
+  lcp?: string
+  tbt?: string
+  cls?: string
+  si?: string
+}
+
 export type CategoryResult = {
   key: CategoryKey
   /** 0-100, or null when the check could not run (excluded from the average). */
@@ -28,7 +38,7 @@ export type CategoryResult = {
   verdict: CategoryVerdict
   sub: SubCheck[]
   /** Mobile speed metrics, only on the `speed` category. */
-  metrics?: { performance: number; lcp?: string; cls?: string }
+  metrics?: SpeedMetricSet
 }
 
 /** One entry of the "top fixes" list, written as fixed templates. */
@@ -38,6 +48,65 @@ export type FixSuggestion = {
   what: string
   why: string
   who: string
+}
+
+/** One PageSpeed "opportunity" (an audit with an estimated saving). */
+export type PsiOpportunity = {
+  id: string
+  /** Lighthouse audit title in English; used as fallback when no template exists. */
+  title: string
+  displayValue?: string
+  savingsMs?: number
+  savingsKb?: number
+}
+
+/** One PageSpeed run (mobile comes with the check, desktop only for the PDF). */
+export type PsiSide = {
+  ok: boolean
+  performance: number | null
+  metrics: SpeedMetricSet
+  opportunities: PsiOpportunity[]
+}
+
+/** Raw measured facts collected only for the PDF report. */
+export type DetailFacts = {
+  redirects: { from: string; status: number; to: string }[]
+  serverResponseMs: number | null
+  htmlBytes: number
+  scriptCount: number
+  stylesheetCount: number
+  compression: 'gzip' | 'br' | 'none' | 'unknown'
+  finalUrl: string
+  userAgent: string
+  title: string
+  description: string
+  h1s: string[]
+  lang: string
+  jsonLdTypes: string[]
+  mapsLink: string | null
+  anpcLink: string | null
+  salLink: string | null
+  companyMatch: string | null
+  privacyLink: string | null
+  cookieBanner: 'strong' | 'hint' | 'none'
+  trackers: string[]
+  trackerScripts: string[]
+  cookies: string[]
+  imagesTotal: number
+  imagesWithoutAlt: string[]
+  fieldsTotal: number
+  fieldsWithoutLabel: string[]
+  phone: string | null
+  whatsapp: string | null
+  email: string | null
+  hasForm: boolean
+  addressText: string | null
+  hoursText: string | null
+  robotsUrl: string
+  robotsOk: boolean | null
+  sitemapUrl: string
+  sitemapOk: boolean | null
+  desktop: PsiSide | null
 }
 
 export type SiteReport = {

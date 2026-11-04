@@ -1,6 +1,6 @@
 import { checkerCopy, fill, type CheckerCopy } from './copy'
 import { FetchBlockedError, fetchChecked, fetchSmallFile } from './fetch-page'
-import type { CategoryKey, CategoryResult, CategoryVerdict, FixSuggestion, SiteReport, SubCheck } from './types'
+import type { CategoryKey, CategoryResult, CategoryVerdict, FixSuggestion, PsiOpportunity, SiteReport, SpeedMetricSet, SubCheck } from './types'
 
 /** Turns "firmata.ro", "www.firmata.ro" or a full URL into a clean https:// URL. */
 export function normalizeInputUrl(input: string): string | null {
@@ -58,7 +58,7 @@ function stripInvisible(html: string) {
   return html.replace(/<(script|style|noscript|svg)\b[\s\S]*?<\/\1>/gi, ' ')
 }
 
-function visibleText(html: string) {
+export function visibleText(html: string) {
   return stripInvisible(html)
     .replace(/<[^>]+>/g, ' ')
     .replace(/&nbsp;/gi, ' ')
@@ -66,16 +66,16 @@ function visibleText(html: string) {
     .replace(/\s+/g, ' ')
 }
 
-function tags(html: string, pattern: RegExp) {
+export function tags(html: string, pattern: RegExp) {
   return html.match(pattern) ?? []
 }
 
-function attr(tag: string, name: string): string | null {
+export function attr(tag: string, name: string): string | null {
   const match = tag.match(new RegExp(`\\b${name}\\s*=\\s*("([^"]*)"|'([^']*)'|([^\\s>]+))`, 'i'))
   return match ? (match[2] ?? match[3] ?? match[4] ?? null) : null
 }
 
-function hrefs(html: string): string[] {
+export function hrefs(html: string): string[] {
   const values: string[] = []
   for (const anchor of tags(html, /<a\b[^>]*>/gi)) {
     const value = attr(anchor, 'href')
@@ -84,20 +84,20 @@ function hrefs(html: string): string[] {
   return values
 }
 
-const TRACKER_PATTERNS: Array<[string, RegExp]> = [
+export const TRACKER_PATTERNS: Array<[string, RegExp]> = [
   ['google-analytics', /googletagmanager\.com\/gtag\/js|google-analytics\.com|googletagmanager\.com\/gtm\.js|__gtag|gtag\(/i],
   ['meta-pixel', /connect\.facebook\.net|fbq\(|facebook\.com\/tr\b/i],
   ['tiktok', /analytics\.tiktok\.com|ttq\./i],
 ]
 
-const TRACKER_COOKIE_NAMES = /^(_ga|_gid|_gat|_fbp|_fr|_ttp|_ttq|_gcl)/i
+export const TRACKER_COOKIE_NAMES = /^(_ga|_gid|_gat|_fbp|_fr|_ttp|_ttq|_gcl)/i
 
-const CONSENT_MARKERS =
+export const CONSENT_MARKERS =
   /cookiebot|cookieyes|complianz|cookielawinfo|onetrust|borlabs|moove_gdpr|cookie-consent|cookieconsent|cookie_consent|consentmanager|consent-manager|iubenda|termly|klaro|cookie-banner|cookiebanner|gdpr-cookie|cmplz_|Cookiebot|usercentrics/i
 
-const CONSENT_TEXT_MARKERS = /accept[ăa] cookie|accept cookies|cookie policy|politica cookie|gestionare cookie|cookie settings|preferin[țt]e cookie/i
+export const CONSENT_TEXT_MARKERS = /accept[ăa] cookie|accept cookies|cookie policy|politica cookie|gestionare cookie|cookie settings|preferin[țt]e cookie/i
 
-function jsonLdTypes(html: string): string[] {
+export function jsonLdTypes(html: string): string[] {
   const types: string[] = []
   const blocks = html.match(/<script[^>]*type\s*=\s*["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi) ?? []
   for (const block of blocks) {
@@ -132,26 +132,75 @@ const BUSINESS_TYPES = /(^|\b)(organization|localbusiness|professionalservice|st
 // The five categories
 // ---------------------------------------------------------------------------
 
+type PsiResponse = {
+  lighthouseResult?: {
+    categories?: { performance?: { score?: number } }
+    audits?: Record<string, { title?: string; displayValue?: string; score?: number; details?: { overallSavingsMs?: number; overallSavingsBytes?: number } }>
+  }
+}
+
+/** One PageSpeed Insights run. Returns null when the API fails or times out. */
+export async function fetchPsi(url: string, strategy: 'mobile' | 'desktop', timeoutMs: number): Promise<PsiResponse | null> {
+  const key = process.env.PAGESPEED_API_KEY?.trim()
+  const psiUrl =
+    `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=${strategy}&category=performance` +
+    (key ? `&key=${encodeURIComponent(key)}` : '')
+  try {
+    const response = await fetch(psiUrl, { signal: AbortSignal.timeout(timeoutMs), cache: 'no-store' })
+    if (!response.ok) return null
+    return (await response.json()) as PsiResponse
+  } catch {
+    return null
+  }
+}
+
+/** The five Lighthouse metrics the PDF reports, as display values. */
+function psiMetrics(data: PsiResponse): Omit<SpeedMetricSet, 'performance'> {
+  const audits = data.lighthouseResult?.audits ?? {}
+  const pick = (id: string) => audits[id]?.displayValue
+  const fcp = pick('first-contentful-paint')
+  const lcp = pick('largest-contentful-paint')
+  const tbt = pick('total-blocking-time')
+  const cls = pick('cumulative-layout-shift')
+  const si = pick('speed-index')
+  return {
+    ...(fcp ? { fcp } : {}),
+    ...(lcp ? { lcp } : {}),
+    ...(tbt ? { tbt } : {}),
+    ...(cls ? { cls } : {}),
+    ...(si ? { si } : {}),
+  }
+}
+
+/** Audits with an estimated saving, sorted by time saved, top 5. */
+export function psiOpportunities(data: PsiResponse): PsiOpportunity[] {
+  const audits = data.lighthouseResult?.audits ?? {}
+  const list: PsiOpportunity[] = []
+  for (const [id, audit] of Object.entries(audits)) {
+    const savingsMs = audit.details?.overallSavingsMs
+    const savingsKb = audit.details?.overallSavingsBytes
+    if (typeof savingsMs !== 'number' || savingsMs <= 0) continue
+    list.push({
+      id,
+      title: audit.title ?? id,
+      ...(audit.displayValue ? { displayValue: audit.displayValue } : {}),
+      savingsMs: Math.round(savingsMs),
+      ...(typeof savingsKb === 'number' && savingsKb > 0 ? { savingsKb: Math.round(savingsKb / 102.4) / 10 } : {}),
+    })
+  }
+  return list.sort((a, b) => (b.savingsMs ?? 0) - (a.savingsMs ?? 0)).slice(0, 5)
+}
+
 async function speedCheck(url: string, locale: 'ro' | 'en', deadline: number): Promise<CategoryResult> {
   const copy = checkerCopy[locale]
   const map: SubMap = new Map()
   const remaining = Math.max(2000, deadline - Date.now())
-  const key = process.env.PAGESPEED_API_KEY?.trim()
-  const psiUrl =
-    `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&strategy=mobile&category=performance` +
-    (key ? `&key=${encodeURIComponent(key)}` : '')
 
   try {
-    const response = await fetch(psiUrl, { signal: AbortSignal.timeout(Math.min(remaining, 22_000)), cache: 'no-store' })
-    if (!response.ok) throw new Error(`PSI ${response.status}`)
-    const data = (await response.json()) as {
-      lighthouseResult?: { categories?: { performance?: { score?: number } }; audits?: Record<string, { displayValue?: string; score?: number }> }
-    }
-    const score01 = data.lighthouseResult?.categories?.performance?.score
+    const data = await fetchPsi(url, 'mobile', Math.min(remaining, 22_000))
+    const score01 = data?.lighthouseResult?.categories?.performance?.score
     if (typeof score01 !== 'number') throw new Error('PSI without performance score')
     const performance = Math.round(score01 * 100)
-    const lcp = data.lighthouseResult?.audits?.['largest-contentful-paint']?.displayValue
-    const cls = data.lighthouseResult?.audits?.['cumulative-layout-shift']?.displayValue
 
     const status: SubCheck['status'] = performance >= 80 ? 'pass' : performance >= 50 ? 'warn' : 'fail'
     sub(map, 'performance', status, copy.sub.performance[status])
@@ -160,7 +209,7 @@ async function speedCheck(url: string, locale: 'ro' | 'en', deadline: number): P
       score: performance,
       verdict: verdictFor(performance),
       sub: [...map.values()],
-      metrics: { performance, ...(lcp ? { lcp } : {}), ...(cls ? { cls } : {}) },
+      metrics: { performance, ...psiMetrics(data ?? {}) },
     }
   } catch {
     return { key: 'speed', score: null, verdict: 'unverified', sub: [] }

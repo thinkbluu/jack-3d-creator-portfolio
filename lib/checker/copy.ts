@@ -8,6 +8,108 @@ import type { CategoryKey, CategoryVerdict } from './types'
 
 export type SubCopy = { pass: string; warn: string; fail: string }
 
+export type PlanEntry = {
+  impact: 'high' | 'medium' | 'low'
+  effort: 'under1h' | 'hours' | 'days'
+  steps: string[]
+}
+
+export type GlossaryEntry = { term: string; text: string }
+
+/** Every fixed sentence the PDF report can contain. */
+export type PdfCopy = {
+  title: string
+  reportFor: string
+  date: string
+  overall: string
+  categories: string
+  topFixes: string
+  footer: string
+  labNote: string
+  unverified: string
+  what: string
+  why: string
+  who: string
+  pageOf: string
+  footerSite: string
+  summaryBest: string
+  summaryWorst: string
+  summaryProblems: string
+  howToReadTitle: string
+  howToRead: string[]
+  thresholds: { good: string; fair: string; poor: string }
+  planTitle: string
+  planIntro: string
+  buckets: { week: string; month: string; later: string }
+  planLabels: { problem: string; why: string; how: string; who: string; effort: string; impact: string }
+  efforts: Record<PlanEntry['effort'], string>
+  impacts: Record<PlanEntry['impact'], string>
+  plan: Record<string, PlanEntry>
+  deviceMobile: string
+  deviceDesktop: string
+  metricLabels: Record<'fcp' | 'lcp' | 'tbt' | 'cls' | 'si', string>
+  metricExplanations: Record<'fcp' | 'lcp' | 'tbt' | 'cls' | 'si', string>
+  metricScale: Record<'fcp' | 'lcp' | 'tbt' | 'cls' | 'si', { good: string; poor: string }>
+  performanceScale: { good: string; fair: string; poor: string }
+  scaleWords: { thresholds: string; good: string; poor: string }
+  detailTitleRow: string
+  detailDescriptionRow: string
+  detailChars: string
+  opportunitiesTitle: string
+  opportunityFallback: string
+  opportunities: Record<string, string>
+  psiFailed: string
+  detailNotFound: string
+  detailRedirects: string
+  detailNoRedirects: string
+  detailRedirectHop: string
+  detailLinkFound: string
+  detailCompanyFound: string
+  detailCookieBanner: Record<'strong' | 'hint' | 'none', string>
+  detailTrackersFound: string
+  detailTrackersNone: string
+  detailCookiesTitle: string
+  detailCookiesNone: string
+  detailCookiesNote: string
+  detailTitleText: string
+  detailDescriptionText: string
+  detailH1Text: string
+  detailH1None: string
+  detailJsonLd: string
+  detailJsonLdNone: string
+  detailLang: string
+  detailImagesNoAlt: string
+  detailImagesAllAlt: string
+  detailFieldsNoLabel: string
+  detailFieldsAllLabeled: string
+  detailPhone: string
+  detailWhatsapp: string
+  detailEmail: string
+  detailForm: string
+  detailFormNone: string
+  detailAddress: string
+  detailHours: string
+  techTitle: string
+  techNote: string
+  techLabels: { serverTime: string; htmlSize: string; scripts: string; stylesheets: string; compression: string; finalUrl: string; userAgent: string }
+  compressionValues: Record<'gzip' | 'br' | 'none' | 'unknown', string>
+  benchmarkTitle: string
+  benchmarkIntro: string
+  benchmarkLines: string[]
+  benchmarkSource: string
+  checklistTitle: string
+  checklistIntro: string
+  glossaryTitle: string
+  glossary: GlossaryEntry[]
+  nextTitle: string
+  nextIntro: string
+  nextServices: string
+  nextWhatsapp: string
+  nextEmail: string
+  nextRecheck: string
+  nextGenerated: string
+}
+
 export type CheckerCopy = {
   categories: Record<CategoryKey, { name: string; note?: string }>
   verdicts: Record<CategoryVerdict, string>
@@ -61,23 +163,375 @@ export type CheckerCopy = {
     what: string
     why: string
     who: string
+    pdfLine: string
   }
-  pdf: {
-    title: string
-    reportFor: string
-    date: string
-    overall: string
-    categories: string
-    topFixes: string
-    footer: string
-    labNote: string
-    unverified: string
-    what: string
-    why: string
-    who: string
-  }
+  pdf: PdfCopy
   homeBlock: { title: string; text: string; link: string }
   servicesLink: string
+}
+
+const pdfRo: PdfCopy = {
+  title: 'Raport verificare site',
+  reportFor: 'Site verificat',
+  date: 'Data verificării',
+  overall: 'Scor general',
+  categories: 'Rezultate pe categorii',
+  topFixes: 'Primele reparatții, în ordinea impactului',
+  footer: 'Raport generat automat de verificatorul gratuit MAST Studio. Valorile de viteză sunt din testul de laborator Google PageSpeed. Verificarea legală și de cookie-uri privește HTML-ul inițial al paginii, nu un audit complet de browser.',
+  labNote: 'Test de laborator',
+  unverified: 'nu am putut verifica',
+  what: 'Ce e greșit',
+  why: 'De ce contează',
+  who: 'Cine o repară de obicei',
+  pageOf: 'Pagina {x} din {y}',
+  footerSite: 'maststudio.ro',
+  summaryBest: 'Cel mai bun la: {name} ({score}/100).',
+  summaryWorst: 'Cel mai slab la: {name} ({score}/100).',
+  summaryProblems: 'Probleme găsite: {n}, din care {urgent} urgente.',
+  howToReadTitle: 'Cum să citești raportul',
+  howToRead: [
+    'Scorul merge de la 0 la 100 și este media categoriilor care au putut fi verificate. Fiecare verificare primește un marcaj: verde (în regulă), galben (de îmbunătățit) sau roșu (problemă).',
+    'Pragurile scorului: 80–100 înseamnă bine, 50–79 înseamnă de îmbunătățit, sub 50 înseamnă probleme grave.',
+    'Viteza este un test de laborator făcut de Google (PageSpeed), nu o măsurătoare la vizitatori reali. Scorul poate varia cu câteva puncte între două rulări, la același site.',
+    'Verificările legale și de cookie-uri privesc HTML-ul inițial al paginii principale, nu un audit complet de browser. Un script de măsurare prezent, dar blocat până la acord, contează ca avertisment, nu ca problemă.',
+  ],
+  thresholds: { good: '80–100: bine', fair: '50–79: de îmbunătățit', poor: '0–49: probleme grave' },
+  planTitle: 'Plan de lucru',
+  planIntro: 'Toate verificările cu problemă sau de îmbunătățit, grupate după cât de repede merită rezolvate. Fiecare are problema, de ce contează pentru un client, pașii concreți, cine o repară de obicei și efortul estimat.',
+  buckets: { week: 'Săptămâna asta', month: 'Luna asta', later: 'Când ai timp' },
+  planLabels: { problem: 'Problema', why: 'De ce contează', how: 'Cum o repari', who: 'Cine o repară de obicei', effort: 'Efort', impact: 'Impact' },
+  efforts: { under1h: 'sub 1 oră', hours: 'câteva ore', days: '1–2 zile' },
+  impacts: { high: 'mare', medium: 'mediu', low: 'mic' },
+  plan: {
+    speed: {
+      impact: 'high',
+      effort: 'days',
+      steps: [
+        'Notează valorile LCP și CLS din raport, apoi compară-le cu pragurile din secțiunea de viteză.',
+        'Comprimă și redimensionează imaginile mari (format WebP sau AVIF, la lățimea reală de afișare).',
+        'Amână încărcarea scripturilor nefolositoare sau renunță la ele.',
+        'Dacă valorile rămân mari, discută cu firma de găzduire sau cu programatorul.',
+      ],
+    },
+    https: {
+      impact: 'high',
+      effort: 'under1h',
+      steps: [
+        'Activează certificatul SSL gratuit din panoul găzduirii (de exemplu Let\u2019s Encrypt).',
+        'Redirecționează tot traficul de pe http:// pe https://.',
+        'Deschide site-ul și verifică că browserul nu afișează avertisment de securitate.',
+      ],
+    },
+    trackers: {
+      impact: 'high',
+      effort: 'hours',
+      steps: [
+        'Notează ce scripturi de măsurare sunt în pagină (raportul le listează la secțiunea de legal).',
+        'Instalează o soluție de consimțământ care blochează scripturile până la accept.',
+        'Testează în fereastră incognito: niciun cookie de măsurare înainte de a apăsa Accept.',
+      ],
+    },
+    anpc: {
+      impact: 'high',
+      effort: 'under1h',
+      steps: [
+        'Ia linkurile oficiale de pe site-ul ANPC.',
+        'Adaugă-le în subsolul site-ului, vizibile pe toate paginile.',
+        'Verifică că linkurile deschid paginile oficiale ANPC.',
+      ],
+    },
+    sal: {
+      impact: 'high',
+      effort: 'under1h',
+      steps: [
+        'Ia linkul oficial al platformei SAL de pe site-ul ANPC.',
+        'Adaugă-l în subsolul site-ului, lângă linkul ANPC.',
+        'Verifică că linkul deschide platforma de soluționare.',
+      ],
+    },
+    company: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Adaugă în subsol: denumirea firmei, CUI, numărul de registru comerțului, sediul social.',
+        'Verifică că datele coincid cu cele din Registrul Comerțului.',
+      ],
+    },
+    privacy: {
+      impact: 'high',
+      effort: 'hours',
+      steps: [
+        'Scrie politica de confidențialitate; un jurist o poate adapta la activitatea ta.',
+        'Publică-o la o adresă stabilă, de exemplu /confidentialitate.',
+        'Adaugă linkul în subsol și în formularele care colectează date.',
+      ],
+    },
+    cookieBanner: {
+      impact: 'high',
+      effort: 'hours',
+      steps: [
+        'Alege o soluție de consimțământ (Cookiebot, Complianz, iubenda sau echivalent).',
+        'Configureaz-o cu buton de accept și buton egal de refuz, fără consimțământ bifat din start.',
+        'Blochează scripturile de măsurare până la alegerea vizitatorului.',
+      ],
+    },
+    title: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Scrie un titlu de 15–60 de caractere, cu serviciul principal și orașul.',
+        'Pune-l în elementul title al paginii principale.',
+        'Caută firma în Google și verifică cum arată titlul în rezultate.',
+      ],
+    },
+    description: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Scrie o descriere de 70–160 de caractere: ce oferi și de ce să te aleagă.',
+        'Pune-o în elementul meta description.',
+        'Verifică preview-ul paginii în rezultatele Google.',
+      ],
+    },
+    h1: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Lasă un singur H1 pe pagină, cu mesajul principal.',
+        'Coboară restul titlurilor pe H2 sau H3.',
+      ],
+    },
+    robots: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Creează un fișier robots.txt simplu la rădăcina site-ului.',
+        'Adaugă linia care indică adresa sitemap.xml.',
+        'Deschide /robots.txt și verifică că răspunde.',
+      ],
+    },
+    sitemap: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Generează sitemap.xml; majoritatea platformelor o fac din setări.',
+        'Trimite adresa hărții în Google Search Console.',
+      ],
+    },
+    jsonld: {
+      impact: 'medium',
+      effort: 'hours',
+      steps: [
+        'Adaugă date structurate schema.org de tip LocalBusiness sau Organization, cu nume, adresă, telefon și program.',
+        'Validează-le cu Rich Results Test al Google.',
+      ],
+    },
+    maps: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Deschide profilul Google Business al firmei.',
+        'Adaugă linkul către profil sau către hartă în pagina de contact.',
+      ],
+    },
+    phone: {
+      impact: 'high',
+      effort: 'under1h',
+      steps: [
+        'Adaugă numărul ca link tel: în antet sau subsol.',
+        'Deschide site-ul pe telefon și verifică că apelul pornește la atingere.',
+      ],
+    },
+    whatsapp: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Creează linkul wa.me cu numărul firmei.',
+        'Pune-l vizibil, de preferat și ca buton plutitor pe telefon.',
+      ],
+    },
+    emailForm: {
+      impact: 'high',
+      effort: 'hours',
+      steps: [
+        'Adaugă un formular de contact simplu (nume, e-mail, mesaj) sau o adresă de e-mail vizibilă.',
+        'Trimite un mesaj de probă și verifică că ajunge la tine, nu în spam.',
+      ],
+    },
+    address: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Scrie adresa completă în pagina de contact și în subsol.',
+        'Adaugă harta Google lângă adresă.',
+      ],
+    },
+    hours: {
+      impact: 'low',
+      effort: 'under1h',
+      steps: [
+        'Adaugă programul de funcționare în pagina de contact și în subsol.',
+        'Pune-l și în profilul Google Business.',
+      ],
+    },
+    alt: {
+      impact: 'medium',
+      effort: 'hours',
+      steps: [
+        'Notează imaginile fără text alternativ; raportul le listează cu numele fișierului.',
+        'Scrie pentru fiecare o descriere scurtă a ceea ce se vede în imagine.',
+        'Completează textul în CMS sau în cod.',
+      ],
+    },
+    labels: {
+      impact: 'medium',
+      effort: 'hours',
+      steps: [
+        'Notează câmpurile fără etichetă; raportul le listează cu numele.',
+        'Adaugă pentru fiecare un label cu for= sau un aria-label.',
+      ],
+    },
+    lang: {
+      impact: 'low',
+      effort: 'under1h',
+      steps: [
+        'Adaugă atributul lang pe elementul html, de exemplu lang="ro".',
+        'Verifică în cod că atributul a rămas după publicare.',
+      ],
+    },
+  },
+  deviceMobile: 'Mobil',
+  deviceDesktop: 'Desktop',
+  metricLabels: { fcp: 'FCP', lcp: 'LCP', tbt: 'TBT', cls: 'CLS', si: 'Speed Index' },
+  metricExplanations: {
+    fcp: 'Cât durează până apare primul conținut pe ecran.',
+    lcp: 'Cât durează până se afișează conținutul principal.',
+    tbt: 'Cât timp pagina e blocată și nu răspunde la atingere în timpul încărcării.',
+    cls: 'Cât de mult se mișcă pagina în timp ce se încarcă.',
+    si: 'Cât de repede se umple vizual pagina.',
+  },
+  metricScale: {
+    fcp: { good: 'până la 1,8 s', poor: 'peste 3 s' },
+    lcp: { good: 'până la 2,5 s', poor: 'peste 4 s' },
+    tbt: { good: 'până la 200 ms', poor: 'peste 600 ms' },
+    cls: { good: 'până la 0,1', poor: 'peste 0,25' },
+    si: { good: 'până la 3,4 s', poor: 'peste 5,8 s' },
+  },
+  performanceScale: { good: '90–100: rapid', fair: '50–89: acceptabil', poor: '0–49: lent' },
+  scaleWords: { thresholds: 'Praguri', good: 'bine', poor: 'problemă' },
+  detailTitleRow: 'Titlu',
+  detailDescriptionRow: 'Descriere meta',
+  detailChars: 'caractere',
+  opportunitiesTitle: 'Cele mai mari oportunități de accelerare, după estimarea Google',
+  opportunityFallback: '{title} (detaliu tehnic)',
+  opportunities: {
+    'render-blocking-resources': 'Fișiere de stil și scripturi blochează prima afișare: încarcă-le mai târziu sau mai puține.',
+    'unused-javascript': 'Cod JavaScript nefolosit se încarcă degeaba: renunță la el sau încarcă-l doar când e nevoie.',
+    'unused-css-rules': 'Stiluri CSS nefolosite se încarcă degeaba: curăță fișierele de stil.',
+    'uses-responsive-images': 'Imaginile sunt mai mari decât ecranul: servește-le la mărimea la care se afișează.',
+    'modern-image-formats': 'Imaginile nu sunt în format modern comprimat (WebP sau AVIF).',
+    'uses-webp-images': 'Imaginile nu sunt în format modern comprimat (WebP sau AVIF).',
+    'uses-optimized-images': 'Imaginile nu sunt comprimate eficient.',
+    'offscreen-images': 'Imaginile de sub ecran se încarcă degeaba la deschidere: încarcă-le când ajunge vizitatorul la ele.',
+    'unminified-css': 'Fișierele de stil nu sunt comprimate (minimizate).',
+    'unminified-javascript': 'Fișierele JavaScript nu sunt comprimate (minimizate).',
+    'uses-text-compression': 'Răspunsurile serverului nu sunt comprimate cu gzip sau brotli.',
+    'total-byte-weight': 'Pagina trimite prea mulți bytes la prima încărcare.',
+    'dom-size': 'Pagina are prea multe elemente în cod.',
+    'mainthread-work-breakdown': 'JavaScriptul ocupă prea mult firul principal al telefonului.',
+    'bootup-time': 'JavaScriptul durează prea mult până se execută.',
+    'server-response-time': 'Serverul răspunde lent la prima cerere.',
+    'redirect-redirects': 'Redirecționările adaugă întârziere: scurtează lanțul de redirecționări.',
+    'uses-long-cache-ttl': 'Fișierele statice nu sunt păstrate în cache pe termen lung.',
+    'efficient-animated-content': 'Animațiile mari (GIF) ar merge mai bine ca video.',
+    'legacy-javascript': 'Cod vechi pentru browsere depășite se trimite și browserelor moderne.',
+    'prioritize-lcp-image': 'Imaginea principală se încarcă prea târziu: dă-i prioritate.',
+    'preload-lcp-image': 'Imaginea principală se încarcă prea târziu: dă-i prioritate.',
+    'font-display': 'Fonturile blochează afișarea textului.',
+    'duplicated-javascript': 'Pachete JavaScript duplicate se încarcă de mai multe ori.',
+  },
+  psiFailed: 'nu am putut verifica',
+  detailNotFound: 'negăsit',
+  detailRedirects: 'Lanțul de redirecționări',
+  detailNoRedirects: 'Fără redirecționări: prima adresă răspunde direct.',
+  detailRedirectHop: '{from} → {to} (HTTP {status})',
+  detailLinkFound: 'găsit: {url}',
+  detailCompanyFound: 'text găsit: „{text}"',
+  detailCookieBanner: {
+    strong: 'Banner de cookie-uri detectat în pagină.',
+    hint: 'Indicii de banner de cookie-uri, dar nu sunt clare.',
+    none: 'Niciun indiciu de banner de cookie-uri în HTML-ul inițial.',
+  },
+  detailTrackersFound: 'Instrumente de măsurare văzute în HTML-ul inițial: {list}.',
+  detailTrackersNone: 'Niciun instrument de măsurare cunoscut în HTML-ul inițial.',
+  detailCookiesTitle: 'Cookie-uri scrise înainte de consimțământ (din răspunsul serverului)',
+  detailCookiesNone: 'Niciun cookie scris de server la prima încărcare.',
+  detailCookiesNote: 'Lista privește doar răspunsul HTTP inițial; cookie-urile scrise de JavaScript nu pot fi văzute fără un browser real.',
+  detailTitleText: 'Titlul paginii ({n} caractere; ideal 15–60)',
+  detailDescriptionText: 'Descrierea meta ({n} caractere; ideal 70–160)',
+  detailH1Text: 'Titluri H1 găsite: {n}',
+  detailH1None: 'Niciun titlu H1 în pagină.',
+  detailJsonLd: 'Tipuri de date structurate găsite: {list}.',
+  detailJsonLdNone: 'Nicio dată structurată (JSON-LD) în pagină.',
+  detailLang: 'Limba declarată în cod: {lang}.',
+  detailImagesNoAlt: 'Imagini fără text alternativ: {n} din {m}. Fișierele:',
+  detailImagesAllAlt: 'Toate cele {m} imagini au text alternativ.',
+  detailFieldsNoLabel: 'Câmpuri de formular fără etichetă: {n} din {m}. Câmpurile:',
+  detailFieldsAllLabeled: 'Toate cele {m} câmpuri de formular au etichetă.',
+  detailPhone: 'Telefon (link tel:)',
+  detailWhatsapp: 'WhatsApp',
+  detailEmail: 'E-mail',
+  detailForm: 'Formular de contact prezent în pagină.',
+  detailFormNone: 'Niciun formular de contact în pagină.',
+  detailAddress: 'Adresă (text găsit în pagină)',
+  detailHours: 'Program (text găsit în pagină)',
+  techTitle: 'Tehnic (informativ, nu intră în scor)',
+  techNote: 'Valorile de mai jos descriu cum răspunde serverul la prima cerere. Nu influențează scorul.',
+  techLabels: {
+    serverTime: 'Timp de răspuns al serverului',
+    htmlSize: 'Mărimea HTML-ului',
+    scripts: 'Scripturi în pagină',
+    stylesheets: 'Fișiere de stil',
+    compression: 'Compresie a răspunsului',
+    finalUrl: 'Adresa finală după redirecționări',
+    userAgent: 'Agentul folosit de verificare',
+  },
+  compressionValues: { gzip: 'gzip (da)', br: 'brotli (da)', none: 'nu', unknown: 'necunoscut' },
+  benchmarkTitle: 'Cum stai față de alții',
+  benchmarkIntro: 'Cifrele de mai jos vin din studiile noastre pe firme românești, nu din estimări.',
+  benchmarkLines: [
+    'Am analizat 200 de afaceri din Timișoara: rata celor cu site propriu diferă mult de la un domeniu la altul.',
+    'Am testat 50 de magazine online românești pe telefon: toate aveau cel puțin o problemă, iar doar 48% arătau costul transportului înainte de finalizarea comenzii.',
+    'Dintre aceleași 50 de magazine, 15 nu aveau buton de refuz pentru cookie-uri, iar 8 bifau din start consimțământul de marketing.',
+  ],
+  benchmarkSource: 'Sursa: Studiu MAST Studio, octombrie 2026.',
+  checklistTitle: 'Listă de verificare',
+  checklistIntro: 'Bifează pe măsură ce repari. Aceeași listă ca în raport, cu casete goale.',
+  glossaryTitle: 'Glosar',
+  glossary: [
+    { term: 'LCP', text: 'Cât durează până se afișează cel mai mare element vizibil din pagină.' },
+    { term: 'CLS', text: 'Cât de mult se mișcă elementele paginii în timp ce se încarcă.' },
+    { term: 'TBT', text: 'Cât timp pagina e blocată și nu răspunde la atingere în timpul încărcării.' },
+    { term: 'HTTPS', text: 'Conexiunea criptată dintre browser și site; adresa începe cu https://.' },
+    { term: 'Redirecționare', text: 'Când o adresă trimite automat browserul către o altă adresă.' },
+    { term: 'Meta description', text: 'Textul scurt care apare sub titlu în rezultatele Google.' },
+    { term: 'H1', text: 'Titlul principal al paginii, cel mai important titlu din cod.' },
+    { term: 'JSON-LD', text: 'Date structurate scrise în codul paginii, pe care Google le citește direct.' },
+    { term: 'Sitemap', text: 'Lista paginilor site-ului, la adresa /sitemap.xml, dată Google.' },
+    { term: 'robots.txt', text: 'Fișierul care spune motoarelor de căutare ce pot și ce nu pot vizita.' },
+    { term: 'Cookie', text: 'Un mic fișier pe care site-ul îl salvează în browserul vizitatorului.' },
+    { term: 'Tracker', text: 'Script care măsoară ce face vizitatorul (Analytics, Meta Pixel, TikTok).' },
+    { term: 'Consimțământ', text: 'Acordul dat de vizitator înainte să fie urmărit sau să i se salveze cookie-uri.' },
+    { term: 'ANPC/SAL', text: 'Autoritatea pentru protecția consumatorilor și platforma ei de soluționare a litigiilor.' },
+    { term: 'Alt text', text: 'Textul care descrie o imagine pentru cititoarele de ecran și pentru Google.' },
+  ],
+  nextTitle: 'Ce urmează',
+  nextIntro: 'Dacă vrei să rezolvăm noi problemele, serviciile care se potrivesc cu ce am găsit:',
+  nextServices: 'Servicii potrivite',
+  nextWhatsapp: 'WhatsApp: +40 746 382 204',
+  nextEmail: 'E-mail: contact@maststudio.ro',
+  nextRecheck: 'Verifică din nou site-ul: {url}',
+  nextGenerated: 'Raport generat automat. Verifică din nou după modificări.',
 }
 
 const ro: CheckerCopy = {
@@ -308,27 +762,379 @@ const ro: CheckerCopy = {
     what: 'Ce e greșit',
     why: 'De ce contează',
     who: 'Cine o repară de obicei',
+    pdfLine: 'Raportul PDF conține toate cele {n} probleme găsite, valorile măsurate și un plan de lucru.',
   },
-  pdf: {
-    title: 'Raport verificare site',
-    reportFor: 'Site verificat',
-    date: 'Data verificării',
-    overall: 'Scor general',
-    categories: 'Rezultate pe categorii',
-    topFixes: 'Primele reparatții, în ordinea impactului',
-    footer: 'Raport generat automat de verificatorul gratuit MAST Studio. Valorile de viteză sunt din testul de laborator Google PageSpeed (mobil). Verificarea legală și de cookie-uri privește HTML-ul inițial al paginii, nu un audit complet de browser.',
-    labNote: 'Test de laborator',
-    unverified: 'nu am putut verifica',
-    what: 'Ce e greșit',
-    why: 'De ce contează',
-    who: 'Cine o repară de obicei',
-  },
+  pdf: pdfRo,
   homeBlock: {
     title: 'Verifică-ți site-ul gratuit.',
     text: 'Viteză, legal, Google, contact, accesibilitate: rezultatul pe ecran în 15 secunde, raportul PDF pe email dacă îl vrei.',
     link: 'Verifică-ți site-ul →',
   },
   servicesLink: 'Sau verifică-ți site-ul gratuit, în 15 secunde →',
+}
+
+const pdfEn: PdfCopy = {
+  title: 'Website check report',
+  reportFor: 'Checked site',
+  date: 'Check date',
+  overall: 'Overall score',
+  categories: 'Results by category',
+  topFixes: 'Top fixes, by impact',
+  footer: 'Report generated automatically by the free MAST Studio website checker. Speed values come from the Google PageSpeed lab test. The legal and cookie checks look at the page’s initial HTML, not a full browser audit.',
+  labNote: 'Lab test',
+  unverified: 'we couldn’t check this',
+  what: 'What’s wrong',
+  why: 'Why it matters',
+  who: 'Who usually fixes it',
+  pageOf: 'Page {x} of {y}',
+  footerSite: 'maststudio.ro',
+  summaryBest: 'Strongest area: {name} ({score}/100).',
+  summaryWorst: 'Weakest area: {name} ({score}/100).',
+  summaryProblems: 'Issues found: {n}, of which {urgent} serious.',
+  howToReadTitle: 'How to read this report',
+  howToRead: [
+    'The score runs from 0 to 100 and is the average of the categories we could check. Each check gets a mark: green (fine), amber (could be better) or red (a problem).',
+    'The score thresholds: 80–100 means good, 50–79 means could be better, below 50 means serious problems.',
+    'Speed is a lab test run by Google (PageSpeed), not a measurement of real visitors. The score can shift by a few points between two runs of the same site.',
+    'The legal and cookie checks look at the initial HTML of the homepage, not a full browser audit. A measurement script that is present but blocked until consent counts as a warning, not a problem.',
+  ],
+  thresholds: { good: '80–100: good', fair: '50–79: could be better', poor: '0–49: serious problems' },
+  planTitle: 'Work plan',
+  planIntro: 'Every check with a problem or room for improvement, grouped by how soon it is worth fixing. Each one has the problem, why it matters to a customer, the concrete steps, who usually fixes it and the estimated effort.',
+  buckets: { week: 'This week', month: 'This month', later: 'When you have time' },
+  planLabels: { problem: 'The problem', why: 'Why it matters', how: 'How to fix it', who: 'Who usually fixes it', effort: 'Effort', impact: 'Impact' },
+  efforts: { under1h: 'under 1 hour', hours: 'a few hours', days: '1–2 days' },
+  impacts: { high: 'high', medium: 'medium', low: 'low' },
+  plan: {
+    speed: {
+      impact: 'high',
+      effort: 'days',
+      steps: [
+        'Note the LCP and CLS values from the report, then compare them with the thresholds in the speed section.',
+        'Compress and resize the large images (WebP or AVIF, at the width they actually display).',
+        'Defer unused scripts or drop them.',
+        'If the values stay high, talk to the hosting provider or the developer.',
+      ],
+    },
+    https: {
+      impact: 'high',
+      effort: 'under1h',
+      steps: [
+        'Enable the free SSL certificate in the hosting panel (for example Let’s Encrypt).',
+        'Redirect all traffic from http:// to https://.',
+        'Open the site and check the browser shows no security warning.',
+      ],
+    },
+    trackers: {
+      impact: 'high',
+      effort: 'hours',
+      steps: [
+        'Note which measurement scripts are on the page (the report lists them in the legal section).',
+        'Install a consent solution that blocks the scripts until the visitor accepts.',
+        'Test in an incognito window: no measurement cookies before pressing Accept.',
+      ],
+    },
+    anpc: {
+      impact: 'high',
+      effort: 'under1h',
+      steps: [
+        'Take the official links from the ANPC website.',
+        'Add them to the site footer, visible on every page.',
+        'Check the links open the official ANPC pages.',
+      ],
+    },
+    sal: {
+      impact: 'high',
+      effort: 'under1h',
+      steps: [
+        'Take the official SAL platform link from the ANPC website.',
+        'Add it to the site footer, next to the ANPC link.',
+        'Check the link opens the dispute-resolution platform.',
+      ],
+    },
+    company: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Add to the footer: the company name, tax ID, trade register number and registered office.',
+        'Check the details match the trade register.',
+      ],
+    },
+    privacy: {
+      impact: 'high',
+      effort: 'hours',
+      steps: [
+        'Write the privacy policy; a lawyer can adapt it to your activity.',
+        'Publish it at a stable address, for example /privacy.',
+        'Add the link to the footer and to every form that collects data.',
+      ],
+    },
+    cookieBanner: {
+      impact: 'high',
+      effort: 'hours',
+      steps: [
+        'Pick a consent solution (Cookiebot, Complianz, iubenda or equivalent).',
+        'Configure it with an accept button and an equally easy reject button, no pre-ticked consent.',
+        'Block the measurement scripts until the visitor makes a choice.',
+      ],
+    },
+    title: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Write a title of 15–60 characters, with the main service and the city.',
+        'Put it in the title element of the homepage.',
+        'Search for the business in Google and check how the title looks.',
+      ],
+    },
+    description: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Write a description of 70–160 characters: what you offer and why choose you.',
+        'Put it in the meta description element.',
+        'Check the page preview in the Google results.',
+      ],
+    },
+    h1: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Keep a single H1 on the page, with the main message.',
+        'Move the other headings down to H2 or H3.',
+      ],
+    },
+    robots: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Create a simple robots.txt file at the root of the site.',
+        'Add the line that points to the sitemap.xml address.',
+        'Open /robots.txt and check it responds.',
+      ],
+    },
+    sitemap: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Generate the sitemap.xml; most platforms do it from settings.',
+        'Submit the sitemap address in Google Search Console.',
+      ],
+    },
+    jsonld: {
+      impact: 'medium',
+      effort: 'hours',
+      steps: [
+        'Add schema.org structured data of type LocalBusiness or Organization, with name, address, phone and hours.',
+        'Validate it with Google’s Rich Results Test.',
+      ],
+    },
+    maps: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Open the business’s Google Business profile.',
+        'Add the link to the profile or the map on the contact page.',
+      ],
+    },
+    phone: {
+      impact: 'high',
+      effort: 'under1h',
+      steps: [
+        'Add the number as a tel: link in the header or footer.',
+        'Open the site on a phone and check a tap starts the call.',
+      ],
+    },
+    whatsapp: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Create the wa.me link with the business number.',
+        'Make it visible, ideally also as a floating button on mobile.',
+      ],
+    },
+    emailForm: {
+      impact: 'high',
+      effort: 'hours',
+      steps: [
+        'Add a simple contact form (name, email, message) or a visible email address.',
+        'Send a test message and check it reaches you, not the spam folder.',
+      ],
+    },
+    address: {
+      impact: 'medium',
+      effort: 'under1h',
+      steps: [
+        'Write the full address on the contact page and in the footer.',
+        'Add the Google map next to it.',
+      ],
+    },
+    hours: {
+      impact: 'low',
+      effort: 'under1h',
+      steps: [
+        'Add the opening hours to the contact page and the footer.',
+        'Add them to the Google Business profile too.',
+      ],
+    },
+    alt: {
+      impact: 'medium',
+      effort: 'hours',
+      steps: [
+        'Note the images without alternative text; the report lists them by file name.',
+        'Write a short description of what each image shows.',
+        'Fill the text in the CMS or in the code.',
+      ],
+    },
+    labels: {
+      impact: 'medium',
+      effort: 'hours',
+      steps: [
+        'Note the fields without labels; the report lists them by name.',
+        'Add a label with for= or an aria-label to each one.',
+      ],
+    },
+    lang: {
+      impact: 'low',
+      effort: 'under1h',
+      steps: [
+        'Add the lang attribute to the html element, for example lang="en".',
+        'Check in the code that the attribute survived publishing.',
+      ],
+    },
+  },
+  deviceMobile: 'Mobile',
+  deviceDesktop: 'Desktop',
+  metricLabels: { fcp: 'FCP', lcp: 'LCP', tbt: 'TBT', cls: 'CLS', si: 'Speed Index' },
+  metricExplanations: {
+    fcp: 'How long until the first content appears on screen.',
+    lcp: 'How long until the main content is displayed.',
+    tbt: 'How long the page is blocked and unresponsive while loading.',
+    cls: 'How much the page moves while loading.',
+    si: 'How quickly the page fills in visually.',
+  },
+  metricScale: {
+    fcp: { good: 'up to 1.8 s', poor: 'over 3 s' },
+    lcp: { good: 'up to 2.5 s', poor: 'over 4 s' },
+    tbt: { good: 'up to 200 ms', poor: 'over 600 ms' },
+    cls: { good: 'up to 0.1', poor: 'over 0.25' },
+    si: { good: 'up to 3.4 s', poor: 'over 5.8 s' },
+  },
+  performanceScale: { good: '90–100: fast', fair: '50–89: acceptable', poor: '0–49: slow' },
+  scaleWords: { thresholds: 'Thresholds', good: 'good', poor: 'a problem' },
+  detailTitleRow: 'Title',
+  detailDescriptionRow: 'Meta description',
+  detailChars: 'characters',
+  opportunitiesTitle: 'Biggest speed opportunities, by Google’s estimate',
+  opportunityFallback: '{title} (technical detail)',
+  opportunities: {
+    'render-blocking-resources': 'Stylesheets and scripts block the first paint: load them later or fewer of them.',
+    'unused-javascript': 'Unused JavaScript loads for nothing: drop it or load it only when needed.',
+    'unused-css-rules': 'Unused CSS rules load for nothing: clean up the stylesheets.',
+    'uses-responsive-images': 'Images are larger than the screen: serve them at the size they display.',
+    'modern-image-formats': 'Images are not in a modern compressed format (WebP or AVIF).',
+    'uses-webp-images': 'Images are not in a modern compressed format (WebP or AVIF).',
+    'uses-optimized-images': 'Images are not compressed efficiently.',
+    'offscreen-images': 'Off-screen images load for nothing on open: load them when the visitor reaches them.',
+    'unminified-css': 'Stylesheets are not minified.',
+    'unminified-javascript': 'JavaScript files are not minified.',
+    'uses-text-compression': 'Server responses are not compressed with gzip or brotli.',
+    'total-byte-weight': 'The page sends too many bytes on first load.',
+    'dom-size': 'The page has too many elements in the code.',
+    'mainthread-work-breakdown': 'JavaScript occupies the phone’s main thread for too long.',
+    'bootup-time': 'JavaScript takes too long to execute.',
+    'server-response-time': 'The server responds slowly to the first request.',
+    'redirect-redirects': 'Redirects add delay: shorten the redirect chain.',
+    'uses-long-cache-ttl': 'Static files are not cached for long.',
+    'efficient-animated-content': 'Large animations (GIF) would work better as video.',
+    'legacy-javascript': 'Outdated code for legacy browsers is sent to modern ones too.',
+    'prioritize-lcp-image': 'The main image loads too late: give it priority.',
+    'preload-lcp-image': 'The main image loads too late: give it priority.',
+    'font-display': 'Fonts block the text from showing.',
+    'duplicated-javascript': 'Duplicate JavaScript bundles load more than once.',
+  },
+  psiFailed: 'we couldn’t check this',
+  detailNotFound: 'not found',
+  detailRedirects: 'Redirect chain',
+  detailNoRedirects: 'No redirects: the first address responds directly.',
+  detailRedirectHop: '{from} → {to} (HTTP {status})',
+  detailLinkFound: 'found: {url}',
+  detailCompanyFound: 'text found: “{text}”',
+  detailCookieBanner: {
+    strong: 'Cookie banner detected on the page.',
+    hint: 'Hints of a cookie banner, but it isn’t clear.',
+    none: 'No hint of a cookie banner in the initial HTML.',
+  },
+  detailTrackersFound: 'Measurement tools seen in the initial HTML: {list}.',
+  detailTrackersNone: 'No known measurement tool in the initial HTML.',
+  detailCookiesTitle: 'Cookies set before consent (from the server response)',
+  detailCookiesNone: 'No cookie set by the server on first load.',
+  detailCookiesNote: 'The list covers only the initial HTTP response; cookies set by JavaScript can’t be seen without a real browser.',
+  detailTitleText: 'Page title ({n} characters; ideally 15–60)',
+  detailDescriptionText: 'Meta description ({n} characters; ideally 70–160)',
+  detailH1Text: 'H1 headings found: {n}',
+  detailH1None: 'No H1 heading on the page.',
+  detailJsonLd: 'Structured data types found: {list}.',
+  detailJsonLdNone: 'No structured data (JSON-LD) on the page.',
+  detailLang: 'Language declared in the code: {lang}.',
+  detailImagesNoAlt: 'Images without alternative text: {n} of {m}. Files:',
+  detailImagesAllAlt: 'All {m} images have alternative text.',
+  detailFieldsNoLabel: 'Form fields without a label: {n} of {m}. Fields:',
+  detailFieldsAllLabeled: 'All {m} form fields have a label.',
+  detailPhone: 'Phone (tel: link)',
+  detailWhatsapp: 'WhatsApp',
+  detailEmail: 'Email',
+  detailForm: 'Contact form present on the page.',
+  detailFormNone: 'No contact form on the page.',
+  detailAddress: 'Address (text found on the page)',
+  detailHours: 'Hours (text found on the page)',
+  techTitle: 'Technical (informational, not scored)',
+  techNote: 'The values below describe how the server responds to the first request. They don’t affect the score.',
+  techLabels: {
+    serverTime: 'Server response time',
+    htmlSize: 'HTML size',
+    scripts: 'Scripts on the page',
+    stylesheets: 'Stylesheets',
+    compression: 'Response compression',
+    finalUrl: 'Final address after redirects',
+    userAgent: 'User agent used for the check',
+  },
+  compressionValues: { gzip: 'gzip (yes)', br: 'brotli (yes)', none: 'no', unknown: 'unknown' },
+  benchmarkTitle: 'How you compare',
+  benchmarkIntro: 'The figures below come from our studies of Romanian businesses, not from estimates.',
+  benchmarkLines: [
+    'We analysed 200 businesses in Timișoara: the share with their own website differs a lot from one industry to another.',
+    'We tested 50 Romanian online stores on mobile: every one had at least one problem, and only 48% showed the shipping cost before checkout.',
+    'Of those same 50 stores, 15 had no cookie reject button, and 8 pre-ticked the marketing consent.',
+  ],
+  benchmarkSource: 'Source: MAST Studio study, October 2026.',
+  checklistTitle: 'Checklist',
+  checklistIntro: 'Tick as you fix. The same list as in the report, with empty boxes.',
+  glossaryTitle: 'Glossary',
+  glossary: [
+    { term: 'LCP', text: 'How long until the largest visible element on the page is displayed.' },
+    { term: 'CLS', text: 'How much the page elements move while the page loads.' },
+    { term: 'TBT', text: 'How long the page is blocked and unresponsive while loading.' },
+    { term: 'HTTPS', text: 'The encrypted connection between browser and site; the address starts with https://.' },
+    { term: 'Redirect', text: 'When one address automatically sends the browser to another address.' },
+    { term: 'Meta description', text: 'The short text shown under the title in the Google results.' },
+    { term: 'H1', text: 'The main heading of the page, the most important heading in the code.' },
+    { term: 'JSON-LD', text: 'Structured data written in the page code, which Google reads directly.' },
+    { term: 'Sitemap', text: 'The list of the site’s pages, at the /sitemap.xml address, given to Google.' },
+    { term: 'robots.txt', text: 'The file that tells search engines what they may and may not visit.' },
+    { term: 'Cookie', text: 'A small file the site saves in the visitor’s browser.' },
+    { term: 'Tracker', text: 'A script that measures what the visitor does (Analytics, Meta Pixel, TikTok).' },
+    { term: 'Consent', text: 'The agreement the visitor gives before being tracked or having cookies saved.' },
+    { term: 'ANPC/SAL', text: 'The Romanian consumer protection authority and its dispute-resolution platform.' },
+    { term: 'Alt text', text: 'The text describing an image for screen readers and for Google.' },
+  ],
+  nextTitle: 'What comes next',
+  nextIntro: 'If you’d rather have us fix the problems, these services match what we found:',
+  nextServices: 'Matching services',
+  nextWhatsapp: 'WhatsApp: +40 746 382 204',
+  nextEmail: 'Email: contact@maststudio.ro',
+  nextRecheck: 'Check the site again: {url}',
+  nextGenerated: 'Report generated automatically. Check again after changes.',
 }
 
 const en: CheckerCopy = {
@@ -559,21 +1365,9 @@ const en: CheckerCopy = {
     what: 'What’s wrong',
     why: 'Why it matters',
     who: 'Who usually fixes it',
+    pdfLine: 'The PDF report contains all {n} issues found, the measured values and a work plan.',
   },
-  pdf: {
-    title: 'Website check report',
-    reportFor: 'Checked site',
-    date: 'Check date',
-    overall: 'Overall score',
-    categories: 'Results by category',
-    topFixes: 'Top fixes, by impact',
-    footer: 'Report generated automatically by the free MAST Studio website checker. Speed values come from the Google PageSpeed lab test (mobile). The legal and cookie checks look at the page’s initial HTML, not a full browser audit.',
-    labNote: 'Lab test',
-    unverified: 'we couldn’t check this',
-    what: 'What’s wrong',
-    why: 'Why it matters',
-    who: 'Who usually fixes it',
-  },
+  pdf: pdfEn,
   homeBlock: {
     title: 'Check your website for free.',
     text: 'Speed, legal, Google, contact, accessibility: the result on screen in 15 seconds, the PDF report by email if you want it.',

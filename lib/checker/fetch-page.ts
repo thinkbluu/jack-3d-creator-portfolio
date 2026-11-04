@@ -95,6 +95,12 @@ export type FetchedPage = {
   truncated: boolean
   /** True when the first response was plain http (before any redirect). */
   startedInsecure: boolean
+  /** Every redirect hop, in order (empty when the first response is final). */
+  redirects: { from: string; status: number; to: string }[]
+  /** Time to the final response header, in milliseconds. */
+  serverResponseMs: number | null
+  /** Content-Encoding of the final response (compression evidence). */
+  contentEncoding: string | null
 }
 
 async function readBodyCapped(response: Response, maxBytes: number) {
@@ -133,7 +139,10 @@ export async function fetchChecked(rawUrl: string, options: { maxBytes?: number;
   let current = await assertFetchableUrl(rawUrl)
   const startedInsecure = current.protocol === 'http:'
 
+  const redirects: { from: string; status: number; to: string }[] = []
+
   for (let hop = 0; hop <= MAX_REDIRECTS; hop += 1) {
+    const hopStartedAt = Date.now()
     const response = await fetch(current, {
       method: options.method ?? 'GET',
       redirect: 'manual',
@@ -143,6 +152,7 @@ export async function fetchChecked(rawUrl: string, options: { maxBytes?: number;
     }).catch((error: unknown) => {
       throw error instanceof Error ? error : new FetchBlockedError('fetch failed')
     })
+    const serverResponseMs = Date.now() - hopStartedAt
 
     if (response.status >= 300 && response.status < 400) {
       const location = response.headers.get('location')
@@ -152,13 +162,24 @@ export async function fetchChecked(rawUrl: string, options: { maxBytes?: number;
       const next = new URL(location, current)
       if (next.protocol !== 'http:' && next.protocol !== 'https:') throw new FetchBlockedError('redirect to a non-web address')
       await assertPublicHost(next.hostname)
+      redirects.push({ from: current.toString(), status: response.status, to: next.toString() })
       current = next
       continue
     }
 
     const { text, truncated } = await readBodyCapped(response, maxBytes)
     const cookies = typeof response.headers.getSetCookie === 'function' ? response.headers.getSetCookie() : []
-    return { finalUrl: current.toString(), status: response.status, html: text, cookies, truncated, startedInsecure }
+    return {
+      finalUrl: current.toString(),
+      status: response.status,
+      html: text,
+      cookies,
+      truncated,
+      startedInsecure,
+      redirects,
+      serverResponseMs,
+      contentEncoding: response.headers.get('content-encoding'),
+    }
   }
 
   throw new FetchBlockedError('too many redirects')

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 import TrackedLink from '@/components/TrackedLink'
-import type { CheckerCopy } from '@/lib/checker/copy'
+import { fill, type CheckerCopy } from '@/lib/checker/copy'
 import { CATEGORY_KEYS, type CategoryResult, type SiteReport } from '@/lib/checker/types'
 
 export type ServiceLink = { slug: string; name: string; priceLabel: string; href: string }
@@ -39,6 +39,13 @@ export default function CheckerTool({ locale, copy, privacyHref, whatsappHref, s
   const [report, setReport] = useState<SiteReport | null>(null)
   const [errorText, setErrorText] = useState('')
   const resultRef = useRef<HTMLDivElement>(null)
+
+  // /verifica-site?url=... pre-fills the input; the check still starts only
+  // when the visitor presses the button, never on page load.
+  useEffect(() => {
+    const prefill = new URLSearchParams(window.location.search).get('url')
+    if (prefill) setUrl(prefill.trim().slice(0, 200))
+  }, [])
 
   // Progress: name each check as it (appears to) run. The server runs them in
   // parallel; the visible sequence is an honest progress indicator, not a log.
@@ -176,6 +183,11 @@ export default function CheckerTool({ locale, copy, privacyHref, whatsappHref, s
                   </li>
                 ))}
               </ol>
+              <p className="text-[var(--ink-3)]">
+                {fill(copy.ui.pdfLine, {
+                  n: report.categories.flatMap((category) => category.sub).filter((entry) => entry.status === 'fail' || entry.status === 'warn').length,
+                })}
+              </p>
             </section>
           )}
 
