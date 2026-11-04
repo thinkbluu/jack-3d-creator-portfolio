@@ -1515,4 +1515,134 @@ export const serviceTextEn: Record<string, ServiceText> = {
     waMessage: 'Hi! I am interested in monthly SEO content for my website.',
     serviceType: 'SEO content and blog articles',
   },
+  'conformitate-legala-site': {
+    name: 'Legal compliance for sites and stores',
+    shortName: 'Legal compliance',
+    h1: 'Legal compliance for websites and online stores',
+    seoTitle: 'Legally compliant site: ANPC, GDPR, cookies',
+    metaDescription:
+      'We put your website or store in order: ANPC and SAL links, company details, policies, a cookie banner with a refuse button, basic accessibility. From 190 EUR, in 3 days.',
+    answerCapsule:
+      'The legal compliance service at MAST Studio brings your website or store in line with the basic requirements in Romania: the ANPC and SAL links, the company details, the privacy and cookie policies, a banner with a refuse button and accessibility elements. It costs from 190 EUR and takes 3 working days.',
+    priceLabel: 'from 190 EUR',
+    deliveryLabel: 'Timeline',
+    deliveryTime: '3 working days',
+    intro:
+      'When we tested 50 Romanian online stores, 15 had no refuse button for cookies and 8 ticked marketing consent in advance. These are easy mistakes to fix, but they can cost dearly at an inspection. We check all of them and fix them directly on your site.',
+    includes: [
+      'the ANPC and SAL links, in the required format',
+      'the company details in the footer: name, tax ID, registration number',
+      'the privacy policy and the cookie policy, adapted to your site',
+      'a cookie banner with a refuse button just as visible as accept',
+      'no pre-ticked marketing boxes',
+      'terms and conditions, the return policy for stores',
+      'a basic accessibility check: contrast, alternative texts, labels',
+    ],
+    notIncluded: [
+      'legal advice or taking on legal responsibility',
+      'policies for special data processing, without a lawyer',
+      'rebuilding the site (if the technology does not allow it, a separate quote)',
+    ],
+    process: [
+      { step: 'We check the site', description: 'We go through the requirements list and tell you what is missing.' },
+      { step: 'We prepare the texts', description: 'The policies are adapted to what your site actually does, not copied.' },
+      { step: 'We implement', description: 'We put everything directly on the site, including the cookie banner.' },
+      { step: 'We hand over the list', description: 'You receive the list of everything that was done, useful at any inspection.' },
+    ],
+    forWho: [
+      'small and mid-sized online stores',
+      'company sites built by others, without the legal elements',
+      'practices and clinics that collect data through forms',
+      'businesses running Google or Meta ads on their site',
+    ],
+    faq: [
+      {
+        question: 'What does a company site legally need in Romania?',
+        answer:
+          'The basics: the company identification details, the privacy policy, the cookie notice with the option to refuse, and for stores the terms and conditions, the return policy and the links to ANPC and alternative dispute resolution.',
+      },
+      {
+        question: 'Does the cookie banner need a refuse button?',
+        answer:
+          'Yes, refusing must be just as easy as accepting, and non-essential cookies must not start before consent.',
+      },
+      {
+        question: 'Does the service replace a lawyer?',
+        answer:
+          'No. We put the usual requirements into practice on the site, and for special situations or sensitive data we recommend a final review by a jurist.',
+      },
+      {
+        question: 'How much does it cost?',
+        answer: 'From 190 EUR for a presentation website or a small store, in 3 working days.',
+      },
+    ],
+    waMessage: 'Hi! I want to bring my site in line with ANPC, GDPR and the cookie rules.',
+    serviceType: 'Legal compliance for sites and stores',
+  },
+  'audit-securitate-gdpr': {
+    name: 'Security and GDPR audit',
+    shortName: 'Security audit',
+    h1: 'Security and GDPR audit for websites and apps',
+    seoTitle: 'Security and GDPR audit for sites, from 290 EUR',
+    metaDescription:
+      'A security and GDPR audit for your website, store or app: vulnerabilities, cookies before consent, exposed data. A clear report, from 290 EUR.',
+    answerCapsule:
+      'The security and GDPR audit at MAST Studio checks your website, store or app for known vulnerabilities, exposed data, missing security settings and tracking that starts before the visitor consents. Within 5 working days you receive a report with every issue, its severity and how to fix it. Starts from 290 EUR.',
+    priceLabel: 'from 290 EUR',
+    deliveryLabel: 'Timeline',
+    deliveryTime: '5 working days',
+    intro:
+      'Most company sites are never checked after launch. In a study of a random sample of Romanian company sites, more than a third started tracking visitors before consent. The audit tells you exactly where you are exposed, before someone else finds out.',
+    includes: [
+      'a scan for known vulnerabilities and outdated versions',
+      'a check of the security settings: HTTPS, headers, forms, admin access',
+      'data exposed publicly: files, keys, user lists',
+      'cookies and scripts that start before consent',
+      'the privacy policy compared with what the site actually does',
+      'for mobile apps: an analysis of the published package',
+      'a report with the severity of every issue and the remediation steps',
+      'a 30-minute call to walk through the report',
+    ],
+    notIncluded: [
+      'fixing the issues found (a separate quote, after the report)',
+      'a complex penetration test on large infrastructure',
+      'legal advice',
+    ],
+    process: [
+      { step: 'You give us the address and allowed access', description: 'We agree in writing on what we check and what we do not, so the audit is legal and safe.' },
+      { step: 'We check', description: 'We test from the outside, like a malicious visitor, without affecting the site.' },
+      { step: 'The report', description: 'Every issue with its severity, the proof and how to fix it, in plain language.' },
+      { step: 'The call', description: 'We explain what is urgent and what can wait. If you want, we fix it.' },
+    ],
+    forWho: [
+      'online stores that receive payments and delivery details',
+      'clinics and practices that work with health data',
+      'apps and platforms with user accounts',
+      'businesses that received a site from another provider and do not know its state',
+    ],
+    faq: [
+      {
+        question: 'What does a security audit for a website check?',
+        answer:
+          'Known vulnerabilities, outdated versions, missing security settings, data exposed publicly and the way the site handles cookies and personal data. For mobile apps we also analyse the published package.',
+      },
+      {
+        question: 'Can the audit break the site?',
+        answer:
+          'No. We test from the outside, with limits agreed in writing beforehand, without attacks that would load the server or change data.',
+      },
+      {
+        question: 'How much does a security audit cost?',
+        answer:
+          'From 290 EUR for a presentation website or a small store. Apps with user accounts and larger platforms are quoted by complexity.',
+      },
+      {
+        question: 'What do I do after I receive the report?',
+        answer:
+          'Fix the urgent issues first. If the site was built by another provider, the report is written so you can send it straight to them. If you want, we fix it, based on a separate quote.',
+      },
+    ],
+    waMessage: 'Hi! I want a security and GDPR audit for my site.',
+    serviceType: 'Security and GDPR audit',
+  },
 }

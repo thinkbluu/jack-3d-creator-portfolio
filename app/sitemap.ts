@@ -25,6 +25,7 @@ const staticPages: Array<{ path: string; lastModified: string; changeFrequency: 
   { path: '/contact', lastModified: '2026-10-12', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/cerere-oferta', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/comparatie', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
+  { path: '/ce-iti-trebuie', lastModified: '2026-11-04', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/glosar', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.5 },
 
   { path: '/cariere', lastModified: '2026-10-03', changeFrequency: 'monthly', priority: 0.5 },

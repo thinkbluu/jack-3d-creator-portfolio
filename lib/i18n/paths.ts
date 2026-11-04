@@ -23,6 +23,7 @@ const TOP: Pair[] = [
   { ro: 'cum-lucram', en: 'approach' },
   { ro: 'newsletter', en: 'newsletter' },
   { ro: 'echipa', en: 'team' },
+  { ro: 'ce-iti-trebuie', en: 'what-you-need' },
 ]
 
 /** Canonical service id is the Romanian slug. English pages use the `en` slug. */

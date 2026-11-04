@@ -11,6 +11,7 @@ export const PAGE_WORDS = {
   '/portofoliu': { ro: 'Lucrări.', en: 'Work.' },
   '/servicii': { ro: 'Servicii.', en: 'Services.' },
   '/solutii': { ro: 'Soluții.', en: 'Solutions.' },
+  '/ce-iti-trebuie': { ro: 'Alegi.', en: 'Choose.' },
   '/preturi': { ro: 'Prețuri.', en: 'Pricing.' },
   '/cum-lucram': { ro: 'Cum lucrăm.', en: 'Approach.' },
   '/despre': { ro: 'Studio.', en: 'Studio.' },

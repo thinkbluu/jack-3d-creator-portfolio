@@ -39,6 +39,7 @@ type ServicesCopy = {
   cta: string
   form: string
   pricingPage: string
+  guideLink: string
 }
 
 const servicesCopy: Record<Locale, ServicesCopy> = {
@@ -78,6 +79,7 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     cta: 'Spune-ne ce ai nevoie și primești oferta azi',
     form: 'Sau completează cererea de ofertă',
     pricingPage: 'Toate prețurile, pe o singură pagină',
+    guideLink: 'Nu știi ce să alegi? Află în 30 de secunde →',
   },
   en: {
     word: PAGE_WORDS['/servicii'].en,
@@ -115,6 +117,7 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     cta: 'Tell us what you need and you get the quote today',
     form: 'Or fill in the quote request',
     pricingPage: 'All prices, on a single page',
+    guideLink: 'Not sure what to choose? Find out in 30 seconds →',
   },
 }
 
@@ -195,6 +198,14 @@ export function ServicesView({ locale }: { locale: Locale }) {
                   </li>
                 ))}
               </ol>
+              <p className="mt-8 border-t border-[var(--hairline)] pt-6">
+                <Link
+                  href={localizePath('/ce-iti-trebuie', locale)}
+                  className="font-sans text-base font-semibold text-[var(--ink)] underline decoration-[var(--brass)] underline-offset-4 transition-colors hover:text-[var(--brass-ink)]"
+                >
+                  {copy.guideLink}
+                </Link>
+              </p>
             </nav>
 
             <div className="flex flex-col gap-20 md:gap-28">
