@@ -296,7 +296,7 @@ const ro = {
   },
   voice: {
     awayTitle: 'Te așteptăm aici. · MAST Studio',
-    console: 'Te uiți în consolă? Angajăm. → https://maststudio.ro/cariere',
+    console: 'Te uiți în consolă? Îmi place stilul. → https://maststudio.ro',
   },
   projects: {
     view: 'Vezi',
@@ -875,7 +875,7 @@ const en: typeof ro = {
   },
   voice: {
     awayTitle: 'We’ll be right here. · MAST Studio',
-    console: 'Looking at the console? We’re hiring. → https://maststudio.ro/en/careers',
+    console: 'Looking at the console? Good taste. → https://maststudio.ro',
   },
   projects: {
     view: 'View',

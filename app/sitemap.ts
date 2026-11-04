@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/blog'
-import { getJobOpenings } from '@/lib/careers'
 import { getAllIndustries } from '@/lib/industries'
 import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
@@ -75,7 +74,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/blog', latestPost, 'weekly', 0.7),
     ...getAllServicePages('ro').map((service) => entry(`/servicii/${service.slug}`, service.updatedAt, 'monthly', 0.9)),
     ...getAllIndustries('ro').map((industry) => entry(`/solutii/${industry.slug}`, '2026-11-04', 'monthly', 0.8)),
-    ...getJobOpenings('ro').map((job) => entry(`/cariere/${job.id}`, '2026-10-03', 'monthly', 0.5)),
     ...getAllProjects('ro')
       .filter((project) => project.type === 'client')
       .map((project) => entry(`/portofoliu/${project.slug}`, PORTFOLIO_UPDATED, 'yearly', 0.6)),

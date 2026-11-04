@@ -178,8 +178,6 @@ export function staticEnglishPaths() {
     '/comparatie',
     '/glosar',
     '/cariere',
-    '/cariere/front-end-developer',
-    '/cariere/mobile-app-developer',
     '/confidentialitate',
     '/cookies',
     '/termeni',

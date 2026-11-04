@@ -6,6 +6,8 @@ import { careerLabelsEn, jobTextEn } from './i18n/content/careers.en'
 export type JobOpening = {
   /** Also the page address: /cariere/<id>. */
   id: string
+  /** False while the position is filled; flip to true to reopen it. */
+  open: boolean
   title: string
   /** Page title without the brand suffix; at most 46 characters. */
   seoTitle: string
@@ -24,6 +26,7 @@ export type JobOpening = {
 export const JOB_OPENINGS: JobOpening[] = [
   {
     id: 'front-end-developer',
+    open: false,
     title: 'Front-end developer',
     seoTitle: 'Front-end developer (React), remote România',
     description:
@@ -49,6 +52,7 @@ export const JOB_OPENINGS: JobOpening[] = [
   },
   {
     id: 'mobile-app-developer',
+    open: false,
     title: 'Mobile app developer',
     seoTitle: 'Mobile app developer (React Native), remote',
     description:
@@ -86,6 +90,11 @@ function localizeJob(job: JobOpening, locale: Locale): JobOpening {
 
 export function getJobOpenings(locale: Locale = 'ro') {
   return JOB_OPENINGS.map((job) => localizeJob(job, locale))
+}
+
+/** Only the positions currently open; empty while every role is filled. */
+export function getOpenJobOpenings(locale: Locale = 'ro') {
+  return getJobOpenings(locale).filter((job) => job.open)
 }
 
 export function getJobOpening(id: string, locale: Locale = 'ro') {

@@ -12,7 +12,7 @@ const THANK_YOU_PATHS = ['/multumim', '/en/thank-you', '/mockup/multumim']
 /**
  * Two quiet brand-voice touches that live outside the page markup:
  * the away-tab title (once per session, skipped on thank-you pages and
- * once the visitor started typing into a form) and the hiring note in the
+ * once the visitor started typing into a form) and the note in the
  * developer console (production only, once per page load).
  */
 export default function BrandVoice({ locale }: { locale: Locale }) {

@@ -5,7 +5,7 @@ import JsonLd from '@/components/JsonLd'
 import SiteHeader from '@/components/SiteHeader'
 import PageOpen from '@/components/studio/PageOpen'
 import SectionHead from '@/components/studio/SectionHead'
-import { CV_RETENTION_MONTHS, careerLocation, careerSchedule, getJobOpenings, salaryLabel } from '@/lib/careers'
+import { CV_RETENTION_MONTHS, careerLocation, careerSchedule, getOpenJobOpenings, salaryLabel } from '@/lib/careers'
 import { localizePath } from '@/lib/i18n/paths'
 import type { Locale } from '@/lib/i18n/locale'
 import { ui } from '@/lib/i18n/ui'
@@ -16,9 +16,9 @@ import { PAGE_WORDS } from '@/lib/page-words'
 
 const careers = {
   ro: {
-    title: 'Cariere MAST Studio: front-end și mobile developer',
+    title: 'Cariere la MAST Studio',
     description:
-      'MAST Studio angajează un front-end developer (React, Next.js) și un mobile app developer (React Native). Lucru la distanță, din România. Trimite CV-ul aici.',
+      'MAST Studio nu are momentan posturi deschise. Echipa e completă, dar primim CV-uri și portofolii pentru roluri viitoare — lucrăm la distanță, din România.',
     name: 'Cariere la MAST Studio',
     kicker: 'Cariere',
     word: PAGE_WORDS['/cariere'].ro,
@@ -26,9 +26,12 @@ const careers = {
     otherLabel: 'Și altfel',
     otherHead: 'Alte roluri.',
     intro:
-      'Căutăm un front-end developer și un mobile app developer. Lucrăm la distanță, cu afaceri mici din toată România. Dacă vrei să lucrezi cu noi pe alt rol, trimite-ne oricum CV-ul: când apare un post potrivit, te contactăm noi.',
+      'Suntem o echipă mică, la distanță, și lucrăm cu afaceri mici din toată România. Momentan echipa e completă, dar primim cu plăcere CV-uri și portofolii pentru roluri viitoare.',
     introVoice: 'Căutăm oameni care se enervează când văd un site urât.',
     openTitle: 'Posturi deschise',
+    closedBefore:
+      'Momentan nu avem posturi deschise. Echipa e completă, dar suntem mereu bucuroși să cunoaștem oameni buni. Trimite-ne CV-ul sau portofoliul la ',
+    closedAfter: ' și te contactăm când apare o poziție potrivită.',
     details: 'Detalii și aplicare: {title} →',
     otherTitle: 'Alte roluri pentru care ne poți scrie',
     roles: [
@@ -48,9 +51,9 @@ const careers = {
     formTitle: 'Trimite-ne CV-ul',
   },
   en: {
-    title: 'Careers at MAST Studio: front-end and mobile developer',
+    title: 'Careers at MAST Studio',
     description:
-      'MAST Studio is hiring a front-end developer (React, Next.js) and a mobile app developer (React Native). Remote work, from Romania. Send your CV here.',
+      'MAST Studio has no open positions right now. The team is complete, but we welcome CVs and portfolios for future roles — remote work, from Romania.',
     name: 'Careers at MAST Studio',
     kicker: 'Careers',
     word: PAGE_WORDS['/cariere'].en,
@@ -58,9 +61,12 @@ const careers = {
     otherLabel: 'Otherwise',
     otherHead: 'Other roles.',
     intro:
-      'We’re hiring a front-end developer and a mobile app developer. We work remotely, with small businesses across Romania. If you want to work with us in another role, send your CV anyway: when a fitting role opens, we’ll contact you.',
+      'We’re a small remote team working with small businesses across Romania. The team is complete right now, but we gladly keep CVs and portfolios for future roles.',
     introVoice: 'We’re looking for people who get annoyed when they see an ugly website.',
     openTitle: 'Open roles',
+    closedBefore:
+      'We have no open positions right now. The team is complete, but we’re always glad to meet good people. Send your CV or portfolio to ',
+    closedAfter: ' and we’ll get in touch when a fitting position opens.',
     details: 'Details and how to apply: {title} →',
     otherTitle: 'Other roles you can write to us about',
     roles: [
@@ -99,7 +105,7 @@ export function CareersView({ locale }: { locale: Locale }) {
     { name: ui[locale].common.home, path: localizePath('/', locale) },
     { name: ui[locale].nav.careers, path },
   ]
-  const jobs = getJobOpenings(locale)
+  const jobs = getOpenJobOpenings(locale)
 
   return (
     <>
@@ -113,28 +119,39 @@ export function CareersView({ locale }: { locale: Locale }) {
         <section aria-labelledby="posturi-deschise" className="tone-dark pb-[clamp(5rem,10vw,9rem)]">
           <div className="studio-container">
             <h2 id="posturi-deschise" className="mono-label text-[var(--fg-3)]">
-              {copy.openTitle} <sup className="text-[var(--accent)]">{jobs.length}</sup>
+              {copy.openTitle}
+              {jobs.length > 0 && <sup className="text-[var(--accent)]">{jobs.length}</sup>}
             </h2>
-            <ul className="big-rows mt-6">
-              {jobs.map((job) => (
-                <li key={job.id}>
-                  <Link href={localizePath(`/cariere/${job.id}`, locale)} className="big-row service-row" aria-label={copy.details.split('{title}').join(job.title.toLowerCase())}>
-                    <span className="mono-label text-[var(--accent)]">→</span>
-                    <span className="min-w-0">
-                      <span className="big-row-name block">{job.title}</span>
-                      <span className="service-row-text">{job.summary}</span>
-                    </span>
-                    <span className="service-row-facts">
-                      <span>
-                        <span className="mono-label text-[var(--fg-3)]">{careerLocation(locale)}</span>
-                        <span className="block">{careerSchedule(locale)}</span>
+            {jobs.length > 0 ? (
+              <ul className="big-rows mt-6">
+                {jobs.map((job) => (
+                  <li key={job.id}>
+                    <Link href={localizePath(`/cariere/${job.id}`, locale)} className="big-row service-row" aria-label={copy.details.split('{title}').join(job.title.toLowerCase())}>
+                      <span className="mono-label text-[var(--accent)]">→</span>
+                      <span className="min-w-0">
+                        <span className="big-row-name block">{job.title}</span>
+                        <span className="service-row-text">{job.summary}</span>
                       </span>
-                      <span className="text-[var(--accent)]">{salaryLabel(job, locale)}</span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                      <span className="service-row-facts">
+                        <span>
+                          <span className="mono-label text-[var(--fg-3)]">{careerLocation(locale)}</span>
+                          <span className="block">{careerSchedule(locale)}</span>
+                        </span>
+                        <span className="text-[var(--accent)]">{salaryLabel(job, locale)}</span>
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--ink-2)]">
+                {copy.closedBefore}
+                <a href={EMAIL_HREF} className="inline min-h-0 font-semibold text-[var(--ink)] underline underline-offset-4">
+                  {EMAIL}
+                </a>
+                {copy.closedAfter}
+              </p>
+            )}
           </div>
         </section>
 
