@@ -6,6 +6,7 @@ import WorkIndex from '@/components/studio/WorkIndex'
 import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
+import { stripMissingCovers } from '@/lib/covers'
 import { getAllProjects } from '@/lib/projects'
 import { breadcrumbNode, graph, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
@@ -46,7 +47,7 @@ export function portfolioMetadata(locale: Locale) {
 export function PortfolioView({ locale }: { locale: Locale }) {
   const copy = portfolioPageCopy[locale]
   const path = localizePath('/portofoliu', locale)
-  const projects = getAllProjects(locale)
+  const projects = stripMissingCovers(getAllProjects(locale))
   const crumbs: BreadcrumbItem[] = [
     { name: ui[locale].common.home, path: localizePath('/', locale) },
     { name: ui[locale].nav.portfolio, path },

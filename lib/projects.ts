@@ -249,6 +249,94 @@ export const projects: Project[] = [
     coverAlt: 'Geodă despărțită cu interior cristalin, Lithos',
     featured: false,
   },
+  {
+    slug: 'aeroscan',
+    metaDescription:
+      'Studiu de caz: centru de comandă pentru drone care cartografiază în timp real ambrozia din jurul Timișoarei, într-un proiect de cercetare finanțat public.',
+    name: 'AEROSCAN',
+    client: 'Centru de comandă pentru drone',
+    type: 'client',
+    status: 'live',
+    category: 'platforma',
+    categoryLabel: 'Platformă',
+    year: 2026,
+    summary:
+      'Centru de comandă pentru drone care cartografiază ambrozia în jurul Timișoarei, în timp real.',
+    challenge:
+      'Ambrozia este principala cauză a alergiilor sezoniere din regiune, iar ca să fie eliminată trebuie întâi găsită, pe suprafețe mari și într-o fereastră scurtă de timp. Proiectul de cercetare avea nevoie de un sistem care să coordoneze zborurile, să urmeze un protocol strict de supraveghere și să arate în timp real unde a fost găsită planta.',
+    solution:
+      'Am proiectat protocolul de supraveghere și am construit centrul de comandă: planificarea zborurilor, urmărirea dronelor în timp real și o hartă care afișează fiecare traseu, fiecare zonă acoperită și fiecare detecție. Sistemul este în funcțiune, este folosit în scop de cercetare și face parte dintr-un proiect finanțat public.',
+    stack: ['Next.js', 'Hărți în timp real', 'Telemetrie drone', 'Vizualizare de date'],
+    cover: '/work/13-aeroscan.webp',
+    coverAlt: 'Drone flight paths drawn over a city map at dusk, AEROSCAN',
+    featured: false,
+  },
+  {
+    slug: 'nutricardio-ai',
+    metaDescription:
+      'Studiu de caz: instrument AI pentru o clinică de nutriție, care estimează valorile nutritive dintr-o fotografie și verifică meniurile după protocolul ei.',
+    name: 'NutriCardio AI',
+    client: 'Clinică de nutriție și longevitate',
+    type: 'client',
+    status: 'in-lucru',
+    category: 'aplicatie',
+    categoryLabel: 'Aplicație AI',
+    year: 2026,
+    summary:
+      'Instrument AI care recunoaște valorile nutritive dintr-o fotografie și verifică meniurile după protocolul clinicii.',
+    challenge:
+      'Pacienții unei clinici de nutriție urmează un protocol alimentar personalizat, dar viața reală înseamnă restaurante, meniuri și mese gătite de alții. Clinica avea nevoie de un instrument care să-i ajute să rămână în protocol fără să cântărească fiecare aliment.',
+    solution:
+      'Construim un instrument care recunoaște alimentele dintr-o singură fotografie și estimează valorile lor nutritive, plus o funcție care scanează meniul unui restaurant și arată ce se potrivește protocolului clinicii. Instrumentul este în dezvoltare și este testat inclusiv pentru siguranța față de date introduse rău intenționat.',
+    stack: ['Computer vision', 'Modele AI', 'Next.js', 'Testare de securitate'],
+    cover: '/work/14-nutricardio-ai.webp',
+    coverAlt: 'A plate of food on a table with nutrition labels floating above it, NutriCardio AI',
+    featured: false,
+  },
+  {
+    slug: 'nutrigenone',
+    metaDescription:
+      'Studiu de caz: platformă AI care analizează datele de microbiom și propune nutriție personalizată pentru stare de bine, longevitate sau performanță sportivă.',
+    name: 'Nutrigenone',
+    client: 'Proiect de cercetare în nutriție personalizată',
+    type: 'client',
+    status: 'in-lucru',
+    category: 'platforma',
+    categoryLabel: 'Platformă AI',
+    year: 2026,
+    summary:
+      'Platformă AI care analizează datele de microbiom și recomandă nutriție personalizată, după obiectivul fiecărei persoane.',
+    challenge:
+      'Microbiomul fiecărei persoane e diferit, iar datele lui au zeci de parametri care se influențează între ei. Proiectul de cercetare voia să transforme aceste date în recomandări concrete de nutriție, diferite pentru cine urmărește starea generală de bine, longevitatea sau performanța sportivă.',
+    solution:
+      'Construim platforma care preia datele de microbiom, le analizează cu AI pe toți parametrii măsurați și propune soluția optimă pentru obiectivul ales de fiecare persoană. Platforma susține cercetarea în curs și e construită să explice fiecare recomandare, nu doar să o dea.',
+    stack: ['Modele AI', 'Analiză de date', 'Next.js', 'PostgreSQL'],
+    cover: '/work/15-nutrigenone.webp',
+    coverAlt: 'Abstract microbiome pattern in soft greens forming a nutrition bar, Nutrigenone',
+    featured: false,
+  },
+  {
+    slug: 'platforma-clinica',
+    metaDescription:
+      'Studiu de caz: platformă securizată de management clinic și cercetare pentru un centru de dermatologie, cu pacienți, date de cercetare și studii clinice.',
+    name: 'Platformă de management clinic',
+    client: 'Centru de dermatologie',
+    type: 'client',
+    status: 'live',
+    category: 'platforma',
+    categoryLabel: 'Platformă',
+    year: 2026,
+    summary:
+      'Platformă securizată pentru pacienți, cercetare și studii clinice, construită într-un proiect finanțat public.',
+    challenge:
+      'Un centru de dermatologie implicat în cercetare avea date împrăștiate în mai multe locuri: fișele pacienților, datele de cercetare și documentele studiilor clinice. Toate erau date de sănătate, deci securitatea nu era o opțiune, ci condiția de pornire.',
+    solution:
+      'Am construit o platformă care adună pacienții, cercetarea și studiile clinice într-un singur sistem, cu acces pe roluri, jurnal al acțiunilor și protecția datelor gândită de la prima linie de cod. Platforma a fost realizată într-un proiect finanțat public și este deținută de centru.',
+    stack: ['Next.js', 'PostgreSQL', 'Acces pe roluri', 'Protecția datelor'],
+    cover: '/work/16-platforma-clinica.webp',
+    coverAlt: 'A calm clinical dashboard on a tablet beside a stethoscope, clinical management platform',
+    featured: false,
+  },
 ]
 
 function localizeProject(project: Project, locale: Locale): Project {

@@ -57,7 +57,7 @@ const industries: Industry[] = [
       source: 'Studiu MAST Studio, octombrie 2026',
     },
     recommendedServices: ['site-de-prezentare', 'sistem-programari-online', 'asistent-ai', 'audit-securitate-gdpr', 'seo-local'],
-    projectSlugs: [],
+    projectSlugs: ['platforma-clinica'],
     guidePost: 'site-clinica-medicala',
     faq: [
       {

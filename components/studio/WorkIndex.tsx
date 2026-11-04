@@ -84,15 +84,25 @@ export default function WorkIndex({ projects }: { projects: Project[] }) {
           <li key={project.slug} data-work="" className="work-item" style={{ '--shape': SHAPES[index % 4] } as CSSProperties}>
             <Link href={href(`/portofoliu/${project.slug}`)} data-cursor={copy.view} data-expand="" className="work-card link-block">
               <span className="work-card-media" data-expand-frame="">
-                <Image
-                  src={project.cover}
-                  alt={project.coverAlt}
-                  fill
-                  sizes="(min-width: 768px) 46vw, 100vw"
-                  priority={index < 2}
-                  data-expand-media=""
-                  className="object-cover object-[right_center]"
-                />
+                {project.cover ? (
+                  <Image
+                    src={project.cover}
+                    alt={project.coverAlt}
+                    fill
+                    sizes="(min-width: 768px) 46vw, 100vw"
+                    priority={index < 2}
+                    data-expand-media=""
+                    className="object-cover object-[right_center]"
+                  />
+                ) : (
+                  <span
+                    role="img"
+                    aria-label={project.coverAlt}
+                    className="absolute inset-0 flex items-center justify-center bg-[linear-gradient(135deg,#0b0f17_0%,#1a2230_55%,#0b0f17_100%)] px-6"
+                  >
+                    <span className="kicker text-center text-[#faf7f2]">{project.name}</span>
+                  </span>
+                )}
               </span>
               <span className="work-card-meta mono-label">
                 <span>{project.categoryLabel}</span>

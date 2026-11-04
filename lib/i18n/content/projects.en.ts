@@ -132,4 +132,56 @@ export const projectTextEn: Record<string, ProjectText> = {
     stack: ['React', 'TypeScript', 'Tailwind CSS', 'Canvas API'],
     coverAlt: 'Split geode with crystal interior, Lithos',
   },
+  aeroscan: {
+    metaDescription:
+      'Case study: a drone command centre that maps ragweed around Timișoara in real time, as part of a publicly funded research project.',
+    client: 'Drone command centre',
+    categoryLabel: 'Platform',
+    summary: 'A drone command centre that maps ragweed around Timișoara in real time.',
+    challenge:
+      'Ragweed is the main cause of seasonal allergies in the region, and to remove it you first have to find it, over large areas and within a short window of time. The research project needed a system that coordinates the flights, follows a strict surveillance protocol and shows in real time where the plant has been found.',
+    solution:
+      'We designed the surveillance protocol and built the command centre: flight planning, real-time drone tracking and a map that shows every flight path, every area covered and every detection. The system is in operation, it is used for research and it is part of a publicly funded project.',
+    stack: ['Next.js', 'Real-time maps', 'Drone telemetry', 'Data visualisation'],
+    coverAlt: 'Drone flight paths drawn over a city map at dusk, AEROSCAN',
+  },
+  'nutricardio-ai': {
+    metaDescription:
+      'Case study: an AI tool for a nutrition clinic that estimates nutritional values from a photo and checks menus against its protocol.',
+    client: 'Nutrition and longevity clinic',
+    categoryLabel: 'AI application',
+    summary: 'An AI tool that recognises nutritional values from a photo and checks menus against the clinic’s protocol.',
+    challenge:
+      'Patients of a nutrition clinic follow a personalised food protocol, but real life means restaurants, menus and meals cooked by others. The clinic needed a tool that helps them stay in the protocol without weighing every food.',
+    solution:
+      'We are building a tool that recognises the foods in a single photo and estimates their nutritional values, plus a feature that scans a restaurant’s menu and shows what fits the clinic’s protocol. The tool is in development and is also being tested for its safety against maliciously entered data.',
+    stack: ['Computer vision', 'AI models', 'Next.js', 'Security testing'],
+    coverAlt: 'A plate of food on a table with nutrition labels floating above it, NutriCardio AI',
+  },
+  nutrigenone: {
+    metaDescription:
+      'Case study: an AI platform that analyses microbiome data and proposes personalised nutrition for wellbeing, longevity or athletic performance.',
+    client: 'Personalised nutrition research project',
+    categoryLabel: 'AI platform',
+    summary: 'An AI platform that analyses microbiome data and recommends personalised nutrition, after each person’s goal.',
+    challenge:
+      'Everyone’s microbiome is different, and its data has dozens of parameters that influence each other. The research project wanted to turn this data into concrete nutrition recommendations, different for someone pursuing general wellbeing, longevity or athletic performance.',
+    solution:
+      'We are building the platform that takes microbiome data, analyses it with AI across all the measured parameters and proposes the optimal solution for the goal each person chooses. The platform supports the ongoing research and is built to explain every recommendation, not just hand it out.',
+    stack: ['AI models', 'Data analysis', 'Next.js', 'PostgreSQL'],
+    coverAlt: 'Abstract microbiome pattern in soft greens forming a nutrition bar, Nutrigenone',
+  },
+  'platforma-clinica': {
+    metaDescription:
+      'Case study: a secure clinical management and research platform for a dermatology centre, with patients, research data and clinical studies.',
+    client: 'Dermatology centre',
+    categoryLabel: 'Platform',
+    summary: 'A secure platform for patients, research and clinical studies, built within a publicly funded project.',
+    challenge:
+      'A dermatology centre involved in research had data scattered across several places: patient records, research data and clinical study documents. All of it was health data, so security was not an option but the starting condition.',
+    solution:
+      'We built a platform that brings patients, research and clinical studies into a single system, with role-based access, an action log and data protection designed from the first line of code. The platform was delivered within a publicly funded project and is owned by the centre.',
+    stack: ['Next.js', 'PostgreSQL', 'Role-based access', 'Data protection'],
+    coverAlt: 'A calm clinical dashboard on a tablet beside a stethoscope, clinical management platform',
+  },
 }

@@ -11,6 +11,7 @@ import TrackedLink from '@/components/TrackedLink'
 import PageHero from '@/components/studio/PageHero'
 import { SegmentProvider } from '@/components/SegmentContext'
 import { getPostBySlug, type BlogPost } from '@/lib/blog'
+import { coverExists } from '@/lib/covers'
 import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
@@ -248,7 +249,7 @@ export async function ServiceDetail({ locale, slug }: { locale: Locale; slug: st
                         className="group block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brass-lite)]"
                       >
                         <span className="relative block w-full overflow-hidden rounded-[6px] bg-[#0b0f17]" style={{ aspectRatio: '16 / 10' }}>
-                          {project.cover ? (
+                          {project.cover && coverExists(project.cover) ? (
                             <Image
                               src={project.cover}
                               alt={project.coverAlt}
