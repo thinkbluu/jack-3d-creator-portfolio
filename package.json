@@ -7,6 +7,7 @@
     "build": "next build",
     "postbuild": "node scripts/indexnow.mjs",
     "indexnow:all": "node scripts/indexnow.mjs --all",
+    "indexnow:url": "node scripts/indexnow.mjs --url",
     "start": "next start",
     "lint": "eslint ."
   },

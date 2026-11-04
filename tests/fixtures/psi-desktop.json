@@ -1,0 +1,24 @@
+{
+  "lighthouseResult": {
+    "categories": {
+      "performance": { "score": 0.88 }
+    },
+    "audits": {
+      "first-contentful-paint": { "displayValue": "0.9 s" },
+      "largest-contentful-paint": { "displayValue": "1.6 s" },
+      "total-blocking-time": { "displayValue": "140 ms" },
+      "cumulative-layout-shift": { "displayValue": "0.05" },
+      "speed-index": { "displayValue": "2.0 s" },
+      "render-blocking-resources": {
+        "title": "Eliminate render-blocking resources",
+        "displayValue": "Potential savings of 150 ms",
+        "details": { "overallSavingsMs": 150 }
+      },
+      "unused-javascript": {
+        "title": "Reduce unused JavaScript",
+        "displayValue": "Potential savings of 180 KiB",
+        "details": { "overallSavingsMs": 90, "overallSavingsBytes": 184320 }
+      }
+    }
+  }
+}

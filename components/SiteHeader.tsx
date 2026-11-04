@@ -4,7 +4,8 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import LanguageSwitcher from '@/components/LanguageSwitcher'
-import MenuOverlay, { type MenuItem } from '@/components/MenuOverlay'
+import DesktopNav from '@/components/DesktopNav'
+import MenuOverlay from '@/components/MenuOverlay'
 import { useHref, useUi } from '@/lib/i18n/context'
 
 export type SiteSection = 'servicii' | 'solutii' | 'portofoliu' | 'cum-lucram' | 'blog' | 'despre' | 'cariere' | 'contact'
@@ -42,21 +43,7 @@ export default function SiteHeader({
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const wasOpen = useRef(false)
 
-  const navItems: MenuItem[] = [
-    { id: 'portofoliu', href: href('/portofoliu'), label: nav.portfolio },
-    { id: 'servicii', href: href('/servicii'), label: nav.services },
-    { id: 'solutii', href: href('/solutii'), label: nav.solutions },
-    { id: 'preturi', href: href('/preturi'), label: nav.pricing },
-    // The free checker lives in the full menu only — the desktop inline row stays short.
-    { id: 'verifica-site', href: href('/verifica-site'), label: nav.checker },
-    { id: 'cum-lucram', href: href('/cum-lucram'), label: nav.approach },
-    { id: 'despre', href: href('/despre'), label: nav.about },
-    { id: 'blog', href: href('/blog'), label: nav.guide },
-    { id: 'cariere', href: href('/cariere'), label: nav.careers },
-    { id: 'contact', href: href('/contact'), label: nav.contact },
-  ]
-  const quote: MenuItem | null = onThankYou ? null : { id: 'cerere-oferta', href: href('/cerere-oferta'), label: nav.quote }
-  const inline = navItems.filter((item) => ['portofoliu', 'servicii', 'solutii', 'preturi', 'despre', 'blog', 'contact'].includes(item.id))
+  const quote = onThankYou ? null : { id: 'cerere-oferta', href: href('/cerere-oferta'), label: nav.quote }
 
   useEffect(() => {
     let frame = 0
@@ -136,19 +123,7 @@ export default function SiteHeader({
             </span>
           </Link>
 
-          <ul className="hidden items-center gap-8 lg:flex">
-            {inline.map((item) => (
-              <li key={item.id}>
-                <Link
-                  href={item.href}
-                  aria-current={current === item.id ? 'page' : undefined}
-                  className="mono-label whitespace-nowrap text-[var(--ink-2)] transition-colors hover:text-[var(--ink)] aria-[current=page]:text-[var(--ink)]"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <DesktopNav current={current} />
 
           <div className="flex items-center gap-3">
             <LanguageSwitcher className="hidden md:block" />
@@ -171,7 +146,7 @@ export default function SiteHeader({
               onClick={() => setOpen(true)}
               aria-expanded={open}
               aria-controls="studio-menu"
-              className={`mono-label flex items-center gap-3 rounded-[var(--radius-pill)] border px-5 transition-colors ${
+              className={`mono-label flex items-center gap-3 rounded-[var(--radius-pill)] border px-5 transition-colors lg:hidden ${
                 dark
                   ? 'border-[var(--hairline-dark)] text-[var(--on-dark)] hover:border-[var(--on-dark)]'
                   : 'border-[var(--hairline)] text-[var(--ink)] hover:border-[var(--ink)]'
@@ -186,7 +161,7 @@ export default function SiteHeader({
           </div>
         </nav>
       </header>
-      <MenuOverlay open={open} onClose={close} items={navItems} current={current} quote={quote ?? undefined} />
+      <MenuOverlay open={open} onClose={close} current={current} quote={quote ?? undefined} />
     </>
   )
 }
