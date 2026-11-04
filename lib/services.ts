@@ -3,8 +3,12 @@ import type { Locale } from './i18n/locale'
 import { canonicalServiceSlug } from './i18n/paths'
 import { serviceTextEn } from './i18n/content/services.en'
 
+export type ServiceGroup = 'web' | 'software' | 'ai' | 'crestere'
+
 export type ServicePage = {
   slug: string
+  /** Family the service belongs to; groups /servicii, the homepage deck and the footer. */
+  group: ServiceGroup
   /** Name used in navigation, cards and structured data. */
   name: string
   shortName: string
@@ -39,18 +43,22 @@ export type ServicePage = {
   updatedAt: string
 }
 
+/** refacere-site costs exactly what site-de-prezentare costs; one source so the two never drift. */
+const PRESENTATION_WEBSITE_PRICE_FROM = 300
+
 export const servicePages: ServicePage[] = [
   {
     slug: 'site-de-prezentare',
+    group: 'web',
     name: 'Site de prezentare',
     shortName: 'Site de prezentare',
-    h1: 'Creare site de prezentare',
+    h1: 'Creare site de prezentare pentru firme',
     seoTitle: 'Creare site de prezentare, de la 300 EUR',
     metaDescription:
-      'Creare site de prezentare pentru afaceri mici: design unic, texte incluse, până la 5 pagini. De la 300 EUR, live în 48 de ore după materiale.',
+      'Creare site de prezentare pentru firme din Timișoara și din toată țara: design unic, texte incluse, gândit pentru telefon. De la 300 EUR, live în 48 de ore.',
     answerCapsule:
       'Un site de prezentare la MAST Studio costă de la 300 EUR și este livrat live în 48 de ore de la primirea materialelor. Include design unic, texte scrise de noi, versiune pentru mobil și optimizare de viteză. Plătești un avans de 50 EUR, restul doar dacă ești mulțumit de rezultat.',
-    priceFrom: 300,
+    priceFrom: PRESENTATION_WEBSITE_PRICE_FROM,
     priceLabel: 'de la 300 EUR',
     deliveryLabel: 'Termen de livrare',
     deliveryTime: '48 de ore după materiale',
@@ -111,8 +119,18 @@ export const servicePages: ServicePage[] = [
         answer:
           'Da, primești optimizare SEO de bază: titluri corecte, viteză de încărcare bună și structură citibilă pentru motoarele de căutare. SEO avansat sau campanii de promovare sunt servicii separate.',
       },
+      {
+        question: 'Lucrați doar cu firme din Timișoara?',
+        answer:
+          'Nu. Suntem în Timișoara, dar lucrăm la distanță cu firme din toată România și din străinătate. Totul se poate face pe WhatsApp, e-mail și apel video.',
+      },
+      {
+        question: 'Site-ul meu va apărea și în ChatGPT sau Google AI?',
+        answer:
+          'Îl construim cu date structurate și texte clare, care ajută și la căutarea cu AI. Pentru o pregătire completă, cu profil Google și directoare, există serviciul separat de vizibilitate AI.',
+      },
     ],
-    relatedSlugs: ['magazin-online', 'mentenanta', 'automatizari-whatsapp'],
+    relatedSlugs: ['magazin-online', 'vizibilitate-ai', 'mentenanta'],
     relatedPosts: [
       'cat-costa-un-site-in-romania',
       'cat-dureaza-constructia-unui-site',
@@ -123,16 +141,88 @@ export const servicePages: ServicePage[] = [
     projectSlugs: ['veterinaria-timisoara', 'agd-innerpath-consulting', 'painea-casei'],
     waMessage: 'Salut! Vreau un site de prezentare, livrat în 48 de ore. Îmi poți face o ofertă?',
     serviceType: 'Creare site de prezentare',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'refacere-site',
+    group: 'web',
+    name: 'Refacere site',
+    shortName: 'Refacere site',
+    h1: 'Refacere site (redesign) pentru firme',
+    seoTitle: 'Refacere site și redesign pentru firme',
+    metaDescription:
+      'Refacem site-ul vechi: design nou, viteză pe telefon, texte clare și aceleași adrese, ca să nu pierzi pozițiile din Google. La prețul unui site de prezentare.',
+    answerCapsule:
+      'Refacerea unui site la MAST Studio costă cât un site de prezentare nou. Păstrăm ce funcționează, adică adresele paginilor, pozițiile din Google și conținutul bun, și refacem ce nu: designul, viteza pe telefon, textele și butoanele de contact. Redirecționăm corect fiecare pagină veche, ca să nu pierzi vizitatori.',
+    priceFrom: PRESENTATION_WEBSITE_PRICE_FROM,
+    priceLabel: `de la ${PRESENTATION_WEBSITE_PRICE_FROM} EUR`,
+    deliveryLabel: 'Termen de livrare',
+    deliveryTime: '48 de ore după materiale',
+    intro:
+      'Un site vechi nu e doar urât. E lent pe telefon, nu mai spune ce faci acum și îi trimite pe clienți la concurență. Dar un redesign făcut prost te poate costa și pozițiile din Google câștigate în ani. De aceea pornim de la ce merge deja și refacem restul.',
+    includes: [
+      'analiza site-ului vechi: ce pagini aduc vizitatori, ce merge, ce nu',
+      'design nou, unic',
+      'texte rescrise clar',
+      'viteză bună pe telefon',
+      'redirecționarea fiecărei pagini vechi către cea nouă',
+      'păstrarea datelor din Google Search Console și Analytics',
+      'mutarea pe un domeniu și o găzduire pe numele tău, dacă nu sunt deja',
+    ],
+    notIncluded: [
+      'funcții noi complexe (magazin, conturi, programări), ofertate separat',
+      'migrarea a sute de produse sau articole fără ofertă separată',
+    ],
+    process: [
+      { step: 'Analizăm site-ul vechi', description: 'Vedem ce pagini contează pentru Google și pentru clienți.' },
+      { step: 'Propunem structura nouă', description: 'Ce păstrăm, ce comasăm, ce scriem din nou.' },
+      { step: 'Construim și redirecționăm', description: 'Site nou, cu fiecare adresă veche trimisă unde trebuie.' },
+      { step: 'Lansăm și urmărim', description: 'Verificăm în primele săptămâni că pozițiile din Google se păstrează.' },
+    ],
+    forWho: [
+      'firme cu site mai vechi de 4-5 ani',
+      'site-uri lente pe telefon',
+      'firme care și-au schimbat serviciile sau identitatea',
+      'site-uri făcute pe teme care se strică la actualizări',
+    ],
+    faq: [
+      {
+        question: 'Pierd pozițiile din Google dacă refac site-ul?',
+        answer:
+          'Nu, dacă redesignul e făcut corect. Păstrăm adresele importante și redirecționăm fiecare pagină veche, apoi urmărim în Search Console primele săptămâni după lansare.',
+      },
+      {
+        question: 'Cât costă refacerea unui site?',
+        answer:
+          'Cât un site de prezentare nou, la același preț de pornire. Dacă site-ul vechi are multe pagini sau funcții speciale, prețul se stabilește în ofertă.',
+      },
+      {
+        question: 'Puteți prelua un site făcut de altcineva?',
+        answer:
+          'Da. Avem nevoie de acces la domeniu sau de ajutorul vechiului furnizor. Dacă domeniul nu e pe numele tău, te ajutăm să-l transferi.',
+      },
+      {
+        question: 'Pot păstra textele vechi?',
+        answer:
+          'Da, pe cele bune le păstrăm. De obicei rescriem doar ce nu mai e actual sau nu e clar pe telefon.',
+      },
+    ],
+    relatedSlugs: ['site-de-prezentare', 'mentenanta', 'conformitate-legala-site'],
+    relatedPosts: ['de-ce-sunt-lente-temele-wordpress', 'ce-inseamna-pagespeed'],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau să refac site-ul firmei.',
+    serviceType: 'Refacere site (redesign)',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'magazin-online',
+    group: 'web',
     name: 'Magazin online',
     shortName: 'Magazin online',
-    h1: 'Creare magazin online',
+    h1: 'Creare magazin online personalizat',
     seoTitle: 'Creare magazin online, de la 900 EUR',
     metaDescription:
-      'Creare magazin online cu plată cu cardul, gestionare comenzi, facturare și curieri. De la 900 EUR, livrat în 7 zile după materiale. Avans 50 EUR.',
+      'Creare magazin online personalizat, fără teme: plată cu cardul și ramburs, facturare, curieri și finalizarea comenzii gândită pentru telefon. De la 900 EUR.',
     answerCapsule:
       'Un magazin online la MAST Studio costă de la 900 EUR și este livrat în 7 zile. Include catalog de produse, plată cu cardul, gestionare comenzi și integrare cu programul de facturare. Plătești un avans de 50 EUR, restul doar dacă ești mulțumit.',
     priceFrom: 900,
@@ -196,8 +286,18 @@ export const servicePages: ServicePage[] = [
         answer:
           'Da. Primești acces la un panou de administrare din care adaugi produse, urmărești comenzile și gestionezi stocul, plus un instructaj complet la predare.',
       },
+      {
+        question: 'De ce contează finalizarea comenzii pe telefon?',
+        answer:
+          'Pentru că acolo se pierd cele mai multe vânzări. Când am testat 50 de magazine online românești pe telefon, toate aveau cel puțin o problemă, iar doar 48% arătau costul transportului înainte de finalizare. Le construim pe ale noastre ca să evite exact aceste greșeli.',
+      },
+      {
+        question: 'Faceți magazine pe Shopify sau WooCommerce?',
+        answer:
+          'Construim magazine personalizate, fără teme gata făcute, ca să fie rapide și să arate ca brandul tău. Dacă ai nevoie de un sistem de administrare anume, discutăm înainte de ofertă.',
+      },
     ],
-    relatedSlugs: ['site-de-prezentare', 'automatizari-whatsapp', 'mentenanta'],
+    relatedSlugs: ['site-de-prezentare', 'asistent-ai', 'mentenanta'],
     relatedPosts: [
       'cat-costa-magazin-online',
       'ce-e-efactura-magazin-online',
@@ -207,16 +307,17 @@ export const servicePages: ServicePage[] = [
     projectSlugs: [],
     waMessage: 'Salut! Vreau un magazin online. Îmi poți face o ofertă?',
     serviceType: 'Creare magazin online',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'aplicatii-web',
+    group: 'software',
     name: 'Aplicații web și mobile',
     shortName: 'Aplicații web și mobile',
-    h1: 'Dezvoltare aplicații web și mobile',
+    h1: 'Dezvoltare aplicații web și mobile la comandă',
     seoTitle: 'Dezvoltare aplicații web și mobile',
     metaDescription:
-      'Aplicații web și mobile pentru procese interne, portaluri de clienți și programări. Ofertă cu preț fix în 24 de ore, construcție în etape, predare completă.',
+      'Dezvoltare aplicații web și mobile la comandă: portaluri de clienți, programări, instrumente interne și AI integrat. Ofertă cu preț fix în 24 de ore.',
     answerCapsule:
       'Aplicațiile web și mobile se estimează individual, iar oferta cu preț fix vine în 24 de ore de la prima discuție. Construim instrumente interne care automatizează procese repetitive, portaluri pentru clienți și sisteme de programări, în etape, cu acces la progres.',
     priceFrom: null,
@@ -279,22 +380,106 @@ export const servicePages: ServicePage[] = [
         answer:
           'Da, la cerere. Poți opta pentru un abonament de mentenanță și dezvoltare continuă, discutat separat, sau poți continua cu echipa ta folosind documentația primită la predare.',
       },
+      {
+        question: 'Puteți integra inteligență artificială în aplicație?',
+        answer:
+          'Da. Am construit aplicații care recunosc valori nutritive din fotografii, analizează date de microbiom și cartografiază date de la drone în timp real. Dacă AI-ul e miezul proiectului, vezi și serviciul de soluții AI personalizate.',
+      },
+      {
+        question: 'Faceți și aplicații pentru iPhone și Android?',
+        answer:
+          'Da. În funcție de proiect, construim aplicații web care merg pe orice telefon sau aplicații mobile publicate în App Store și Google Play. Îți recomandăm varianta potrivită în ofertă.',
+      },
     ],
-    relatedSlugs: ['platforme-saas', 'automatizari-whatsapp', 'mentenanta'],
+    relatedSlugs: ['platforme-saas', 'solutii-ai-personalizate', 'design-ux-ui'],
     relatedPosts: ['cat-costa-aplicatie-web', 'automatizari-whatsapp-afacere-mica'],
     projectSlugs: [],
     waMessage: 'Salut! Am nevoie de o aplicație web sau mobilă. Putem discuta?',
     serviceType: 'Dezvoltare aplicații web',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'aplicatii-mobile',
+    group: 'software',
+    name: 'Aplicații mobile iOS și Android',
+    shortName: 'Aplicații mobile',
+    h1: 'Dezvoltare aplicații mobile pentru iOS și Android',
+    seoTitle: 'Dezvoltare aplicații mobile iOS și Android',
+    metaDescription:
+      'Dezvoltăm aplicații mobile pentru iPhone și Android: de la prima versiune la publicarea în App Store și Google Play, cu AI integrat unde aduce valoare.',
+    answerCapsule:
+      'MAST Studio dezvoltă aplicații mobile pentru iPhone și Android dintr-o singură bază de cod, de la design și prima versiune până la publicarea în App Store și Google Play. Construim în etape, cu versiuni de test pe telefonul tău, și integrăm AI acolo unde aduce valoare reală. Oferta cu preț vine în 24 de ore.',
+    priceFrom: null,
+    priceLabel: 'ofertă în 24 de ore',
+    deliveryLabel: 'Termen',
+    deliveryTime: 'în etape, stabilite în ofertă',
+    intro:
+      'O aplicație mobilă are sens când clienții tăi o folosesc des: rezervă, comandă, urmăresc un rezultat sau primesc notificări. Te ajutăm întâi să decizi dacă ai nevoie de aplicație sau de o aplicație web, apoi o construim în etape, ca să o testezi pe telefonul tău de la primele săptămâni.',
+    includes: [
+      'analiză: aplicație mobilă sau aplicație web, ce ți se potrivește',
+      'design de interfață pentru telefon',
+      'o singură bază de cod pentru iPhone și Android',
+      'conturi, notificări, plăți în aplicație, la nevoie',
+      'funcții AI: recunoaștere de imagini, recomandări, asistent',
+      'versiuni de test pe telefonul tău pe parcurs',
+      'publicarea în App Store și Google Play',
+      'codul și conturile de dezvoltator pe numele tău',
+    ],
+    notIncluded: [
+      'taxele conturilor de dezvoltator Apple și Google',
+      'promovarea aplicației după lansare (separat)',
+      'jocuri 3D complexe',
+    ],
+    process: [
+      { step: 'Discuție și ofertă', description: 'Înțelegem ce trebuie să facă aplicația. Oferta cu etape și preț vine în 24 de ore.' },
+      { step: 'Design', description: 'Ecranele cheie, testate pe telefon înainte de programare.' },
+      { step: 'Construcție în etape', description: 'Primești versiuni de test pe telefon și dai feedback pe parcurs.' },
+      { step: 'Publicare și predare', description: 'O publicăm în magazine, îți predăm codul și conturile.' },
+    ],
+    forWho: [
+      'clinici și cabinete cu pacienți care revin des',
+      'servicii cu rezervări și abonamente',
+      'startup-uri cu un produs mobil',
+      'firme care vor o aplicație internă pentru echipele din teren',
+    ],
+    faq: [
+      {
+        question: 'Cât costă o aplicație mobilă?',
+        answer:
+          'Depinde de numărul de ecrane, de funcții și de integrări, așa că facem o ofertă după prima discuție, în 24 de ore. Pornim de obicei cu o primă versiune mică, ca să testezi ideea înainte de investiția mare.',
+      },
+      {
+        question: 'Aplicație mobilă sau aplicație web?',
+        answer:
+          'Dacă oamenii o folosesc rar sau o găsesc din Google, o aplicație web e de obicei suficientă și mai ieftină. Dacă o deschid des, primesc notificări sau folosesc camera și locația, o aplicație mobilă merită.',
+      },
+      {
+        question: 'Publicați aplicația în App Store și Google Play?',
+        answer:
+          'Da, ne ocupăm de tot procesul de publicare, pe conturile de dezvoltator ale firmei tale.',
+      },
+      {
+        question: 'Puteți integra AI în aplicație?',
+        answer:
+          'Da. Am construit aplicații care recunosc valori nutritive dintr-o fotografie și care analizează date complexe pentru recomandări personalizate.',
+      },
+    ],
+    relatedSlugs: ['aplicatii-web', 'design-ux-ui', 'mvp-startup'],
+    relatedPosts: [],
+    projectSlugs: ['nutricardio-ai'],
+    waMessage: 'Salut! Am o idee de aplicație mobilă. Putem discuta?',
+    serviceType: 'Dezvoltare aplicații mobile iOS și Android',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'platforme-saas',
+    group: 'software',
     name: 'Platforme SaaS',
     shortName: 'Platforme SaaS',
-    h1: 'Platforme SaaS custom',
+    h1: 'Dezvoltare platforme SaaS custom',
     seoTitle: 'Platformă SaaS custom: de la idee la lansare',
     metaDescription:
-      'Platforme SaaS custom: conturi, abonamente și plăți online, construite în etape de la prima versiune la primii clienți. Ofertă cu preț fix în 24 de ore.',
+      'Dezvoltare platformă SaaS de la idee la primii clienți: conturi, abonamente, plăți online și AI unde aduce valoare. Construită în etape, ofertă în 24 de ore.',
     answerCapsule:
       'O platformă SaaS custom se estimează individual, cu ofertă în 24 de ore de la prima discuție. Pornim de la o primă versiune clară, cu conturi, abonamente și plăți online, și o construim în etape, cu acces la progres, până la primii utilizatori care plătesc.',
     priceFrom: null,
@@ -302,7 +487,7 @@ export const servicePages: ServicePage[] = [
     deliveryLabel: 'Termen de livrare',
     deliveryTime: 'estimat în ofertă',
     intro:
-      'Ai o idee de produs digital pentru care clienții să plătească lunar? Te ajutăm să o transformi într-o platformă reală: stabilim împreună ce intră în prima versiune, o construim în etape și o lansăm fără funcții inutile care întârzie primii clienți.',
+      'Ai o idee de produs digital pentru care clienții să plătească lunar? Te ajutăm să o transformi ������ntr-o platformă reală: stabilim împreună ce intră în prima versiune, o construim în etape și o lansăm fără funcții inutile care întârzie primii clienți.',
     includes: [
       'definirea primei versiuni (MVP) și a priorităților',
       'design de interfață personalizat',
@@ -356,22 +541,172 @@ export const servicePages: ServicePage[] = [
         answer:
           'Poți continua cu un abonament de mentenanță și dezvoltare, discutat separat, sau poți merge mai departe cu echipa ta, folosind documentația primită la predare.',
       },
+      {
+        question: 'Puteți construi un SaaS cu funcții de AI?',
+        answer:
+          'Da. Integrăm modele AI acolo unde aduc valoare reală utilizatorilor, de la recomandări personalizate la analiza documentelor, și ținem costurile de rulare sub control din arhitectură.',
+      },
     ],
-    relatedSlugs: ['aplicatii-web', 'mentenanta', 'automatizari-whatsapp'],
+    relatedSlugs: ['aplicatii-web', 'solutii-ai-personalizate', 'design-ux-ui'],
     relatedPosts: ['cat-costa-aplicatie-web'],
     projectSlugs: ['asesor'],
     waMessage: 'Salut! Vreau să construim o platformă personalizată. Putem discuta?',
     serviceType: 'Dezvoltare platforme SaaS',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'mvp-startup',
+    group: 'software',
+    name: 'MVP pentru startup-uri',
+    shortName: 'MVP startup',
+    h1: 'Dezvoltare MVP pentru startup-uri',
+    seoTitle: 'Dezvoltare MVP pentru startup-uri',
+    metaDescription:
+      'Construim prima versiune a produsului tău în 4-8 săptămâni: doar ce trebuie ca să testezi ideea cu clienți reali. Web, mobil sau SaaS, cu AI unde contează.',
+    answerCapsule:
+      'Un MVP este prima versiune a produsului tău, cu doar funcțiile necesare ca să-l testezi cu clienți reali. La MAST Studio îl construim în 4-8 săptămâni, ca aplicație web, mobilă sau SaaS, cu design curat, plăți și analiză de utilizare. Oferta vine în 24 de ore, iar codul rămâne al tău.',
+    priceFrom: null,
+    priceLabel: 'ofertă în 24 de ore',
+    deliveryLabel: 'Termen',
+    deliveryTime: '4-8 săptămâni pentru prima versiune',
+    intro:
+      'Cele mai multe startup-uri pierd luni și bani construind funcții pe care nu le folosește nimeni. Un MVP bun face invers: alege cele două sau trei lucruri care dovedesc că ideea merită, le construiește bine și le pune repede în fața clienților. Apoi decizi cu date, nu cu presupuneri.',
+    includes: [
+      'atelier de definire: ce intră în prima versiune și ce așteaptă',
+      'design de produs pentru ecranele cheie',
+      'aplicație web, mobilă sau SaaS, după produs',
+      'conturi, plăți și abonamente, la nevoie',
+      'analiză de utilizare, ca să vezi ce folosesc oamenii',
+      'lansare la primii utilizatori',
+      'cod și conturi pe numele tău, gata de dezvoltat mai departe',
+    ],
+    notIncluded: [
+      'marketingul și vânzările de după lansare',
+      'funcții care nu sunt necesare pentru testarea ideii',
+      'acționariat sau plată în părți sociale',
+    ],
+    process: [
+      { step: 'Atelier de definire', description: 'Stabilim ipoteza de testat și cele 2-3 funcții care o dovedesc.' },
+      { step: 'Design rapid', description: 'Ecranele cheie, testate cu 3-5 oameni din publicul tău.' },
+      { step: 'Construcție', description: '4-8 săptămâni, cu o versiune nouă de văzut în fiecare săptămână.' },
+      { step: 'Lansare și măsurare', description: 'Primii utilizatori reali și datele despre ce funcționează.' },
+    ],
+    forWho: [
+      'fondatori cu o idee validată în discuții, dar fără produs',
+      'firme care vor să testeze un produs digital nou',
+      'startup-uri care pregătesc o rundă de finanțare',
+      'echipe non-tehnice care au nevoie de un partener tehnic',
+    ],
+    faq: [
+      {
+        question: 'Ce este un MVP?',
+        answer:
+          'Minimum Viable Product, prima versiune a unui produs, cu doar funcțiile necesare ca să afli dacă oamenii îl vor și îl folosesc.',
+      },
+      {
+        question: 'Cât costă un MVP?',
+        answer:
+          'Depinde de produs, așa că oferta vine în 24 de ore după prima discuție. Ținem prima versiune mică intenționat, ca să cheltui puțin până afli dacă ideea merită.',
+      },
+      {
+        question: 'În cât timp e gata?',
+        answer:
+          'De obicei în 4-8 săptămâni pentru prima versiune, cu o versiune nouă de văzut în fiecare săptămână.',
+      },
+      {
+        question: 'Ce se întâmplă după MVP?',
+        answer:
+          'Dacă datele arată că ideea merită, continuăm dezvoltarea împreună sau predăm codul complet echipei tale.',
+      },
+    ],
+    relatedSlugs: ['platforme-saas', 'aplicatii-mobile', 'design-ux-ui'],
+    relatedPosts: [],
+    projectSlugs: ['asesor'],
+    waMessage: 'Salut! Am o idee de startup și am nevoie de un MVP.',
+    serviceType: 'Dezvoltare MVP pentru startup-uri',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'sistem-programari-online',
+    group: 'software',
+    name: 'Sistem de programări online',
+    shortName: 'Programări online',
+    h1: 'Sistem de programări online pentru cabinete și saloane',
+    seoTitle: 'Sistem de programări online, de la 690 EUR',
+    metaDescription:
+      'Sistem de programări online pe site-ul tău: calendar pe specialiști, confirmări și remindere pe WhatsApp sau SMS, fără comision pe programare. De la 690 EUR.',
+    answerCapsule:
+      'Sistemul de programări online de la MAST Studio pune un calendar direct pe site-ul tău: clientul alege serviciul, specialistul și ora, iar confirmarea și reminderele pleacă automat pe e-mail sau WhatsApp. Nu plătești comision pe programare și datele rămân ale tale. Pornește de la 690 EUR și e gata în 2-3 săptămâni.',
+    priceFrom: 690,
+    priceLabel: 'de la 690 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '2-3 săptămâni',
+    intro:
+      'Platformele de programări te pun lângă concurenți, iau comision și păstrează datele clienților tăi. Un sistem propriu, pe site-ul tău, îți dă aceleași avantaje fără dezavantajele astea: calendar online, remindere care reduc neprezentările și o listă de clienți care rămâne a ta.',
+    includes: [
+      'calendar online pe site, pe servicii și specialiști',
+      'program de lucru, pauze și concedii',
+      'confirmări și remindere automate pe e-mail, WhatsApp sau SMS',
+      'anulare și reprogramare de către client',
+      'panou de administrare pentru tine și echipă',
+      'listă de clienți cu istoricul programărilor',
+      'fără comision pe programare',
+    ],
+    notIncluded: [
+      'costurile SMS sau WhatsApp Business, plătite separat',
+      'plata online în avans (la cerere, ofertă separată)',
+      'integrare cu un program medical existent (după analiză)',
+    ],
+    process: [
+      { step: 'Ne spui cum lucrezi', description: 'Servicii, durate, specialiști, program și regulile de anulare.' },
+      { step: 'Configurăm sistemul', description: 'Calendarul, mesajele de confirmare și reminderele, pe tonul tău.' },
+      { step: 'Testăm cu echipa', description: 'Facem programări de probă până merge totul fără cusur.' },
+      { step: 'Lansăm și te instruim', description: 'Echipa știe să-l folosească din prima zi.' },
+    ],
+    forWho: [
+      'cabinete medicale, stomatologice și veterinare',
+      'saloane de înfrumusețare și clinici estetice',
+      'kinetoterapeuți, nutriționiști și psihologi',
+      'servicii auto și alte servicii pe programare',
+    ],
+    faq: [
+      {
+        question: 'De ce un sistem propriu și nu o platformă de programări?',
+        answer:
+          'Pentru că nu plătești comision pe fiecare programare, clientul nu vede concurenții lângă tine, iar datele clienților rămân ale tale.',
+      },
+      {
+        question: 'Reduc reminderele neprezentările?',
+        answer:
+          'Da, reminderul trimis cu o zi înainte și posibilitatea de a reprograma ușor sunt cele mai eficiente metode de a reduce programările ratate.',
+      },
+      {
+        question: 'Cât costă un sistem de programări?',
+        answer:
+          'De la 690 EUR pentru un cabinet sau salon cu un singur sediu. Costurile mesajelor SMS sau WhatsApp sunt separate și mici.',
+      },
+      {
+        question: 'Se poate lega de asistentul AI?',
+        answer:
+          'Da. Asistentul AI poate prelua programări în conversație și le pune direct în calendar.',
+      },
+    ],
+    relatedSlugs: ['automatizari-whatsapp', 'asistent-ai', 'site-de-prezentare'],
+    relatedPosts: [],
+    projectSlugs: ['asesor'],
+    waMessage: 'Salut! Vreau un sistem de programări online pe site.',
+    serviceType: 'Sistem de programări online',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'design-ux-ui',
+    group: 'web',
     name: 'Design UX/UI',
     shortName: 'Design UX/UI',
-    h1: 'Design UX/UI pentru aplicații și platforme',
+    h1: 'Design UX/UI pentru aplicații, platforme și site-uri',
     seoTitle: 'Design UX/UI pentru aplicații, de la 250 EUR',
     metaDescription:
-      'Design UX/UI pentru aplicații, platforme și SaaS. Audit de la 250 EUR, design de produs de la 1.200 EUR, prototip interactiv în Figma și predare către programator.',
+      'Design UX/UI pentru aplicații, SaaS și site-uri: audit de la 250 EUR, design de produs de la 1.200 EUR, prototip interactiv și predare către programator.',
     answerCapsule:
       'La MAST Studio, designul UX/UI pornește de la 250 EUR pentru auditul unui site sau al unei aplicații existente și de la 1.200 EUR pentru designul unui MVP (până la 12 ecrane cheie) în aproximativ 2 săptămâni. Primești fluxuri de utilizare, wireframe-uri, UI high-fidelity pentru desktop și mobil, prototip interactiv în Figma, un mini design system și predarea către programator.',
     priceFrom: 250,
@@ -449,16 +784,89 @@ export const servicePages: ServicePage[] = [
     projectSlugs: ['asesor', 'lumora', 'mostar', 'lithos'],
     waMessage: 'Salut! Mă interesează design UX/UI pentru un proiect. Putem vorbi?',
     serviceType: 'Design UX/UI',
-    updatedAt: '2026-10-24',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'site-proiect-finantat',
+    group: 'web',
+    name: 'Site pentru proiect cu finanțare europeană',
+    shortName: 'Site proiect finanțat',
+    h1: 'Site pentru proiecte cu finanțare europeană',
+    seoTitle: 'Site pentru proiect cu finanțare europeană',
+    metaDescription:
+      'Site pentru proiecte finanțate prin PoCIDIF, PR și PNRR, cu elementele obligatorii de vizibilitate, rezultate și noutăți. De la 690 EUR, în 7-10 zile.',
+    answerCapsule:
+      'Construim site-uri pentru proiecte cu finanțare europeană care respectă regulile de vizibilitate ale finanțatorului: siglele și mențiunile obligatorii, codul SMIS, valoarea finanțării, pagini pentru obiective, rezultate, echipă, parteneri și noutăți. Pornesc de la 690 EUR și sunt gata în 7-10 zile după materiale.',
+    priceFrom: 690,
+    priceLabel: 'de la 690 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '7-10 zile după materiale',
+    intro:
+      'Un proiect cu finanțare europeană trebuie să aibă o prezență online care respectă reguli stricte de vizibilitate și care rămâne actualizată pe toată durata proiectului. Am construit astfel de site-uri pentru proiecte de cercetare biomedicală, unde trebuia să le vorbim în același timp cercetătorilor, partenerilor și evaluatorilor finanțatorului.',
+    includes: [
+      'elementele obligatorii de vizibilitate ale programului, plasate corect',
+      'bară permanentă cu identificatorii proiectului: cod SMIS, beneficiar, valoare',
+      'pagini pentru obiective, activități, rezultate, echipă și parteneri',
+      'secțiune de noutăți și comunicate, ușor de actualizat',
+      'variantă în română și engleză, la cerere',
+      'arhivă de documente și rapoarte publice',
+      'predare completă și instruirea echipei de proiect',
+    ],
+    notIncluded: [
+      'redactarea comunicatelor de presă obligatorii (ofertă separată)',
+      'găzduirea și domeniul, pe numele beneficiarului',
+      'verificarea juridică a conformității cu contractul de finanțare',
+    ],
+    process: [
+      { step: 'Ne trimiți contractul și manualul de identitate', description: 'Din ele extragem exact ce elemente de vizibilitate cere programul tău.' },
+      { step: 'Structurăm conținutul', description: 'Separăm ce e pentru evaluatori, ce e pentru parteneri și ce e pentru public.' },
+      { step: 'Construim și verificăm', description: 'Fiecare element obligatoriu e bifat pe o listă înainte de lansare.' },
+      { step: 'Lansăm și te instruim', description: 'Echipa de proiect poate publica singură noutățile și rezultatele.' },
+    ],
+    forWho: [
+      'beneficiari de proiecte PoCIDIF, PR și PNRR',
+      'centre de cercetare și universități',
+      'firme cu proiecte de investiții finanțate',
+      'ONG-uri și asociații cu proiecte europene',
+    ],
+    faq: [
+      {
+        question: 'Ce elemente de vizibilitate sunt obligatorii pe site-ul unui proiect finanțat?',
+        answer:
+          'De obicei: siglele programului și ale Uniunii Europene, mențiunea finanțării, titlul și codul proiectului, beneficiarul, valoarea și perioada de implementare. Lista exactă depinde de program și o luăm din manualul de identitate vizuală al finanțatorului.',
+      },
+      {
+        question: 'Pot plăti site-ul din bugetul proiectului?',
+        answer:
+          'De multe ori da, la cheltuielile de informare și publicitate. Verifică în ghidul și bugetul proiectului tău; îți dăm factura și documentele de livrare de care ai nevoie la decont.',
+      },
+      {
+        question: 'Cine actualizează site-ul pe durata proiectului?',
+        answer:
+          'Echipa ta, după instruire, sau noi, printr-un abonament de mentenanță. Site-ul trebuie să rămână actualizat și după încheierea proiectului, pe perioada de durabilitate.',
+      },
+      {
+        question: 'Faceți și versiunea în engleză?',
+        answer:
+          'Da. Pentru proiectele cu parteneri internaționali recomandăm site bilingv, cu aceeași structură în ambele limbi.',
+      },
+    ],
+    relatedSlugs: ['site-de-prezentare', 'mentenanta', 'conformitate-legala-site'],
+    relatedPosts: [],
+    projectSlugs: ['decodex', 'oncogen'],
+    waMessage: 'Salut! Am un proiect cu finanțare europeană și am nevoie de site.',
+    serviceType: 'Site pentru proiect cu finanțare europeană',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'mentenanta',
+    group: 'crestere',
     name: 'Mentenanță și creștere',
     shortName: 'Mentenanță',
-    h1: 'Mentenanță site web',
+    h1: 'Mentenanță site web și magazin online',
     seoTitle: 'Mentenanță site web, de la 90 EUR pe lună',
     metaDescription:
-      'Mentenanță site de la 90 EUR pe lună, fără contract pe termen lung: actualizări, backup, monitorizare și mici modificări. Preluăm și site-uri făcute de alții.',
+      'Mentenanță site și magazin online de la 90 EUR pe lună, fără contract lung: actualizări, backup, securitate, modificări. Preluăm și site-uri făcute de alții.',
     answerCapsule:
       'Mentenanța unui site la MAST Studio pornește de la 90 EUR pe lună, fără contract pe termen lung. Include actualizări, backup-uri, monitorizare de bază și mici modificări de conținut. Hostingul și domeniul rămân separate, pe numele firmei tale.',
     priceFrom: 90,
@@ -471,7 +879,7 @@ export const servicePages: ServicePage[] = [
     includes: [
       'actualizări de platformă și dependențe, când e cazul',
       'backup-uri periodice',
-      'monitorizare de bază: verificăm că site-ul răspunde',
+      'monitorizare de bază: verific��m că site-ul răspunde',
       'mici ajustări de conținut și corecturi punctuale',
       'optimizare lunară pentru viteză și SEO de bază',
       'un interlocutor clar când ceva nu merge',
@@ -527,22 +935,382 @@ export const servicePages: ServicePage[] = [
         answer:
           'Nu obligatoriu din prima zi, dar e utilă dacă nu vrei să te ocupi tu de actualizări și backup. Poți începe oricând simți că nu mai ai timp pentru partea tehnică.',
       },
+      {
+        question: 'Preluați un site făcut de altcineva?',
+        answer:
+          'Da. Facem întâi o verificare a site-ului, îți spunem cinstit în ce stare e și abia apoi propunem un abonament. Dacă domeniul nu e pe numele tău, te ajutăm să-l transferi.',
+      },
     ],
-    relatedSlugs: ['site-de-prezentare', 'magazin-online', 'automatizari-whatsapp'],
+    relatedSlugs: ['vizibilitate-ai', 'site-de-prezentare', 'magazin-online'],
     relatedPosts: ['cat-costa-mentenanta-site', 'de-ce-sunt-lente-temele-wordpress', 'ce-inseamna-pagespeed'],
     projectSlugs: ['decodex'],
     waMessage: 'Salut! Mă interesează mentenanță și creștere pentru site-ul meu.',
     serviceType: 'Mentenanță site web',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'seo-local',
+    group: 'crestere',
+    name: 'SEO local și Google Business',
+    shortName: 'SEO local',
+    h1: 'SEO local și Google Business Profile',
+    seoTitle: 'SEO local și Google Business, 150 EUR/lună',
+    metaDescription:
+      'SEO local pentru afaceri din orașul tău: profil Google Business îngrijit, recenzii, pagini locale și raport lunar. De la 150 EUR pe lună, fără contract lung.',
+    answerCapsule:
+      'SEO local de la MAST Studio înseamnă că afacerea ta apare când cineva caută serviciul tău în oraș: profil Google Business îngrijit lunar, postări, răspunsuri la recenzii, pagini locale pe site și raport lunar. Costă de la 150 EUR pe lună, fără contract pe termen lung.',
+    priceFrom: 150,
+    priceUnit: 'MON',
+    priceLabel: 'de la 150 EUR pe lună',
+    deliveryLabel: 'Contract',
+    deliveryTime: 'lunar, fără contract lung',
+    intro:
+      'Când cineva caută „dentist Timișoara” sau „instalator lângă mine”, primele trei rezultate de pe hartă iau aproape toate apelurile. Locul acolo nu se cumpără, se câștigă lună de lună: un profil complet, recenzii constante, informații corecte peste tot și un site care spune clar ce faci și unde.',
+    includes: [
+      'optimizarea completă a profilului Google Business',
+      'postări lunare pe profil',
+      'răspunsuri la recenzii, scrise împreună cu tine',
+      'plan pentru recenzii noi constante',
+      'pagini locale pe site, pentru zonele în care lucrezi',
+      'date identice în directoare',
+      'raport lunar: apeluri, vizite, poziții',
+    ],
+    notIncluded: [
+      'bugetul de reclame plătite',
+      'recenzii false sau cumpărate',
+      'garanția primului loc',
+    ],
+    process: [
+      { step: 'Audit local', description: 'Vedem unde apari azi, cum stai față de concurenți și ce lipsește din profil.' },
+      { step: 'Punem la punct baza', description: 'Profil complet, date corecte peste tot, pagini locale pe site.' },
+      { step: 'Lucrăm lunar', description: 'Postări, recenzii, ajustări.' },
+      { step: 'Raport lunar', description: 'Cifrele reale: apeluri, vizite, cereri de direcții, poziții.' },
+    ],
+    forWho: [
+      'cabinete, clinici și saloane',
+      'meseriași și firme de servicii la domiciliu',
+      'restaurante și cafenele',
+      'firme de avocatură și contabilitate',
+    ],
+    faq: [
+      {
+        question: 'Ce este SEO local?',
+        answer:
+          'Totalitatea lucrurilor care fac o afacere să apară în căutările cu localizare, pe Google Maps și în pachetul de trei rezultate de pe hartă: profilul Google, recenziile, datele de contact și paginile locale de pe site.',
+      },
+      {
+        question: 'În cât timp se văd rezultate?',
+        answer:
+          'Primele schimbări apar de obicei în 4-8 săptămâni, în funcție de concurența din domeniu și de cât de complet era profilul la început.',
+      },
+      {
+        question: 'Pot renunța oricând?',
+        answer:
+          'Da. Abonamentul e lunar, fără contract pe termen lung. Tot ce am construit rămâne al tău.',
+      },
+    ],
+    relatedSlugs: ['vizibilitate-ai', 'site-de-prezentare', 'campanii-reclame'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau să apar mai sus pe Google Maps în orașul meu.',
+    serviceType: 'SEO local și Google Business Profile',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'campanii-reclame',
+    group: 'crestere',
+    name: 'Campanii Google și Meta',
+    shortName: 'Campanii reclame',
+    h1: 'Campanii Google Ads și Meta Ads',
+    seoTitle: 'Campanii Google Ads și Meta, de la 250 EUR',
+    metaDescription:
+      'Campanii Google Ads, Facebook și Instagram pentru afaceri mici: buget controlat, reclame testate, raport lunar cu clienții reali aduși. De la 250 EUR pe lună.',
+    answerCapsule:
+      'Administrăm campaniile Google Ads, Facebook și Instagram ale afacerii tale de la 250 EUR pe lună, plus bugetul de reclame, plătit direct de tine platformelor. Măsurăm ce contează: mesaje, apeluri și cereri reale, nu doar clicuri, iar raportul lunar arată cât te costă fiecare client nou.',
+    priceFrom: 250,
+    priceUnit: 'MON',
+    priceLabel: 'de la 250 EUR pe lună + bugetul de reclame',
+    deliveryLabel: 'Contract',
+    deliveryTime: 'lunar, fără contract lung',
+    intro:
+      'Reclamele pot aduce clienți rapid sau pot arde bani la fel de rapid. Diferența o fac pagina pe care ajunge omul, mesajul, publicul ales și măsurarea corectă. Noi construim campania împreună cu pagina de destinație, testăm mai multe variante și oprim repede ce nu funcționează.',
+    includes: [
+      'strategie de campanie și alegerea publicului',
+      'configurarea măsurării: apeluri, WhatsApp, formulare',
+      'texte și vizualuri pentru reclame',
+      'testarea mai multor variante',
+      'optimizare săptămânală',
+      'raport lunar cu costul pe client nou',
+    ],
+    notIncluded: [
+      'bugetul de reclame, plătit direct către Google și Meta',
+      'producție video complexă',
+      'promisiuni de vânzări garantate',
+    ],
+    process: [
+      { step: 'Stabilim obiectivul', description: 'Ce înseamnă un rezultat pentru tine: un apel, o programare, o comandă.' },
+      { step: 'Pregătim campania', description: 'Măsurare, pagină de destinație, mesaje și public.' },
+      { step: 'Lansăm și testăm', description: 'Mai multe variante, buget mic la început, apoi creștem ce merge.' },
+      { step: 'Raport lunar', description: 'Cât ai cheltuit, câți clienți au venit și cât a costat fiecare.' },
+    ],
+    forWho: [
+      'afaceri locale care vor clienți noi rapid',
+      'magazine online',
+      'clinici și cabinete (cu respectarea regulilor de publicitate medicală)',
+      'academii și cursuri cu înscrieri',
+    ],
+    faq: [
+      {
+        question: 'Ce buget de reclame îmi trebuie?',
+        answer:
+          'Pentru o afacere locală, de obicei de la 30-50 de lei pe zi pentru început. Îl stabilim împreună și îl creștem doar când vedem rezultate.',
+      },
+      {
+        question: 'Plătesc bugetul prin voi?',
+        answer:
+          'Nu. Bugetul se plătește direct de tine către Google și Meta, din contul tău. Noi primim doar onorariul de administrare.',
+      },
+      {
+        question: 'Pot renunța oricând?',
+        answer:
+          'Da. Abonamentul e lunar, iar conturile de reclame rămân ale tale, cu tot istoricul.',
+      },
+    ],
+    relatedSlugs: ['seo-local', 'site-de-prezentare', 'magazin-online'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau campanii Google sau Meta pentru afacerea mea.',
+    serviceType: 'Administrare campanii Google Ads și Meta Ads',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'continut-seo',
+    group: 'crestere',
+    name: 'Conținut SEO lunar',
+    shortName: 'Conținut SEO',
+    h1: 'Articole de blog și conținut SEO lunar',
+    seoTitle: 'Conținut SEO și articole de blog lunar',
+    metaDescription:
+      'Articole de blog și pagini scrise pentru căutările clienților tăi, verificate de un om, cu date reale și legături interne. De la 240 EUR pe lună, 4 articole.',
+    answerCapsule:
+      'Serviciul de conținut SEO de la MAST Studio îți aduce lunar 4 articole sau pagini noi, scrise pentru întrebările pe care clienții tăi le caută pe Google și le pun asistenților AI. Folosim AI pentru viteză, dar fiecare text e verificat de un om, cu date reale și legături către serviciile tale. Pornește de la 240 EUR pe lună.',
+    priceFrom: 240,
+    priceUnit: 'MON',
+    priceLabel: 'de la 240 EUR pe lună',
+    deliveryLabel: 'Contract',
+    deliveryTime: 'lunar, fără contract lung',
+    intro:
+      'Un blog la care nu scrie nimeni nu aduce nimic. Un blog cu articole generice, scrise doar ca să existe, aduce și mai puțin. Noi scriem puțin și bine: răspunsuri concrete la întrebările reale ale clienților tăi, cu cifre verificate și cu un pas următor clar spre serviciile tale.',
+    includes: [
+      'plan lunar de subiecte, după ce caută clienții tăi',
+      '4 articole sau pagini noi pe lună',
+      'fiecare text verificat și editat de un om',
+      'cifre și surse verificate, fără informații inventate',
+      'legături interne către serviciile și paginile tale',
+      'imagini pentru fiecare articol',
+      'publicare directă pe site',
+      'raport lunar: ce s-a publicat și ce trafic aduce',
+    ],
+    notIncluded: [
+      'articole sponsorizate pe alte site-uri',
+      'texte publicate fără verificarea ta, dacă vrei să le aprobi',
+      'traduceri în alte limbi (separat)',
+    ],
+    process: [
+      { step: 'Plan de subiecte', description: 'Găsim întrebările pe care clienții tăi le caută și pe care nu le acoperă nimeni bine.' },
+      { step: 'Scriem', description: 'AI pentru viteză, om pentru verificare, ton și cifre.' },
+      { step: 'Aprobi și publicăm', description: 'Tu vezi fiecare articol înainte, dacă vrei.' },
+      { step: 'Măsurăm', description: 'Raport lunar cu traficul și cu ce subiecte merită continuate.' },
+    ],
+    forWho: [
+      'firme cu site, dar fără timp de scris',
+      'cabinete și clinici care vor să răspundă la întrebările pacienților',
+      'magazine online care vor trafic din Google',
+      'firme de servicii profesionale',
+    ],
+    faq: [
+      {
+        question: 'Scrieți articolele cu AI?',
+        answer:
+          'Folosim AI pentru documentare și o primă variantă, dar fiecare articol e verificat, editat și completat de un om, cu cifre și surse reale. Nu publicăm texte generate și nevăzute.',
+      },
+      {
+        question: 'În cât timp aduc articolele trafic?',
+        answer:
+          'De obicei în 2-4 luni pentru primele rezultate vizibile, în funcție de domeniu și de cât de puternic e site-ul.',
+      },
+      {
+        question: 'Pot renunța oricând?',
+        answer:
+          'Da, abonamentul e lunar. Articolele publicate rămân ale tale.',
+      },
+      {
+        question: 'Pot alege eu subiectele?',
+        answer:
+          'Da. Propunem un plan lunar, iar tu adaugi, scoți sau schimbi subiecte înainte să scriem.',
+      },
+    ],
+    relatedSlugs: ['seo-local', 'vizibilitate-ai', 'mentenanta'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Mă interesează conținut SEO lunar pentru site.',
+    serviceType: 'Conținut SEO și articole de blog',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'audit-securitate-gdpr',
+    group: 'crestere',
+    name: 'Audit de securitate și GDPR',
+    shortName: 'Audit securitate',
+    h1: 'Audit de securitate și GDPR pentru site și aplicații',
+    seoTitle: 'Audit securitate și GDPR site, de la 290 EUR',
+    metaDescription:
+      'Audit de securitate și GDPR pentru site, magazin sau aplicație: vulnerabilități, cookie-uri înainte de acord, date expuse. Raport clar, de la 290 EUR.',
+    answerCapsule:
+      'Auditul de securitate și GDPR de la MAST Studio verifică site-ul, magazinul sau aplicația ta pentru vulnerabilități cunoscute, date expuse, setări de securitate lipsă și urmărire pornită înainte de acordul vizitatorului. Primești în 5 zile lucrătoare un raport cu fiecare problemă, gravitatea ei și cum se repară. Pornește de la 290 EUR.',
+    priceFrom: 290,
+    priceLabel: 'de la 290 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '5 zile lucrătoare',
+    intro:
+      'Majoritatea site-urilor de firmă nu sunt verificate niciodată după lansare. Într-un studiu pe un eșantion aleator de site-uri de firme din România, peste o treime porneau urmărirea vizitatorilor înainte de acord. Auditul îți spune exact unde ești expus, înainte să o afle altcineva.',
+    includes: [
+      'scanare de vulnerabilități cunoscute și versiuni învechite',
+      'verificarea setărilor de securitate: HTTPS, antete, formulare, acces la administrare',
+      'date expuse public: fișiere, chei, liste de utilizatori',
+      'cookie-uri și scripturi pornite înainte de acord',
+      'politica de confidențialitate comparată cu ce face site-ul în realitate',
+      'pentru aplicații mobile: analiza pachetului publicat',
+      'raport cu gravitatea fiecărei probleme și pașii de remediere',
+      'discuție de 30 de minute pe raport',
+    ],
+    notIncluded: [
+      'repararea problemelor găsite (ofertă separată, după raport)',
+      'test de penetrare complex pe infrastructură mare',
+      'consultanță juridică',
+    ],
+    process: [
+      { step: 'Ne dai adresa și accesele permise', description: 'Stabilim în scris ce verificăm și ce nu, ca auditul să fie legal și sigur.' },
+      { step: 'Verificăm', description: 'Testăm din exterior, ca un vizitator rău intenționat, fără să afectăm site-ul.' },
+      { step: 'Raportul', description: 'Fiecare problemă cu gravitatea ei, dovada și cum se repară, pe înțelesul tău.' },
+      { step: 'Discuția', description: 'Îți explicăm ce e urgent și ce poate aștepta. Dacă vrei, reparăm noi.' },
+    ],
+    forWho: [
+      'magazine online care primesc plăți și date de livrare',
+      'clinici și cabinete care lucrează cu date de sănătate',
+      'aplicații și platforme cu conturi de utilizatori',
+      'firme care au primit un site de la alt furnizor și nu știu în ce stare e',
+    ],
+    faq: [
+      {
+        question: 'Ce verifică un audit de securitate pentru site?',
+        answer:
+          'Vulnerabilitățile cunoscute, versiunile învechite, setările de securitate lipsă, datele expuse public și felul în care site-ul tratează cookie-urile și datele personale. La aplicații mobile analizăm și pachetul publicat.',
+      },
+      {
+        question: 'Poate auditul să strice site-ul?',
+        answer:
+          'Nu. Testăm din exterior, cu limite stabilite în scris înainte, fără atacuri care să încarce serverul sau să modifice date.',
+      },
+      {
+        question: 'Cât costă un audit de securitate?',
+        answer:
+          'De la 290 EUR pentru un site de prezentare sau un magazin mic. Aplicațiile cu conturi de utilizatori și platformele mai mari se ofertează după complexitate.',
+      },
+      {
+        question: 'Ce fac după ce primesc raportul?',
+        answer:
+          'Reparați problemele urgente primele. Dacă site-ul e făcut de alt furnizor, raportul e scris ca să-l poți trimite direct lui. Dacă vrei, reparăm noi, pe baza unei oferte separate.',
+      },
+    ],
+    relatedSlugs: ['conformitate-legala-site', 'mentenanta', 'aplicatii-web'],
+    relatedPosts: [],
+    projectSlugs: ['platforma-clinica'],
+    waMessage: 'Salut! Vreau un audit de securitate și GDPR pentru site.',
+    serviceType: 'Audit de securitate și GDPR pentru site',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'conformitate-legala-site',
+    group: 'crestere',
+    name: 'Conformitate legală site și magazin',
+    shortName: 'Conformitate legală',
+    h1: 'Conformitate legală pentru site și magazin online',
+    seoTitle: 'Site conform legal: ANPC, GDPR, cookie-uri',
+    metaDescription:
+      'Punem site-ul sau magazinul în regulă: ANPC și SAL, date de firmă, politici, banner de cookie-uri cu refuz, accesibilitate de bază. De la 190 EUR, în 3 zile.',
+    answerCapsule:
+      'Serviciul de conformitate legală de la MAST Studio pune site-ul sau magazinul tău în regulă cu cerințele de bază din România: legăturile ANPC și SAL, datele firmei, politica de confidențialitate și cea de cookie-uri, banner cu buton de refuz și elemente de accesibilitate. Costă de la 190 EUR și durează 3 zile lucrătoare.',
+    priceFrom: 190,
+    priceLabel: 'de la 190 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '3 zile lucrătoare',
+    intro:
+      'Când am testat 50 de magazine online românești, 15 nu aveau buton de refuz pentru cookie-uri, iar 8 bifau din start consimțământul de marketing. Sunt greșeli ușor de reparat, dar care pot costa scump la un control. Le verificăm pe toate și le reparăm direct pe site.',
+    includes: [
+      'legăturile ANPC și SAL, în formatul cerut',
+      'datele firmei în subsol: denumire, CUI, număr de înregistrare',
+      'politica de confidențialitate și politica de cookie-uri, adaptate site-ului tău',
+      'banner de cookie-uri cu refuz la fel de vizibil ca acceptul',
+      'fără bife precompletate de marketing',
+      'termeni și condiții, politica de retur pentru magazine',
+      'verificare de accesibilitate de bază: contrast, texte alternative, etichete',
+    ],
+    notIncluded: [
+      'consultanță juridică sau asumarea răspunderii legale',
+      'politici pentru prelucrări speciale de date, fără avocat',
+      'refacerea site-ului (dacă tehnologia nu permite, ofertă separată)',
+    ],
+    process: [
+      { step: 'Verificăm site-ul', description: 'Trecem prin lista de cerințe și îți spunem ce lipsește.' },
+      { step: 'Pregătim textele', description: 'Politicile se adaptează la ce face site-ul tău în realitate, nu se copiază.' },
+      { step: 'Implementăm', description: 'Punem totul direct pe site, inclusiv bannerul de cookie-uri.' },
+      { step: 'Îți predăm lista', description: 'Primești lista cu tot ce s-a făcut, utilă la orice control.' },
+    ],
+    forWho: [
+      'magazine online mici și mijlocii',
+      'site-uri de firmă făcute de alții, fără elementele legale',
+      'cabinete și clinici care colectează date prin formulare',
+      'firme care folosesc reclame Google sau Meta pe site',
+    ],
+    faq: [
+      {
+        question: 'Ce trebuie să aibă legal un site de firmă în România?',
+        answer:
+          'De bază: datele de identificare ale firmei, politica de confidențialitate, informarea despre cookie-uri cu posibilitatea de refuz, iar pentru magazine termenii și condițiile, politica de retur și legăturile către ANPC și soluționarea alternativă a litigiilor.',
+      },
+      {
+        question: 'Bannerul de cookie-uri trebuie să aibă buton de refuz?',
+        answer:
+          'Da, refuzul trebuie să fie la fel de ușor ca acceptul, iar cookie-urile neesențiale nu au voie să pornească înainte de acord.',
+      },
+      {
+        question: 'Înlocuiește serviciul un avocat?',
+        answer:
+          'Nu. Punem în practică cerințele obișnuite pe site, iar pentru situații speciale sau date sensibile îți recomandăm verificarea finală a unui jurist.',
+      },
+      {
+        question: 'Cât costă?',
+        answer:
+          'De la 190 EUR pentru un site de prezentare sau un magazin mic, în 3 zile lucrătoare.',
+      },
+    ],
+    relatedSlugs: ['audit-securitate-gdpr', 'magazin-online', 'mentenanta'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau să pun site-ul în regulă cu ANPC, GDPR și cookie-urile.',
+    serviceType: 'Conformitate legală pentru site și magazin online',
+    updatedAt: '2026-11-03',
   },
   {
     slug: 'automatizari-whatsapp',
+    group: 'ai',
     name: 'Automatizări WhatsApp',
     shortName: 'Automatizări WhatsApp',
-    h1: 'Automatizări WhatsApp pentru afaceri mici',
+    h1: 'Automatizări WhatsApp Business pentru afaceri mici',
     seoTitle: 'Automatizări WhatsApp pentru afaceri mici',
     metaDescription:
-      'Automatizări WhatsApp de la 250 EUR: răspunsuri după program, confirmări de programare și informații despre servicii. Tu aprobi fiecare mesaj trimis.',
+      'Automatizări WhatsApp Business de la 250 EUR: răspunsuri după program, confirmări și remindere de programare. Tu aprobi fiecare mesaj, decizia rămâne a ta.',
     answerCapsule:
       'Automatizările WhatsApp de la MAST Studio pornesc de la 250 EUR: răspunsuri în afara programului, confirmări de programare, informații despre servicii și status de comandă. Stabilim împreună 2-4 fluxuri utile, tu aprobi fiecare text, iar deciziile rămân la tine.',
     priceFrom: 250,
@@ -604,15 +1372,530 @@ export const servicePages: ServicePage[] = [
         answer:
           'Depinde de câte fluxuri vrei și de cât de clare sunt textele. Nu avem un termen standard ca la site-ul de prezentare; îl stabilim în ofertă, după ce știm exact ce automatizăm.',
       },
+      {
+        question: 'Când am nevoie de un asistent AI în loc de automatizări?',
+        answer:
+          'Când întrebările clienților sunt prea variate pentru mesaje fixe. Automatizările răspund la scenarii stabilite dinainte, asistentul AI poartă o conversație din informațiile tale.',
+      },
     ],
-    relatedSlugs: ['site-de-prezentare', 'aplicatii-web', 'mentenanta'],
+    relatedSlugs: ['asistent-ai', 'automatizari-ai', 'site-de-prezentare'],
     relatedPosts: ['automatizari-whatsapp-afacere-mica', 'conversie-site-prezentare'],
     projectSlugs: [],
     waMessage: 'Salut! Mă interesează automatizări și WhatsApp pentru afacerea mea.',
     serviceType: 'Automatizări WhatsApp',
-    updatedAt: '2026-10-02',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'asistent-ai',
+    group: 'ai',
+    name: 'Asistent AI pentru clienți',
+    shortName: 'Asistent AI',
+    h1: 'Asistent AI pentru site și WhatsApp',
+    seoTitle: 'Asistent AI pentru site și WhatsApp',
+    metaDescription:
+      'Asistent AI care răspunde clienților pe site și WhatsApp din informațiile firmei tale, preia programări și predă conversația unui om. De la 790 EUR.',
+    answerCapsule:
+      'Asistentul AI de la MAST Studio răspunde clienților pe site și pe WhatsApp, zi și noapte, doar din informațiile aprobate de tine: servicii, prețuri, program, politici. Preia cereri și programări și predă conversația unui om când e nevoie. Pornește de la 790 EUR, plus costurile lunare de rulare, stabilite în ofertă.',
+    priceFrom: 790,
+    priceLabel: 'de la 790 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '2-3 săptămâni',
+    intro:
+      'Clienții tăi pun aceleași întrebări la orice oră, iar cine nu primește răspuns în câteva minute merge la următorul din listă. Un asistent AI bine construit răspunde imediat, corect și pe tonul firmei tale, pentru că știe doar ce l-ai învățat tu. Nu inventează prețuri, nu promite lucruri pe care nu le faci și îți lasă ție deciziile importante.',
+    includes: [
+      'analiza întrebărilor pe care le primești cel mai des',
+      'bază de cunoștințe construită din informațiile firmei: servicii, prețuri, program, politici, FAQ',
+      'asistent pe site și, la cerere, pe WhatsApp Business',
+      'preluarea cererilor de ofertă și a programărilor',
+      'predarea conversației către un om, cu tot istoricul',
+      'mesaj clar că persoana vorbește cu un asistent AI',
+      'testare pe întrebări reale înainte de lansare',
+      'raport lunar cu întrebările primite și răspunsurile date',
+    ],
+    notIncluded: [
+      'costurile lunare ale modelului AI și ale WhatsApp Business, plătite separat, la vedere',
+      'sfaturi medicale, juridice sau financiare date de AI în locul unui specialist',
+      'integrări complexe cu ERP sau CRM (ofertă separată)',
+    ],
+    process: [
+      { step: 'Strângem ce trebuie să știe asistentul', description: 'Întrebările frecvente, prețurile, programul și regulile tale. Tot ce nu e scris aici, asistentul nu spune.' },
+      { step: 'Construim și antrenăm baza de cunoștințe', description: 'Asistentul răspunde doar din sursele aprobate și spune „nu știu, vă pun în legătură cu un coleg” când nu are răspunsul.' },
+      { step: 'Testăm cu întrebările tale reale', description: 'Îl punem la încercare cu zeci de întrebări, inclusiv cele dificile, și corectăm până răspunde cum ai răspunde tu.' },
+      { step: 'Lansăm și urmărim', description: 'Îl punem pe site și pe WhatsApp, iar în prima lună verificăm conversațiile și ajustăm răspunsurile.' },
+    ],
+    forWho: [
+      'cabinete medicale, stomatologice și veterinare cu multe întrebări repetitive',
+      'saloane și clinici care fac programări',
+      'magazine online cu întrebări despre produse, livrare și retur',
+      'firme de servicii care primesc cereri de ofertă după program',
+    ],
+    faq: [
+      {
+        question: 'Ce e un asistent AI pentru clienți?',
+        answer:
+          'Un program care înțelege întrebările scrise de clienți și răspunde în limbaj natural, din informațiile firmei tale. Spre deosebire de un chatbot cu butoane, înțelege și întrebări formulate în felul fiecăruia.',
+      },
+      {
+        question: 'Poate inventa răspunsuri sau prețuri?',
+        answer:
+          'Îl construim să răspundă doar din informațiile aprobate de tine. Când nu știe, spune asta și trimite conversația unui om. Testăm exact acest lucru înainte de lansare.',
+      },
+      {
+        question: 'Cât costă un asistent AI?',
+        answer:
+          'Construcția pornește de la 790 EUR. Separat plătești costul lunar al modelului AI și, dacă îl folosești, al WhatsApp Business. Ambele depind de numărul de conversații și le estimăm în ofertă.',
+      },
+      {
+        question: 'E conform cu GDPR și cu regulile europene privind AI?',
+        answer:
+          'Da. Clientul este anunțat de la început că vorbește cu un asistent AI, cum cer regulile europene, datele sunt prelucrate doar pentru conversație, iar politica de confidențialitate se actualizează în consecință.',
+      },
+      {
+        question: 'Care e diferența față de automatizările WhatsApp?',
+        answer:
+          'Automatizările WhatsApp trimit mesaje fixe, scrise dinainte. Asistentul AI poartă o conversație: înțelege întrebarea și formulează răspunsul din informațiile tale. Multe afaceri pornesc cu automatizări și trec apoi la asistent.',
+      },
+    ],
+    relatedSlugs: ['automatizari-whatsapp', 'automatizari-ai', 'site-de-prezentare'],
+    relatedPosts: ['automatizari-whatsapp-afacere-mica', 'conversie-site-prezentare', 'cat-costa-aplicatie-web'],
+    projectSlugs: [],
+    waMessage: 'Salut! Mă interesează un asistent AI pentru clienți, pe site și WhatsApp.',
+    serviceType: 'Asistent AI pentru clienți',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'automatizari-ai',
+    group: 'ai',
+    name: 'Automatizări AI pentru procese',
+    shortName: 'Automatizări AI',
+    h1: 'Automatizări AI pentru procesele firmei tale',
+    seoTitle: 'Automatizări AI pentru firme, de la 990 EUR',
+    metaDescription:
+      'Automatizări AI pentru documente, oferte, e-mailuri și rapoarte: preiau munca repetitivă a echipei, iar un om validează ce contează. De la 990 EUR.',
+    answerCapsule:
+      'Automatizările AI de la MAST Studio preiau munca repetitivă din firmă: citesc și sortează e-mailuri, extrag date din facturi și documente, pregătesc oferte și rapoarte. Pornesc de la 990 EUR pentru un proces, iar un om din echipa ta validează fiecare pas important.',
+    priceFrom: 990,
+    priceLabel: 'de la 990 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '2-4 săptămâni, după proces',
+    intro:
+      'În aproape orice firmă există ore pierdute săptăm��nal pe aceleași lucruri: copiat date dintr-un document în altul, răspuns la e-mailuri asemănătoare, făcut aceeași ofertă cu alte cifre. Inteligența artificială face astăzi aceste lucruri bine și repede. Noi alegem procesul care îți mănâncă cel mai mult timp, îl automatizăm și lăsăm omul acolo unde e nevoie de judecată.',
+    includes: [
+      'analiza procesului și calculul timpului economisit, înainte de start',
+      'automatizarea unui proces complet, cap-coadă',
+      'extragere de date din documente, facturi, PDF-uri și e-mailuri',
+      'generare de oferte, rapoarte și răspunsuri pe baza șabloanelor tale',
+      'legătură cu instrumentele pe care le folosești deja: e-mail, Google Workspace, Excel, CRM',
+      'pas de validare umană pentru deciziile importante',
+      'documentație și instruirea echipei',
+    ],
+    notIncluded: [
+      'costurile lunare ale modelelor AI și ale serviciilor terțe, estimate în ofertă',
+      'automatizarea mai multor procese odată (fiecare se ofertează separat)',
+      'decizii luate de AI fără control uman în zone sensibile',
+    ],
+    process: [
+      { step: 'Alegem procesul', description: 'Ne arăți cum lucrați azi. Alegem procesul cu cel mai mult timp pierdut și calculăm câte ore pe lună poate economisi.' },
+      { step: 'Construim o primă versiune', description: 'În prima săptămână vezi automatizarea lucrând pe exemple reale din firma ta.' },
+      { step: 'Testăm pe date reale', description: 'O rulăm în paralel cu felul vostru de lucru și corectăm până rezultatele sunt sigure.' },
+      { step: 'Predăm și instruim', description: 'Echipa primește documentația, știe cum validează rezultatele și ce face când ceva nu e în regulă.' },
+    ],
+    forWho: [
+      'firme de contabilitate și birouri care lucrează mult cu documente',
+      'firme de distribuție și producție care fac multe oferte',
+      'cabinete și clinici cu multă administrație',
+      'echipe de vânzări și suport care răspund la e-mailuri similare',
+    ],
+    faq: [
+      {
+        question: 'Ce procese se pot automatiza cu AI?',
+        answer:
+          'Orice proces repetitiv bazat pe text sau documente: sortarea e-mailurilor, extragerea datelor din facturi și contracte, pregătirea ofertelor, rezumate de ședințe, rapoarte periodice, răspunsuri standard. Le alegem pe cele cu cel mai mult timp economisit.',
+      },
+      {
+        question: 'Cât costă o automatizare AI?',
+        answer:
+          'Pornește de la 990 EUR pentru un proces. Prețul final depinde de numărul de pași, de sursele de date și de integrări. Costurile lunare ale modelelor AI sunt separate și le estimăm în ofertă.',
+      },
+      {
+        question: 'Datele firmei rămân în siguranță?',
+        answer:
+          'Lucrăm doar cu furnizori AI care nu folosesc datele tale pentru antrenare, limităm accesul la ce e strict necesar și documentăm prelucrarea pentru GDPR.',
+      },
+      {
+        question: 'Înlocuiește AI-ul angajații?',
+        answer:
+          'Nu. Preia partea repetitivă, iar oamenii rămân pe ce cere judecată: validare, relația cu clienții, decizii. Scopul e ca echipa să aibă timp pentru munca care contează.',
+      },
+      {
+        question: 'Nu știu ce să automatizez. De unde încep?',
+        answer:
+          'Cu un audit AI: în 7-10 zile îți arătăm ce procese merită automatizate, cât timp economisești și în ce ordine. Costul auditului se scade din prima implementare.',
+      },
+    ],
+    relatedSlugs: ['audit-strategie-ai', 'asistent-ai', 'aplicatii-web'],
+    relatedPosts: ['automatizari-whatsapp-afacere-mica', 'conversie-site-prezentare', 'cat-costa-aplicatie-web'],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau să automatizez un proces din firmă cu AI. Putem discuta?',
+    serviceType: 'Automatizări cu inteligență artificială',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'solutii-ai-personalizate',
+    group: 'ai',
+    name: 'Soluții AI personalizate',
+    shortName: 'Soluții AI',
+    h1: 'Dezvoltare soluții AI personalizate',
+    seoTitle: 'Dezvoltare soluții AI personalizate',
+    metaDescription:
+      'Dezvoltăm soluții AI pe datele tale: recunoaștere de imagini, analiză de date, recomandări personalizate și AI integrat în aplicații. Ofertă în 24 de ore.',
+    answerCapsule:
+      'MAST Studio dezvoltă soluții de inteligență artificială pe măsură: recunoaștere de imagini, analiză de date complexe, recomandări personalizate și AI integrat în aplicații existente. Am construit sisteme pentru supraveghere cu drone, nutriție personalizată și cercetare medicală. Oferta vine în 24 de ore de la prima discuție.',
+    priceFrom: null,
+    priceLabel: 'ofertă în 24 de ore',
+    deliveryLabel: 'Termen',
+    deliveryTime: 'în etape, stabilite în ofertă',
+    intro:
+      'Unele probleme nu se rezolvă cu un instrument gata făcut. Ai date proprii, un proces unic sau o idee de produs în care AI-ul e miezul, nu un accesoriu. Pentru astfel de proiecte construim soluția de la zero, în etape, cu o primă versiune funcțională devreme și cu decizii de arhitectură, securitate și date luate de oameni.',
+    includes: [
+      'descoperire tehnică: ce date ai, ce trebuie să facă sistemul, ce e realist',
+      'recunoaștere de imagini și documente (computer vision)',
+      'analiză de date și modele de recomandare personalizate',
+      'integrarea modelelor AI în aplicații, platforme și fluxuri existente',
+      'panouri de control și vizualizare de date în timp real',
+      'securitate și protecția datelor gândite de la început',
+      'construcție în etape, cu acces la progres',
+      'cod, date și conturi pe numele tău, documentație completă',
+    ],
+    notIncluded: [
+      'promisiuni de acuratețe înainte de testul pe datele tale',
+      'hardware specializat (drone, senzori, servere), dacă proiectul îl cere',
+      'costurile de rulare a modelelor și a infrastructurii, estimate în ofertă',
+    ],
+    process: [
+      { step: 'Discuție de descoperire', description: 'Înțelegem problema, datele și constrângerile. Primești o ofertă cu etape și preț în 24 de ore.' },
+      { step: 'Dovada de concept', description: 'Testăm ideea pe datele tale reale, ca să știm ce acurate���e e posibilă înainte de investiția mare.' },
+      { step: 'Construcție în etape', description: 'Fiecare etapă se încheie cu ceva ce poți folosi și testa, nu cu un raport.' },
+      { step: 'Lansare și predare', description: 'Sistemul intră în folosire, iar tu primești codul, documentația și instruirea echipei.' },
+    ],
+    forWho: [
+      'firme cu date proprii pe care vor să le transforme în decizii',
+      'clinici și centre de cercetare',
+      'startup-uri care construiesc un produs bazat pe AI',
+      'proiecte cu finanțare europeană care includ o componentă de inteligență artificială',
+    ],
+    faq: [
+      {
+        question: 'Ce fel de soluții AI ați construit?',
+        answer:
+          'Un centru de comandă pentru drone care cartografiază ambrozia în jurul Timișoarei, o platformă care analizează datele de microbiom pentru nutriție personalizată, un instrument care recunoaște valorile nutritive dintr-o fotografie și o platformă securizată de management clinic și cercetare.',
+      },
+      {
+        question: 'Cât costă o soluție AI personalizată?',
+        answer:
+          'Depinde de date, de complexitate și de integrări, așa că facem o ofertă după prima discuție, în 24 de ore. Recomandăm să pornim cu o dovadă de concept, ca să știi ce funcționează înainte de investiția mare.',
+      },
+      {
+        question: 'Am nevoie de multe date?',
+        answer:
+          'Nu întotdeauna. Modelele AI actuale pot face multe cu puține exemple, iar unde e nevoie de mai multe date te ajutăm să le colectezi corect. Răspunsul cinstit vine după ce vedem datele tale.',
+      },
+      {
+        question: 'Se pot finanța astfel de proiecte din fonduri europene?',
+        answer:
+          'Da, multe programe de digitalizare și cercetare finanțează componente de inteligență artificială. Oferta și planul de etape pe care le primești de la noi pot fi folosite în documentația cererii.',
+      },
+      {
+        question: 'Cine deține soluția la final?',
+        answer:
+          'Tu. Codul, datele și conturile sunt pe numele firmei tale, iar documentația îți permite să lucrezi mai departe cu orice echipă.',
+      },
+    ],
+    relatedSlugs: ['aplicatii-web', 'platforme-saas', 'audit-strategie-ai'],
+    relatedPosts: ['automatizari-whatsapp-afacere-mica', 'conversie-site-prezentare', 'cat-costa-aplicatie-web'],
+    projectSlugs: ['aeroscan', 'nutricardio-ai', 'nutrigenone', 'platforma-clinica'],
+    waMessage: 'Salut! Am o idee de proiect cu inteligență artificială. Putem discuta?',
+    serviceType: 'Dezvoltare soluții de inteligență artificială',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'audit-strategie-ai',
+    group: 'ai',
+    name: 'Audit și strategie AI',
+    shortName: 'Audit AI',
+    h1: 'Audit și strategie AI pentru firme',
+    seoTitle: 'Audit și strategie AI, de la 490 EUR',
+    metaDescription:
+      'Audit AI pentru firme: aflăm unde îți economisește AI timp și bani, ce riscuri ai și în ce ordine să implementezi. De la 490 EUR, în 7-10 zile.',
+    answerCapsule:
+      'Auditul AI de la MAST Studio îți arată, în 7-10 zile, unde poate economisi inteligența artificială timp și bani în firma ta, ce riscuri de date și de conformitate ai și în ce ordine merită implementat fiecare pas. Costă de la 490 EUR, iar suma se scade din prima implementare făcută cu noi.',
+    priceFrom: 490,
+    priceLabel: 'de la 490 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '7-10 zile',
+    intro:
+      'Toată lumea vorbește despre AI, dar puțini patroni știu de unde să înceapă și ce merită cu adevărat. Auditul răspunde concret: ne uităm la cum lucrează firma ta, măsurăm unde se pierde timp și îți dăm un plan cu 3-5 oportunități, cu costuri, economii estimate și riscuri, nu o prezentare despre viitor.',
+    includes: [
+      'interviuri scurte cu oamenii care fac munca',
+      'harta proceselor repetitive din firmă',
+      '3-5 oportunități AI, ordonate după timpul economisit și efort',
+      'estimare de cost și de economie pentru fiecare',
+      'verificarea riscurilor: date personale, GDPR, regulile europene privind AI',
+      'recomandări de instrumente, cu prețurile lor reale',
+      'plan de implementare pe 90 de zile',
+      'prezentare și discuție de o oră cu echipa de conducere',
+    ],
+    notIncluded: [
+      'implementarea propriu-zisă (ofertată separat, auditul se scade din preț)',
+      'consultanță juridică (recomandările de conformitate nu înlocuiesc un avocat)',
+    ],
+    process: [
+      { step: 'Discuție de pornire', description: 'Aflăm ce face firma, unde simți că pierzi timp și ce ai încercat deja.' },
+      { step: 'Analiză în firmă', description: 'Vorbim cu oamenii care fac munca și ne uităm la documentele și instrumentele folosite.' },
+      { step: 'Planul', description: 'Primești raportul cu oportunitățile, costurile, economiile și riscurile, pe înțelesul tuturor.' },
+      { step: 'Prezentare și pași următori', description: 'Îl discutăm împreună. Dacă vrei să implementăm, costul auditului se scade din prima etapă.' },
+    ],
+    forWho: [
+      'patroni care vor să înțeleagă ce poate face AI concret pentru firma lor',
+      'firme cu 5-100 de angajați și multă muncă administrativă',
+      'echipe care folosesc deja ChatGPT, dar fără reguli și fără un plan',
+      'firme care pregătesc o cerere de finanțare pentru digitalizare',
+    ],
+    faq: [
+      {
+        question: 'Ce primesc concret după auditul AI?',
+        answer:
+          'Un raport cu 3-5 oportunități ordonate după impact, cu estimări de cost și de timp economisit, riscurile de date și conformitate și un plan pe 90 de zile. Plus o discuție de o oră în care îl trecem în revistă.',
+      },
+      {
+        question: 'Cât costă un audit AI?',
+        answer:
+          'De la 490 EUR pentru o firmă mică, cu un singur departament. Dacă alegi să implementezi cu noi, suma se scade din prima etapă.',
+      },
+      {
+        question: 'Trebuie să știu ceva despre AI înainte?',
+        answer:
+          'Nu. Auditul e făcut tocmai pentru cine nu are timp să urmărească tot ce apare. Îți explicăm totul pe limba afacerii, nu în termeni tehnici.',
+      },
+      {
+        question: 'Ce înseamnă regulile europene privind AI pentru firma mea?',
+        answer:
+          'Pentru majoritatea firmelor mici, obligațiile sunt simple: oamenii trebuie anunțați când vorbesc cu un AI, iar datele personale se prelucrează conform GDPR. În audit verificăm exact ce se aplică la tine.',
+      },
+      {
+        question: 'Ajută auditul la o cerere de finanțare?',
+        answer:
+          'Da. Planul de digitalizare din audit, cu costuri și pași, e o bază bună pentru o cerere de finanțare pentru digitalizare.',
+      },
+    ],
+    relatedSlugs: ['automatizari-ai', 'asistent-ai', 'training-ai'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Mă interesează un audit AI pentru firma mea.',
+    serviceType: 'Consultanță și strategie AI',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'vizibilitate-ai',
+    group: 'ai',
+    name: 'Vizibilitate în ChatGPT și AI',
+    shortName: 'Vizibilitate AI',
+    h1: 'Vizibilitate în ChatGPT, Gemini și căutarea cu AI',
+    seoTitle: 'Cum apari în ChatGPT: vizibilitate AI (GEO)',
+    metaDescription:
+      'Te pregătim să fii recomandat de ChatGPT, Gemini și Google AI: profil Google, directoare, date structurate și conținut clar. De la 390 EUR, în 10 zile.',
+    answerCapsule:
+      'Tot mai mulți clienți cer recomandări direct de la ChatGPT sau Gemini, nu de la Google. Serviciul de vizibilitate AI de la MAST Studio pregătește afacerea ta să apară în aceste răspunsuri: profil Google complet, prezență în directoare, date structurate pe site și conținut pe care AI-ul îl poate cita. Pornește de la 390 EUR și durează 10 zile.',
+    priceFrom: 390,
+    priceLabel: 'de la 390 EUR',
+    deliveryLabel: 'Termen',
+    deliveryTime: '10 zile',
+    intro:
+      'Când am întrebat ChatGPT care e cel mai bun dentist, veterinar sau avocat din Timișoara, 90% dintre firmele recomandate aveau site propriu, dar sursele citate erau mai ales Google Maps, directoare și site-uri de recenzii. Asta înseamnă că AI-ul află despre tine din tot ce scrie internetul despre tine, nu doar din site. Noi punem ordine în toate aceste locuri, ca să fii ușor de găsit și de recomandat.',
+    includes: [
+      'test inițial: ce spun ChatGPT, Gemini și Perplexity despre firma ta și despre concurenți',
+      'optimizarea profilului Google Business',
+      'listare și corectare în directoarele relevante pentru domeniul tău',
+      'date identice peste tot: nume, adresă, telefon, program',
+      'date structurate pe site (schema.org) și fișier llms.txt',
+      'pagini și răspunsuri scrise ca AI-ul să le poată cita',
+      'plan pentru recenzii constante',
+      'raport final și un nou test după 30 de zile',
+    ],
+    notIncluded: [
+      'garanția că vei fi recomandat (nimeni nu o poate da cinstit)',
+      'recenzii false sau cumpărate',
+      'reconstruirea completă a site-ului (dacă e nevoie, ofertă separată)',
+    ],
+    process: [
+      { step: 'Testul de pornire', description: 'Punem asistenților AI întrebările pe care le pun clienții tăi și notăm cine apare și de unde își iau informațiile.' },
+      { step: 'Punem ordine în surse', description: 'Profil Google, directoare, date de contact identice peste tot.' },
+      { step: 'Optimizăm site-ul', description: 'Date structurate, răspunsuri clare la întrebările clienților și conținut ușor de citat.' },
+      { step: 'Testăm din nou', description: 'După 30 de zile repetăm testul și îți arătăm ce s-a schimbat.' },
+    ],
+    forWho: [
+      'afaceri locale: cabinete, clinici, saloane, restaurante, meseriași',
+      'firme de servicii profesionale: avocați, contabili, consultanți',
+      'magazine online care vor să apară în recomandările de produse',
+      'oricine a observat că clienții spun „am găsit pe ChatGPT”',
+    ],
+    faq: [
+      {
+        question: 'Ce este GEO (optimizarea pentru căutarea cu AI)?',
+        answer:
+          'GEO înseamnă pregătirea informațiilor despre firma ta ca asistenții AI, precum ChatGPT, Gemini sau Google AI Overviews, să le găsească, să le înțeleagă și să le citeze când cineva cere o recomandare.',
+      },
+      {
+        question: 'Poți garanta că ChatGPT mă va recomanda?',
+        answer:
+          'Nu, și cine îți garantează asta nu spune adevărul. Putem însă să te facem prezent, corect și consecvent în toate sursele din care AI-ul își ia informațiile, iar testul de la 30 de zile arată concret ce s-a schimbat.',
+      },
+      {
+        question: 'Care e diferența față de SEO?',
+        answer:
+          'SEO te ajută să apari în lista de rezultate Google. GEO te ajută să apari în răspunsul scris de un AI. Se completează: multe dintre lucrurile care ajută la una ajută și la cealaltă.',
+      },
+      {
+        question: 'De unde își iau asistenții AI informațiile despre firme locale?',
+        answer:
+          'În testul nostru din Timișoara, ChatGPT a citat cel mai des Google Maps, directoare de firme, site-uri de recenzii și articole de tip top. Site-urile firmelor au fost citate direct doar rar, dar aproape toate firmele recomandate aveau site.',
+      },
+      {
+        question: 'Cât costă și cât durează?',
+        answer:
+          'De la 390 EUR, în aproximativ 10 zile, plus testul de verificare după 30 de zile. Dacă vrei urmărire lunară, se poate adăuga la mentenanță.',
+      },
+    ],
+    relatedSlugs: ['site-de-prezentare', 'mentenanta', 'asistent-ai'],
+    relatedPosts: ['ce-inseamna-pagespeed'],
+    projectSlugs: [],
+    waMessage: 'Salut! Vreau să apar în recomandările ChatGPT și Google AI.',
+    serviceType: 'Optimizare pentru căutarea cu AI (GEO)',
+    updatedAt: '2026-11-03',
+  },
+  {
+    slug: 'training-ai',
+    group: 'ai',
+    name: 'Training AI pentru echipe',
+    shortName: 'Training AI',
+    h1: 'Training AI pentru echipe și firme',
+    seoTitle: 'Training AI pentru echipe, de la 450 EUR',
+    metaDescription:
+      'Atelier practic de AI pentru echipe: ChatGPT, Claude și Gemini folosite corect, pe sarcinile voastre reale, cu reguli clare pentru date. De la 450 EUR.',
+    answerCapsule:
+      'Trainingul AI de la MAST Studio e un atelier practic de o jumătate de zi, la sediul tău sau online, pentru până la 12 oameni. Echipa învață să folosească ChatGPT, Claude și Gemini pe sarcinile ei reale, să verifice ce produce AI-ul și ce date nu are voie să introducă. Costă de la 450 EUR pe atelier.',
+    priceFrom: 450,
+    priceLabel: 'de la 450 EUR / atelier',
+    deliveryLabel: 'Durată',
+    deliveryTime: 'o jumătate de zi, la sediul tău sau online',
+    intro:
+      'Echipa ta folosește probabil deja AI, fiecare în felul lui, unii bine, alții riscant. Un atelier bun face din obiceiuri individuale o practică a firmei: aceleași instrumente, aceleași reguli pentru date, prompt-uri care chiar funcționează pe munca voastră, nu exemple generice de pe internet.',
+    includes: [
+      'discuție înainte, ca exercițiile să fie pe sarcinile reale ale echipei',
+      'atelier practic de o jumătate de zi, pentru până la 12 participanți',
+      'ChatGPT, Claude și Gemini: când folosești fiecare',
+      'scrierea de prompt-uri bune și verificarea rezultatelor',
+      'reguli de siguranță: ce date nu se introduc niciodată în AI',
+      'o bibliotecă de prompt-uri pentru firma ta, de folosit după atelier',
+      'regulament intern scurt de folosire a AI, gata de adoptat',
+    ],
+    notIncluded: ['abonamentele la instrumentele AI', 'certificare oficială acreditată'],
+    process: [
+      { step: 'Aflăm ce face echipa', description: 'O discuție scurtă despre sarcinile zilnice, ca exemplele din atelier să fie despre munca voastră.' },
+      { step: 'Pregătim atelierul', description: 'Exerciții, prompt-uri și reguli adaptate domeniului vostru.' },
+      { step: 'Atelierul', description: 'Patru ore practice: fiecare participant lucrează pe calculatorul lui, pe sarcini reale.' },
+      { step: 'După atelier', description: 'Primiți biblioteca de prompt-uri și regulamentul intern. Răspundem la întrebări încă două săptămâni.' },
+    ],
+    forWho: [
+      'echipe de birou, vânzări, marketing și suport',
+      'firme care vor reguli clare înainte ca AI-ul să fie folosit peste tot',
+      'cabinete și clinici care lucrează cu date sensibile',
+      'asociații și camere de comerț care organizează instruiri pentru membri',
+    ],
+    faq: [
+      {
+        question: 'Pentru cine este trainingul AI?',
+        answer:
+          'Pentru orice echipă care lucrează la calculator: birou, vânzări, marketing, suport, administrație. Nu e nevoie de cunoștințe tehnice, doar de un laptop și de sarcinile de zi cu zi.',
+      },
+      {
+        question: 'Ce instrumente AI învățăm?',
+        answer:
+          'ChatGPT, Claude și Gemini, cu accent pe ce face fiecare cel mai bine. Dacă firma folosește deja un instrument anume, construim atelierul în jurul lui.',
+      },
+      {
+        question: 'Cât costă trainingul AI?',
+        answer:
+          'De la 450 EUR pentru un atelier de o jumătate de zi cu până la 12 participanți, online sau în Timișoara. Pentru alte orașe se adaugă costurile de deplasare.',
+      },
+      {
+        question: 'Echipa mea folosește deja ChatGPT. Mai are sens?',
+        answer:
+          'Da, de obicei chiar mai mult. Atelierul aduce reguli comune pentru date, verificarea rezultatelor și prompt-uri care economisesc timp real, nu doar curiozitate.',
+      },
+      {
+        question: 'Se poate deconta trainingul din fonduri?',
+        answer:
+          'Multe programe de digitalizare finanțează și instruirea personalului. Îți dăm toate documentele de care ai nevoie: program, durată, participanți și factură.',
+      },
+    ],
+    relatedSlugs: ['audit-strategie-ai', 'automatizari-ai', 'asistent-ai'],
+    relatedPosts: [],
+    projectSlugs: [],
+    waMessage: 'Salut! Mă interesează un training AI pentru echipa mea.',
+    serviceType: 'Training de inteligență artificială pentru echipe',
+    updatedAt: '2026-11-03',
   },
 ]
+
+/** The four service families, in the order they appear on /servicii. */
+export const serviceGroups: {
+  id: ServiceGroup
+  name: Record<Locale, string>
+  line: Record<Locale, string>
+}[] = [
+  {
+    id: 'web',
+    name: { ro: 'Site-uri și magazine online', en: 'Websites and online stores' },
+    line: {
+      ro: 'Prezența ta online: un site care convinge și un magazin care vinde.',
+      en: 'Your online presence: a site that convinces and a store that sells.',
+    },
+  },
+  {
+    id: 'software',
+    name: { ro: 'Aplicații și software', en: 'Apps and software' },
+    line: {
+      ro: 'Instrumente construite pe măsura afacerii tale, de la portaluri la platforme SaaS.',
+      en: 'Tools built around your business, from client portals to SaaS platforms.',
+    },
+  },
+  {
+    id: 'ai',
+    name: { ro: 'Inteligență artificială și automatizări', en: 'AI and automation' },
+    line: {
+      ro: 'AI care lucrează pentru tine: răspunde clienților, preia munca repetitivă și te face vizibil în ChatGPT.',
+      en: 'AI that works for you: it answers customers, takes over repetitive work and makes you visible in ChatGPT.',
+    },
+  },
+  {
+    id: 'crestere',
+    name: { ro: 'Creștere, siguranță și suport', en: 'Growth, safety and support' },
+    line: {
+      ro: 'După lansare: siguranță, conformitate, vizibilitate și clienți noi, lună de lună.',
+      en: 'After launch: security, compliance, visibility and new customers, month after month.',
+    },
+  },
+]
+
+/** Groups in display order, each with its localized services (offer copy included). */
+export function getServicesByGroup(locale: Locale = 'ro') {
+  const services = getAllServicePages(locale)
+  return serviceGroups.map((group) => ({
+    ...group,
+    services: services.filter((service) => service.group === group.id),
+  }))
+}
 
 function localizeService(service: ServicePage, locale: Locale): ServicePage {
   if (locale === 'ro') return service
@@ -636,4 +1919,15 @@ export function getServicePageBySlug(slug: string, locale: Locale = 'ro') {
   const id = canonicalServiceSlug(slug) ?? slug
   const service = servicePages.find((item) => item.slug === id)
   return service ? applyOfferCopy(localizeService(service, locale), locale) : undefined
+}
+
+// Fail the build when a relatedSlugs entry points at a service that does not
+// exist — a broken internal link would otherwise ship silently.
+const knownServiceSlugs = new Set(servicePages.map((service) => service.slug))
+for (const service of servicePages) {
+  for (const relatedSlug of service.relatedSlugs) {
+    if (!knownServiceSlugs.has(relatedSlug)) {
+      throw new Error(`[services] "${service.slug}" lists unknown relatedSlugs entry "${relatedSlug}"`)
+    }
+  }
 }

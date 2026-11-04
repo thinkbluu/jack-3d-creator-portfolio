@@ -103,8 +103,15 @@ export default function LocaleDocument({ locale, children }: { locale: Locale; c
         <link rel="alternate" type="application/rss+xml" title={ui[locale].meta.rss} href={`${SITE_URL}/feed.xml`} />
         <link rel="ard" href="/.well-known/ard.json" />
         <link rel="ai-catalog" href="/.well-known/ai-catalog.json" />
+        {/* The brass MAST mark is the LCP element on the homepage and page
+            heroes; it is referenced from CSS (mask), so discover it early. */}
+        <link rel="preload" as="image" href="/icons/mast-mark.svg" />
         <noscript>
-          <style>{'[data-fade]{opacity:1!important;transform:none!important}'}</style>
+          <style>
+            {
+              '[data-fade]{opacity:1!important;transform:none!important}[data-reveal-pending]{opacity:1!important;transform:none!important}[data-split-pending] .split-inner{transform:none!important}'
+            }
+          </style>
         </noscript>
       </head>
       <body className="bg-[var(--shell)] font-sans antialiased">

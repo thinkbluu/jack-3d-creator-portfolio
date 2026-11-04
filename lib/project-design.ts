@@ -165,6 +165,70 @@ const design: Record<string, Record<Locale, ProjectDesign>> = {
       ],
     },
   },
+  aeroscan: {
+    ro: {
+      notes: [
+        { label: 'Harta e ecranul principal', text: 'Totul se citește pe hartă: fiecare traseu de zbor, fiecare zonă acoperită și fiecare detecție, în timp real.' },
+        { label: 'Protocolul înaintea zborului', text: 'Planificarea zborurilor urmează protocolul strict de supraveghere, nu invers: sistemul coordonează pașii înainte ca drona să decoleze.' },
+        { label: 'Timp real', text: 'Urmărirea dronelor și detecțiile apar live, pentru că deciziile de teren se iau într-o fereastră scurtă de lucru.' },
+      ],
+    },
+    en: {
+      notes: [
+        { label: 'The map is the main screen', text: 'Everything is read on the map: every flight path, every area covered and every detection, in real time.' },
+        { label: 'Protocol before flight', text: 'Flight planning follows the strict surveillance protocol, not the other way around: the system coordinates the steps before the drone takes off.' },
+        { label: 'Real time', text: 'Drone tracking and detections appear live, because field decisions are made inside a short working window.' },
+      ],
+    },
+  },
+  'nutricardio-ai': {
+    ro: {
+      notes: [
+        { label: 'O singură fotografie', text: 'Estimarea valorilor nutritive pornește de la o singură fotografie, fără cântăriri și fără formulare lungi.' },
+        { label: 'Protocolul clinicii, nu reguli generale', text: 'Scanning-ul meniurilor compară cu protocolul clinicii, nu cu sfaturi generice, ca răspunsul să conteze pentru pacientul acela.' },
+        { label: 'Testat pentru siguranță', text: 'Instrumentul e testat inclusiv pentru siguranța față de date introduse rău intenționat, pentru că lucrează cu date despre sănătate.' },
+      ],
+    },
+    en: {
+      notes: [
+        { label: 'A single photo', text: 'The nutritional estimate starts from a single photo, with no weighing and no long forms.' },
+        { label: 'The clinic’s protocol, not general rules', text: 'Menu scanning compares against the clinic’s protocol, not generic advice, so the answer matters for that patient.' },
+        { label: 'Tested for safety', text: 'The tool is also tested for its safety against maliciously entered data, because it works with health data.' },
+      ],
+    },
+  },
+  nutrigenone: {
+    ro: {
+      notes: [
+        { label: 'Obiectivul alege recomandarea', text: 'Aceleași date duc la recomandări diferite după obiectiv: stare de bine, longevitate sau performanță sportivă.' },
+        { label: 'Fiecare recomandare explicată', text: 'Platforma e construită să explice fiecare recomandare, nu doar să o dea, ca raționamentul să poată fi urmărit.' },
+        { label: 'Construit pentru cercetare', text: 'Platforma susține cercetarea în curs și analizează toți parametrii măsurați, nu o selecție convenabilă.' },
+      ],
+    },
+    en: {
+      notes: [
+        { label: 'The goal picks the recommendation', text: 'The same data leads to different recommendations depending on the goal: wellbeing, longevity or athletic performance.' },
+        { label: 'Every recommendation explained', text: 'The platform is built to explain every recommendation, not just hand it out, so the reasoning can be followed.' },
+        { label: 'Built for research', text: 'The platform supports the ongoing research and analyses all the measured parameters, not a convenient selection.' },
+      ],
+    },
+  },
+  'platforma-clinica': {
+    ro: {
+      notes: [
+        { label: 'Securitatea întâi', text: 'Protecția datelor e gândită de la prima linie de cod, nu adăugată la final: datele sunt de sănătate, deci securitatea e condiția de pornire.' },
+        { label: 'Acces pe roluri', text: 'Fiecare rol vede doar ce are voie: pacienți, cercetare și studii clinice trăiesc în același sistem, dar nu la vedere pentru toți.' },
+        { label: 'Un singur loc pentru date', text: 'Fișele pacienților, datele de cercetare și documentele studiilor stau într-un singur sistem, cu jurnal al acțiunilor.' },
+      ],
+    },
+    en: {
+      notes: [
+        { label: 'Security first', text: 'Data protection is designed from the first line of code, not added at the end: the data is health data, so security is the starting condition.' },
+        { label: 'Role-based access', text: 'Each role sees only what it is allowed to: patients, research and clinical studies live in the same system, but not in view of everyone.' },
+        { label: 'One place for the data', text: 'Patient records, research data and study documents sit in a single system, with an action log.' },
+      ],
+    },
+  },
 }
 
 export function getProjectDesign(slug: string, locale: Locale = 'ro'): ProjectDesign | null {

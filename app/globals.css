@@ -1056,6 +1056,58 @@ html.lenis {
   }
 }
 
+/* The curtain must never delay LCP on phones (mobile): skip it under 768px (the inline
+   script in IntroLoader sets data-intro-seen there too, so the WebGL mark
+   boots without waiting for a curtain that never plays). */
+@media (max-width: 767.98px) {
+  .studio-loader {
+    display: none;
+  }
+}
+
+/* Reveal + SplitHeading: the hidden states are desktop-only, so phones,
+   reduced-motion users and no-JS visitors get the text visible at first paint
+   (LCP). Desktop keeps the server-rendered hidden state and animates in via
+   the IntersectionObserver in components/studio/Reveal.tsx. */
+.split-word {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  padding-bottom: 0.12em;
+  vertical-align: top;
+}
+
+.split-inner {
+  display: inline-block;
+  max-width: 100%;
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  [data-split-pending] .split-inner {
+    transform: translateY(110%);
+  }
+
+  [data-split-shown] .split-inner {
+    transform: translateY(0);
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: calc(var(--split-i, 0) * 50ms);
+  }
+
+  [data-reveal-pending] {
+    opacity: 0;
+    transform: translateY(var(--reveal-y, 28px));
+  }
+
+  [data-reveal-shown] {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+}
+
 .studio-cursor-label {
   position: absolute;
   inset: 0;
@@ -1508,6 +1560,17 @@ html[data-daypart]:not([data-daypart='day']) .salut-hello[data-part='day'] {
 @media (prefers-reduced-motion: reduce) {
   .salut-big,
   .salut-line {
+    animation: none;
+  }
+}
+
+/* On phones the greeting must be visible at first paint (LCP): skip the
+   salut-rise entrance instead of fading the hero text in behind an animation
+   delay. Desktop keeps the entrance, where the intro curtain covers it. */
+@media (max-width: 767.98px) {
+  .salut-big,
+  .salut-line,
+  .salut-nudge {
     animation: none;
   }
 }

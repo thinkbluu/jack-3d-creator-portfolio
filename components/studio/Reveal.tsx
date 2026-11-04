@@ -1,11 +1,17 @@
 'use client'
 
-import { motion, useReducedMotion } from 'framer-motion'
-import type { ElementType, ReactNode } from 'react'
+import { useEffect, useRef, type CSSProperties, type ElementType, type ReactNode } from 'react'
 
-const EASE = [0.2, 0.7, 0.2, 1] as const
-
-/** Fade and rise into view once. */
+/**
+ * Fade and rise into view once.
+ *
+ * The hidden state lives in CSS under a desktop-only media query (see
+ * `.reveal-*` in globals.css), so the content is visible at first paint on
+ * phones, for reduced-motion users and without JavaScript — the animation
+ * must never delay LCP. On desktop the element is server-rendered hidden and
+ * an IntersectionObserver swaps in the transition, matching the old
+ * framer-motion `whileInView` behaviour (threshold 0.2, once).
+ */
 export function Reveal({
   children,
   delay = 0,
@@ -17,23 +23,47 @@ export function Reveal({
   y?: number
   className?: string
 }) {
-  const reduced = useReducedMotion()
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (!window.matchMedia('(min-width: 768px)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.removeAttribute('data-reveal-pending')
+      return
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        el.removeAttribute('data-reveal-pending')
+        el.setAttribute('data-reveal-shown', '')
+        observer.disconnect()
+      },
+      { threshold: 0.2 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <motion.div
+    <div
+      ref={ref}
+      data-reveal-pending=""
       className={className}
-      initial={{ opacity: 0, y: reduced ? 0 : y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: reduced ? 0 : 0.9, delay: reduced ? 0 : delay, ease: EASE }}
+      style={{ '--reveal-y': `${y}px`, '--reveal-delay': `${Math.round(delay * 1000)}ms` } as CSSProperties}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }
 
 /**
  * Headline whose words rise out of a mask, one after another, when it enters
  * the viewport. `accent` is appended on its own line in italic brass.
+ *
+ * Like Reveal, the hidden state is CSS-gated to desktops: on mobile the words
+ * are plain visible text in the server HTML, so the h1 can become LCP without
+ * waiting for hydration.
  */
 export function SplitHeading({
   text,
@@ -48,32 +78,54 @@ export function SplitHeading({
   className?: string
   accentClassName?: string
 }) {
-  const reduced = useReducedMotion()
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    if (!window.matchMedia('(min-width: 768px)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.removeAttribute('data-split-pending')
+      return
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        el.removeAttribute('data-split-pending')
+        el.setAttribute('data-split-shown', '')
+        observer.disconnect()
+      },
+      { threshold: 0.4 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   const words = text.split(' ')
   const accentWords = accent ? accent.split(' ') : []
-  const word = (value: string, index: number, extra = '') => (
-    <span key={`${value}-${index}`} className="inline-block max-w-full overflow-hidden pb-[0.12em] align-top">
-      <motion.span
-        className={`inline-block max-w-full ${extra}`}
-        variants={{ hidden: { y: reduced ? 0 : '110%' }, shown: { y: 0 } }}
-        transition={{ duration: reduced ? 0 : 0.9, delay: reduced ? 0 : index * 0.05, ease: EASE }}
-      >
-        {value}&nbsp;
-      </motion.span>
-    </span>
-  )
+  let index = 0
+  const word = (value: string, extra = '') => {
+    const i = index++
+    return (
+      <span key={`${value}-${i}`} className="split-word">
+        <span className={`split-inner ${extra}`} style={{ '--split-i': i } as CSSProperties}>
+          {value}&nbsp;
+        </span>
+      </span>
+    )
+  }
+
   return (
-    <motion.div initial="hidden" whileInView="shown" viewport={{ once: true, amount: 0.4 }}>
+    <div ref={ref} data-split-pending="" className="split-heading">
       <Tag className={className}>
-        {words.map((value, index) => word(value, index))}
+        {words.map((value) => word(value))}
         {accentWords.length ? (
           <>
             <br />
-            {accentWords.map((value, index) => word(value, words.length + index, accentClassName))}
+            {accentWords.map((value) => word(value, accentClassName))}
           </>
         ) : null}
       </Tag>
-    </motion.div>
+    </div>
   )
 }
 

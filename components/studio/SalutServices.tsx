@@ -36,7 +36,11 @@ export default function SalutServices() {
                     </p>
                     <div className="flex flex-wrap gap-3">
                       <Link
-                        href={href(`/servicii/${service.id}`)}
+                        href={
+                          'groupLink' in service && service.groupLink
+                            ? `${href('/servicii')}${service.groupLink}`
+                            : href(`/servicii/${service.id}`)
+                        }
                         className="inline-flex items-center rounded-[var(--radius-pill)] border border-[var(--ink)] px-6 py-3 text-sm font-semibold transition-colors hover:bg-[var(--ink)] hover:text-[var(--shell)]"
                       >
                         {copy.details}

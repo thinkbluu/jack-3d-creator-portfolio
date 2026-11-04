@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/blog'
 import { getJobOpenings } from '@/lib/careers'
+import { getAllIndustries } from '@/lib/industries'
 import type { Locale } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
 import { getAllProjects } from '@/lib/projects'
@@ -15,6 +16,7 @@ type Entry = MetadataRoute.Sitemap[number]
 const staticPages: Array<{ path: string; lastModified: string; changeFrequency: Entry['changeFrequency']; priority: number }> = [
   { path: '/', lastModified: '2026-10-04', changeFrequency: 'monthly', priority: 1 },
   { path: '/servicii', lastModified: '2026-10-04', changeFrequency: 'monthly', priority: 0.9 },
+  { path: '/solutii', lastModified: '2026-11-04', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/preturi', lastModified: '2026-10-24', changeFrequency: 'monthly', priority: 0.8 },
   { path: '/portofoliu', lastModified: '2026-10-04', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/despre', lastModified: '2026-10-12', changeFrequency: 'yearly', priority: 0.6 },
@@ -23,7 +25,9 @@ const staticPages: Array<{ path: string; lastModified: string; changeFrequency: 
   { path: '/contact', lastModified: '2026-10-12', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/cerere-oferta', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
   { path: '/comparatie', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.6 },
+  { path: '/ce-iti-trebuie', lastModified: '2026-11-04', changeFrequency: 'monthly', priority: 0.7 },
   { path: '/glosar', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.5 },
+  { path: '/verifica-site', lastModified: '2026-11-04', changeFrequency: 'monthly', priority: 0.8 },
 
   { path: '/cariere', lastModified: '2026-10-03', changeFrequency: 'monthly', priority: 0.5 },
   { path: '/confidentialitate', lastModified: '2026-10-04', changeFrequency: 'yearly', priority: 0.2 },
@@ -70,6 +74,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entry('/mockup', '2026-10-09', 'weekly', 0.8, ['ro']),
     entry('/blog', latestPost, 'weekly', 0.7),
     ...getAllServicePages('ro').map((service) => entry(`/servicii/${service.slug}`, service.updatedAt, 'monthly', 0.9)),
+    ...getAllIndustries('ro').map((industry) => entry(`/solutii/${industry.slug}`, '2026-11-04', 'monthly', 0.8)),
     ...getJobOpenings('ro').map((job) => entry(`/cariere/${job.id}`, '2026-10-03', 'monthly', 0.5)),
     ...getAllProjects('ro')
       .filter((project) => project.type === 'client')

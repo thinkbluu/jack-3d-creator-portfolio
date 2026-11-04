@@ -43,7 +43,7 @@ export default function IntroLoader() {
     <>
       <script
         dangerouslySetInnerHTML={{
-          __html: `try{if(sessionStorage.getItem('${KEY}'))document.documentElement.dataset.introSeen='1'}catch(e){}`,
+          __html: `try{if(sessionStorage.getItem('${KEY}')||matchMedia('(max-width: 767px)').matches||matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.dataset.introSeen='1'}catch(e){}`,
         }}
       />
       <div aria-hidden="true" className="studio-loader tone-dark grain fixed inset-0 z-[120] flex flex-col justify-between">

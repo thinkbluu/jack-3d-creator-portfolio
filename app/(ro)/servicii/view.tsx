@@ -10,7 +10,8 @@ import { localizePath } from '@/lib/i18n/paths'
 import { ui } from '@/lib/i18n/ui'
 import { breadcrumbNode, graph, serviceNode, webPageNode, type BreadcrumbItem } from '@/lib/schema'
 import { pageMetadata } from '@/lib/seo'
-import { getAllServicePages } from '@/lib/services'
+import { checkerCopy } from '@/lib/checker/copy'
+import { getServicesByGroup } from '@/lib/services'
 import { isNoDepositActive } from '@/lib/offer'
 import { absoluteUrl } from '@/lib/site'
 import { PAGE_WORDS } from '@/lib/page-words'
@@ -24,6 +25,8 @@ type ServicesCopy = {
   description: string
   kicker: string
   intro: string
+  fitLabel: string
+  fitSteps: { label: string; anchor: string }[]
   prices: string
   columns: { service: string; price: string; time: string }
   servicesLabel: string
@@ -37,12 +40,13 @@ type ServicesCopy = {
   cta: string
   form: string
   pricingPage: string
+  guideLink: string
 }
 
 const servicesCopy: Record<Locale, ServicesCopy> = {
   ro: {
     word: PAGE_WORDS['/servicii'].ro,
-    lead: 'Ce construim, cât costă și în cât timp. Scris dinainte.',
+    lead: 'Tot ce îi trebuie afacerii tale online, într-un singur loc.',
     howLabel: 'Procesul',
     howLink: 'Tot procesul, pas cu pas',
     title: 'Servicii web design și prețuri',
@@ -50,7 +54,15 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
       'Servicii web design din Timișoara cu prețuri la vedere: site de prezentare de la 300 EUR, magazin online de la 900 EUR, aplicații, mentenanță și WhatsApp.',
     kicker: 'Servicii · Timișoara și toată România',
     intro:
-      'Construim site-uri de prezentare, magazine online, aplicații și platforme pentru afaceri din Timișoara și din toată România. Fiecare serviciu are preț de pornire și termen scris. La site-uri și magazine online plătești un avans de 50 EUR, iar restul doar dacă ești mulțumit de rezultat.',
+      'Site-uri, magazine online, aplicații, inteligență artificială și creștere după lansare. Un singur partener, un singur interlocutor, prețuri de pornire și termene scrise pentru fiecare serviciu.',
+    fitLabel: 'Cum se leagă',
+    fitSteps: [
+      { label: 'Fii găsit', anchor: '#crestere' },
+      { label: 'Convinge', anchor: '#web' },
+      { label: 'Vinde', anchor: '#web' },
+      { label: 'Automatizează', anchor: '#ai' },
+      { label: 'Crește', anchor: '#crestere' },
+    ],
     prices: 'Prețuri pe scurt',
     columns: { service: 'Serviciu', price: 'Preț', time: 'Termen' },
     servicesLabel: 'Servicii',
@@ -68,10 +80,11 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     cta: 'Spune-ne ce ai nevoie și primești oferta azi',
     form: 'Sau completează cererea de ofertă',
     pricingPage: 'Toate prețurile, pe o singură pagină',
+    guideLink: 'Nu știi ce să alegi? Află în 30 de secunde →',
   },
   en: {
     word: PAGE_WORDS['/servicii'].en,
-    lead: 'What we build, what it costs and how long it takes. Written down up front.',
+    lead: 'Everything your business needs online, in one place.',
     howLabel: 'Process',
     howLink: 'The whole process, step by step',
     title: 'Web design services and prices',
@@ -79,7 +92,15 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
       'Web design services from Timișoara with prices in the open: a presentation website from 300 EUR, an online store from 900 EUR, apps, maintenance, and WhatsApp.',
     kicker: 'Services · Timișoara and across Romania',
     intro:
-      'We build presentation websites, online stores, apps, and platforms for businesses in Timișoara and across Romania. Each service has a starting price and a written timeline. For websites and online stores you pay a 50 EUR deposit, and the rest only if you are happy with the result.',
+      'Websites, online stores, apps, artificial intelligence and growth after launch. One partner, one point of contact, starting prices and written timelines for every service.',
+    fitLabel: 'How it fits together',
+    fitSteps: [
+      { label: 'Get found', anchor: '#crestere' },
+      { label: 'Convince', anchor: '#web' },
+      { label: 'Sell', anchor: '#web' },
+      { label: 'Automate', anchor: '#ai' },
+      { label: 'Grow', anchor: '#crestere' },
+    ],
     prices: 'Prices at a glance',
     columns: { service: 'Service', price: 'Price', time: 'Timeline' },
     servicesLabel: 'Services',
@@ -97,13 +118,15 @@ const servicesCopy: Record<Locale, ServicesCopy> = {
     cta: 'Tell us what you need and you get the quote today',
     form: 'Or fill in the quote request',
     pricingPage: 'All prices, on a single page',
+    guideLink: 'Not sure what to choose? Find out in 30 seconds →',
   },
 }
 
-// No-deposit offer variant for the intro (November 2026).
+// No-deposit offer variant for the intro (November 2026): the current intro
+// with the no-deposit sentence appended.
 const servicesIntroOffer: Record<Locale, string> = {
-  ro: 'Construim site-uri de prezentare, magazine online, aplicații și platforme pentru afaceri din Timișoara și din toată România. Fiecare serviciu are preț de pornire și termen scris. La site-uri și magazine online, în noiembrie, nu plătești avans: restul doar dacă ești mulțumit de rezultat.',
-  en: 'We build presentation websites, online stores, apps, and platforms for businesses in Timișoara and across Romania. Each service has a starting price and a written timeline. For websites and online stores, in November there is no deposit: you pay the rest only if you are happy with the result.',
+  ro: `${servicesCopy.ro.intro} La site-uri și magazine online, în noiembrie, nu plătești avans: restul doar dacă ești mulțumit de rezultat.`,
+  en: `${servicesCopy.en.intro} For websites and online stores, in November there is no deposit: you pay the rest only if you are happy with the result.`,
 }
 
 export function servicesMetadata(locale: Locale) {
@@ -119,7 +142,9 @@ export function servicesMetadata(locale: Locale) {
 export function ServicesView({ locale }: { locale: Locale }) {
   const copy = isNoDepositActive() ? { ...servicesCopy[locale], intro: servicesIntroOffer[locale] } : servicesCopy[locale]
   const path = localizePath('/servicii', locale)
-  const services = getAllServicePages(locale)
+  const grouped = getServicesByGroup(locale)
+  // The ItemList keeps every service, now in group order.
+  const services = grouped.flatMap((group) => group.services)
   const crumbs: BreadcrumbItem[] = [
     { name: ui[locale].common.home, path: localizePath('/', locale) },
     { name: ui[locale].nav.services, path },
@@ -159,29 +184,72 @@ export function ServicesView({ locale }: { locale: Locale }) {
             <h2 id="preturi-pe-scurt" className="sr-only">
               {copy.prices}
             </h2>
-            <ol className="big-rows">
-              {services.map((service, index) => (
-                <li key={service.slug}>
-                  <Link href={localizePath(`/servicii/${service.slug}`, locale)} className="big-row service-row">
-                    <span className="mono-label text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</span>
-                    <span className="min-w-0">
-                      <span className="big-row-name block">{service.name}</span>
-                      <span className="service-row-text">{service.answerCapsule}</span>
-                    </span>
-                    <span className="service-row-facts">
-                      <span>
-                        <span className="mono-label text-[var(--fg-3)]">{copy.columns.price}</span>
-                        <span className="block">{service.priceLabel}</span>
+
+            <nav aria-label={copy.fitLabel} className="mb-20 md:mb-28">
+              <p className="mono-label text-[var(--fg-3)]">{copy.fitLabel}</p>
+              <ol className="mt-6 grid gap-x-8 gap-y-4 sm:grid-cols-5">
+                {copy.fitSteps.map((step, index) => (
+                  <li key={step.label}>
+                    <a href={step.anchor} className="group flex items-baseline gap-3 border-t border-[var(--hairline)] pt-4">
+                      <span className="mono-label text-[var(--fg-3)]">{String(index + 1).padStart(2, '0')}</span>
+                      <span className="font-semibold text-[var(--ink)] transition-colors group-hover:text-[var(--accent)]">
+                        {step.label} <span aria-hidden="true">→</span>
                       </span>
-                      <span>
-                        <span className="mono-label text-[var(--fg-3)]">{copy.columns.time}</span>
-                        <span className="block">{service.deliveryTime}</span>
-                      </span>
-                    </span>
-                  </Link>
-                </li>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+              <p className="mt-8 border-t border-[var(--hairline)] pt-6">
+                <Link
+                  href={localizePath('/ce-iti-trebuie', locale)}
+                  className="font-sans text-base font-semibold text-[var(--ink)] underline decoration-[var(--brass)] underline-offset-4 transition-colors hover:text-[var(--brass-ink)]"
+                >
+                  {copy.guideLink}
+                </Link>
+              </p>
+              <p className="mt-4">
+                <Link
+                  href={localizePath('/verifica-site', locale)}
+                  className="font-sans text-base font-semibold text-[var(--ink)] underline underline-offset-4 transition-colors hover:text-[var(--brass-ink)]"
+                >
+                  {checkerCopy[locale].servicesLink}
+                </Link>
+              </p>
+            </nav>
+
+            <div className="flex flex-col gap-20 md:gap-28">
+              {grouped.map((group) => (
+                <section key={group.id} id={group.id} aria-labelledby={`${group.id}-titlu`} className="scroll-mt-24">
+                  <h2 id={`${group.id}-titlu`} className="type-h2 text-balance">
+                    {group.name[locale]}
+                  </h2>
+                  <p className="mt-4 max-w-xl leading-relaxed text-[var(--fg-2)]">{group.line[locale]}</p>
+                  <ol className="big-rows mt-10 md:mt-14">
+                    {group.services.map((service, index) => (
+                      <li key={service.slug}>
+                        <Link href={localizePath(`/servicii/${service.slug}`, locale)} className="big-row service-row">
+                          <span className="mono-label text-[var(--accent)]">{String(index + 1).padStart(2, '0')}</span>
+                          <span className="min-w-0">
+                            <span className="big-row-name block">{service.name}</span>
+                            <span className="service-row-text">{service.answerCapsule}</span>
+                          </span>
+                          <span className="service-row-facts">
+                            <span>
+                              <span className="mono-label text-[var(--fg-3)]">{copy.columns.price}</span>
+                              <span className="block">{service.priceLabel}</span>
+                            </span>
+                            <span>
+                              <span className="mono-label text-[var(--fg-3)]">{copy.columns.time}</span>
+                              <span className="block">{service.deliveryTime}</span>
+                            </span>
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
               ))}
-            </ol>
+            </div>
           </div>
         </section>
 

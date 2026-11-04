@@ -73,6 +73,14 @@ const nextConfig = {
         headers: [{ key: 'Link', value: '</.well-known/ai-catalog.json>; rel="ai-catalog"' }],
       },
       {
+        // Static assets in /public (icons, photos, fonts) change rarely: cache
+        // them like /_next/static, which Next already marks immutable. Only
+        // binary assets get immutable — text routes like /feed.xml are
+        // rendered by route handlers and must stay revalidatable.
+        source: '/:path*.(svg|png|jpg|jpeg|gif|webp|avif|ico|woff|woff2|mp4|webm)',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      {
         source: '/(.*)',
         headers: [
           { key: 'Content-Security-Policy', value: contentSecurityPolicy },

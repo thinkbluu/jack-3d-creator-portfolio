@@ -9,6 +9,7 @@ import SiteHeader from '@/components/SiteHeader'
 import PageOpen from '@/components/studio/PageOpen'
 import ParallaxCover from '@/components/studio/ParallaxCover'
 import { Reveal } from '@/components/studio/Reveal'
+import { coverExists } from '@/lib/covers'
 import type { Locale } from '@/lib/i18n/locale'
 import { schemaLanguage } from '@/lib/i18n/locale'
 import { localizePath } from '@/lib/i18n/paths'
@@ -219,7 +220,17 @@ export async function ProjectView({ locale, slug }: { locale: Locale; slug: stri
 
           {project.cover ? (
             <div className="tone-dark px-[clamp(0.75rem,2vw,1.5rem)] pb-[clamp(0.75rem,2vw,1.5rem)]">
-              <ParallaxCover src={project.cover} alt={coverAlt} priority />
+              {coverExists(project.cover) ? (
+                <ParallaxCover src={project.cover} alt={coverAlt} priority fallbackLabel={project.name} />
+              ) : (
+                <div
+                  role="img"
+                  aria-label={coverAlt}
+                  className="flex aspect-[2/1] w-full items-center justify-center rounded-[8px] bg-[linear-gradient(135deg,#0b0f17_0%,#1a2230_55%,#0b0f17_100%)] px-6"
+                >
+                  <span className="kicker text-center text-[#faf7f2]">{project.name}</span>
+                </div>
+              )}
             </div>
           ) : null}
 
@@ -370,7 +381,7 @@ export async function ProjectView({ locale, slug }: { locale: Locale; slug: stri
                 </span>
               </span>
             </span>
-            {next.cover ? (
+            {next.cover && coverExists(next.cover) ? (
               <Image
                 src={next.cover}
                 alt={next.coverAlt}

@@ -18,9 +18,9 @@ export const PHONE_HREF = `tel:${PHONE_E164}`
 export const EMAIL = 'contact@maststudio.ro'
 export const EMAIL_HREF = `mailto:${EMAIL}`
 
-// The studio works remotely and has no office open to visitors, so the site
-// names only the city. The street address is the registered office and appears
-// only where the law asks for it: terms, privacy and cookies.
+// The studio works remotely and has no office open to visitors. The street
+// address is the registered office: it appears in the footer (as company
+// details) and wherever the law asks for it: terms, privacy and cookies.
 export const LOCATION = {
   locality: 'Timișoara',
   region: 'Timiș',

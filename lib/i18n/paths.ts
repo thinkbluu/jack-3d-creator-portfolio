@@ -5,6 +5,7 @@ type Pair = { ro: string; en: string }
 /** First URL segment. Romanian values are the canonical ids. */
 const TOP: Pair[] = [
   { ro: 'servicii', en: 'services' },
+  { ro: 'solutii', en: 'solutions' },
   { ro: 'preturi', en: 'pricing' },
   { ro: 'portofoliu', en: 'work' },
   { ro: 'despre', en: 'about' },
@@ -22,17 +23,45 @@ const TOP: Pair[] = [
   { ro: 'cum-lucram', en: 'approach' },
   { ro: 'newsletter', en: 'newsletter' },
   { ro: 'echipa', en: 'team' },
+  { ro: 'ce-iti-trebuie', en: 'what-you-need' },
+  { ro: 'verifica-site', en: 'website-checker' },
 ]
 
 /** Canonical service id is the Romanian slug. English pages use the `en` slug. */
 export const SERVICE_SLUGS: Pair[] = [
   { ro: 'site-de-prezentare', en: 'presentation-website' },
+  { ro: 'refacere-site', en: 'website-redesign' },
   { ro: 'magazin-online', en: 'online-store' },
   { ro: 'aplicatii-web', en: 'web-and-mobile-apps' },
+  { ro: 'aplicatii-mobile', en: 'mobile-apps' },
   { ro: 'platforme-saas', en: 'saas-platforms' },
+  { ro: 'mvp-startup', en: 'startup-mvp' },
+  { ro: 'sistem-programari-online', en: 'online-booking-system' },
   { ro: 'design-ux-ui', en: 'ux-ui-design' },
+  { ro: 'site-proiect-finantat', en: 'eu-funded-project-website' },
   { ro: 'mentenanta', en: 'maintenance' },
+  { ro: 'seo-local', en: 'local-seo' },
+  { ro: 'campanii-reclame', en: 'ads-management' },
+  { ro: 'continut-seo', en: 'seo-content' },
+  { ro: 'audit-securitate-gdpr', en: 'security-gdpr-audit' },
+  { ro: 'conformitate-legala-site', en: 'website-legal-compliance' },
   { ro: 'automatizari-whatsapp', en: 'whatsapp-automation' },
+  { ro: 'asistent-ai', en: 'ai-assistant' },
+  { ro: 'automatizari-ai', en: 'ai-automation' },
+  { ro: 'solutii-ai-personalizate', en: 'custom-ai-solutions' },
+  { ro: 'audit-strategie-ai', en: 'ai-audit-strategy' },
+  { ro: 'vizibilitate-ai', en: 'ai-search-visibility' },
+  { ro: 'training-ai', en: 'ai-training' },
+]
+
+/** Canonical industry id is the Romanian slug. English pages use the `en` slug. */
+export const INDUSTRY_SLUGS: Pair[] = [
+  { ro: 'clinici-medicale', en: 'medical-clinics' },
+  { ro: 'cabinete-veterinare', en: 'veterinary-practices' },
+  { ro: 'saloane-infrumusetare', en: 'beauty-salons' },
+  { ro: 'avocati-contabili', en: 'lawyers-accountants' },
+  { ro: 'meseriasi', en: 'trades' },
+  { ro: 'magazine-online', en: 'online-stores' },
 ]
 
 function pairValue(pairs: Pair[], value: string, from: Locale, to: Locale) {
@@ -61,6 +90,7 @@ function mapParts(parts: string[], from: Locale, to: Locale) {
     if (index === 0) return pairValue(TOP, part, from, to)
     const top = pairValue(TOP, parts[0], from, 'ro')
     if (index === 1 && top === 'servicii') return pairValue(SERVICE_SLUGS, part, from, to)
+    if (index === 1 && top === 'solutii') return pairValue(INDUSTRY_SLUGS, part, from, to)
     return part
   })
 }
@@ -126,6 +156,15 @@ export function publicServiceSlug(canonicalSlug: string, locale: Locale) {
   return pairValue(SERVICE_SLUGS, canonicalSlug, 'ro', locale)
 }
 
+export function canonicalIndustrySlug(slug: string) {
+  const match = INDUSTRY_SLUGS.find((pair) => pair.ro === slug || pair.en === slug)
+  return match?.ro
+}
+
+export function publicIndustrySlug(canonicalSlug: string, locale: Locale) {
+  return pairValue(INDUSTRY_SLUGS, canonicalSlug, 'ro', locale)
+}
+
 /** Static English paths, excluding blog articles (added when an English post exists). */
 export function staticEnglishPaths() {
   const paths = [
@@ -146,6 +185,9 @@ export function staticEnglishPaths() {
     '/termeni',
     '/blog',
     ...SERVICE_SLUGS.map((pair) => `/servicii/${pair.ro}`),
+    '/solutii',
+    ...INDUSTRY_SLUGS.map((pair) => `/solutii/${pair.ro}`),
+    '/verifica-site',
   ]
   return paths.map((path) => localizePath(path, 'en'))
 }

@@ -10,6 +10,8 @@ import { getProjectBySlug } from './projects'
 export const PAGE_WORDS = {
   '/portofoliu': { ro: 'Lucrări.', en: 'Work.' },
   '/servicii': { ro: 'Servicii.', en: 'Services.' },
+  '/solutii': { ro: 'Soluții.', en: 'Solutions.' },
+  '/ce-iti-trebuie': { ro: 'Alegi.', en: 'Choose.' },
   '/preturi': { ro: 'Prețuri.', en: 'Pricing.' },
   '/cum-lucram': { ro: 'Cum lucrăm.', en: 'Approach.' },
   '/despre': { ro: 'Studio.', en: 'Studio.' },
@@ -17,6 +19,7 @@ export const PAGE_WORDS = {
   '/contact': { ro: 'Scrie-ne.', en: 'Write.' },
   '/cariere': { ro: 'Cariere.', en: 'Careers.' },
   '/newsletter': { ro: 'Scrisori.', en: 'Letters.' },
+  '/verifica-site': { ro: 'Verificare.', en: 'Check.' },
 } as const satisfies Record<string, Record<Locale, string>>
 
 type WordPath = keyof typeof PAGE_WORDS

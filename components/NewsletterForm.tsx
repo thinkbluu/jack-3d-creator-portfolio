@@ -69,6 +69,7 @@ export default function NewsletterForm({ placement, className = '' }: { placemen
         tabIndex={-1}
         autoComplete="off"
         aria-hidden="true"
+        aria-label="Website"
         value={website}
         onChange={(event) => setWebsite(event.target.value)}
         className="hidden"

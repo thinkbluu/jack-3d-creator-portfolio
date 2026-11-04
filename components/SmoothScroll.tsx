@@ -1,6 +1,6 @@
 'use client'
 
-import Lenis from 'lenis'
+import type Lenis from 'lenis'
 import { useEffect } from 'react'
 
 declare global {
@@ -24,6 +24,10 @@ export function setScrollLocked(locked: boolean) {
 /**
  * Inertial page scrolling for the whole site. Skipped for visitors who ask for
  * reduced motion, and on touch devices, where native scrolling already feels right.
+ *
+ * Lenis itself is imported lazily inside the effect: it is dead weight on
+ * touch devices (the early return above) and it used to sit in the initial
+ * bundle of every page.
  */
 export default function SmoothScroll() {
   useEffect(() => {
@@ -31,19 +35,26 @@ export default function SmoothScroll() {
     const coarse = window.matchMedia('(pointer: coarse)').matches
     if (reduce || coarse) return
 
-    // autoRaf lets Lenis own its rAF loop; it handles its own timing, so no
-    // stale-time jumps after the page has been idle.
-    const lenis = new Lenis({
-      autoRaf: true,
-      duration: 1.15,
-      smoothWheel: true,
-      anchors: { offset: -88 },
+    let cancelled = false
+    let lenis: Lenis | undefined
+
+    import('lenis').then(({ default: LenisCtor }) => {
+      if (cancelled) return
+      // autoRaf lets Lenis own its rAF loop; it handles its own timing, so no
+      // stale-time jumps after the page has been idle.
+      lenis = new LenisCtor({
+        autoRaf: true,
+        duration: 1.15,
+        smoothWheel: true,
+        anchors: { offset: -88 },
+      })
+      window.__lenis = lenis
     })
-    window.__lenis = lenis
 
     return () => {
-      lenis.destroy()
-      if (window.__lenis === lenis) delete window.__lenis
+      cancelled = true
+      lenis?.destroy()
+      if (window.__lenis && window.__lenis === lenis) delete window.__lenis
     }
   }, [])
 
